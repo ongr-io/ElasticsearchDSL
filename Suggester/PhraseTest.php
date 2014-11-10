@@ -27,13 +27,14 @@ class PhraseTest extends \PHPUnit_Framework_TestCase
         $expected0 = [
             'body-phrase' => [
                 'text' => 'lorem ipsum',
-                'phrase' => [
-                    'field' => 'body',
-                ],
+                'phrase' => ['field' => 'body'],
             ],
         ];
 
-        $out[] = [$expected0, $phrase0];
+        $out[] = [
+            $expected0,
+            $phrase0,
+        ];
 
         // Case #1: using all fields.
         $phrase1 = new Phrase('description', 'awesome cat');
@@ -64,7 +65,10 @@ class PhraseTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$expected1, $phrase1];
+        $out[] = [
+            $expected1,
+            $phrase1,
+        ];
 
         return $out;
     }

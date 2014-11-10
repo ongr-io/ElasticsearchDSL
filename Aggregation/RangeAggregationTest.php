@@ -34,14 +34,20 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
-                        ['from' => '10', 'to' => 20],
+                        [
+                            'from' => '10',
+                            'to' => 20,
+                        ],
                     ],
                     'keyed' => false,
                 ],
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #1 multiple keyed ranges.
         $aggregation = new RangeAggregation('test_agg');
@@ -55,15 +61,24 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
-                        ['from' => '10', 'key' => 'range_1'],
-                        ['to' => '20', 'key' => 'range_2'],
+                        [
+                            'from' => '10',
+                            'key' => 'range_1',
+                        ],
+                        [
+                            'to' => '20',
+                            'key' => 'range_2',
+                        ],
                     ],
                     'keyed' => true,
                 ],
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #2 nested aggregation.
         $aggregation = new RangeAggregation('test_agg');
@@ -80,7 +95,10 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
-                        ['from' => '10', 'to' => '10'],
+                        [
+                            'from' => '10',
+                            'to' => '10',
+                        ],
                     ],
                     'keyed' => false,
                 ],
@@ -88,7 +106,10 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                     'agg_test_agg_2' => [
                         'range' => [
                             'ranges' => [
-                                ['from' => '20', 'to' => '20'],
+                                [
+                                    'from' => '20',
+                                    'to' => '20',
+                                ],
                             ],
                             'keyed' => false,
                         ],
@@ -97,7 +118,10 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         return $out;
     }

@@ -25,9 +25,7 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
 
         $expectedResult = [
             'agg_test_agg' => [
-                'stats' => [
-                    'field' => 'test_field',
-                ],
+                'stats' => ['field' => 'test_field'],
             ],
         ];
 

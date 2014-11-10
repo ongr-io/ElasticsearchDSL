@@ -30,13 +30,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
 
         $result = [
             'agg_test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                ],
+                'terms' => ['field' => 'test_field'],
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #1 terms aggregation with size.
         $aggregation = new TermsAggregation('test_agg');
@@ -52,7 +53,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #2 terms aggregation with size and min document count.
         $aggregation = new TermsAggregation('test_agg');
@@ -70,7 +74,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #3 terms aggregation with simple include, exclude.
         $aggregation = new TermsAggregation('test_agg');
@@ -88,7 +95,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #4 terms aggregation with include, exclude and flags.
         $aggregation = new TermsAggregation('test_agg');
@@ -112,7 +122,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #5 terms aggregation with order default direction.
         $aggregation = new TermsAggregation('test_agg');
@@ -123,14 +136,15 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             'agg_test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
-                    'order' => [
-                        '_count' => 'asc',
-                    ],
+                    'order' => ['_count' => 'asc'],
                 ],
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #6 terms aggregation with order term mode, desc direction.
         $aggregation = new TermsAggregation('test_agg');
@@ -141,14 +155,15 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             'agg_test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
-                    'order' => [
-                        '_term' => 'desc',
-                    ],
+                    'order' => ['_term' => 'desc'],
                 ],
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         return $out;
     }

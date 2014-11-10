@@ -26,14 +26,15 @@ class CompletionTest extends \PHPUnit_Framework_TestCase
         $completion0 = new Completion('my-field', 'lorem ipsum');
         $expected0 = [
             'my-field-completion' => [
-               'text' => 'lorem ipsum',
-                'completion' => [
-                    'field' => 'my-field',
-                ],
+                'text' => 'lorem ipsum',
+                'completion' => ['field' => 'my-field'],
             ],
         ];
 
-        $out[] = [$expected0, $completion0];
+        $out[] = [
+            $expected0,
+            $completion0,
+        ];
 
         // Case #1: using fuzzy.
         $completion1 = new Completion('my-other-field', 'super awesome cat', 'my-completion1');
@@ -48,7 +49,10 @@ class CompletionTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$expected1, $completion1];
+        $out[] = [
+            $expected1,
+            $completion1,
+        ];
 
         // Case #2: providing all data.
         $completion2 = new Completion('body', 'even more super awesome cat', 'my-completion2');
@@ -74,7 +78,10 @@ class CompletionTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$expected2, $completion2];
+        $out[] = [
+            $expected2,
+            $completion2,
+        ];
 
         return $out;
     }

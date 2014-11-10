@@ -43,15 +43,16 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
             'agg_test_agg' => [
                 'filter' => [
                     'test_filter' => [
-                        'test_field' => [
-                            'test_value' => 'test',
-                        ],
+                        'test_field' => ['test_value' => 'test'],
                     ],
                 ],
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #1 nested filter aggregation.
         $aggregation = new FilterAggregation('test_agg');
@@ -74,9 +75,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
             'agg_test_agg' => [
                 'filter' => [
                     'test_filter' => [
-                        'test_field' => [
-                            'test_value' => 'test',
-                        ],
+                        'test_field' => ['test_value' => 'test'],
                     ],
                 ],
                 'aggregations' => [
@@ -87,7 +86,10 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         return $out;
     }

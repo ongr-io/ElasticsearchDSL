@@ -15,7 +15,7 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\TopHitsAggregation;
 use ONGR\ElasticsearchBundle\DSL\Sort\Sorts;
 
 /**
- * Unit tests for top hits aggregation
+ * Unit tests for top hits aggregation.
  */
 class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,9 +32,7 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $expectedAgg->from = 1;
         $expectedAgg->sort = $sorts->toArray();
         $expected = [
-            'agg_test' => [
-                'top_hits' => $expectedAgg,
-            ]
+            'agg_test' => ['top_hits' => $expectedAgg]
         ];
 
         $this->assertEquals($expected, $aggregation->toArray());

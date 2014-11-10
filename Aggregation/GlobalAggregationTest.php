@@ -33,7 +33,10 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         // Case #1 nested global aggregation.
         $aggregation = new GlobalAggregation('test_agg');
@@ -51,7 +54,10 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$aggregation, $result];
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
 
         return $out;
     }

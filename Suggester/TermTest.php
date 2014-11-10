@@ -27,12 +27,13 @@ class TermTest extends \PHPUnit_Framework_TestCase
         $expected0 = [
             'body-term' => [
                 'text' => 'lorem ipsum',
-                'term' => [
-                    'field' => 'body',
-                ],
+                'term' => ['field' => 'body'],
             ],
         ];
-        $out[] = [$expected0, $term0];
+        $out[] = [
+            $expected0,
+            $term0,
+        ];
 
         // Case #1: full suggester.
         $term1 = new Term('body', 'lorem ipsum');
@@ -55,7 +56,10 @@ class TermTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [$expected1, $term1];
+        $out[] = [
+            $expected1,
+            $term1,
+        ];
 
         return $out;
     }
