@@ -152,7 +152,7 @@ class TermsAggregation extends AbstractAggregation
             $data['size'] = $this->size;
         }
 
-        if ($this->minDocumentCount) {
+        if ($this->minDocumentCount !== null) {
             $data['min_doc_count'] = $this->minDocumentCount;
         }
 
