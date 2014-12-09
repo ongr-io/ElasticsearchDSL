@@ -49,7 +49,7 @@ class RangeAggregation extends AbstractAggregation
      */
     public function addRange($from = null, $to = null, $key = '')
     {
-        $range  = [];
+        $range = [];
 
         if (!empty($from)) {
             $range['from'] = $from;

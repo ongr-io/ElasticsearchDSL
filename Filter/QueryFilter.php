@@ -54,6 +54,7 @@ class QueryFilter implements BuilderInterface
     public function toArray()
     {
         if ($this->hasParameter('_cache')) {
+            $query = [];
             $query['query'] = [$this->query->getType() => $this->query->toArray()];
             $output = $this->processArray($query);
 

@@ -11,6 +11,9 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation\Type;
 
+/**
+ * Trait used by Aggregations which do not support nesting.
+ */
 trait MetricTrait
 {
     /**
