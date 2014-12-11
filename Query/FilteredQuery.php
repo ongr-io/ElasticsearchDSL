@@ -27,7 +27,7 @@ class FilteredQuery extends AbstractFilter implements BuilderInterface
     private $query;
 
     /**
-     * @param Query  $query
+     * @param Query $query
      */
     public function __construct($query = null)
     {
@@ -68,6 +68,7 @@ class FilteredQuery extends AbstractFilter implements BuilderInterface
      */
     public function toArray()
     {
+        $output = [];
         $output['filter'] = parent::toArray();
 
         if ($this->query !== null) {

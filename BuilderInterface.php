@@ -11,6 +11,9 @@
 
 namespace ONGR\ElasticsearchBundle\DSL;
 
+/**
+ * Interface BuilderInterface.
+ */
 interface BuilderInterface
 {
     /**

@@ -11,6 +11,9 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation\Type;
 
+/**
+ * Trait used by Aggregations which supports nesting.
+ */
 trait BucketingTrait
 {
     /**

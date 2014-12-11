@@ -75,7 +75,7 @@ class Term extends AbstractSuggester
                     'size' => $this->getSize(),
                     'term' => $suggester,
                 ]
-            )
+            ),
         ];
     }
 

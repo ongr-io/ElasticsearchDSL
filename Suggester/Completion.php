@@ -74,7 +74,7 @@ class Completion extends AbstractSuggester
         );
 
         $completion = [
-            'field' => $this->getField()
+            'field' => $this->getField(),
         ];
 
         if (empty($fuzzy) && $this->isFuzzy()) {

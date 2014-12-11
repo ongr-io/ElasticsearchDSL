@@ -74,6 +74,7 @@ abstract class AbstractFilter
      */
     public function toArray()
     {
+        $output = [];
         $output[$this->filters->getType()] = $this->filters->toArray();
 
         return $output;
