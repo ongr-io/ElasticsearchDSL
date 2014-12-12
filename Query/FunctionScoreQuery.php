@@ -41,7 +41,7 @@ class FunctionScoreQuery implements BuilderInterface
      * @param array            $functions
      * @param array            $parameters
      */
-    public function __construct(BuilderInterface $filterOrQuery, $functions, array $parameters = [])
+    public function __construct(BuilderInterface $filterOrQuery, array $functions, array $parameters = [])
     {
         $this->dslType = array_slice(explode('\\', get_class($filterOrQuery)), -2, 1)[0];
         $this->filterOrQuery = $filterOrQuery;
