@@ -22,7 +22,7 @@ class SimpleQueryStringQuery implements BuilderInterface
     use ParametersTrait;
 
     /**
-     * @var string
+     * @var string The actual query to be parsed.
      */
     private $query;
 
