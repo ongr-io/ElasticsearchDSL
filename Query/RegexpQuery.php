@@ -22,15 +22,11 @@ class RegexpQuery implements BuilderInterface
     use ParametersTrait;
 
     /**
-     * Field to be queried.
-     *
      * @var string
      */
     private $field;
 
     /**
-     * The actual regexp value to be used.
-     *
      * @var string
      */
     private $regexpValue;

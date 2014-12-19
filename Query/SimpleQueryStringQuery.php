@@ -22,8 +22,6 @@ class SimpleQueryStringQuery implements BuilderInterface
     use ParametersTrait;
 
     /**
-     * The actual query to be parsed.
-     *
      * @var string
      */
     private $query;
