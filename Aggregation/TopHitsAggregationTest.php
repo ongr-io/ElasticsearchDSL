@@ -32,7 +32,9 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $expectedAgg->from = 1;
         $expectedAgg->sort = $sorts->toArray();
         $expected = [
-            'agg_test' => ['top_hits' => $expectedAgg]
+            'agg_test' => [
+                'top_hits' => $expectedAgg,
+            ],
         ];
 
         $this->assertEquals($expected, $aggregation->toArray());
