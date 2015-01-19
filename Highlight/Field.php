@@ -23,63 +23,49 @@ class Field
     const TYPE_FVH = 'fvh';
 
     /**
-     * Field name.
-     *
-     * @var string
+     * @var string Field name.
      */
     protected $name;
 
     /**
-     * Highlighter type. By default 'plain'.
-     *
-     * @var string
+     * @var string Highlighter type. By default 'plain'.
      */
     protected $type;
 
     /**
-     * Size of the highlighted fragment in characters. By default 100.
-     *
-     * @var int
+     * @var int Size of the highlighted fragment in characters. By default 100.
      */
     protected $fragmentSize;
 
     /**
-     * Maximum number of fragments to return. By default 5.
-     *
-     * @var int
+     * @var int Maximum number of fragments to return. By default 5.
      */
     protected $numberOfFragments;
 
     /**
-     * Combine matches on multiple fields to highlight a single field.
-     *
-     * @var array
+     * @var array Combine matches on multiple fields to highlight a single field.
      */
     protected $matchedFields;
 
     /**
-     * Query to highlight.
-     *
-     * @var BuilderInterface
+     * @var BuilderInterface Query to highlight.
      */
     protected $highlightQuery;
 
     /**
-     * Show part of string even if there are no matches to highlight. Defaults to 0.
-     *
-     * @var int
+     * @var int Show part of string even if there are no matches to highlight. Defaults to 0.
      */
     protected $noMatchSize;
 
     /**
-     * Highlight fields based on the source.
-     *
-     * @var bool
+     * @var bool Highlight fields based on the source.
      */
     protected $forceSource;
 
     /**
-     * @param string $name
+     * Creates a highlight for a field.
+     *
+     * @param string $name Field name.
      */
     public function __construct($name)
     {

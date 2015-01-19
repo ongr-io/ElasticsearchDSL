@@ -17,16 +17,12 @@ namespace ONGR\ElasticsearchBundle\DSL\Suggester\Context;
 abstract class AbstractContext
 {
     /**
-     * Name of the context used.
-     *
-     * @var string
+     * @var string Name of the context used.
      */
     private $name;
 
     /**
-     * Value of the context.
-     *
-     * @var string|array
+     * @var string|array Value of the context.
      */
     private $value;
 

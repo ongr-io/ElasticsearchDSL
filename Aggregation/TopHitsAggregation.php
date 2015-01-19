@@ -22,23 +22,17 @@ class TopHitsAggregation extends AbstractAggregation
     use MetricTrait;
 
     /**
-     * Number of top matching hits to return per bucket.
-     *
-     * @var int
+     * @var int Number of top matching hits to return per bucket.
      */
     private $size;
 
     /**
-     * The offset from the first result you want to fetch.
-     *
-     * @var int
+     * @var int The offset from the first result you want to fetch.
      */
     private $from;
 
     /**
-     * How the top matching hits should be sorted.
-     *
-     * @var Sorts
+     * @var Sorts How the top matching hits should be sorted.
      */
     private $sort;
 

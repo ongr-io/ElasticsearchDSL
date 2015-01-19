@@ -87,7 +87,7 @@ class Completion extends AbstractSuggester
             $this->getName() => [
                 'text' => $this->getText(),
                 'completion' => $completion,
-            ]
+            ],
         ];
     }
 

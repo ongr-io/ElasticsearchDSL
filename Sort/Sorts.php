@@ -19,9 +19,7 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 class Sorts implements BuilderInterface
 {
     /**
-     * Sorts collection.
-     *
-     * @var AbstractSort[]
+     * @var AbstractSort[] Sorts collection.
      */
     private $sorts = [];
 

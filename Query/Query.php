@@ -20,7 +20,7 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 class Query implements BuilderInterface
 {
     /**
-     * @var BuilderInterface[] Queries
+     * @var BuilderInterface[]
      */
     private $queries;
 

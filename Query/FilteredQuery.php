@@ -20,7 +20,7 @@ use ONGR\ElasticsearchBundle\DSL\Filter\AbstractFilter;
 class FilteredQuery extends AbstractFilter implements BuilderInterface
 {
     /**
-     * @var Query used inside filtered area.
+     * @var Query Used inside filtered area.
      */
     private $query;
 

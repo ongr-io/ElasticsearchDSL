@@ -21,51 +21,37 @@ class Highlight
     const TYPE_FVH = 'fvh';
 
     /**
-     * Holds fields to highlight.
-     *
-     * @var array
+     * @var array Holds fields to highlight.
      */
     protected $fields = [];
 
     /**
-     * Holds html tag name and class that highlight will be put in (default 'em' tag).
-     *
-     * @var array
+     * @var array Holds html tag name and class that highlight will be put in (default 'em' tag).
      */
     protected $tags = [];
 
     /**
-     * Holds tag schema name. 'styled' is the only option yet.
-     *
-     * @var string
+     * @var string Holds tag schema name. 'styled' is the only option yet.
      */
     protected $tagsSchema = null;
 
     /**
-     * Fragments sort type.
-     *
-     * @var string
+     * @var string Fragments sort type.
      */
     protected $order = null;
 
     /**
-     * Highlighter type. By default plain.
-     *
-     * @var string
+     * @var string Highlighter type. By default plain.
      */
     protected $type = null;
 
     /**
-     * Size of the highlighted fragment in characters. By default 100.
-     *
-     * @var int
+     * @var int Size of the highlighted fragment in characters. By default 100.
      */
     protected $fragmentSize = null;
 
     /**
-     * Maximum number of fragments to return. By default 5.
-     *
-     * @var int
+     * @var int Maximum number of fragments to return. By default 5.
      */
     protected $numberOfFragments = null;
 

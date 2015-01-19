@@ -31,7 +31,7 @@ class Search
     const SCROLL_DURATION = '5m';
 
     /**
-     * @var Query $query
+     * @var Query
      */
     private $query;
 
@@ -41,14 +41,12 @@ class Search
     private $boolQueryParams;
 
     /**
-     * @var BuilderInterface $filters
+     * @var BuilderInterface
      */
     private $filters;
 
     /**
-     * Filters collection.
-     *
-     * @var BuilderInterface $postFilters
+     * @var BuilderInterface Filters collection.
      */
     private $postFilters;
 

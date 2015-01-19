@@ -24,9 +24,7 @@ class Context extends AbstractSuggester
     private $context;
 
     /**
-     * Size of completion.
-     *
-     * @var int
+     * @var int Size of completion.
      */
     private $size;
 
@@ -93,7 +91,7 @@ class Context extends AbstractSuggester
             $this->getName() => [
                 'text' => $this->getText(),
                 'completion' => $completion,
-            ]
+            ],
         ];
     }
 

@@ -30,9 +30,7 @@ class RangeQuery implements BuilderInterface
     const GTE = 'gte';
 
     /**
-     * Field name.
-     *
-     * @var string
+     * @var string Field name.
      */
     private $field;
 

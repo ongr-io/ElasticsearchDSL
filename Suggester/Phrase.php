@@ -85,7 +85,7 @@ class Phrase extends AbstractSuggester
             $this->getName() => [
                 'text' => $this->getText(),
                 'phrase' => array_filter($phrase),
-            ]
+            ],
         ];
     }
 

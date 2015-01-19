@@ -19,9 +19,7 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 class Sort extends AbstractSort
 {
     /**
-     * Filter for sorting.
-     *
-     * @var BuilderInterface
+     * @var BuilderInterface Filter for sorting.
      */
     private $nestedFilter;
 

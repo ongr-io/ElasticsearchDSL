@@ -29,9 +29,7 @@ class GeoSort extends AbstractSort
     protected $location;
 
     /**
-     * Units in which to measure distance.
-     *
-     * @var string
+     * @var string Units in which to measure distance.
      */
     protected $unit;
 

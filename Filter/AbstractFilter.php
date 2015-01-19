@@ -25,9 +25,9 @@ abstract class AbstractFilter
     protected $filters;
 
     /**
-     * @param array $boolParams Bool parameters.
+     * Initializes bool filter.
      *
-     * @internal param bool $filters Filters collection.
+     * @param array $boolParams Bool parameters.
      */
     public function __construct($boolParams = [])
     {

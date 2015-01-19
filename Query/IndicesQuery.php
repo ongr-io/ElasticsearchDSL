@@ -19,12 +19,12 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 class IndicesQuery implements BuilderInterface
 {
     /**
-     * @var string[] $indices
+     * @var string[]
      */
     private $indices;
 
     /**
-     * @var BuilderInterface $query
+     * @var BuilderInterface
      */
     private $query;
 
