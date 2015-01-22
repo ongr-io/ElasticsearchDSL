@@ -11,13 +11,16 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderBag;
+use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderInterface;
 
 /**
  * AbstractAggregation class.
  */
-abstract class AbstractAggregation implements BuilderInterface
+abstract class AbstractAggregation implements FriendlyBuilderInterface
 {
+    const PREFIX = 'agg_';
+
     /**
      * @var string
      */
@@ -29,7 +32,7 @@ abstract class AbstractAggregation implements BuilderInterface
     protected $name;
 
     /**
-     * @var Aggregations
+     * @var FriendlyBuilderBag
      */
     public $aggregations;
 
@@ -58,7 +61,7 @@ abstract class AbstractAggregation implements BuilderInterface
     public function __construct($name)
     {
         $this->name = $name;
-        $this->aggregations = new Aggregations();
+        $this->aggregations = new FriendlyBuilderBag();
     }
 
     /**
@@ -78,11 +81,11 @@ abstract class AbstractAggregation implements BuilderInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
-        return Aggregations::PREFIX . $this->name;
+        return self::PREFIX . $this->name;
     }
 
     /**

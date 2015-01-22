@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchBundle\DSL;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\AbstractAggregation;
-use ONGR\ElasticsearchBundle\DSL\Aggregation\Aggregations;
 use ONGR\ElasticsearchBundle\DSL\Bool\Bool;
 use ONGR\ElasticsearchBundle\DSL\Filter\PostFilter;
 use ONGR\ElasticsearchBundle\DSL\Highlight\Highlight;
@@ -21,7 +20,6 @@ use ONGR\ElasticsearchBundle\DSL\Query\Query;
 use ONGR\ElasticsearchBundle\DSL\Sort\AbstractSort;
 use ONGR\ElasticsearchBundle\DSL\Sort\Sorts;
 use ONGR\ElasticsearchBundle\DSL\Suggester\AbstractSuggester;
-use ONGR\ElasticsearchBundle\DSL\Suggester\Suggesters;
 
 /**
  * Search object that can be executed by a manager.
@@ -91,7 +89,7 @@ class Search
     private $scriptFields;
 
     /**
-     * @var Suggesters
+     * @var FriendlyBuilderBag
      */
     private $suggesters;
 
@@ -116,7 +114,7 @@ class Search
     private $stats;
 
     /**
-     * @var Aggregations
+     * @var FriendlyBuilderBag
      */
     private $aggregations;
 
@@ -361,9 +359,9 @@ class Search
     public function addAggregation($agg)
     {
         if ($this->aggregations === null) {
-            $this->aggregations = new Aggregations();
+            $this->aggregations = new FriendlyBuilderBag();
         }
-        $this->aggregations->addAggregation($agg);
+        $this->aggregations->add($agg);
 
         return $this;
     }
@@ -406,7 +404,7 @@ class Search
     public function addSuggester(AbstractSuggester $suggester)
     {
         if ($this->suggesters === null) {
-            $this->suggesters = new Suggesters();
+            $this->suggesters = new FriendlyBuilderBag();
         }
         $this->suggesters->add($suggester);
 
@@ -475,7 +473,7 @@ class Search
     }
 
     /**
-     * @return Aggregations
+     * @return FriendlyBuilderBag
      */
     public function getAggregations()
     {
@@ -611,7 +609,7 @@ class Search
     }
 
     /**
-     * @return Suggesters
+     * @return FriendlyBuilderBag
      */
     public function getSuggesters()
     {
