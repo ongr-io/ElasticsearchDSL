@@ -12,11 +12,12 @@
 namespace ONGR\ElasticsearchBundle\DSL\Highlight;
 
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderInterface;
 
 /**
  * This class holds data for highlighting field.
  */
-class Field
+class Field implements FriendlyBuilderInterface
 {
     const TYPE_PLAIN = 'plain';
     const TYPE_POSTINGS = 'postings';
@@ -25,42 +26,42 @@ class Field
     /**
      * @var string Field name.
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string Highlighter type. By default 'plain'.
      */
-    protected $type;
+    private $type;
 
     /**
      * @var int Size of the highlighted fragment in characters. By default 100.
      */
-    protected $fragmentSize;
+    private $fragmentSize;
 
     /**
      * @var int Maximum number of fragments to return. By default 5.
      */
-    protected $numberOfFragments;
+    private $numberOfFragments;
 
     /**
      * @var array Combine matches on multiple fields to highlight a single field.
      */
-    protected $matchedFields;
+    private $matchedFields;
 
     /**
      * @var BuilderInterface Query to highlight.
      */
-    protected $highlightQuery;
+    private $highlightQuery;
 
     /**
      * @var int Show part of string even if there are no matches to highlight. Defaults to 0.
      */
-    protected $noMatchSize;
+    private $noMatchSize;
 
     /**
      * @var bool Highlight fields based on the source.
      */
-    protected $forceSource;
+    private $forceSource;
 
     /**
      * Creates a highlight for a field.
@@ -74,7 +75,7 @@ class Field
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -183,9 +184,7 @@ class Field
     }
 
     /**
-     * Returns an array of field parameters.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function toArray()
     {
@@ -200,5 +199,13 @@ class Field
                 'force_source' => $this->forceSource,
             ]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
