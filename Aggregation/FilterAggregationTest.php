@@ -69,7 +69,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
             ->method('getName')
             ->willReturn('agg_test_agg2');
 
-        $aggregation->aggregations->addAggregation($aggregation2);
+        $aggregation->aggregations->add($aggregation2);
 
         $result = [
             'agg_test_agg' => [
