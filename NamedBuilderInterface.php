@@ -14,7 +14,7 @@ namespace ONGR\ElasticsearchBundle\DSL;
 /**
  * Interface used by builders with names.
  */
-interface FriendlyBuilderInterface extends BuilderInterface
+interface NamedBuilderInterface extends BuilderInterface
 {
     /**
      * Returns builder name.

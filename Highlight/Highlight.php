@@ -11,13 +11,13 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Highlight;
 
-use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderBag;
-use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
+use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
 
 /**
  * Data holder for highlight api.
  */
-class Highlight extends FriendlyBuilderBag
+class Highlight extends NamedBuilderBag
 {
     const TYPE_PLAIN = 'plain';
     const TYPE_POSTINGS = 'postings';
@@ -58,7 +58,7 @@ class Highlight extends FriendlyBuilderBag
      *
      * @return Highlight
      */
-    public function add(FriendlyBuilderInterface $builder)
+    public function add(NamedBuilderInterface $builder)
     {
         parent::add($builder);
 
@@ -197,7 +197,7 @@ class Highlight extends FriendlyBuilderBag
             }
         }
 
-        /** @var FriendlyBuilderInterface $field */
+        /** @var NamedBuilderInterface $field */
         foreach ($this->all() as $field) {
             $highlight['fields'][$field->getName()] = $field->toArray();
         }

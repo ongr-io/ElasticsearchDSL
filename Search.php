@@ -89,7 +89,7 @@ class Search
     private $scriptFields;
 
     /**
-     * @var FriendlyBuilderBag
+     * @var NamedBuilderBag
      */
     private $suggesters;
 
@@ -114,7 +114,7 @@ class Search
     private $stats;
 
     /**
-     * @var FriendlyBuilderBag
+     * @var NamedBuilderBag
      */
     private $aggregations;
 
@@ -359,7 +359,7 @@ class Search
     public function addAggregation($agg)
     {
         if ($this->aggregations === null) {
-            $this->aggregations = new FriendlyBuilderBag();
+            $this->aggregations = new NamedBuilderBag();
         }
         $this->aggregations->add($agg);
 
@@ -404,7 +404,7 @@ class Search
     public function addSuggester(AbstractSuggester $suggester)
     {
         if ($this->suggesters === null) {
-            $this->suggesters = new FriendlyBuilderBag();
+            $this->suggesters = new NamedBuilderBag();
         }
         $this->suggesters->add($suggester);
 
@@ -473,7 +473,7 @@ class Search
     }
 
     /**
-     * @return FriendlyBuilderBag
+     * @return NamedBuilderBag
      */
     public function getAggregations()
     {
@@ -609,7 +609,7 @@ class Search
     }
 
     /**
-     * @return FriendlyBuilderBag
+     * @return NamedBuilderBag
      */
     public function getSuggesters()
     {

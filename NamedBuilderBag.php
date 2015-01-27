@@ -12,17 +12,17 @@
 namespace ONGR\ElasticsearchBundle\DSL;
 
 /**
- * Container for friendly builders.
+ * Container for named builders.
  */
-class FriendlyBuilderBag
+class NamedBuilderBag
 {
     /**
-     * @var FriendlyBuilderInterface[]
+     * @var NamedBuilderInterface[]
      */
     private $bag = [];
 
     /**
-     * @param FriendlyBuilderInterface[] $builders
+     * @param NamedBuilderInterface[] $builders
      */
     public function __construct(array $builders = [])
     {
@@ -32,7 +32,7 @@ class FriendlyBuilderBag
     /**
      * Replaces builders with new ones.
      *
-     * @param FriendlyBuilderInterface[] $builders
+     * @param NamedBuilderInterface[] $builders
      */
     public function set(array $builders)
     {
@@ -44,9 +44,9 @@ class FriendlyBuilderBag
     /**
      * Adds a builder.
      *
-     * @param FriendlyBuilderInterface $builder
+     * @param NamedBuilderInterface $builder
      */
-    public function add(FriendlyBuilderInterface $builder)
+    public function add(NamedBuilderInterface $builder)
     {
         $this->bag[$builder->getName()] = $builder;
     }
@@ -86,7 +86,7 @@ class FriendlyBuilderBag
      *
      * @param string $name Builder name.
      *
-     * @return FriendlyBuilderInterface
+     * @return NamedBuilderInterface
      */
     public function get($name)
     {
@@ -98,14 +98,14 @@ class FriendlyBuilderBag
      *
      * @param string|null $name Builder name.
      *
-     * @return FriendlyBuilderInterface[]
+     * @return NamedBuilderInterface[]
      */
     public function all($name = null)
     {
         return array_filter(
             $this->bag,
             function ($builder) use ($name) {
-                /** @var FriendlyBuilderInterface $builder */
+                /** @var NamedBuilderInterface $builder */
 
                 return $name === null || $builder->getName() == $name;
             }

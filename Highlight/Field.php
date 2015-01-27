@@ -12,12 +12,12 @@
 namespace ONGR\ElasticsearchBundle\DSL\Highlight;
 
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
 
 /**
  * This class holds data for highlighting field.
  */
-class Field implements FriendlyBuilderInterface
+class Field implements NamedBuilderInterface
 {
     const TYPE_PLAIN = 'plain';
     const TYPE_POSTINGS = 'postings';
