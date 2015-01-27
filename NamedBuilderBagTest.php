@@ -12,17 +12,17 @@
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL;
 
 
-use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderBag;
-use ONGR\ElasticsearchBundle\DSL\FriendlyBuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
+use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
 
-class FriendlyBuilderBagTest extends \PHPUnit_Framework_TestCase
+class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests if bag knows if he has a builder.
      */
     public function testHas()
     {
-        $bag = new FriendlyBuilderBag(
+        $bag = new NamedBuilderBag(
             [
                 $this->getBuilder('foo'),
             ]
@@ -35,7 +35,7 @@ class FriendlyBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemove()
     {
-        $bag = new FriendlyBuilderBag(
+        $bag = new NamedBuilderBag(
             [
                 $this->getBuilder('foo'),
                 $this->getBuilder('baz'),
@@ -53,7 +53,7 @@ class FriendlyBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testClear()
     {
-        $bag = new FriendlyBuilderBag(
+        $bag = new NamedBuilderBag(
             [
                 $this->getBuilder('foo'),
                 $this->getBuilder('baz'),
@@ -70,7 +70,7 @@ class FriendlyBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        $bag = new FriendlyBuilderBag(
+        $bag = new NamedBuilderBag(
             [
                 $this->getBuilder('baz'),
             ]
@@ -84,11 +84,11 @@ class FriendlyBuilderBagTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $name
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|FriendlyBuilderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|NamedBuilderInterface
      */
     private function getBuilder($name)
     {
-        $friendlyBuilderMock = $this->getMock('ONGR\ElasticsearchBundle\DSL\FriendlyBuilderInterface');
+        $friendlyBuilderMock = $this->getMock('ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface');
 
         $friendlyBuilderMock
             ->expects($this->once())
