@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL;
 
-
 use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
 use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
 
