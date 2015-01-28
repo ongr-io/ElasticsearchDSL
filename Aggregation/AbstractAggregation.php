@@ -134,7 +134,7 @@ abstract class AbstractAggregation implements NamedBuilderInterface
     protected function collectNestedAggregations()
     {
         $result = [];
-        foreach ($this->aggregations->all() as $aggregation) {
+        foreach ($this->getAggregations() as $aggregation) {
             $result = array_merge($result, $aggregation->toArray());
         }
 

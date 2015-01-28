@@ -96,18 +96,18 @@ class NamedBuilderBag
     /**
      * Returns all builders contained.
      *
-     * @param string|null $name Builder name.
+     * @param string|null $type Builder type.
      *
      * @return NamedBuilderInterface[]
      */
-    public function all($name = null)
+    public function all($type = null)
     {
         return array_filter(
             $this->bag,
-            function ($builder) use ($name) {
+            function ($builder) use ($type) {
                 /** @var NamedBuilderInterface $builder */
 
-                return $name === null || $builder->getName() == $name;
+                return $type === null || $builder->getType() == $type;
             }
         );
     }
