@@ -24,17 +24,17 @@ abstract class AbstractAggregation implements NamedBuilderInterface
     /**
      * @var string
      */
-    protected $field;
+    private $field;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var NamedBuilderBag
      */
-    public $aggregations;
+    private $aggregations;
 
     /**
      * @return string
@@ -89,6 +89,26 @@ abstract class AbstractAggregation implements NamedBuilderInterface
     }
 
     /**
+     * Adds a sub-aggregation.
+     *
+     * @param AbstractAggregation $abstractAggregation
+     */
+    public function addAggregation(AbstractAggregation $abstractAggregation)
+    {
+        $this->aggregations->add($abstractAggregation);
+    }
+
+    /**
+     * Returns all sub aggregations.
+     *
+     * @return AbstractAggregation[]
+     */
+    public function getAggregations()
+    {
+        return $this->aggregations->all();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function toArray()
@@ -114,8 +134,7 @@ abstract class AbstractAggregation implements NamedBuilderInterface
     protected function collectNestedAggregations()
     {
         $result = [];
-        $nested = $this->aggregations->all();
-        foreach ($nested as $aggregation) {
+        foreach ($this->aggregations->all() as $aggregation) {
             $result = array_merge($result, $aggregation->toArray());
         }
 
