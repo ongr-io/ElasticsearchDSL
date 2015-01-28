@@ -16,9 +16,11 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\NestedAggregation;
 class NestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test for nested aggregation toArray() method.
+     * Test for nested aggregation toArray() method exception.
+     *
+     * @expectedException \LogicException
      */
-    public function testToArray()
+    public function testToArrayException()
     {
         $aggregation = new NestedAggregation('test_agg');
         $aggregation->setPath('test_path');
@@ -26,6 +28,37 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
         $expectedResult = [
             'agg_test_agg' => [
                 'nested' => ['path' => 'test_path'],
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $aggregation->toArray());
+    }
+
+    /**
+     * Test for nested aggregation toArray() method exception.
+     */
+    public function testToArray()
+    {
+        $termMock = $this
+            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $termMock
+            ->expects($this->once())
+            ->method('toArray')
+            ->will($this->returnValue(['terms' => []]));
+
+        $aggregation = new NestedAggregation('test_nested_agg');
+        $aggregation->setPath('test_path');
+        $aggregation->addAggregation($termMock);
+
+        $expectedResult = [
+            'agg_test_nested_agg' => [
+                'nested' => ['path' => 'test_path'],
+                'aggregations' => [
+                    'terms' => [],
+                ],
             ],
         ];
 

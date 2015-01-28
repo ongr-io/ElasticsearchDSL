@@ -88,7 +88,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation2 = new RangeAggregation('test_agg_2');
         $aggregation2->addRange('20', '20');
 
-        $aggregation->aggregations->add($aggregation2);
+        $aggregation->addAggregation($aggregation2);
 
         $result = [
             'agg_test_agg' => [

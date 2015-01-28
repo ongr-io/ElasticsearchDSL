@@ -41,7 +41,7 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #1 nested global aggregation.
         $aggregation = new GlobalAggregation('test_agg');
         $aggregation2 = new GlobalAggregation('test_agg_2');
-        $aggregation->aggregations->add($aggregation2);
+        $aggregation->addAggregation($aggregation2);
 
         $result = [
             'agg_test_agg' => [
