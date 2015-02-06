@@ -31,20 +31,30 @@ class CardinalityAggregation extends AbstractAggregation
     private $rehash;
 
     /**
+     * @var string
+     */
+    private $script;
+
+    /**
      * {@inheritdoc}
      */
     public function getArray()
     {
-        if (!$this->getField()) {
-            return new \stdClass();
+        $out = [];
+
+        if ($this->getField()) {
+            $out['field'] = $this->getField();
+        } elseif ($this->getScript()) {
+            $out['script'] = $this->getScript();
+        } else {
+            throw new \LogicException('Cardinality aggregation must have field or script set.');
         }
 
-        $out['field'] = $this->getField();
         if ($this->getPrecisionThreshold()) {
             $out['precision_threshold'] = $this->getPrecisionThreshold();
         }
 
-        if ($this->isRehash() !== null) {
+        if ($this->isRehash()) {
             $out['rehash'] = $this->isRehash();
         }
 
@@ -83,6 +93,22 @@ class CardinalityAggregation extends AbstractAggregation
     public function setRehash($rehash)
     {
         $this->rehash = $rehash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScript()
+    {
+        return $this->script;
+    }
+
+    /**
+     * @param string $script
+     */
+    public function setScript($script)
+    {
+        $this->script = $script;
     }
 
     /**
