@@ -23,67 +23,91 @@ class RangeAggregation extends AbstractAggregation
     /**
      * @var array
      */
-    protected $ranges = [];
+    private $ranges = [];
 
     /**
      * @var bool
      */
-    protected $keyed = false;
+    private $keyed = false;
 
     /**
      * Sets if result buckets should be keyed.
      *
      * @param bool $keyed
+     *
+     * @return RangeAggregation
      */
     public function setKeyed($keyed)
     {
         $this->keyed = $keyed;
+
+        return $this;
     }
 
     /**
      * Add range to aggregation.
      *
-     * @param mixed  $from
-     * @param mixed  $to
-     * @param string $key
+     * @param int|float|null $from
+     * @param int|float|null $to
+     * @param string         $key
+     *
+     * @return RangeAggregation
      */
     public function addRange($from = null, $to = null, $key = '')
     {
-        $range = [];
-
-        if (!empty($from)) {
-            $range['from'] = $from;
-        }
-
-        if (!empty($to)) {
-            $range['to'] = $to;
-        }
+        $range = array_filter(
+            [
+                'from' => $from,
+                'to' => $to,
+            ]
+        );
 
         if ($this->keyed && !empty($key)) {
             $range['key'] = $key;
         }
 
         $this->ranges[] = $range;
+
+        return $this;
     }
 
     /**
      * Remove range from aggregation. Returns true on success.
      *
-     * @param mixed  $from
-     * @param mixed  $to
-     * @param string $searchKey
+     * @param int|float|null $from
+     * @param int|float|null $to
      *
      * @return bool
      */
-    public function removeRange($from, $to, $searchKey = '')
+    public function removeRange($from, $to)
     {
         foreach ($this->ranges as $key => $range) {
-            if (($range['from'] == $from && $range['to'] == $to)
-                || (!empty($searchKey) && $range['key'] == $searchKey)
-            ) {
+            if (array_diff_assoc(array_filter(['from' => $from, 'to' => $to]), $range) === []) {
                 unset($this->ranges[$key]);
 
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Removes range by key.
+     *
+     * @param string $key Range key.
+     *
+     * @return bool
+     */
+    public function removeRangeByKey($key)
+    {
+        if ($this->keyed) {
+            foreach ($this->ranges as $rangeKey => $range) {
+                if (array_key_exists('key', $range) && $range['key'] === $key) {
+                    unset($this->ranges[$rangeKey]);
+
+                    return true;
+                }
             }
         }
 
@@ -97,7 +121,7 @@ class RangeAggregation extends AbstractAggregation
     {
         $data = [
             'keyed' => $this->keyed,
-            'ranges' => $this->ranges,
+            'ranges' => array_values($this->ranges),
         ];
 
         if ($this->getField()) {
