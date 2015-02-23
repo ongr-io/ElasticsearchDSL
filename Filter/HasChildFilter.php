@@ -29,17 +29,17 @@ class HasChildFilter implements BuilderInterface
     /**
      * @var string
      */
-    private $query;
+    private $filter;
 
     /**
      * @param string           $type
-     * @param BuilderInterface $query
+     * @param BuilderInterface $filter
      * @param array            $parameters
      */
-    public function __construct($type, BuilderInterface $query, array $parameters = [])
+    public function __construct($type, BuilderInterface $filter, array $parameters = [])
     {
         $this->type = $type;
-        $this->query = $query;
+        $this->filter = $filter;
         $this->setParameters($parameters);
     }
 
@@ -58,8 +58,8 @@ class HasChildFilter implements BuilderInterface
     {
         $query = [
             'type' => $this->type,
-            'query' => [
-                $this->query->getType() => $this->query->toArray(),
+            'filter' => [
+                $this->filter->getType() => $this->filter->toArray(),
             ],
         ];
 
