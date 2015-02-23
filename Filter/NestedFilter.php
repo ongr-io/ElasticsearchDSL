@@ -32,11 +32,6 @@ class NestedFilter implements BuilderInterface
     private $query;
 
     /**
-     * @var array
-     */
-    private $parameters;
-
-    /**
      * @param string           $path
      * @param BuilderInterface $query
      * @param array            $parameters
