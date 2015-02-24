@@ -30,7 +30,7 @@ class HasChildFilter implements BuilderInterface
     private $type;
 
     /**
-     * @var string
+     * @var BuilderInterface
      */
     private $filter;
 
