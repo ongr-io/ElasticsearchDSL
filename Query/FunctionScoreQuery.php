@@ -49,7 +49,7 @@ class FunctionScoreQuery implements BuilderInterface
         BuilderInterface $query,
         array $functions,
         array $parameters = [],
-        $dslType = self::USE_FILTER
+        $dslType = self::USE_QUERY
     ) {
         $this->dslType = $dslType;
         $this->query = $query;

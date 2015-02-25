@@ -19,16 +19,6 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 class MultiMatchQuery implements BuilderInterface
 {
     /**
-     * @param array  $fields
-     * @param string $query
-     */
-    public function __construct(array $fields, $query)
-    {
-        $this->fields = $fields;
-        $this->query = $query;
-    }
-
-    /**
      * @var array
      */
     private $fields = [];
@@ -37,6 +27,16 @@ class MultiMatchQuery implements BuilderInterface
      * @var string
      */
     private $query;
+
+    /**
+     * @param array  $fields
+     * @param string $query
+     */
+    public function __construct(array $fields, $query)
+    {
+        $this->fields = $fields;
+        $this->query = $query;
+    }
 
     /**
      * {@inheritdoc}

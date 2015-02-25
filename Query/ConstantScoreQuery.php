@@ -39,7 +39,7 @@ class ConstantScoreQuery implements BuilderInterface
      * @param array            $parameters
      * @param string           $dslType
      */
-    public function __construct(BuilderInterface $query, array $parameters = [], $dslType = self::USE_FILTER)
+    public function __construct(BuilderInterface $query, array $parameters = [], $dslType = self::USE_QUERY)
     {
         $this->dslType = $dslType;
         $this->query = $query;
