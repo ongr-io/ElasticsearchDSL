@@ -21,6 +21,9 @@ class FunctionScoreQuery implements BuilderInterface
 {
     use ParametersTrait;
 
+    const USE_QUERY = 'query';
+    const USE_FILTER = 'filter';
+
     /**
      * @var string
      */
@@ -29,7 +32,7 @@ class FunctionScoreQuery implements BuilderInterface
     /**
      * @var BuilderInterface
      */
-    private $filterOrQuery;
+    private $query;
 
     /**
      * @var array[]
@@ -37,14 +40,19 @@ class FunctionScoreQuery implements BuilderInterface
     private $functions;
 
     /**
-     * @param BuilderInterface $filterOrQuery
+     * @param BuilderInterface $query
      * @param array            $functions
      * @param array            $parameters
+     * @param string           $dslType
      */
-    public function __construct(BuilderInterface $filterOrQuery, array $functions, array $parameters = [])
-    {
-        $this->dslType = array_slice(explode('\\', get_class($filterOrQuery)), -2, 1)[0];
-        $this->filterOrQuery = $filterOrQuery;
+    public function __construct(
+        BuilderInterface $query,
+        array $functions,
+        array $parameters = [],
+        $dslType = self::USE_FILTER
+    ) {
+        $this->dslType = $dslType;
+        $this->query = $query;
         $this->functions = $functions;
         $this->setParameters($parameters);
     }
@@ -64,7 +72,7 @@ class FunctionScoreQuery implements BuilderInterface
     {
         $query = [
             strtolower($this->dslType) => [
-                $this->filterOrQuery->getType() => $this->filterOrQuery->toArray(),
+                $this->query->getType() => $this->query->toArray(),
             ],
             'functions' => [$this->functions],
         ];

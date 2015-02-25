@@ -24,22 +24,22 @@ class MatchQuery implements BuilderInterface
     /**
      * @var string
      */
-    private $query;
+    private $field;
 
     /**
      * @var string
      */
-    private $field;
+    private $query;
 
     /**
-     * @param string $query
      * @param string $field
+     * @param string $query
      * @param array  $parameters
      */
-    public function __construct($query, $field, array $parameters = [])
+    public function __construct($field, $query, array $parameters = [])
     {
-        $this->query = $query;
         $this->field = $field;
+        $this->query = $query;
         $this->setParameters($parameters);
     }
 

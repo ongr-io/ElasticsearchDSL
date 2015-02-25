@@ -21,8 +21,8 @@ class HasChildFilter implements BuilderInterface
 {
     use ParametersTrait;
 
-    const INNER_QUERY = 'query';
-    const INNER_FILTER = 'filter';
+    const USE_QUERY = 'query';
+    const USE_FILTER = 'filter';
 
     /**
      * @var string
@@ -32,36 +32,21 @@ class HasChildFilter implements BuilderInterface
     /**
      * @var BuilderInterface
      */
-    private $filter;
-
-    /**
-     * @var BuilderInterface
-     */
     private $query;
 
     /**
      * @param string           $type
-     * @param BuilderInterface $block
+     * @param BuilderInterface $query
      * @param array            $parameters
-     * @param string           $inner
+     * @param string           $dslType
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($type, BuilderInterface $block, array $parameters = [], $inner = self::INNER_FILTER)
+    public function __construct($type, BuilderInterface $query, array $parameters = [], $dslType = self::USE_FILTER)
     {
         $this->type = $type;
-
-        switch ($inner) {
-            case 'filter':
-                $this->filter = $block;
-                break;
-            case 'query':
-                $this->query = $block;
-                break;
-            default:
-                throw new \InvalidArgumentException('Not supported argument type');
-        }
-
+        $this->dslType = $dslType;
+        $this->query = $query;
         $this->setParameters($parameters);
     }
 
@@ -78,17 +63,10 @@ class HasChildFilter implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [ 'type' => $this->type ];
-
-        $queries = ['filter', 'query'];
-
-        foreach ($queries as $type) {
-            if ($this->{$type}) {
-                $query[$type] = [
-                    $this->{$type}->getType() => $this->{$type}->toArray(),
-                ];
-            }
-        }
+        $query = [
+            'type' => $this->type,
+            $this->dslType => [$this->query->getType() => $this->query->toArray()],
+        ];
 
         $output = $this->processArray($query);
 
