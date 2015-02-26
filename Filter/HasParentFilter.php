@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchBundle\DSL\Filter;
 
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\DslTypeAwareTrait;
 use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 
 /**
@@ -20,9 +21,7 @@ use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 class HasParentFilter implements BuilderInterface
 {
     use ParametersTrait;
-
-    const USE_QUERY = 'query';
-    const USE_FILTER = 'filter';
+    use DslTypeAwareTrait;
 
     /**
      * @var string
@@ -38,20 +37,15 @@ class HasParentFilter implements BuilderInterface
      * @param string           $parentType
      * @param BuilderInterface $query
      * @param array            $parameters
-     * @param string           $dslType
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(
-        $parentType,
-        BuilderInterface $query,
-        array $parameters = [],
-        $dslType = self::USE_FILTER
-    ) {
+    public function __construct($parentType, BuilderInterface $query, array $parameters = [])
+    {
         $this->parentType = $parentType;
-        $this->dslType = $dslType;
         $this->query = $query;
         $this->setParameters($parameters);
+        $this->setDslType('filter');
     }
 
     /**
@@ -69,7 +63,7 @@ class HasParentFilter implements BuilderInterface
     {
         $query = [
             'parent_type' => $this->parentType,
-            $this->dslType => [$this->query->getType() => $this->query->toArray()],
+            $this->getDslType() => [$this->query->getType() => $this->query->toArray()],
         ];
 
         $output = $this->processArray($query);
