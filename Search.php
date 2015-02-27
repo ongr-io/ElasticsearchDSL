@@ -549,7 +549,7 @@ class Search
      */
     public function getQueries()
     {
-        return $this->queries;
+        return $this->query;
     }
 
     /**
@@ -623,26 +623,22 @@ class Search
     {
         $output = [];
 
-        if ($this->filters !== null) {
-            if ($this->query === null) {
-                $queryForFiltered = null;
-            } else {
-                $queryForFiltered = clone $this->query;
-            }
+        $query = $this->query;
 
-            $filteredQuery = new FilteredQuery($queryForFiltered);
+        if ($this->filters !== null) {
+            $filteredQuery = new FilteredQuery($query === null ? null : $query);
             $filteredQuery->setFilter($this->filters);
 
             if ($this->boolFilterParams) {
                 $filteredQuery->setBoolParameters($this->boolFilterParams);
             }
 
-            $this->destroyQuery();
-            $this->addQuery($filteredQuery);
+            $query = new Query();
+            $query->addQuery($filteredQuery);
         }
 
-        if ($this->query !== null) {
-            $output[$this->query->getType()] = $this->query->toArray();
+        if ($query !== null) {
+            $output[$query->getType()] = $query->toArray();
         }
 
         if ($this->postFilters !== null) {
