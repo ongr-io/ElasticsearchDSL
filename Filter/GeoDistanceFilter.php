@@ -24,12 +24,12 @@ class GeoDistanceFilter implements BuilderInterface
     /**
      * @var string
      */
-    private $distance;
+    private $field;
 
     /**
      * @var string
      */
-    private $field;
+    private $distance;
 
     /**
      * @var mixed
@@ -37,15 +37,15 @@ class GeoDistanceFilter implements BuilderInterface
     private $location;
 
     /**
-     * @param string $distance
      * @param string $field
+     * @param string $distance
      * @param mixed  $location
      * @param array  $parameters
      */
-    public function __construct($distance, $field, $location, array $parameters = [])
+    public function __construct($field, $distance, $location, array $parameters = [])
     {
-        $this->distance = $distance;
         $this->field = $field;
+        $this->distance = $distance;
         $this->location = $location;
 
         $this->setParameters($parameters);
