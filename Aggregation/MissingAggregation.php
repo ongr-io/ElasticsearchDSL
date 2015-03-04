@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\BucketingTrait;
-use Symfony\Component\Process\Exception\LogicException;
 
 /**
  * Class representing missing aggregation.
@@ -29,7 +28,7 @@ class MissingAggregation extends AbstractAggregation
         if ($this->getField()) {
             return ['field' => $this->getField()];
         }
-        throw new LogicException('Missing aggregation must have a field set');
+        throw new \LogicException('Missing aggregation must have a field set.');
     }
 
     /**

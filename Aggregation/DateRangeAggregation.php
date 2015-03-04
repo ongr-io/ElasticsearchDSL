@@ -58,15 +58,18 @@ class DateRangeAggregation extends AbstractAggregation
      */
     public function addRange($from = null, $to = null)
     {
-        if ($from === null && $to === null) {
-            throw new \LogicException('Missing range');
-        } elseif ($from === null) {
-            $this->ranges = [['to' => $to]];
-        } elseif ($to === null) {
-            $this->ranges = [['from' => $from]];
-        } else {
-            $this->ranges = [['from' => $from], ['to' => $to]];
+        $range = array_filter(
+            [
+                'from' => $from,
+                'to' => $to,
+            ]
+        );
+
+        if (empty($range)) {
+            throw new \LogicException('Either from or to must be set. Both cannot be null.');
         }
+
+        $this->ranges[] = $range;
 
         return $this;
     }
@@ -80,12 +83,12 @@ class DateRangeAggregation extends AbstractAggregation
             $data = [
                 'format' => $this->getFormat(),
                 'field' => $this->getField(),
-                'ranges' => array_values($this->ranges),
+                'ranges' => $this->ranges,
             ];
 
             return $data;
         }
-        throw new \LogicException('Date range aggregation must have field and format set.');
+        throw new \LogicException('Date range aggregation must have field, format set and range added.');
     }
 
     /**
