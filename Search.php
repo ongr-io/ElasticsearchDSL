@@ -124,6 +124,33 @@ class Search
     private $preference;
 
     /**
+     * @var float
+     */
+    private $minScore;
+
+    /**
+     * @return float
+     */
+    public function getMinScore()
+    {
+        return $this->minScore;
+    }
+
+    /**
+     * Set min score.
+     *
+     * @param float $minScore
+     *
+     * @return $this
+     */
+    public function setMinScore($minScore)
+    {
+        $this->minScore = $minScore;
+
+        return $this;
+    }
+
+    /**
      * Set offset.
      *
      * @param int $from
@@ -659,6 +686,7 @@ class Search
             'scriptFields' => 'script_fields',
             'explain' => 'explain',
             'stats' => 'stats',
+            'minScore' => 'min_score',
         ];
 
         foreach ($params as $field => $param) {
