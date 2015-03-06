@@ -12,7 +12,7 @@
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester;
 
 use ONGR\ElasticsearchBundle\DSL\Suggester\Completion;
-use ONGR\ElasticsearchBundle\Tests\app\fixture\AbstractEntityTest;
+use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
 
 /**
  * Test for Completion.
@@ -21,8 +21,10 @@ use ONGR\ElasticsearchBundle\Tests\app\fixture\AbstractEntityTest;
  *
  * @package ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester
  */
-class CompletionTest extends AbstractEntityTest
+class CompletionTest extends \PHPUnit_Framework_TestCase
 {
+    use EncapsulationTestAwareTrait;
+
     /**
      * @return array
      */
