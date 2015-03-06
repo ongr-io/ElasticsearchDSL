@@ -76,4 +76,15 @@ class TermTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($expected, $suggester->toArray());
     }
+
+    /**
+     * Tests toArray method exception.
+     *
+     * @expectedException \LogicException
+     */
+    public function testToArrayException()
+    {
+        $term = new Term('', '');
+        $term->toArray();
+    }
 }
