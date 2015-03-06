@@ -156,15 +156,4 @@ class CompletionTest extends \PHPUnit_Framework_TestCase
             ['unicodeAware'],
         ];
     }
-
-    /**
-     * Tests toArray method exception.
-     *
-     * @expectedException \LogicException
-     */
-    public function testToArrayException()
-    {
-        $completion = new Completion('', '');
-        $completion->toArray();
-    }
 }
