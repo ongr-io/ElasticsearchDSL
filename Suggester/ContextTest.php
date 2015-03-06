@@ -26,7 +26,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
         $context = new Context('', '', $name);
         $context->setSize(123);
-        $context->setContext(new Phrase('', '', 'test'));
+        $context->setContext(new Phrase('', ''));
 
         $result = $context->toArray();
 
