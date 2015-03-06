@@ -12,9 +12,19 @@
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester;
 
 use ONGR\ElasticsearchBundle\DSL\Suggester\Completion;
+use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
 
+/**
+ * Test for Completion.
+ *
+ * Class CompletionTest
+ *
+ * @package ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester
+ */
 class CompletionTest extends \PHPUnit_Framework_TestCase
 {
+    use EncapsulationTestAwareTrait;
+
     /**
      * @return array
      */
@@ -90,13 +100,61 @@ class CompletionTest extends \PHPUnit_Framework_TestCase
      * Tests toArray method.
      *
      * @param array      $expected
-     * @param Completion $phrase
+     * @param Completion $completion
      *
      * @dataProvider getTestToArrayData
      */
-    public function testToArray($expected, $phrase)
+    public function testToArray($expected, $completion)
     {
-        $this->assertEquals($expected, $phrase->toArray());
+        $this->assertEquals($expected, $completion->toArray());
+    }
+
+    /**
+     * Tests if toArray method throws Logic Exception.
+     *
+     * @expectedException \LogicException
+     */
+    public function testToArrayException()
+    {
+        $completion = new Completion('foo', 'bar');
+        $completion->setField(null);
+        $completion->setText(null);
+        $completion->toArray();
+    }
+
+    /**
+     * Tests useFuzzy property.
+     */
+    public function testUseFuzzy()
+    {
+        $completion = new Completion('foo', 'bar');
+        $completion->useFuzzy(true);
+        $this->assertEquals(true, $completion->isFuzzy());
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassName()
+    {
+        $this->setStub(new Completion('foo', 'bar'));
+        $this->addIgnoredField('useFuzzy');
+
+        return 'ONGR\ElasticsearchBundle\DSL\Suggester\Completion';
+    }
+
+    /**
+     * @return array
+     */
+    public function getFieldsData()
+    {
+        return [
+            ['fuzziness'],
+            ['transpositions', 'boolean'],
+            ['minLength'],
+            ['prefixLength'],
+            ['unicodeAware'],
+        ];
     }
 
     /**
