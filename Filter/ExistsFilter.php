@@ -15,6 +15,8 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 
 /**
  * Represents Elasticsearch "exists" filter.
+ * 
+ * @link http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-exists-filter.html
  */
 class ExistsFilter implements BuilderInterface
 {
@@ -24,18 +26,11 @@ class ExistsFilter implements BuilderInterface
     private $field;
 
     /**
-     * @var string
-     */
-    private $value;
-
-    /**
      * @param string $field Field value.
-     * @param string $value Field name.
      */
-    public function __construct($field, $value)
+    public function __construct($field)
     {
         $this->field = $field;
-        $this->value = $value;
     }
 
     /**
@@ -52,7 +47,7 @@ class ExistsFilter implements BuilderInterface
     public function toArray()
     {
         return [
-            $this->field => $this->value,
+            'field' => $this->field,
         ];
     }
 }
