@@ -13,24 +13,26 @@ namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
 
 use ONGR\ElasticsearchBundle\DSL\Filter\ExistsFilter;
 
+/**
+ * Unit test for ExistsFilter.
+ */
 class ExistsFilterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests GetType method.
+     * Tests ExistsFilter#getType() method.
      */
     public function testGetType()
     {
-        $filter = new ExistsFilter('foo', 'bar');
+        $filter = new ExistsFilter('bar');
         $this->assertEquals('exists', $filter->getType());
     }
 
     /**
-     * Test for filter toArray() method.
+     * Tests ExistsFilter#toArray() method.
      */
     public function testToArray()
     {
-        $filter = new ExistsFilter('foo', 'bar');
-        $expectedResult = ['foo' => 'bar'];
-        $this->assertEquals($expectedResult, $filter->toArray());
+        $filter = new ExistsFilter('bar');
+        $this->assertEquals(['field' => 'bar'], $filter->toArray());
     }
 }
