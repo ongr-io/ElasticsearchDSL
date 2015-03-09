@@ -96,15 +96,15 @@ class GeoHashGridAggregation extends AbstractAggregation
             throw new \LogicException('Geo bounds aggregation must have a field set.');
         }
 
-        if ($this->precision) {
+        if ($this->getPrecision()) {
             $data['precision'] = $this->getPrecision();
         }
 
-        if ($this->size) {
+        if ($this->getSize()) {
             $data['size'] = $this->getSize();
         }
 
-        if ($this->shardSize) {
+        if ($this->getShardSize()) {
             $data['shard_size'] = $this->getShardSize();
         }
 
