@@ -12,9 +12,12 @@
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester;
 
 use ONGR\ElasticsearchBundle\DSL\Suggester\Phrase;
+use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
 
 class PhraseTest extends \PHPUnit_Framework_TestCase
 {
+    use EncapsulationTestAwareTrait;
+
     /**
      * @return array
      */
@@ -84,5 +87,44 @@ class PhraseTest extends \PHPUnit_Framework_TestCase
     public function testToArray($expected, $phrase)
     {
         $this->assertEquals($expected, $phrase->toArray());
+    }
+
+    /**
+     * Tests toArray method exception.
+     *
+     * @expectedException \LogicException
+     */
+    public function testToArrayException()
+    {
+        $phrase = new Phrase('', '');
+        $phrase->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassName()
+    {
+        $this->setStub(new Phrase('foo', 'bar'));
+
+        return 'ONGR\ElasticsearchBundle\DSL\Suggester\Phrase';
+    }
+
+    /**
+     * Returns list of fields to test. Works as data provider.
+     *
+     * @return array
+     */
+    public function getFieldsData()
+    {
+        return [
+            ['analyzer'],
+            ['gramSize'],
+            ['realWordErrorLikelihood'],
+            ['confidence'],
+            ['maxErrors'],
+            ['highlight'],
+            ['size'],
+        ];
     }
 }
