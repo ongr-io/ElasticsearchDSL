@@ -14,9 +14,12 @@ namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester;
 use ONGR\ElasticsearchBundle\DSL\Suggester\Completion;
 use ONGR\ElasticsearchBundle\DSL\Suggester\Context;
 use ONGR\ElasticsearchBundle\DSL\Suggester\Phrase;
+use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
 
 class ContextTest extends \PHPUnit_Framework_TestCase
 {
+    use EncapsulationTestAwareTrait;
+
     /**
      * Tests toArray method when $this->getSize() !== null.
      */
@@ -39,5 +42,30 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('size', $completion);
 
         $this->assertEquals($completion['size'], 123);
+    }
+
+    /**
+     * Returns list of fields to test. Works as data provider.
+     *
+     * @return array
+     */
+    public function getFieldsData()
+    {
+        return [
+            ['context'],
+            ['size'],
+        ];
+    }
+
+    /**
+     * Returns entity class name.
+     *
+     * @return string
+     */
+    public function getClassName()
+    {
+        $this->setStub(new Context('foo', 'bar'));
+
+        return 'ONGR\ElasticsearchBundle\DSL\Suggester\Context';
     }
 }

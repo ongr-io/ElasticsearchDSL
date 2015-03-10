@@ -12,9 +12,12 @@
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester;
 
 use ONGR\ElasticsearchBundle\DSL\Suggester\Term;
+use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
 
 class TermTest extends \PHPUnit_Framework_TestCase
 {
+    use EncapsulationTestAwareTrait;
+
     /**
      * @return array
      */
@@ -86,5 +89,68 @@ class TermTest extends \PHPUnit_Framework_TestCase
     {
         $term = new Term('', '');
         $term->toArray();
+    }
+
+    /**
+     * Tests setSort method.
+     */
+    public function testSetSort()
+    {
+        $term = new Term('foo', 'bar');
+
+        $term->setSort(Term::SORT_BY_FREQ);
+        $this->assertEquals(Term::SORT_BY_FREQ, $term->getSort());
+
+        $term->setSort(Term::SORT_BY_SCORE);
+        $this->assertEquals(Term::SORT_BY_SCORE, $term->getSort());
+
+        $initValue = $term->getSort();
+        $term->setSort('wrongSort');
+        $this->assertEquals($initValue, $term->getSort());
+    }
+
+    /**
+     * Tests setSuggestMode method.
+     */
+    public function testSetSuggestMode()
+    {
+        $term = new Term('foo', 'bar');
+
+        $term->setSuggestMode(Term::SUGGEST_MODE_ALWAYS);
+        $this->assertEquals(Term::SUGGEST_MODE_ALWAYS, $term->getSuggestMode());
+
+        $term->setSuggestMode(Term::SUGGEST_MODE_MISSING);
+        $this->assertEquals(Term::SUGGEST_MODE_MISSING, $term->getSuggestMode());
+
+        $initValue = $term->getSuggestMode();
+        $term->setSuggestMode('wrongMode');
+        $this->assertEquals($initValue, $term->getSuggestMode());
+    }
+
+    /**
+     * Returns list of fields to test. Works as data provider.
+     *
+     * @return array
+     */
+    public function getFieldsData()
+    {
+        return [
+            ['analyzer'],
+            ['size'],
+        ];
+    }
+
+    /**
+     * Returns entity class name.
+     *
+     * @return string
+     */
+    public function getClassName()
+    {
+        $this->setStub(new Term('foo', 'bar'));
+        $this->addIgnoredField('sort');
+        $this->addIgnoredField('suggestMode');
+
+        return 'ONGR\ElasticsearchBundle\DSL\Suggester\Term';
     }
 }

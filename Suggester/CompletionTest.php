@@ -14,13 +14,6 @@ namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester;
 use ONGR\ElasticsearchBundle\DSL\Suggester\Completion;
 use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
 
-/**
- * Test for Completion.
- *
- * Class CompletionTest
- *
- * @package ONGR\ElasticsearchBundle\Tests\Unit\DSL\Suggester
- */
 class CompletionTest extends \PHPUnit_Framework_TestCase
 {
     use EncapsulationTestAwareTrait;
@@ -149,6 +142,7 @@ class CompletionTest extends \PHPUnit_Framework_TestCase
     public function getFieldsData()
     {
         return [
+            ['name'],
             ['fuzziness'],
             ['transpositions', 'boolean'],
             ['minLength'],
