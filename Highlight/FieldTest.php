@@ -13,21 +13,32 @@ namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Bool\Bool;
 use ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter;
+use ONGR\ElasticsearchBundle\DSL\Highlight\Field;
 
 /**
- * Unit test for Bool.
+ * Unit test for Field.
  */
-class BoolTest extends \PHPUnit_Framework_TestCase
+class FieldTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests isRelevant method.
+     * Tests getType method.
      */
-    public function testIsRelevant()
+    public function testGetType()
     {
-        $bool = new Bool();
-        $this->assertEquals(false, $bool->isRelevant());
+        $field = new Field('test');
 
-        $bool->addToBool(new MissingFilter('test'));
-        $this->assertEquals(true, $bool->isRelevant());
+        $field->setHighlighterType(Field::TYPE_FVH);
+        $this->assertEquals(Field::TYPE_FVH, $field->getType());
+
+        $field->setHighlighterType(Field::TYPE_PLAIN);
+        $this->assertEquals(Field::TYPE_PLAIN, $field->getType());
+
+        $field->setHighlighterType(Field::TYPE_POSTINGS);
+        $this->assertEquals(Field::TYPE_POSTINGS, $field->getType());
+
+        $initValue = $field->getType();
+
+        $field->setHighlighterType('wrongValue');
+        $this->assertEquals($initValue, $field->getType());
     }
 }
