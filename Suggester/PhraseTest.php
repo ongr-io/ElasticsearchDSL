@@ -109,7 +109,6 @@ class PhraseTest extends \PHPUnit_Framework_TestCase
     {
         $this->setStub(new Phrase('foo', 'bar'));
 
-
         return 'ONGR\ElasticsearchBundle\DSL\Suggester\Phrase';
     }
 

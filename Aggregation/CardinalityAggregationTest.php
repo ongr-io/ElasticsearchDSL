@@ -65,6 +65,4 @@ class CardinalityAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new CardinalityAggregation('bar');
         $aggregation->getArray();
     }
-
-
 }

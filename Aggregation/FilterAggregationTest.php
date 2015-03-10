@@ -12,6 +12,8 @@
 namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\FilterAggregation;
+use ONGR\ElasticsearchBundle\DSL\Filter\AndFilter;
+use ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -128,6 +130,17 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArrayNoFilter()
     {
         $aggregation = new FilterAggregation('test_agg');
+        $aggregation->toArray();
+    }
+
+    /**
+     * Test for toArray() with setting a filter.
+     */
+    public function testToArrayWithFilter()
+    {
+        $aggregation = new FilterAggregation('test_agg');
+
+        $aggregation->setFilter(new MissingFilter('test'));
         $aggregation->toArray();
     }
 }
