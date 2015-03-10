@@ -98,8 +98,6 @@ class PhraseTest extends \PHPUnit_Framework_TestCase
     {
         $phrase = new Phrase('', '');
         $phrase->toArray();
-
-        $this->getFieldsData();
     }
 
     /**
