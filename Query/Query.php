@@ -26,6 +26,8 @@ class Query implements BuilderInterface
 
     /**
      * @var NestedQuery
+     *
+     * @deprecated will remove in 1.0 Add NestedQuery to the Query as all other queries.
      */
     private $nested = null;
 
@@ -79,6 +81,8 @@ class Query implements BuilderInterface
     /**
      * @param string           $path
      * @param BuilderInterface $query
+     *
+     * @deprecated will remove in 1.0 Add NestedQuery to the Query as all other queries.
      */
     public function addToNested($path, $query)
     {
