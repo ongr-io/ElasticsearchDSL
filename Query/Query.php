@@ -16,6 +16,8 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 
 /**
  * Query class.
+ *
+ * @deprecated will remove in 1.0 Query container now is implemented directly in search.
  */
 class Query implements BuilderInterface
 {

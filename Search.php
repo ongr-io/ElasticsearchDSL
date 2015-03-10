@@ -17,6 +17,7 @@ use ONGR\ElasticsearchBundle\DSL\Filter\PostFilter;
 use ONGR\ElasticsearchBundle\DSL\Highlight\Highlight;
 use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
 use ONGR\ElasticsearchBundle\DSL\Query\Query;
+use ONGR\ElasticsearchBundle\DSL\Query\QueryAwareTrait;
 use ONGR\ElasticsearchBundle\DSL\Sort\AbstractSort;
 use ONGR\ElasticsearchBundle\DSL\Sort\Sorts;
 use ONGR\ElasticsearchBundle\DSL\Suggester\AbstractSuggester;
@@ -26,12 +27,9 @@ use ONGR\ElasticsearchBundle\DSL\Suggester\AbstractSuggester;
  */
 class Search
 {
-    const SCROLL_DURATION = '5m';
+    use QueryAwareTrait;
 
-    /**
-     * @var Query
-     */
-    private $query;
+    const SCROLL_DURATION = '5m';
 
     /**
      * @var array
@@ -439,44 +437,7 @@ class Search
     }
 
     /**
-     * @param BuilderInterface $query    Query.
-     * @param string           $boolType Possible boolType values:
-     *                                   - must
-     *                                   - must_not
-     *                                   - should.
-     *
-     * @return $this
-     */
-    public function addQuery(BuilderInterface $query, $boolType = 'must')
-    {
-        if ($this->query === null) {
-            $this->query = new Query;
-        }
-        $this->query->addQuery($query, $boolType);
-
-        return $this;
-    }
-
-    /**
-     * Unset the query.
-     */
-    public function destroyQuery()
-    {
-        $this->query = null;
-    }
-
-    /**
-     * @param array $params Example values:
-     *                      - minimum_should_match => 1
-     *                      - boost => 1.
-     */
-    public function setBoolQueryParameters(array $params)
-    {
-        $this->query->setBoolParameters($params);
-    }
-
-    /**
-     * Returns query string parameters.
+     * Returns query url parameters.
      *
      * @return array
      */
@@ -572,14 +533,6 @@ class Search
     }
 
     /**
-     * @return BuilderInterface[]
-     */
-    public function getQueries()
-    {
-        return $this->query;
-    }
-
-    /**
      * @return array
      */
     public function getScriptFields()
@@ -648,25 +601,18 @@ class Search
      */
     public function toArray()
     {
-        $output = [];
-
-        $query = $this->query;
+        /*
+         * First we check if there are some filter to add to filtered query.
+         * For now we use match all, but its gonna be changed.
+         */
 
         if ($this->filters !== null) {
-            $filteredQuery = new FilteredQuery($query === null ? null : $query);
+            $filteredQuery = new FilteredQuery();
             $filteredQuery->setFilter($this->filters);
-
-            if ($this->boolFilterParams) {
-                $filteredQuery->setBoolParameters($this->boolFilterParams);
-            }
-
-            $query = new Query();
-            $query->addQuery($filteredQuery);
+            $this->addQuery($filteredQuery);
         }
 
-        if ($query !== null) {
-            $output[$query->getType()] = $query->toArray();
-        }
+        $output = $this->processQueries();
 
         if ($this->postFilters !== null) {
             $postFilter = new PostFilter();
