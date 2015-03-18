@@ -52,4 +52,64 @@ class GeoDistanceAggregationTest extends \PHPUnit_Framework_TestCase
         $agg = new GeoDistanceAggregation('test_agg');
         $agg->addRange();
     }
+
+    /**
+     * Data provider for testGeoDistanceAggregationGetArray().
+     *
+     * @return array
+     */
+    public function testGeoDistanceAggregationGetArrayDataProvider()
+    {
+        $out = [];
+        $filterData = [
+            'field' => 'location',
+            'origin' => '52.3760, 4.894',
+            'unit' => 'mi',
+            'distance_type' => 'plane',
+            'ranges' => [100, 300],
+        ];
+
+        $expectedResults = [
+            'field' => 'location',
+            'origin' => '52.3760, 4.894',
+            'unit' => 'mi',
+            'distance_type' => 'plane',
+            'ranges' => [['from' => 100, 'to' => 300]],
+        ];
+
+        $out[] = [$filterData, $expectedResults];
+
+        return $out;
+    }
+
+    /**
+     * Tests getArray method.
+     *
+     * @param array $filterData
+     * @param array $expected
+     *
+     * @dataProvider testGeoDistanceAggregationGetArrayDataProvider
+     */
+    public function testGeoDistanceAggregationGetArray($filterData, $expected)
+    {
+        $aggregation = new GeoDistanceAggregation('foo');
+        $aggregation->setOrigin($filterData['origin']);
+        $aggregation->setField($filterData['field']);
+        $aggregation->setUnit($filterData['unit']);
+        $aggregation->setDistanceType($filterData['distance_type']);
+        $aggregation->addRange($filterData['ranges'][0], $filterData['ranges'][1]);
+
+        $result = $aggregation->getArray();
+        $this->assertEquals($result, $expected);
+    }
+
+    /**
+     * Tests getType method.
+     */
+    public function testGeoDistanceAggregationGetType()
+    {
+        $aggregation = new GeoDistanceAggregation('foo');
+        $result = $aggregation->getType();
+        $this->assertEquals('geo_distance', $result);
+    }
 }

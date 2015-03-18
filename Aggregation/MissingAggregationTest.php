@@ -26,4 +26,26 @@ class MissingAggregationTest extends \PHPUnit_Framework_TestCase
         $agg = new MissingAggregation('test_agg');
         $agg->getArray();
     }
+
+    /**
+     * Test getArray method.
+     */
+    public function testMissingAggregationGetArray()
+    {
+        $aggregation = new MissingAggregation('foo');
+        $aggregation->setField('bar');
+        $result = $aggregation->getArray();
+        $this->assertEquals('bar', $result['field']);
+        $this->assertArrayHasKey('field', $result);
+    }
+
+    /**
+     * Test getType method.
+     */
+    public function testMissingAggregationGetType()
+    {
+        $aggregation = new MissingAggregation('bar');
+        $result = $aggregation->getType();
+        $this->assertEquals('missing', $result);
+    }
 }

@@ -28,4 +28,27 @@ class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new ChildrenAggregation('foo');
         $aggregation->getArray();
     }
+
+    /**
+     * Tests getType method.
+     */
+    public function testChildrenAggregationGetType()
+    {
+        $aggregation = new ChildrenAggregation('foo');
+        $result = $aggregation->getType();
+        $this->assertEquals('children', $result);
+    }
+
+    /**
+     * Tests getArray method.
+     */
+    public function testChildrenAggregationGetArray()
+    {
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\AbstractAggregation')
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        $aggregation = new ChildrenAggregation('foo');
+        $aggregation->addAggregation($mock);
+        $aggregation->getArray();
+    }
 }
