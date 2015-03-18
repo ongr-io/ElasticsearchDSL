@@ -11,37 +11,30 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Query\Span;
 
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
-
 /**
  * Elasticsearch span near query.
  */
-class SpanNearQuery implements SpanQueryInterface
+class SpanNearQuery extends SpanOrQuery implements SpanQueryInterface
 {
-    use ParametersTrait;
-
     /**
      * @var int
      */
     private $slop;
 
     /**
-     * @var SpanQueryInterface[]
+     * @return int
      */
-    private $queries = [];
+    public function getSlop()
+    {
+        return $this->slop;
+    }
 
     /**
-     * @param int                  $slop
-     * @param SpanQueryInterface[] $queries
-     * @param array                $parameters
-     *
-     * @throws \LogicException
+     * @param int $slop
      */
-    public function __construct($slop, array $queries = [], array $parameters = [])
+    public function setSlop($slop)
     {
         $this->slop = $slop;
-        $this->queries = $queries;
-        $this->setParameters($parameters);
     }
 
     /**
@@ -58,11 +51,10 @@ class SpanNearQuery implements SpanQueryInterface
     public function toArray()
     {
         $query = [];
-        foreach ($this->queries as $type) {
-            $data = [$type->getType() => $type->toArray()];
-            $query['clauses'][] = $data;
+        foreach ($this->getQueries() as $type) {
+            $query['clauses'][] = [$type->getType() => $type->toArray()];
         }
-        $query['slop'] = $this->slop;
+        $query['slop'] = $this->getSlop();
         $output = $this->processArray($query);
 
         return $output;

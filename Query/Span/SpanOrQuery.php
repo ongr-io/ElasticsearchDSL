@@ -26,15 +26,33 @@ class SpanOrQuery implements SpanQueryInterface
     private $queries = [];
 
     /**
-     * @param SpanQueryInterface[] $queries
-     * @param array                $parameters
+     * @param array $parameters
      */
-    public function __construct(array $queries = [], array $parameters = [])
+    public function __construct(array $parameters = [])
     {
-        foreach ($queries as $query) {
-            $this->queries[] = $query;
-        }
         $this->setParameters($parameters);
+    }
+
+    /**
+     * Add span query.
+     *
+     * @param SpanQueryInterface $query
+     *
+     * @return $this
+     */
+    public function addQuery(SpanQueryInterface $query)
+    {
+        $this->queries[] = $query;
+
+        return $this;
+    }
+
+    /**
+     * @return SpanQueryInterface[]
+     */
+    public function getQueries()
+    {
+        return $this->queries;
     }
 
     /**
@@ -52,8 +70,7 @@ class SpanOrQuery implements SpanQueryInterface
     {
         $query = [];
         foreach ($this->queries as $type) {
-            $data = [$type->getType() => $type->toArray()];
-            $query['clauses'][] = $data;
+            $query['clauses'][] = [$type->getType() => $type->toArray()];
         }
         $output = $this->processArray($query);
 
