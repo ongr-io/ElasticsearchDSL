@@ -25,4 +25,61 @@ class HasChildFilterTest extends \PHPUnit_Framework_TestCase
         $result = $filter->getType();
         $this->assertEquals('has_child', $result);
     }
+
+    /**
+     * Data provider to testToArray.
+     *
+     * @return array
+     */
+    public function getArrayDataProvider()
+    {
+        return [
+            // Case #1.
+            [
+                'comment',
+                'term',
+                ['name' => 'foo'],
+                [],
+                'filter',
+                ['type' => 'comment', 'filter' => ['term' => ['name' => 'foo']]],
+            ],
+            // Case #2.
+            [
+                'comment',
+                'term',
+                ['name' => 'foo'],
+                ['parameter' => 'value'],
+                'query',
+                ['type' => 'comment', 'query' => ['term' => ['name' => 'foo']], 'parameter' => 'value'],
+            ],
+        ];
+    }
+
+    /**
+     * Tests toArray method.
+     *
+     * @param string $type         Child type.
+     * @param string $queryType    Type of query for mock query class.
+     * @param array  $queryToArray Return value for mock query class toArray method.
+     * @param array  $parameters   Optional parameters.
+     * @param string $dslType      Filter or query.
+     * @param array  $expected     Expected result.
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testToArray($type, $queryType, $queryToArray, $parameters, $dslType, $expected)
+    {
+        $mockQuery = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')->getMock();
+        $mockQuery->expects($this->once())
+            ->method('getType')
+            ->will($this->returnValue($queryType));
+        $mockQuery->expects($this->once())
+            ->method('toArray')
+            ->will($this->returnValue($queryToArray));
+
+        $filter = new HasChildFilter($type, $mockQuery, $parameters);
+        $filter->setDslType($dslType);
+        $result = $filter->toArray();
+        $this->assertEquals($expected, $result);
+    }
 }
