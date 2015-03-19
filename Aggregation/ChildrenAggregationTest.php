@@ -49,6 +49,9 @@ class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $aggregation = new ChildrenAggregation('foo');
         $aggregation->addAggregation($mock);
-        $aggregation->getArray();
+        $aggregation->setChildren('question');
+        $result = $aggregation->getArray();
+        $expected = ['type' => 'question'];
+        $this->assertEquals($expected, $result);
     }
 }

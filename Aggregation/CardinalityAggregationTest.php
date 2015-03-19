@@ -65,4 +65,14 @@ class CardinalityAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new CardinalityAggregation('bar');
         $aggregation->getArray();
     }
+
+    /**
+     * Tests getType method.
+     */
+    public function testCardinallyAggregationGetType()
+    {
+        $aggregation = new CardinalityAggregation('foo');
+        $result = $aggregation->getType();
+        $this->assertEquals('cardinality', $result);
+    }
 }
