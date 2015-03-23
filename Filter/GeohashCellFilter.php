@@ -57,6 +57,7 @@ class GeohashCellFilter implements BuilderInterface
      */
     public function toArray()
     {
+        $query = [];
         $query[$this->field] = $this->location;
         $output = $this->processArray($query);
 
