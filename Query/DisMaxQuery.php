@@ -59,6 +59,7 @@ class DisMaxQuery implements BuilderInterface
      */
     public function toArray()
     {
+        $query = [];
         foreach ($this->queries as $type) {
             $query['queries'][] = [$type->getType() => $type->toArray()];
         }
