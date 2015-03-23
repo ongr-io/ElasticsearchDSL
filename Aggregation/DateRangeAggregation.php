@@ -79,7 +79,7 @@ class DateRangeAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        if ($this->getField() && $this->getFormat() && $this->ranges) {
+        if ($this->getField() && $this->getFormat() && !empty($this->ranges)) {
             $data = [
                 'format' => $this->getFormat(),
                 'field' => $this->getField(),
