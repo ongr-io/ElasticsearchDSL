@@ -48,7 +48,9 @@ class ScriptSort extends AbstractSort
      */
     public function __construct($script, $returnType, $params = null, $order = self::ORDER_DESC)
     {
-        $this->setParams($params);
+        if ($params) {
+            $this->setParams($params);
+        }
         $this->setScript($script);
         $this->setOrder($order);
         $this->setReturnType($returnType);
