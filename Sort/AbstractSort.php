@@ -98,7 +98,7 @@ abstract class AbstractSort implements BuilderInterface
     /**
      * Set order direction.
      *
-     * @param string|array $order
+     * @param string $order
      */
     public function setOrder($order)
     {
