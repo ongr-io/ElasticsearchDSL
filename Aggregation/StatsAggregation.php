@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\MetricTrait;
+use ONGR\ElasticsearchBundle\DSL\ScriptAwareTrait;
 
 /**
  * Class representing StatsAggregation.
@@ -19,6 +20,7 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\MetricTrait;
 class StatsAggregation extends AbstractAggregation
 {
     use MetricTrait;
+    use ScriptAwareTrait;
 
     /**
      * {@inheritdoc}
@@ -33,6 +35,14 @@ class StatsAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        return $this->getField() ? ['field' => $this->getField()] : new \stdClass();
+        $out = [];
+        if ($this->getField()) {
+            $out['field'] = $this->getField();
+        }
+        if ($this->getScript()) {
+            $out['script'] = $this->getScript();
+        }
+
+        return $out;
     }
 }
