@@ -74,7 +74,7 @@ class Ipv4RangeAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        if ($this->getField() && $this->ranges) {
+        if ($this->getField() && !empty($this->ranges)) {
             return [
                 'field' => $this->getField(),
                 'ranges' => array_values($this->ranges),
