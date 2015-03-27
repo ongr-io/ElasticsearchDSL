@@ -73,14 +73,13 @@ trait QueryAwareTrait
     /**
      * Checks if there is added specific query.
      *
-     * @param string $key
-     * @param string $boolType
+     * @param string $type Query type.
      *
      * @return bool
      */
-    public function hasQuery($key, $boolType = Bool::MUST)
+    public function hasQuery($type)
     {
-        return array_key_exists($key, $this->queries[$boolType]);
+        return array_key_exists($type, $this->queries);
     }
 
     /**
