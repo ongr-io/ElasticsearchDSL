@@ -17,7 +17,7 @@ use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 /**
  * Elasticsearch fuzzy_like_this_field query class.
  */
-class FuzzyLikeThisField implements BuilderInterface
+class FuzzyLikeThisFieldQuery implements BuilderInterface
 {
     use ParametersTrait;
 
@@ -30,11 +30,6 @@ class FuzzyLikeThisField implements BuilderInterface
      * @var string
      */
     private $likeText;
-
-    /**
-     * @var string
-     */
-    private $analyzer;
 
     /**
      * @param string $field
@@ -63,7 +58,6 @@ class FuzzyLikeThisField implements BuilderInterface
     {
         $query = [
             'like_text' => $this->likeText,
-            'analyzer' => $this->analyzer,
         ];
 
         $output = [

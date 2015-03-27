@@ -29,21 +29,25 @@ class DisMaxQuery implements BuilderInterface
     /**
      * Initializes Dis Max query.
      *
-     * @param BuilderInterface[] $queries
-     * @param array              $parameters
-     *
-     * @throws \InvalidArgumentException
+     * @param array $parameters
      */
-    public function __construct(array $queries = [], array $parameters = [])
+    public function __construct(array $parameters = [])
     {
-        foreach ($queries as $query) {
-            if ($query instanceof BuilderInterface) {
-                $this->queries[] = $query;
-            } else {
-                throw new \InvalidArgumentException('Arguments must be instance of BuilderInterface');
-            }
-        }
         $this->setParameters($parameters);
+    }
+
+    /**
+     * Add query.
+     *
+     * @param BuilderInterface $query
+     *
+     * @return DisMaxQuery
+     */
+    public function addQuery(BuilderInterface $query)
+    {
+        $this->queries[] = $query;
+
+        return $this;
     }
 
     /**
