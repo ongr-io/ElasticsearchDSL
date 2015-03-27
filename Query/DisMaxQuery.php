@@ -41,7 +41,7 @@ class DisMaxQuery implements BuilderInterface
      *
      * @param BuilderInterface $query
      *
-     * @return $this
+     * @return DisMaxQuery
      */
     public function addQuery(BuilderInterface $query)
     {
