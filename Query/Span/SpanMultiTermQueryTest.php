@@ -49,7 +49,7 @@ class SpanMultiTermQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $this->mock = null;
+        unset($this->mock);
     }
 
     /**
