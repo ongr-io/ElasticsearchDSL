@@ -77,24 +77,32 @@ class PercentilesAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        $out = [];
+        $out = array_filter(
+            [
+                'compression' => $this->getCompression(),
+                'percents' => $this->getPercents(),
+                'field' => $this->getField(),
+                'script' => $this->getScript(),
+            ],
+            function ($val) {
+                return ($val || is_numeric($val));
+            }
+        );
 
-        if ($this->getField()) {
-            $out['field'] = $this->getField();
-        } elseif ($this->getScript()) {
-            $out['script'] = $this->getScript();
-        } else {
-            throw new \LogicException('Percentiles aggregation must have field or script set.');
-        }
-
-        if ($this->getCompression()) {
-            $out['compression'] = $this->getCompression();
-        }
-
-        if ($this->getPercents()) {
-            $out['percents'] = $this->getPercents();
-        }
+        $this->isRequiredParametersSet($out);
 
         return $out;
+    }
+
+    /**
+     * @param array $a
+     *
+     * @throws \LogicException
+     */
+    private function isRequiredParametersSet($a)
+    {
+        if (!array_key_exists('field', $a) && !array_key_exists('script', $a)) {
+            throw new \LogicException('Percentiles aggregation must have field or script set.');
+        }
     }
 }
