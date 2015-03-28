@@ -77,24 +77,37 @@ class PercentileRanksAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        $out = [];
+        $out = array_filter(
+            [
+                'field' => $this->getField(),
+                'script' => $this->getScript(),
+                'values' => $this->getValues(),
+                'compression' => $this->getCompression(),
+            ],
+            function ($val) {
+                return ($val || is_numeric($val));
+            }
+        );
 
-        if ($this->getField() && $this->getValues()) {
-            $out['field'] = $this->getField();
-            $out['values'] = $this->getValues();
-        } elseif ($this->getScript() && $this->getValues()) {
-            $out['script'] = $this->getScript();
-            $out['values'] = $this->getValues();
-        } else {
-            throw new \LogicException(
-                'Percentile ranks aggregation must have field and values or script and values set.'
-            );
-        }
-
-        if ($this->getCompression()) {
-            $out['compression'] = $this->getCompression();
-        }
+        $this->isRequiredParametersSet($out);
 
         return $out;
+    }
+
+    /**
+     * @param array $a
+     *
+     * @return bool
+     *
+     * @throws \LogicException
+     */
+    private function isRequiredParametersSet($a)
+    {
+        if (array_key_exists('field', $a) && array_key_exists('values', $a)
+            || (array_key_exists('script', $a) && array_key_exists('values', $a))
+        ) {
+            return true;
+        }
+        throw new \LogicException('Percentile ranks aggregation must have field and values or script and values set.');
     }
 }
