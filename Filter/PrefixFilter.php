@@ -26,12 +26,12 @@ class PrefixFilter implements BuilderInterface
     /**
      * @var string
      */
-    private $field;
+    protected $field;
 
     /**
      * @var string
      */
-    private $value;
+    protected $value;
 
     /**
      * @param string $field      Field name.

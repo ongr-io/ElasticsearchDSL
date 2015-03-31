@@ -11,46 +11,13 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Query;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
+use ONGR\ElasticsearchBundle\DSL\Filter\PrefixFilter;
 
 /**
  * Represents Elasticsearch "prefix" query.
  */
-class PrefixQuery implements BuilderInterface
+class PrefixQuery extends PrefixFilter
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * @param string $field      Field name.
-     * @param string $value      Value.
-     * @param array  $parameters Optional parameters.
-     */
-    public function __construct($field, $value, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->value = $value;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'prefix';
-    }
-
     /**
      * {@inheritdoc}
      */
