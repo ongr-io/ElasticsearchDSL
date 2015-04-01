@@ -12,22 +12,15 @@
 namespace ONGR\ElasticsearchBundle\DSL;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\AbstractAggregation;
-use ONGR\ElasticsearchBundle\DSL\Bool\Bool;
-use ONGR\ElasticsearchBundle\DSL\Filter\PostFilter;
 use ONGR\ElasticsearchBundle\DSL\Highlight\Highlight;
-use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
-use ONGR\ElasticsearchBundle\DSL\Query\Query;
-use ONGR\ElasticsearchBundle\DSL\Query\QueryAwareTrait;
 use ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SearchEndpointInterface;
 use ONGR\ElasticsearchBundle\DSL\Sort\AbstractSort;
 use ONGR\ElasticsearchBundle\DSL\Sort\Sorts;
 use ONGR\ElasticsearchBundle\DSL\Suggester\AbstractSuggester;
 use ONGR\ElasticsearchBundle\Serializer\Normalizer\CustomReferencedNormalizer;
-use ONGR\ElasticsearchBundle\Serializer\Normalizer\ReferencedNormalizer;
 use ONGR\ElasticsearchBundle\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Search object that can be executed by a manager.
@@ -92,7 +85,7 @@ class Search
     private $minScore;
 
     /**
-     * @var Serializer
+     * @var OrderedSerializer
      */
     private $serializer;
 
