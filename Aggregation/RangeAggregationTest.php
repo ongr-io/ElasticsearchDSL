@@ -20,7 +20,6 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testRangeAggregationAddRange()
     {
-        // Case #0 single range.
         $aggregation = new RangeAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->addRange('10', 20);
@@ -48,7 +47,6 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testRangeAggregationAddRangeMultiple()
     {
-        // Case #1 multiple keyed ranges.
         $aggregation = new RangeAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setKeyed(true);
@@ -82,7 +80,6 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testRangeAggregationAddRangeNested()
     {
-        // Case #2 nested aggregation.
         $aggregation = new RangeAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->addRange('10', '10');
@@ -134,13 +131,57 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider for testRangeAggregationRemoveRangeByKey(), testRangeAggregationRemoveRange().
-     *
-     * @return array
+     * Tests removeRangeByKey method.
      */
-    public function testRangeAggregationDataProvider()
+    public function testRangeAggregationRemoveRangeByKey()
     {
-        $expectedResults = [
+        $aggregation = new RangeAggregation('foo');
+        $aggregation->setField('price');
+        $aggregation->setKeyed(true);
+        $aggregation->addRange(100, 300, 'name');
+
+        $expected = [
+            'field' => 'price',
+            'keyed' => true,
+            'ranges' => [
+                [
+                    'from' => 100,
+                    'to' => 300,
+                    'key' => 'name',
+                ],
+            ],
+        ];
+
+        $result = $aggregation->getArray();
+        $this->assertEquals($result, $expected, 'get array of ranges when keyed=true');
+
+        $result = $aggregation->removeRangeByKey('name');
+        $this->assertTrue($result, 'returns true when removed valid range name');
+
+        $result = $aggregation->removeRangeByKey('not_existing_key');
+        $this->assertFalse($result, 'should not allow remove not existing key if keyed=true');
+
+        $aggregation->setKeyed(false);
+        $result = $aggregation->removeRangeByKey('not_existing_key');
+        $this->assertFalse($result, 'should not allow remove not existing key if keyed=false');
+
+        $aggregation->addRange(100, 300, 'name');
+        $result = $aggregation->removeRangeByKey('name');
+        $this->assertFalse($result, 'can not remove any existing range if keyed=false');
+    }
+
+    /**
+     * Tests removeRange method.
+     */
+    public function testRangeAggregationRemoveRange()
+    {
+        $aggregation = new RangeAggregation('foo');
+        $aggregation->setField('price');
+        $aggregation->setKeyed(true);
+        $aggregation->addRange(100, 300, 'key');
+        $aggregation->addRange(500, 700, 'range_2');
+
+        $expected = [
             'field' => 'price',
             'keyed' => true,
             'ranges' => [
@@ -152,61 +193,10 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        return [[$expectedResults]];
-    }
-
-    /**
-     * Tests removeRangeByKey method.
-     *
-     * @param array $expected
-     *
-     * @dataProvider testRangeAggregationDataProvider
-     */
-    public function testRangeAggregationRemoveRangeByKey($expected)
-    {
-        $aggregation = new RangeAggregation('foo');
-        $aggregation->setField('price');
-        $aggregation->setKeyed(true);
-        $aggregation->addRange(100, 300, 'key');
-
-        $result = $aggregation->getArray();
-        $this->assertEquals($result, $expected);
-
-        $result = $aggregation->removeRangeByKey('key');
-        $this->assertTrue($result);
-
-        $result = $aggregation->removeRangeByKey('not_existing_key');
-        $this->assertFalse($result);
-        // Test with keyed=false.
-        $aggregation->setKeyed(false);
-        $result = $aggregation->removeRangeByKey('not_existing_key');
-        $this->assertFalse($result);
-
-        $aggregation->addRange(100, 300, 'key');
-        $result = $aggregation->removeRangeByKey('key');
-        $this->assertFalse($result);
-    }
-
-    /**
-     * Tests removeRange method.
-     *
-     * @param array $expected
-     *
-     * @dataProvider testRangeAggregationDataProvider
-     */
-    public function testRangeAggregationRemoveRange($expected)
-    {
-        $aggregation = new RangeAggregation('foo');
-        $aggregation->setField('price');
-        $aggregation->setKeyed(true);
-        $aggregation->addRange(100, 300, 'key');
-        $aggregation->addRange(500, 700, 'range_2');
-
         $aggregation->removeRange(500, 700);
         $result = $aggregation->getArray();
-        $this->assertEquals($result, $expected);
-        // Test fake ranges.
+        $this->assertEquals($result, $expected, 'get expected array of ranges');
         $result = $aggregation->removeRange(500, 700);
-        $this->assertFalse($result);
+        $this->assertFalse($result, 'returns false after removing not-existing range');
     }
 }

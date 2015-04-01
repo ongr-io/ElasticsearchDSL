@@ -36,7 +36,6 @@ class MissingAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('bar');
         $result = $aggregation->getArray();
         $this->assertEquals('bar', $result['field']);
-        $this->assertArrayHasKey('field', $result);
     }
 
     /**

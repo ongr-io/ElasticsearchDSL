@@ -46,14 +46,26 @@ class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $agg = new GeoBoundsAggregation('foo');
         $agg->setField('bar');
-        $agg->setWrapLongitude(false);
-        $result = $agg->getArray();
-        $this->assertArrayHasKey('field', $result);
-        $this->assertArrayHasKey('wrap_longitude', $result);
-        $this->assertEquals('bar', $result['field']);
-        $this->assertFalse($result['wrap_longitude']);
         $agg->setWrapLongitude(true);
-        $result = $agg->getArray();
-        $this->assertTrue($result['wrap_longitude']);
+        $result = [
+            'agg_foo' => [
+                'geo_bounds' => [
+                    'field' => 'bar',
+                    'wrap_longitude' => true,
+                ],
+            ],
+        ];
+        $this->assertEquals($result, $agg->toArray(), 'when wraplongitude is true');
+
+        $agg->setWrapLongitude(false);
+        $result = [
+            'agg_foo' => [
+                'geo_bounds' => [
+                    'field' => 'bar',
+                    'wrap_longitude' => false,
+                ],
+            ],
+        ];
+        $this->assertEquals($result, $agg->toArray(), 'when wraplongitude is false');
     }
 }

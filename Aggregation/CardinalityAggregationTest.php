@@ -25,33 +25,29 @@ class CardinalityAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $aggregation = new CardinalityAggregation('bar');
 
-        // When $script is set.
         $aggregation->setScript('foo');
         $result = $aggregation->getArray();
 
-        $this->assertArrayHasKey('script', $result);
-        $this->assertEquals('foo', $result['script']);
+        $this->assertArrayHasKey('script', $result, 'key=script when script is set');
+        $this->assertEquals('foo', $result['script'], 'script=foo when scripts name=foo');
 
-        // When $field is set.
         $aggregation->setField('foo');
         $result = $aggregation->getArray();
 
-        $this->assertArrayHasKey('field', $result);
-        $this->assertEquals('foo', $result['field']);
+        $this->assertArrayHasKey('field', $result, 'key=field when field is set');
+        $this->assertEquals('foo', $result['field'], 'field=foo when fields name=foo');
 
-        // When $precisionThreshold is set.
         $aggregation->setPrecisionThreshold(10);
         $result = $aggregation->getArray();
 
-        $this->assertArrayHasKey('precision_threshold', $result);
-        $this->assertEquals(10, $result['precision_threshold']);
+        $this->assertArrayHasKey('precision_threshold', $result, 'key=precision_threshold when is set');
+        $this->assertEquals(10, $result['precision_threshold'], 'precision_threshold=10 when is set');
 
-        // When $rehash is set.
         $aggregation->setRehash(true);
         $result = $aggregation->getArray();
 
-        $this->assertArrayHasKey('rehash', $result);
-        $this->assertEquals(true, $result['rehash']);
+        $this->assertArrayHasKey('rehash', $result, 'key=rehash when rehash is set');
+        $this->assertEquals(true, $result['rehash'], 'rehash=true when rehash is set to true');
     }
 
     /**
