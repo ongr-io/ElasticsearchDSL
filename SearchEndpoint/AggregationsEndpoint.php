@@ -40,7 +40,7 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if (!empty($this->bag->all())) {
+        if (count($this->bag->all()) > 0) {
             return $this->bag->toArray();
         }
     }
