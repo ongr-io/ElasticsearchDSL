@@ -15,7 +15,7 @@ use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 
 /**
  * Represents Elasticsearch "exists" filter.
- * 
+ *
  * @link http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-exists-filter.html
  */
 class ExistsFilter implements BuilderInterface
