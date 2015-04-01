@@ -75,7 +75,7 @@ class SpanOrQueryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($result, $query->toArray());
 
         $result = $query->getQueries();
-        $this->assertInternalType('array',$result);
-        $this->assertEquals(1,count($result));
+        $this->assertInternalType('array', $result);
+        $this->assertEquals(1, count($result));
     }
 }
