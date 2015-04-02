@@ -42,11 +42,7 @@ trait ParametersTrait
      */
     public function getParameter($name)
     {
-        if ($this->hasParameter($name)) {
-            return $this->parameters[$name];
-        }
-
-        return false;
+        return $this->parameters[$name];
     }
 
     /**
@@ -65,9 +61,7 @@ trait ParametersTrait
      */
     public function addParameter($name, $value)
     {
-        if (!$this->hasParameter($name)) {
-            $this->parameters[$name] = $value;
-        }
+        $this->parameters[$name] = $value;
     }
 
     /**

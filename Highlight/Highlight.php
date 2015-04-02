@@ -11,13 +11,14 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Highlight;
 
+use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
 use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
 
 /**
  * Data holder for highlight api.
  */
-class Highlight extends NamedBuilderBag
+class Highlight extends NamedBuilderBag implements BuilderInterface
 {
     const TYPE_PLAIN = 'plain';
     const TYPE_POSTINGS = 'postings';
@@ -173,6 +174,14 @@ class Highlight extends NamedBuilderBag
     /**
      * {@inheritdoc}
      */
+    public function getType()
+    {
+        return 'highlight';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function toArray()
     {
         $highlight = array_filter(
@@ -182,6 +191,7 @@ class Highlight extends NamedBuilderBag
                 'fragment_size' => $this->fragmentSize,
                 'number_of_fragments' => $this->numberOfFragments,
                 'tags_schema' => $this->tagsSchema,
+                'fields' => $this->getFields(),
             ]
         );
 
@@ -197,11 +207,21 @@ class Highlight extends NamedBuilderBag
             }
         }
 
-        /** @var NamedBuilderInterface $field */
-        foreach ($this->all() as $field) {
-            $highlight['fields'][$field->getName()] = $field->toArray();
+        return $highlight;
+    }
+
+    /**
+     * Returns fields as array.
+     *
+     * @return array
+     */
+    private function getFields()
+    {
+        $out = [];
+        foreach ($this->all() as $builder) {
+            $out = array_merge($out, [$builder->getName() => $builder->toArray()]);
         }
 
-        return $highlight;
+        return $out;
     }
 }

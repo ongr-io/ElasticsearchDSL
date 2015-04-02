@@ -111,4 +111,17 @@ class NamedBuilderBag
             }
         );
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        $out = [];
+        foreach ($this->all() as $builder) {
+            $out = array_merge($out, $builder->toArray());
+        }
+
+        return $out;
+    }
 }

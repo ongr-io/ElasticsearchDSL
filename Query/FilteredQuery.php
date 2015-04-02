@@ -69,8 +69,8 @@ class FilteredQuery extends AbstractFilter implements BuilderInterface
         $output = [];
         $output['filter'] = parent::toArray();
 
-        if ($this->query !== null) {
-            $output['query'] = $this->query->toArray();
+        if ($this->query) {
+            $output['query'][$this->getQuery()->getType()] = $this->getQuery()->toArray();
         }
 
         return $output;

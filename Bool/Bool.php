@@ -50,11 +50,13 @@ class Bool implements BuilderInterface
      */
     public function addToBool(BuilderInterface $bool, $type = self::MUST)
     {
-        if (in_array($type, [ self::MUST, self::MUST_NOT, self::SHOULD ])) {
-            $this->container[$type][] = $bool;
-        } else {
+        $constants = (new \ReflectionObject($this))->getConstants();
+
+        if (!in_array($type, $constants)) {
             throw new \UnexpectedValueException(sprintf('The bool operator %s is not supported', $type));
         }
+
+        $this->container[$type][] = $bool;
     }
 
     /**
