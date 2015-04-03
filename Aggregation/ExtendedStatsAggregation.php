@@ -15,19 +15,40 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\MetricTrait;
 use ONGR\ElasticsearchBundle\DSL\ScriptAwareTrait;
 
 /**
- * Class representing StatsAggregation.
+ * Class representing Extended stats aggregation.
  */
-class StatsAggregation extends AbstractAggregation
+class ExtendedStatsAggregation extends AbstractAggregation
 {
     use MetricTrait;
     use ScriptAwareTrait;
+
+    /**
+     * @var int
+     */
+    private $sigma;
+
+    /**
+     * @return int
+     */
+    public function getSigma()
+    {
+        return $this->sigma;
+    }
+
+    /**
+     * @param int $sigma
+     */
+    public function setSigma($sigma)
+    {
+        $this->sigma = $sigma;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getType()
     {
-        return 'stats';
+        return 'extended_stats';
     }
 
     /**
@@ -36,11 +57,17 @@ class StatsAggregation extends AbstractAggregation
     public function getArray()
     {
         $out = [];
+
         if ($this->getField()) {
             $out['field'] = $this->getField();
-        }
-        if ($this->getScript()) {
+        } elseif ($this->getScript()) {
             $out['script'] = $this->getScript();
+        } else {
+            throw new \LogicException('Extended stats aggregation must have field or script set.');
+        }
+
+        if ($this->getSigma()) {
+            $out['sigma'] = $this->getSigma();
         }
 
         return $out;
