@@ -42,7 +42,7 @@ class Search
     /**
      * @var string|null
      */
-    private $scrollDuration;
+    private $scroll;
 
     /**
      * @var array|bool|string
@@ -589,7 +589,7 @@ class Search
      */
     public function setScroll($duration = self::SCROLL_DURATION)
     {
-        $this->scrollDuration = $duration;
+        $this->scroll = $duration;
 
         return $this;
     }
@@ -601,7 +601,7 @@ class Search
      */
     public function getScroll()
     {
-        return $this->scrollDuration;
+        return $this->scroll;
     }
 
     /**
