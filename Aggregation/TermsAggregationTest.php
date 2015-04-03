@@ -16,14 +16,10 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
 class TermsAggregationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Data provider for testToArray().
-     *
-     * @return array
+     * Tests setField method.
      */
-    public function getToArrayData()
+    public function testTermsAggregationSetField()
     {
-        $out = [];
-
         // Case #0 terms aggregation.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -34,11 +30,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
+        $this->assertEquals($aggregation->toArray(), $result);
+    }
 
+    /**
+     * Tests setSize method.
+     */
+    public function testTermsAggregationSetSize()
+    {
         // Case #1 terms aggregation with size.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -53,11 +52,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
+        $this->assertEquals($aggregation->toArray(), $result);
+    }
 
+    /**
+     * Tests minDocumentCount method.
+     */
+    public function testTermsAggregationMinDocumentCount()
+    {
         // Case #2 terms aggregation with size and min document count.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -74,11 +76,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
+        $this->assertEquals($aggregation->toArray(), $result);
+    }
 
+    /**
+     * Tests include, exclude method.
+     */
+    public function testTermsAggregationSimpleIncludeExclude()
+    {
         // Case #3 terms aggregation with simple include, exclude.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -95,11 +100,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
+        $this->assertEquals($aggregation->toArray(), $result);
+    }
 
+    /**
+     * Tests include, exclude with flags method.
+     */
+    public function testTermsAggregationIncludeExcludeFlags()
+    {
         // Case #4 terms aggregation with include, exclude and flags.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -122,11 +130,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
+        $this->assertEquals($aggregation->toArray(), $result);
+    }
 
+    /**
+     * Tests setOrder method.
+     */
+    public function testTermsAggregationSetOrder()
+    {
         // Case #5 terms aggregation with order default direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -141,11 +152,14 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
+        $this->assertEquals($aggregation->toArray(), $result);
+    }
 
+    /**
+     * Tests setOrder DESC method.
+     */
+    public function testTermsAggregationSetOrderDESC()
+    {
         // Case #6 terms aggregation with order term mode, desc direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
@@ -160,24 +174,16 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $out[] = [
-            $aggregation,
-            $result,
-        ];
-
-        return $out;
+        $this->assertEquals($aggregation->toArray(), $result);
     }
 
     /**
-     * Test for toArray().
-     *
-     * @param TermsAggregation $aggregation
-     * @param array            $expectedResults
-     *
-     * @dataProvider getToArrayData
+     * Tests getType method.
      */
-    public function testToArray($aggregation, $expectedResults)
+    public function testTermsAggregationGetType()
     {
-        $this->assertEquals($expectedResults, $aggregation->toArray());
+        $aggregation = new TermsAggregation('foo');
+        $result = $aggregation->getType();
+        $this->assertEquals('terms', $result);
     }
 }

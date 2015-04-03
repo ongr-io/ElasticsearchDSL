@@ -38,4 +38,32 @@ class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
         $agg = new DateRangeAggregation('test_agg');
         $agg->addRange(null, null);
     }
+
+    /**
+     * Test getArray method.
+     */
+    public function testDateRangeAggregationGetArray()
+    {
+        $agg = new DateRangeAggregation('foo');
+        $agg->addRange(10, 20);
+        $agg->setFormat('bar');
+        $agg->setField('baz');
+        $result = $agg->getArray();
+        $expected = [
+            'format' => 'bar',
+            'field' => 'baz',
+            'ranges' => [['from' => 10, 'to' => 20]],
+        ];
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests getType method.
+     */
+    public function testDateRangeAggregationGetType()
+    {
+        $aggregation = new DateRangeAggregation('foo');
+        $result = $aggregation->getType();
+        $this->assertEquals('date_range', $result);
+    }
 }
