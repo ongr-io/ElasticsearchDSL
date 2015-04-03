@@ -20,8 +20,8 @@ class PostFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfGetType()
     {
-        $filter = new PostFilter();
-        $this->assertEquals('post_filter', $filter->getType());
+        $postFilter = new PostFilter();
+        $this->assertEquals('post_filter', $postFilter->getType());
     }
 
     /**
@@ -29,7 +29,43 @@ class PostFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfIsRelevantFunctionIsReturningFalse()
     {
-        $bool = new PostFilter();
-        $this->assertFalse($bool->isRelevant());
+        $postFilter = new PostFilter();
+        $this->assertFalse($postFilter->isRelevant());
+    }
+
+    /**
+     * Test addFilter method.
+     */
+    public function testAddFilter()
+    {
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+            ->setMethods(['addToBool'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $missingFilterMock->expects($this->once())
+            ->method('addToBool')
+            ->withAnyParameters();
+
+        $postFilter = new PostFilter();
+        $postFilter->setFilter($missingFilterMock);
+        $postFilter->addFilter($missingFilterMock, 'test');
+    }
+
+    /**
+     * Test setBoolParameters method.
+     */
+    public function testSetBoolParameters()
+    {
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+            ->setMethods(['setParameters'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $missingFilterMock->expects($this->once())
+            ->method('setParameters')
+            ->withAnyParameters();
+
+        $postFilter = new PostFilter();
+        $postFilter->setFilter($missingFilterMock);
+        $postFilter->setBoolParameters(['test_param']);
     }
 }

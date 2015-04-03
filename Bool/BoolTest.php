@@ -26,9 +26,9 @@ class BoolTest extends \PHPUnit_Framework_TestCase
     public function testBoolIsRelevant()
     {
         $bool = new Bool();
-        $this->assertEquals(false, $bool->isRelevant());
+        $this->assertFalse($bool->isRelevant());
         $bool->addToBool(new MissingFilter('test'));
-        $this->assertEquals(true, $bool->isRelevant());
+        $this->assertTrue($bool->isRelevant());
     }
 
     /**

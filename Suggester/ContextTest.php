@@ -32,7 +32,6 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $context->setContext(new Phrase('', ''));
 
         $result = $context->toArray();
-
         $this->assertArrayHasKey($name, $result);
 
         $data = $result[$name];
@@ -40,7 +39,6 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
         $completion = $data['completion'];
         $this->assertArrayHasKey('size', $completion);
-
         $this->assertEquals($completion['size'], 123);
     }
 
