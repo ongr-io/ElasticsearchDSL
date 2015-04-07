@@ -37,7 +37,7 @@ class SearchEndpointFactory
      * @return SearchEndpointInterface
      *
      * @throws \RuntimeException Endpoint does not exist.
-     * @throws \DomainException  Endpoint is not implementing SearchEndpointInterface
+     * @throws \DomainException  Endpoint is not implementing SearchEndpointInterface.
      */
     public static function get($type)
     {
