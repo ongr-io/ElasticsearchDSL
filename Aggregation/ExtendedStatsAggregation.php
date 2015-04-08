@@ -56,19 +56,16 @@ class ExtendedStatsAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        $out = [];
-
-        if ($this->getField()) {
-            $out['field'] = $this->getField();
-        } elseif ($this->getScript()) {
-            $out['script'] = $this->getScript();
-        } else {
-            throw new \LogicException('Extended stats aggregation must have field or script set.');
-        }
-
-        if ($this->getSigma()) {
-            $out['sigma'] = $this->getSigma();
-        }
+        $out = array_filter(
+            [
+                'field' => $this->getField(),
+                'script' => $this->getScript(),
+                'sigma' => $this->getSigma(),
+            ],
+            function ($val) {
+                return ($val || is_numeric($val));
+            }
+        );
 
         return $out;
     }
