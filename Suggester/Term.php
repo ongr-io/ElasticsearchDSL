@@ -148,7 +148,6 @@ class Term extends AbstractSuggester
             [
                 self::SUGGEST_MODE_ALWAYS,
                 self::SUGGEST_MODE_MISSING,
-                self::SUGGEST_MODE_MISSING,
             ]
         )
         ) {
