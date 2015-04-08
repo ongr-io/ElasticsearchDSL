@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchBundle\DSL\ScriptAwareTrait;
 
 /**
  * Class representing TermsAggregation.
@@ -19,16 +20,36 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\BucketingTrait;
 class TermsAggregation extends AbstractAggregation
 {
     use BucketingTrait;
+    use ScriptAwareTrait;
 
-    const MODE_COUNT = '_count';
-    const MODE_TERM = '_term';
     const DIRECTION_ASC = 'asc';
     const DIRECTION_DESC = 'desc';
+    const HINT_MAP = 'map';
+    const HINT_GLOBAL_ORDINALS = 'global_ordinals';
+    const HINT_GLOBAL_ORDINALS_HASH = 'global_ordinals_hash';
+    const HINT_GLOBAL_ORDINALS_LOW_CARDINALITY = 'global_ordinals_low_cardinality';
+    const COLLECT_BREADTH_FIRST = 'breadth_first';
+    const COLLECT_DEPTH_FIRST = 'depth_first';
 
     /**
      * @var int
      */
     private $size;
+
+    /**
+     * @var int
+     */
+    private $shardSize;
+
+    /**
+     * @var int
+     */
+    private $shardMinDocCount;
+
+    /**
+     * @var string
+     */
+    private $executionHint;
 
     /**
      * @var string
@@ -43,7 +64,7 @@ class TermsAggregation extends AbstractAggregation
     /**
      * @var int
      */
-    private $minDocumentCount;
+    private $minDocCount;
 
     /**
      * @var string
@@ -66,6 +87,67 @@ class TermsAggregation extends AbstractAggregation
     private $excludeFlags;
 
     /**
+     * @var string
+     */
+    private $collectMode;
+
+    /**
+     * @return string
+     */
+    public function getCollectMode()
+    {
+        return $this->collectMode;
+    }
+
+    /**
+     * @param string $collectMode
+     */
+    public function setCollectMode($collectMode = self::COLLECT_DEPTH_FIRST)
+    {
+        $this->collectMode = $collectMode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShardSize()
+    {
+        return $this->shardSize;
+    }
+
+    /**
+     * @param int $shardSize
+     */
+    public function setShardSize($shardSize)
+    {
+        $this->shardSize = $shardSize;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShardMinDocCount()
+    {
+        return $this->shardMinDocCount;
+    }
+
+    /**
+     * @param int $shardMinDocCount
+     */
+    public function setShardMinDocCount($shardMinDocCount)
+    {
+        $this->shardMinDocCount = $shardMinDocCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
      * Sets buckets max count.
      *
      * @param int $size
@@ -73,6 +155,22 @@ class TermsAggregation extends AbstractAggregation
     public function setSize($size)
     {
         $this->size = $size;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExecutionHint()
+    {
+        return $this->executionHint;
+    }
+
+    /**
+     * @param string $executionHint
+     */
+    public function setExecutionHint($executionHint = self::HINT_MAP)
+    {
+        $this->executionHint = $executionHint;
     }
 
     /**
@@ -88,13 +186,41 @@ class TermsAggregation extends AbstractAggregation
     }
 
     /**
+     * @return array|null
+     */
+    public function getOrder()
+    {
+        if ($this->isOrder()) {
+            return [$this->orderMode => $this->orderDirection];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isOrder()
+    {
+        return $this->orderMode && $this->orderDirection;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinDocCount()
+    {
+        return $this->minDocCount;
+    }
+
+    /**
      * Sets minimum hits to consider as term.
      *
-     * @param int $count
+     * @param int $minDocCount
      */
-    public function setMinDocumentCount($count)
+    public function setMinDocCount($minDocCount)
     {
-        $this->minDocumentCount = $count;
+        $this->minDocCount = $minDocCount;
     }
 
     /**
@@ -140,31 +266,24 @@ class TermsAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        $data = ['field' => $this->getField()];
-
-        if ($this->orderMode && $this->orderDirection) {
-            $data['order'] = [
-                $this->orderMode => $this->orderDirection,
-            ];
-        }
-
-        if ($this->size) {
-            $data['size'] = $this->size;
-        }
-
-        if ($this->minDocumentCount !== null) {
-            $data['min_doc_count'] = $this->minDocumentCount;
-        }
-
-        $includeResult = $this->getIncludeExclude($this->include, $this->includeFlags);
-        if ($includeResult) {
-            $data['include'] = $includeResult;
-        }
-
-        $excludeResult = $this->getIncludeExclude($this->exclude, $this->excludeFlags);
-        if ($excludeResult) {
-            $data['exclude'] = $excludeResult;
-        }
+        $data = array_filter(
+            [
+                'field' => $this->getField(),
+                'min_doc_count' => $this->getMinDocCount(),
+                'size' => $this->getSize(),
+                'shard_size' => $this->getShardSize(),
+                'shard_min_doc_count' => $this->getShardMinDocCount(),
+                'order' => $this->getOrder(),
+                'include' => $this->getIncludeExclude($this->include, $this->includeFlags),
+                'exclude' => $this->getIncludeExclude($this->exclude, $this->excludeFlags),
+                'execution_hint' => $this->getExecutionHint(),
+                'script' => $this->getScript(),
+                'collect_mode' => $this->getCollectMode(),
+            ],
+            function ($value) {
+                return ($value || $value !== null);
+            }
+        );
 
         return $data;
     }
