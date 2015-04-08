@@ -64,7 +64,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setSize(1);
-        $aggregation->setMinDocumentCount(10);
+        $aggregation->setMinDocCount(10);
 
         $result = [
             'agg_test_agg' => [
@@ -141,7 +141,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #5 terms aggregation with order default direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setOrder(TermsAggregation::MODE_COUNT);
+        $aggregation->setOrder('_count');
 
         $result = [
             'agg_test_agg' => [
@@ -163,7 +163,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #6 terms aggregation with order term mode, desc direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setOrder(TermsAggregation::MODE_TERM, TermsAggregation::DIRECTION_DESC);
+        $aggregation->setOrder('_term', TermsAggregation::DIRECTION_DESC);
 
         $result = [
             'agg_test_agg' => [
