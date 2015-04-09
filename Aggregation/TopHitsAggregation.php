@@ -49,7 +49,9 @@ class TopHitsAggregation extends AbstractAggregation
         parent::__construct($name);
         $this->setFrom($from);
         $this->setSize($size);
-        $this->setSort($sort);
+        if (!empty($sort)) {
+            $this->setSort($sort);
+        }
     }
 
     /**
