@@ -49,7 +49,7 @@ class Field implements NamedBuilderInterface
     private $matchedFields;
 
     /**
-     * @var BuilderInterface Query to highlight.
+     * @var array BuilderInterface query to highlight.
      */
     private $highlightQuery;
 
