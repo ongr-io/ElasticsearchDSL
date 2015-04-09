@@ -18,6 +18,8 @@ class CategoryContext extends AbstractContext
 {
     /**
      * {@inheritdoc}
+     *
+     * @return array|string
      */
     public function toArray()
     {
