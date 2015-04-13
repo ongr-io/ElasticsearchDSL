@@ -49,9 +49,7 @@ class TopHitsAggregation extends AbstractAggregation
         parent::__construct($name);
         $this->setFrom($from);
         $this->setSize($size);
-        if (!empty($sort)) {
-            $this->setSort($sort);
-        }
+        $this->setSort($sort);
     }
 
     /**
@@ -129,18 +127,32 @@ class TopHitsAggregation extends AbstractAggregation
     {
         $data = new \stdClass();
 
-        if ($this->getSort()) {
-            $data->sort = $this->getSort()->toArray();
-        }
-
-        if ($this->getSize()) {
-            $data->size = $this->getSize();
-        }
-
-        if ($this->getFrom()) {
-            $data->from = $this->getFrom();
+        $filteredData = $this->getFilteredData();
+        foreach ($filteredData as $key => $value) {
+            $data->{$key} = $value;
         }
 
         return $data;
+    }
+
+    /**
+     * Filters the data.
+     *
+     * @return array
+     */
+    private function getFilteredData()
+    {
+        $fd = array_filter(
+            [
+                'sort' => $this->getSort() ? $this->getSort()->toArray() : [],
+                'size' => $this->getSize(),
+                'from' => $this->getFrom(),
+            ],
+            function ($val) {
+                return (($val || is_array($val) || ($val || is_numeric($val))));
+            }
+        );
+
+        return $fd;
     }
 }
