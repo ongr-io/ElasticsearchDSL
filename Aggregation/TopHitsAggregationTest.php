@@ -25,10 +25,10 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $sorts = new Sorts();
-        $aggregation = new TopHitsAggregation('test', 1, 1, $sorts);
+        $aggregation = new TopHitsAggregation('test', 0, 1);
 
         $expectedAgg = new \stdClass();
-        $expectedAgg->size = 1;
+        $expectedAgg->size = 0;
         $expectedAgg->from = 1;
         $expectedAgg->sort = $sorts->toArray();
         $expected = [
