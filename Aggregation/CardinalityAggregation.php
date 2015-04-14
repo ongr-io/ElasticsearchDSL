@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\MetricTrait;
+use ONGR\ElasticsearchBundle\DSL\ScriptAwareTrait;
 
 /**
  * Difference values counter.
@@ -19,6 +20,7 @@ use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\MetricTrait;
 class CardinalityAggregation extends AbstractAggregation
 {
     use MetricTrait;
+    use ScriptAwareTrait;
 
     /**
      * @var int
@@ -31,32 +33,23 @@ class CardinalityAggregation extends AbstractAggregation
     private $rehash;
 
     /**
-     * @var string
-     */
-    private $script;
-
-    /**
      * {@inheritdoc}
      */
     public function getArray()
     {
-        $out = [];
+        $out = array_filter(
+            [
+                'field' => $this->getField(),
+                'script' => $this->getScript(),
+                'precision_threshold' => $this->getPrecisionThreshold(),
+                'rehash' => $this->isRehash(),
+            ],
+            function ($val) {
+                return ($val || is_bool($val));
+            }
+        );
 
-        if ($this->getField()) {
-            $out['field'] = $this->getField();
-        } elseif ($this->getScript()) {
-            $out['script'] = $this->getScript();
-        } else {
-            throw new \LogicException('Cardinality aggregation must have field or script set.');
-        }
-
-        if ($this->getPrecisionThreshold()) {
-            $out['precision_threshold'] = $this->getPrecisionThreshold();
-        }
-
-        if ($this->isRehash()) {
-            $out['rehash'] = $this->isRehash();
-        }
+        $this->checkRequiredFields($out);
 
         return $out;
     }
@@ -96,26 +89,24 @@ class CardinalityAggregation extends AbstractAggregation
     }
 
     /**
-     * @return string
-     */
-    public function getScript()
-    {
-        return $this->script;
-    }
-
-    /**
-     * @param string $script
-     */
-    public function setScript($script)
-    {
-        $this->script = $script;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getType()
     {
         return 'cardinality';
+    }
+
+    /**
+     * Checks if required fields are set.
+     *
+     * @param array $fields
+     *
+     * @throws \LogicException
+     */
+    private function checkRequiredFields($fields)
+    {
+        if (!array_key_exists('field', $fields) && !array_key_exists('script', $fields)) {
+            throw new \LogicException('Cardinality aggregation must have field or script set.');
+        }
     }
 }
