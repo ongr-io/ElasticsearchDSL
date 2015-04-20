@@ -41,7 +41,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #1 terms aggregation with size.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setSize(1);
+        $aggregation->addParameter('size', 1);
 
         $result = [
             'agg_test_agg' => [
@@ -63,8 +63,8 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #2 terms aggregation with size and min document count.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setSize(1);
-        $aggregation->setMinDocCount(10);
+        $aggregation->addParameter('size', 1);
+        $aggregation->addParameter('min_doc_count', 10);
 
         $result = [
             'agg_test_agg' => [
@@ -87,8 +87,8 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #3 terms aggregation with simple include, exclude.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setInclude('test_.*');
-        $aggregation->setExclude('pizza_.*');
+        $aggregation->addParameter('include', 'test_.*');
+        $aggregation->addParameter('exclude', 'pizza_.*');
 
         $result = [
             'agg_test_agg' => [
@@ -111,8 +111,20 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #4 terms aggregation with include, exclude and flags.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setInclude('test_.*', 'CANON_EQ|CASE_INSENSITIVE');
-        $aggregation->setExclude('pizza_.*', 'CASE_INSENSITIVE');
+        $aggregation->addParameter(
+            'include',
+            [
+                'pattern' => 'test_.*',
+                'flags' => 'CANON_EQ|CASE_INSENSITIVE',
+            ]
+        );
+        $aggregation->addParameter(
+            'exclude',
+            [
+                'pattern' => 'pizza_.*',
+                'flags' => 'CASE_INSENSITIVE',
+            ]
+        );
 
         $result = [
             'agg_test_agg' => [
@@ -141,7 +153,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #5 terms aggregation with order default direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setOrder('_count');
+        $aggregation->addParameter('order', ['_count' => 'asc']);
 
         $result = [
             'agg_test_agg' => [
@@ -163,7 +175,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #6 terms aggregation with order term mode, desc direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setOrder('_term', TermsAggregation::DIRECTION_DESC);
+        $aggregation->addParameter('order', ['_term' => 'desc']);
 
         $result = [
             'agg_test_agg' => [
