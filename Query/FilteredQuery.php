@@ -34,7 +34,7 @@ class FilteredQuery extends AbstractFilter implements BuilderInterface
     }
 
     /**
-     * @return Query $query
+     * @return Query
      */
     public function getQuery()
     {
