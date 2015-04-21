@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\BucketingTrait;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 use ONGR\ElasticsearchBundle\DSL\ScriptAwareTrait;
 
 /**
@@ -22,7 +21,6 @@ class TermsAggregation extends AbstractAggregation
 {
     use BucketingTrait;
     use ScriptAwareTrait;
-    use ParametersTrait;
 
     /**
      * {@inheritdoc}
@@ -44,6 +42,6 @@ class TermsAggregation extends AbstractAggregation
             ]
         );
 
-        return $this->processArray($data);
+        return $data;
     }
 }
