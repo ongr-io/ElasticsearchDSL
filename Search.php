@@ -365,7 +365,7 @@ class Search
     }
 
     /**
-     * Returns currectly contained sorts object.
+     * Returns sorts object.
      *
      * @return Sorts
      */

@@ -31,7 +31,7 @@ interface SearchEndpointInterface extends NormalizableInterface
     public function addBuilder(BuilderInterface $builder, $parameters = []);
 
     /**
-     * Returns currectly contained builder.
+     * Returns contained builder.
      *
      * @return BuilderInterface|BuilderInterface[]
      */
