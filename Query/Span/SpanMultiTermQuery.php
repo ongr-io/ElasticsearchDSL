@@ -53,6 +53,7 @@ class SpanMultiTermQuery implements SpanQueryInterface
      */
     public function toArray()
     {
+        $query = [];
         $query['match'] = [$this->query->getType() => $this->query->toArray()];
         $output = $this->processArray($query);
 

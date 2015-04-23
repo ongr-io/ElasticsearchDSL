@@ -49,6 +49,7 @@ class NotFilter implements BuilderInterface
      */
     public function toArray()
     {
+        $query = [];
         $query['filter'] = [$this->filter->getType() => $this->filter->toArray()];
 
         $output = $this->processArray($query);

@@ -49,6 +49,7 @@ class IdsFilter implements BuilderInterface
      */
     public function toArray()
     {
+        $query = [];
         $query['values'] = $this->values;
 
         $output = $this->processArray($query);

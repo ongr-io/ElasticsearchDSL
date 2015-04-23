@@ -56,6 +56,7 @@ class GeoPolygonFilter implements BuilderInterface
      */
     public function toArray()
     {
+        $query = [];
         $query[$this->field] = ['points' => $this->points];
         $output = $this->processArray($query);
 

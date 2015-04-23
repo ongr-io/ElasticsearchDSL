@@ -49,6 +49,7 @@ class MissingFilter implements BuilderInterface
      */
     public function toArray()
     {
+        $query = [];
         $query['field'] = $this->field;
 
         $output = $this->processArray($query);
