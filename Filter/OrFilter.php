@@ -16,47 +16,16 @@ use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 
 /**
  * Represents Elasticsearch "or" filter.
+ *
+ * @link http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-or-filter.html
  */
-class OrFilter implements BuilderInterface
+class OrFilter extends AndFilter
 {
-    use ParametersTrait;
-
-    /**
-     * @var BuilderInterface[]
-     */
-    private $filters;
-
-    /**
-     * @param BuilderInterface[] $filters    Filters.
-     * @param array              $parameters Optional parameters.
-     */
-    public function __construct($filters, array $parameters = [])
-    {
-        $this->filters = $filters;
-        $this->setParameters($parameters);
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getType()
     {
         return 'or';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [];
-
-        foreach ($this->filters as $filter) {
-            $query['filters'][] = [$filter->getType() => $filter->toArray()];
-        }
-
-        $output = $this->processArray($query);
-
-        return $output;
     }
 }
