@@ -20,7 +20,7 @@ class OrFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetType()
     {
-        $filter = new OrFilter('', []);
+        $filter = new OrFilter();
         $result = $filter->getType();
         $this->assertEquals('or', $result);
     }
@@ -56,12 +56,10 @@ class OrFilterTest extends \PHPUnit_Framework_TestCase
                 [$mockBuilderFirstFilter],
                 [],
                 [
-                    'filters' => [
-                        0 => [
-                            'term' => [
-                                'test_field' => [
-                                    'test_value' => 'test',
-                                ],
+                    [
+                        'term' => [
+                            'test_field' => [
+                                'test_value' => 'test',
                             ],
                         ],
                     ],
@@ -72,19 +70,17 @@ class OrFilterTest extends \PHPUnit_Framework_TestCase
                 [$mockBuilderFirstFilter, $mockBuilderSecondFilter],
                 [],
                 [
-                    'filters' => [
-                        0 => [
-                            'term' => [
-                                'test_field' => [
-                                    'test_value' => 'test',
-                                ],
+                    [
+                        'term' => [
+                            'test_field' => [
+                                'test_value' => 'test',
                             ],
                         ],
-                        1 => [
-                            'prefix' => [
-                                'test_field' => [
-                                    'test_value' => 'test',
-                                ],
+                    ],
+                    [
+                        'prefix' => [
+                            'test_field' => [
+                                'test_value' => 'test',
                             ],
                         ],
                     ],

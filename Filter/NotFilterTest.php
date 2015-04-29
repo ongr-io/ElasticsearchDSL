@@ -20,7 +20,7 @@ class NotFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetType()
     {
-        $filter = new NotFilter('', []);
+        $filter = new NotFilter();
         $this->assertEquals('not', $filter->getType());
     }
 

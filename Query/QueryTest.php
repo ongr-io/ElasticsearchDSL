@@ -36,14 +36,17 @@ class QueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddQuery()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+        $missingFilterMock = $this
+            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
             ->disableOriginalConstructor()
-            ->setMethods(['addToBool'])
+            ->setMethods(['add'])
             ->getMock();
-        $missingFilterMock->expects($this->once())
-            ->method('addToBool')
+        $missingFilterMock
+            ->expects($this->once())
+            ->method('add')
             ->withAnyParameters();
-        $postFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\PostFilter')
+        $postFilterMock = $this
+            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\PostFilter')
             ->disableOriginalConstructor()
             ->getMock();
 

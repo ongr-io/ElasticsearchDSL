@@ -39,33 +39,19 @@ class PostFilterTest extends \PHPUnit_Framework_TestCase
     public function testAddFilter()
     {
         $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
-            ->setMethods(['addToBool'])
             ->disableOriginalConstructor()
             ->getMock();
-        $missingFilterMock->expects($this->once())
-            ->method('addToBool')
-            ->withAnyParameters();
+        $missingFilterMock
+            ->expects($this->once())
+            ->method('toArray')
+            ->willReturn([]);
+        $missingFilterMock
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn('test_type');
 
         $postFilter = new PostFilter();
         $postFilter->setFilter($missingFilterMock);
-        $postFilter->addFilter($missingFilterMock, 'test');
-    }
-
-    /**
-     * Test setBoolParameters method.
-     */
-    public function testSetBoolParameters()
-    {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
-            ->setMethods(['setParameters'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $missingFilterMock->expects($this->once())
-            ->method('setParameters')
-            ->withAnyParameters();
-
-        $postFilter = new PostFilter();
-        $postFilter->setFilter($missingFilterMock);
-        $postFilter->setBoolParameters(['test_param']);
+        $this->assertEquals(['test_type' => []], $postFilter->toArray());
     }
 }
