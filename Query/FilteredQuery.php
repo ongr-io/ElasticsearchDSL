@@ -12,45 +12,76 @@
 namespace ONGR\ElasticsearchBundle\DSL\Query;
 
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\Filter\AbstractFilter;
+use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 
 /**
- * Filtered query class.
+ * Represents Elasticsearch "bool" filter.
+ *
+ * @link http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-filtered-query.html
  */
-class FilteredQuery extends AbstractFilter implements BuilderInterface
+class FilteredQuery implements BuilderInterface
 {
+    use ParametersTrait;
+    
     /**
-     * @var Query Used inside filtered area.
+     * @var BuilderInterface Used query inside filtered query.
      */
     private $query;
 
     /**
-     * @param Query $query
+     * @var BuilderInterface Used filter inside filtered query.
      */
-    public function __construct($query = null)
-    {
-        parent::__construct();
-        $this->query = $query;
-    }
+    private $filter;
 
     /**
-     * @return Query
+     * @param BuilderInterface $query
+     * @param BuilderInterface $filter
      */
-    public function getQuery()
+    public function __construct($query = null, $filter = null)
     {
-        if ($this->query === null) {
-            $this->query = new Query();
+        if ($query !== null) {
+            $this->setQuery($query);
         }
-
-        return $this->query;
+        
+        if ($filter !== null) {
+            $this->setFilter($filter);
+        }
     }
 
     /**
+     * Sets query.
+     *
      * @param BuilderInterface $query
      */
     public function setQuery(BuilderInterface $query)
     {
         $this->query = $query;
+    }
+
+    /**
+     * @return BuilderInterface
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * Sets filter.
+     *
+     * @param BuilderInterface $filter
+     */
+    public function setFilter(BuilderInterface $filter)
+    {
+        $this->filter = $filter;
+    }
+
+    /**
+     * @return BuilderInterface
+     */
+    public function getFilter()
+    {
+        return $this->filter;
     }
 
     /**
@@ -67,12 +98,15 @@ class FilteredQuery extends AbstractFilter implements BuilderInterface
     public function toArray()
     {
         $output = [];
-        $output['filter'] = parent::toArray();
+        
+        if ($this->getFilter()) {
+            $output['filter'][$this->getFilter()->getType()] = $this->getFilter()->toArray();
+        }
 
-        if ($this->query) {
+        if ($this->getQuery()) {
             $output['query'][$this->getQuery()->getType()] = $this->getQuery()->toArray();
         }
 
-        return $output;
+        return count($output) > 0 ? $this->processArray($output) : [];
     }
 }

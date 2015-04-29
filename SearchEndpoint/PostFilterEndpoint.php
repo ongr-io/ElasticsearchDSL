@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Search post filter dsl endpoint.
  */
-class PostFilterEndpoint extends QueryEndpoint
+class PostFilterEndpoint extends FilterEndpoint
 {
     /**
      * {@inheritdoc}
@@ -26,7 +26,7 @@ class PostFilterEndpoint extends QueryEndpoint
     {
         if ($this->getBuilder()) {
             $postFilter = new PostFilter();
-            $postFilter->setBoolParameters($this->getParameters());
+            !$this->isBool() ? : $this->getBuilder()->setParameters($this->getParameters());
             $postFilter->setFilter($this->getBuilder());
 
             return $postFilter->toArray();

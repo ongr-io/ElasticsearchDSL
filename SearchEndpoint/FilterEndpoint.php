@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
 
+use ONGR\ElasticsearchBundle\DSL\Filter\BoolFilter;
 use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -26,7 +27,7 @@ class FilterEndpoint extends QueryEndpoint
     {
         if ($this->getBuilder()) {
             $query = new FilteredQuery();
-            $query->setBoolParameters($this->getParameters());
+            !$this->isBool() ? : $this->getBuilder()->setParameters($this->getParameters());
             $query->setFilter($this->getBuilder());
             $this->addReference('filtered_query', $query);
         }
@@ -38,5 +39,13 @@ class FilterEndpoint extends QueryEndpoint
     public function getOrder()
     {
         return 1;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getBoolInstance()
+    {
+        return new BoolFilter();
     }
 }

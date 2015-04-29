@@ -11,9 +11,9 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\Bool\Bool;
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
 use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
+use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery;
 use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
 use ONGR\ElasticsearchBundle\Serializer\Normalizer\OrderedNormalizerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +27,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     use ParametersTrait;
 
     /**
-     * @var BuilderInterface|Bool
+     * @var BuilderInterface|BoolQuery
      */
     private $query;
 
@@ -54,8 +54,8 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
             $this->setBuilder($builder);
         } else {
             $parameters = $this->resolver->resolve(array_filter($parameters));
-            $this->query instanceof Bool ? : $this->convertToBool();
-            $this->query->addToBool($builder, $parameters['bool_type']);
+            $this->isBool() ? : $this->convertToBool();
+            $this->query->add($builder, $parameters['bool_type']);
         }
 
         return $this;
@@ -123,8 +123,28 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     {
         $resolver
             ->setDefaults(
-                ['bool_type' => Bool::MUST]
+                ['bool_type' => BoolQuery::MUST]
             );
+    }
+
+    /**
+     * Returns true if query is bool.
+     *
+     * @return bool
+     */
+    protected function isBool()
+    {
+        return $this->getBuilder() instanceof BoolQuery;
+    }
+
+    /**
+     * Returns bool instance for this endpoint case.
+     *
+     * @return BoolQuery
+     */
+    protected function getBoolInstance()
+    {
+        return new BoolQuery();
     }
 
     /**
@@ -132,10 +152,10 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
      */
     private function convertToBool()
     {
-        $bool = new Bool();
+        $bool = $this->getBoolInstance();
 
         if ($this->query !== null) {
-            $bool->addToBool($this->query);
+            $bool->add($this->query);
         }
 
         $this->query = $bool;
