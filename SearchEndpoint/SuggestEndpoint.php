@@ -11,9 +11,6 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 /**
  * Search suggesters dsl endpoint.
  */

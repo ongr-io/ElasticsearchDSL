@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
 
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**
