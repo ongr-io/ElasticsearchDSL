@@ -11,9 +11,6 @@
 
 namespace ONGR\ElasticsearchBundle\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "or" filter.
  *

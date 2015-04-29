@@ -30,7 +30,7 @@ class Query implements BuilderInterface
      *
      * @deprecated will remove in 1.0 Add NestedQuery to the Query as all other queries.
      */
-    private $nested = null;
+    private $nested;
 
     /**
      * @param array $boolParams Possible values:

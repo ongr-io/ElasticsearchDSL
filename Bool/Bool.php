@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchBundle\DSL\Bool;
 
 use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery;
 
 /**
