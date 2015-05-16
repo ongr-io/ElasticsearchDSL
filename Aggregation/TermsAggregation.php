@@ -148,7 +148,7 @@ class TermsAggregation extends AbstractAggregation
             ];
         }
 
-        if ($this->size) {
+        if ($this->size !== null) {
             $data['size'] = $this->size;
         }
 
