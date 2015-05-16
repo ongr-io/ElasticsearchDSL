@@ -53,6 +53,22 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($aggregation->toArray(), $result);
+
+        // Case #2 terms aggregation with zero size.
+        $aggregation = new TermsAggregation('test_agg');
+        $aggregation->setField('test_field');
+        $aggregation->setSize(0);
+
+        $result = [
+            'agg_test_agg' => [
+                'terms' => [
+                    'field' => 'test_field',
+                    'size' => 0,
+                ],
+            ],
+        ];
+
+        $this->assertEquals($aggregation->toArray(), $result);
     }
 
     /**
@@ -60,7 +76,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testTermsAggregationMinDocumentCount()
     {
-        // Case #2 terms aggregation with size and min document count.
+        // Case #3 terms aggregation with size and min document count.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setSize(1);
@@ -84,7 +100,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testTermsAggregationSimpleIncludeExclude()
     {
-        // Case #3 terms aggregation with simple include, exclude.
+        // Case #4 terms aggregation with simple include, exclude.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setInclude('test_.*');
@@ -108,7 +124,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testTermsAggregationIncludeExcludeFlags()
     {
-        // Case #4 terms aggregation with include, exclude and flags.
+        // Case #5 terms aggregation with include, exclude and flags.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setInclude('test_.*', 'CANON_EQ|CASE_INSENSITIVE');
@@ -138,7 +154,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testTermsAggregationSetOrder()
     {
-        // Case #5 terms aggregation with order default direction.
+        // Case #6 terms aggregation with order default direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setOrder(TermsAggregation::MODE_COUNT);
@@ -160,7 +176,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testTermsAggregationSetOrderDESC()
     {
-        // Case #6 terms aggregation with order term mode, desc direction.
+        // Case #7 terms aggregation with order term mode, desc direction.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
         $aggregation->setOrder(TermsAggregation::MODE_TERM, TermsAggregation::DIRECTION_DESC);
