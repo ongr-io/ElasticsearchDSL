@@ -41,7 +41,7 @@ class SearchEndpointFactory
     public static function get($type)
     {
         if (!array_key_exists($type, self::$endpoints)) {
-            throw new \RuntimeException();
+            throw new \RuntimeException('Endpoint does not exist.');
         }
 
         return new self::$endpoints[$type]();
