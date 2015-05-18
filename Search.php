@@ -27,8 +27,6 @@ use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
  */
 class Search
 {
-    const SCROLL_DURATION = '5m';
-
     /**
      * @var int
      */
@@ -587,7 +585,7 @@ class Search
      *
      * @return Search
      */
-    public function setScroll($duration = self::SCROLL_DURATION)
+    public function setScroll($duration = '5m')
     {
         $this->scroll = $duration;
 
