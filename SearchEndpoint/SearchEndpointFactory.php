@@ -37,19 +37,13 @@ class SearchEndpointFactory
      * @return SearchEndpointInterface
      *
      * @throws \RuntimeException Endpoint does not exist.
-     * @throws \DomainException  Endpoint is not implementing SearchEndpointInterface.
      */
     public static function get($type)
     {
         if (!array_key_exists($type, self::$endpoints)) {
-            throw new \RuntimeException();
-        }
-        $endpoint = new self::$endpoints[$type]();
-
-        if ($endpoint instanceof SearchEndpointInterface) {
-            return $endpoint;
+            throw new \RuntimeException('Endpoint does not exist.');
         }
 
-        throw new \DomainException();
+        return new self::$endpoints[$type]();
     }
 }
