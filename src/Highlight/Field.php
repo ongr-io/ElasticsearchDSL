@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Highlight;
+namespace ONGR\ElasticsearchDSL\Highlight;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 
 /**
  * This class holds data for highlighting field.

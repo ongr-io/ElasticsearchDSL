@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Query class.

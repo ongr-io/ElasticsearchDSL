@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\DslTypeAwareTrait;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\DslTypeAwareTrait;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch has_child filter.

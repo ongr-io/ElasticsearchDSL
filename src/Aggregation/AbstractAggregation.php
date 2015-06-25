@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\NamedBuilderBag;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * AbstractAggregation class.

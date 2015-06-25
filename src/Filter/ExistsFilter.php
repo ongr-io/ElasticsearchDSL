@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Represents Elasticsearch "exists" filter.

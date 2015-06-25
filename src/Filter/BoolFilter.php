@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
 
 /**
  * Represents Elasticsearch "bool" filter.

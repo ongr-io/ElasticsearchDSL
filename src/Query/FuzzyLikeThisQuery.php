@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Query;
 
 /**
  * Elasticsearch fuzzy_like_this query class.

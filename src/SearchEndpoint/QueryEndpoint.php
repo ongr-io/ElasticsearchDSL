@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
-use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery;
-use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchBundle\Serializer\Normalizer\OrderedNormalizerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

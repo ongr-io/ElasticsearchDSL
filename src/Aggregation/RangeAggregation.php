@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
 
 /**
  * Class representing RangeAggregation.

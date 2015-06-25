@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Represents Elasticsearch "indices" filter.
@@ -67,7 +67,7 @@ class IndicesFilter implements BuilderInterface
         $output['filter'] = [$this->filter->getType() => $this->filter->toArray()];
 
         if ($this->noMatchFilter !== null) {
-            if (is_a($this->noMatchFilter, 'ONGR\ElasticsearchBundle\DSL\BuilderInterface')) {
+            if (is_a($this->noMatchFilter, 'ONGR\ElasticsearchDSL\BuilderInterface')) {
                 $output['no_match_filter'] = [$this->noMatchFilter->getType() => $this->noMatchFilter->toArray()];
             } else {
                 $output['no_match_filter'] = $this->noMatchFilter;

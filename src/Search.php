@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL;
+namespace ONGR\ElasticsearchDSL;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\AbstractAggregation;
-use ONGR\ElasticsearchBundle\DSL\Highlight\Highlight;
-use ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SearchEndpointFactory;
-use ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SearchEndpointInterface;
-use ONGR\ElasticsearchBundle\DSL\Sort\AbstractSort;
-use ONGR\ElasticsearchBundle\DSL\Sort\Sorts;
-use ONGR\ElasticsearchBundle\DSL\Suggester\AbstractSuggester;
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
+use ONGR\ElasticsearchDSL\Highlight\Highlight;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
+use ONGR\ElasticsearchDSL\Sort\AbstractSort;
+use ONGR\ElasticsearchDSL\Sort\Sorts;
+use ONGR\ElasticsearchDSL\Suggester\AbstractSuggester;
 use ONGR\ElasticsearchBundle\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchBundle\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;

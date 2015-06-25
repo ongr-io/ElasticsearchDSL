@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL;
+namespace ONGR\ElasticsearchDSL;
 
 /**
  * Container for named builders.

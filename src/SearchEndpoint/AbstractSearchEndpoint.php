@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchBundle\Serializer\Normalizer\AbstractNormalizable;
 

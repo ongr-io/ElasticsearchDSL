@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Suggester;
+namespace ONGR\ElasticsearchDSL\Suggester;
 
 /**
  * Phrase class.

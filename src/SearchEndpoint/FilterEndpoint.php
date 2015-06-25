@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\BoolFilter;
-use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
+use ONGR\ElasticsearchDSL\Filter\BoolFilter;
+use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

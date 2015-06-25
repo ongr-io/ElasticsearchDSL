@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\Sort\Sorts;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Sort\Sorts;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

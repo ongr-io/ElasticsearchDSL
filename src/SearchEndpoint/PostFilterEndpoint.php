@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\PostFilter;
+use ONGR\ElasticsearchDSL\Filter\PostFilter;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

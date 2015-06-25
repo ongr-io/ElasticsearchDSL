@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\Type\MetricTrait;
-use ONGR\ElasticsearchBundle\DSL\ScriptAwareTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
+use ONGR\ElasticsearchDSL\ScriptAwareTrait;
 
 /**
  * Class representing PercentilesAggregation.

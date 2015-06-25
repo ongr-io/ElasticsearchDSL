@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Sort;
+namespace ONGR\ElasticsearchDSL\Sort;
 
 /**
  * A special type of sorting by distance.

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Aggregation;
 
 /**
  * Class representing Max Aggregation.

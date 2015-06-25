@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Suggester;
+namespace ONGR\ElasticsearchDSL\Suggester;
 
-use ONGR\ElasticsearchBundle\DSL\Suggester\Context\AbstractContext;
+use ONGR\ElasticsearchDSL\Suggester\Context\AbstractContext;
 
 /**
  * Context suggester.

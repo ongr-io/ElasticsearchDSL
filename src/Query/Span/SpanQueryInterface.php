@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Query\Span;
+namespace ONGR\ElasticsearchDSL\Query\Span;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Interface SpanQueryInterface to recognise span queries.

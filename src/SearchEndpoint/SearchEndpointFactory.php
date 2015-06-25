@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 /**
  * Factory for search endpoints.
@@ -20,13 +20,13 @@ class SearchEndpointFactory
      * @var array Holds namespaces for endpoints.
      */
     private static $endpoints = [
-        'query' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\QueryEndpoint',
-        'filter' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\FilterEndpoint',
-        'post_filter' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\PostFilterEndpoint',
-        'sort' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SortEndpoint',
-        'highlight' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\HighlightEndpoint',
-        'aggregations' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\AggregationsEndpoint',
-        'suggest' => 'ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SuggestEndpoint',
+        'query' => 'ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint',
+        'filter' => 'ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint',
+        'post_filter' => 'ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint',
+        'sort' => 'ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint',
+        'highlight' => 'ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint',
+        'aggregations' => 'ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint',
+        'suggest' => 'ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint',
     ];
 
     /**

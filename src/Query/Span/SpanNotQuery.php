@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Query\Span;
+namespace ONGR\ElasticsearchDSL\Query\Span;
 
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch Span not query.

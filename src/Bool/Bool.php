@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Bool;
+namespace ONGR\ElasticsearchDSL\Bool;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
 
 /**
  * Bool operator. Can be used for filters and queries.
  *
- * @deprecated Will be removed in 1.0. Use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery.
+ * @deprecated Will be removed in 1.0. Use ONGR\ElasticsearchDSL\Query\BoolQuery.
  */
 class Bool extends BoolQuery
 {
@@ -29,7 +29,7 @@ class Bool extends BoolQuery
      *
      * @throws \UnexpectedValueException
      *
-     * @deprecated Will be removed in 1.0. Use ONGR\ElasticsearchBundle\DSL\Query\BoolQuery::add().
+     * @deprecated Will be removed in 1.0. Use ONGR\ElasticsearchDSL\Query\BoolQuery::add().
      */
     public function addToBool(BuilderInterface $bool, $type = BoolQuery::MUST)
     {

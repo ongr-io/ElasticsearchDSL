@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Suggester\Context;
+namespace ONGR\ElasticsearchDSL\Suggester\Context;
 
 /**
  * Category context to be used by context suggester.

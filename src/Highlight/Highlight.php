@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Highlight;
+namespace ONGR\ElasticsearchDSL\Highlight;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\NamedBuilderBag;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 
 /**
  * Data holder for highlight api.

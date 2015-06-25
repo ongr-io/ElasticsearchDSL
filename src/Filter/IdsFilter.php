@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Represents Elasticsearch "ids" filter.
