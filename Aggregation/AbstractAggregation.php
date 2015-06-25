@@ -13,12 +13,15 @@ namespace ONGR\ElasticsearchBundle\DSL\Aggregation;
 
 use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
 use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
+use ONGR\ElasticsearchBundle\DSL\ParametersTrait;
 
 /**
  * AbstractAggregation class.
  */
 abstract class AbstractAggregation implements NamedBuilderInterface
 {
+    use ParametersTrait;
+
     const PREFIX = 'agg_';
 
     /**
@@ -113,7 +116,12 @@ abstract class AbstractAggregation implements NamedBuilderInterface
      */
     public function toArray()
     {
-        $result = [$this->getName() => [$this->getType() => $this->getArray()]];
+        $array = $this->getArray();
+        $result = [
+            $this->getName() => [
+                $this->getType() => is_array($array) ? $this->processArray($array) : $array,
+            ],
+        ];
 
         if ($this->supportsNesting()) {
             $nestedResult = $this->collectNestedAggregations();
