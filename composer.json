@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": ">=5.4",
+        "symfony/serializer": "~2.7",
         "elasticsearch/elasticsearch": "~1.0"
     },
     "require-dev": {
@@ -21,6 +22,9 @@
         "ongr/ongr-strict-standard": "~2.0"
     },
     "autoload": {
-        "psr-4": { "ONGR\\ElasticsearchDSL\\": "src/" }
+        "psr-4": {
+            "ONGR\\ElasticsearchDSL\\": "src/",
+            "ONGR\\ElasticsearchDSL\\Tests\\": "tests/"
+        }
     }
 }
