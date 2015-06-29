@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\NestedAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\NestedAggregation;
 
 class NestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,7 +40,7 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $termMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation')
+            ->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\TermsAggregation')
             ->disableOriginalConstructor()
             ->getMock();
 

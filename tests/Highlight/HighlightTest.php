@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Highlight;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Highlight;
 
-use ONGR\ElasticsearchBundle\DSL\Highlight\Field;
-use ONGR\ElasticsearchBundle\DSL\Highlight\Highlight;
+use ONGR\ElasticsearchDSL\Highlight\Field;
+use ONGR\ElasticsearchDSL\Highlight\Highlight;
 
 /**
  * Unit test for Highlight.

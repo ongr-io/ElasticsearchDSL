@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query\Span;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query\Span;
 
-use ONGR\ElasticsearchBundle\DSL\Query\Span\SpanNotQuery;
-use ONGR\ElasticsearchBundle\DSL\Query\Span\SpanQueryInterface;
+use ONGR\ElasticsearchDSL\Query\Span\SpanNotQuery;
+use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 
 /**
  * Unit test for SpanNotQuery.
@@ -29,7 +29,7 @@ class SpanNotQueryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Query\Span\SpanQueryInterface')->getMock();
+        $this->mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface')->getMock();
         $this->mock->expects($this->atMost(2))
             ->method('getType')
             ->will($this->returnValue('span_or'));

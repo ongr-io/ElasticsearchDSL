@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\CardinalityAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\CardinalityAggregation;
 
 /**
  * Unit test for cardinality aggregation.

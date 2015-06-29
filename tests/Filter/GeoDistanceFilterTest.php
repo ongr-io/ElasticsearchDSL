@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\GeoDistanceFilter;
+use ONGR\ElasticsearchDSL\Filter\GeoDistanceFilter;
 
 class GeoDistanceFilterTest extends \PHPUnit_Framework_TestCase
 {

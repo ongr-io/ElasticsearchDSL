@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\PrefixFilter;
+use ONGR\ElasticsearchDSL\Filter\PrefixFilter;
 
 class PrefixFilterTest extends \PHPUnit_Framework_TestCase
 {

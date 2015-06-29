@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 
-use ONGR\ElasticsearchBundle\DSL\DslTypeAwareTrait;
+use ONGR\ElasticsearchDSL\DslTypeAwareTrait;
 
 /**
  * Test for DslTypeAwareTrait.
@@ -28,7 +28,7 @@ class DslTypeAwareTraitTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->mock = $this->getMockForTrait('ONGR\ElasticsearchBundle\DSL\DslTypeAwareTrait');
+        $this->mock = $this->getMockForTrait('ONGR\ElasticsearchDSL\DslTypeAwareTrait');
     }
 
     /**

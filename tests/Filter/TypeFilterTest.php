@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\TypeFilter;
+use ONGR\ElasticsearchDSL\Filter\TypeFilter;
 
 class TypeFilterTest extends \PHPUnit_Framework_TestCase
 {

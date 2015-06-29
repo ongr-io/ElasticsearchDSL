@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\ExistsFilter;
+use ONGR\ElasticsearchDSL\Filter\ExistsFilter;
 
 /**
  * Unit test for ExistsFilter.

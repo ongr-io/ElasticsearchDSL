@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\GeoBoundsAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\GeoBoundsAggregation;
 
 /**
  * Unit test for geo bounds aggregation.

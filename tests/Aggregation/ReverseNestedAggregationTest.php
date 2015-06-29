@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\ReverseNestedAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\ReverseNestedAggregation;
 
 class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,7 +40,7 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $termMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation')
+            ->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\TermsAggregation')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -71,7 +71,7 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArrayNoPath()
     {
         $termMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation')
+            ->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\TermsAggregation')
             ->disableOriginalConstructor()
             ->getMock();
 

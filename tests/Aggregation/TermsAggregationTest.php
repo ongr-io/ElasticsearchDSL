@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\TermsAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 
 class TermsAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -57,7 +57,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #2 terms aggregation with zero size.
         $aggregation = new TermsAggregation('test_agg');
         $aggregation->setField('test_field');
-        $aggregation->setSize(0);
+        $aggregation->addParameter('size', 0);
 
         $result = [
             'agg_test_agg' => [

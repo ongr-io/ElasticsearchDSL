@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\HasChildFilter;
+use ONGR\ElasticsearchDSL\Filter\HasChildFilter;
 
 class HasChildFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class HasChildFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetType()
     {
-        $mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')->getMock();
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $filter = new HasChildFilter('test_field', $mock);
         $result = $filter->getType();
         $this->assertEquals('has_child', $result);
@@ -69,7 +69,7 @@ class HasChildFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray($type, $queryType, $queryToArray, $parameters, $dslType, $expected)
     {
-        $mockQuery = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')->getMock();
+        $mockQuery = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $mockQuery->expects($this->once())
             ->method('getType')
             ->will($this->returnValue($queryType));

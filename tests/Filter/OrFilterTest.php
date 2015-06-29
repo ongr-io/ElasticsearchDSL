@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\OrFilter;
+use ONGR\ElasticsearchDSL\Filter\OrFilter;
 
 class OrFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,7 +32,7 @@ class OrFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function getArrayDataProvider()
     {
-        $mockBuilderFirstFilter = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $mockBuilderFirstFilter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->getMock();
         $mockBuilderFirstFilter->expects($this->any())
             ->method('getType')
@@ -41,7 +41,7 @@ class OrFilterTest extends \PHPUnit_Framework_TestCase
             ->method('toArray')
             ->willReturn(['test_field' => ['test_value' => 'test']]);
 
-        $mockBuilderSecondFilter = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $mockBuilderSecondFilter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->getMock();
         $mockBuilderSecondFilter->expects($this->any())
             ->method('getType')

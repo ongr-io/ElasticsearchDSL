@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
 
-use ONGR\ElasticsearchBundle\DSL\Query\Query;
+use ONGR\ElasticsearchDSL\Query\Query;
 
 class QueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetBoolParameters()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
             ->setConstructorArgs(['test_field'])
             ->getMock();
         $missingFilterMock->expects($this->once())
@@ -37,7 +37,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     public function testAddQuery()
     {
         $missingFilterMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+            ->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
             ->disableOriginalConstructor()
             ->setMethods(['add'])
             ->getMock();
@@ -46,7 +46,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->withAnyParameters();
         $postFilterMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\PostFilter')
+            ->getMockBuilder('ONGR\ElasticsearchDSL\Filter\PostFilter')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -69,7 +69,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
             ->disableOriginalConstructor()
             ->getMock();
         $missingFilterMock->expects($this->once())

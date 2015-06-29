@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\PercentileRanksAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\PercentileRanksAggregation;
 
 /**
  * Percentile ranks aggregation unit tests.

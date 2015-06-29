@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
 
-use ONGR\ElasticsearchBundle\DSL\Query\HasChildQuery;
+use ONGR\ElasticsearchDSL\Query\HasChildQuery;
 
 class HasChildQueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class HasChildQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
             ->setConstructorArgs(['test_field'])
             ->getMock();
         $query = new HasChildQuery('test_type', $missingFilterMock, ['test_parameter1']);

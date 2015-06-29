@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\PostFilter;
+use ONGR\ElasticsearchDSL\Filter\PostFilter;
 
 class PostFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class PostFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddFilter()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
             ->disableOriginalConstructor()
             ->getMock();
         $missingFilterMock

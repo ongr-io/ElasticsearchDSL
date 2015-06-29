@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\FiltersAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
 
 /**
  * Unit test for filters aggregation.
@@ -26,7 +26,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfExceptionIsThrown()
     {
-        $mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')->getMock();
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $aggregation = new FiltersAggregation('test_agg');
         $aggregation->addFilter($mock);
     }
@@ -36,7 +36,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testFiltersAggregationGetArray()
     {
-        $mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')->getMock();
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $aggregation = new FiltersAggregation('test_agg');
         $aggregation->setAnonymous(true);
         $aggregation->addFilter($mock, 'name');
@@ -60,7 +60,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $aggregation = new FiltersAggregation('test_agg');
-        $filter = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $filter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->setMethods(['toArray', 'getType'])
             ->getMockForAbstractClass();
         $filter->expects($this->any())

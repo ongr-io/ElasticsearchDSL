@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\IndicesFilter;
+use ONGR\ElasticsearchDSL\Filter\IndicesFilter;
 
 class IndicesFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -94,7 +94,7 @@ class IndicesFilterTest extends \PHPUnit_Framework_TestCase
      */
     private function indicesQtyMockBuilder(array $param = [])
     {
-        $mockBuilder = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $mockBuilder = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->getMock();
         $mockBuilder->expects($this->any())
             ->method('getType')

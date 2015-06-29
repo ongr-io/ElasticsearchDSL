@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\FilterAggregation;
-use ONGR\ElasticsearchBundle\DSL\Filter\AndFilter;
-use ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter;
+use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
+use ONGR\ElasticsearchDSL\Filter\AndFilter;
+use ONGR\ElasticsearchDSL\Filter\MissingFilter;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +29,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #0 filter aggregation.
         $aggregation = new FilterAggregation('test_agg');
 
-        $filter = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $filter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->setMethods(['toArray', 'getType'])
             ->getMockForAbstractClass();
         $filter->expects($this->any())
@@ -60,7 +60,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new FilterAggregation('test_agg');
         $aggregation->setFilter($filter);
 
-        $aggregation2 = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\AbstractAggregation')
+        $aggregation2 = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation')
             ->disableOriginalConstructor()
             ->setMethods(['toArray', 'getName'])
             ->getMockForAbstractClass();

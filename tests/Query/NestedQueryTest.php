@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
 
-use ONGR\ElasticsearchBundle\DSL\Query\NestedQuery;
+use ONGR\ElasticsearchDSL\Query\NestedQuery;
 
 class NestedQueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class NestedQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Filter\MissingFilter')
+        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
             ->setConstructorArgs(['test_field'])
             ->getMock();
         $missingFilterMock->expects($this->any())

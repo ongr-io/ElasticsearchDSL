@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\DateRangeAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\DateRangeAggregation;
 
 class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
 {

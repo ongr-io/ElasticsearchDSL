@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query\Span;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query\Span;
 
-use ONGR\ElasticsearchBundle\DSL\BuilderInterface;
-use ONGR\ElasticsearchBundle\DSL\Query\Span\SpanMultiTermQuery;
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Query\Span\SpanMultiTermQuery;
 
 /**
  * Unit test for SpanMultiTermQuery.
@@ -32,7 +32,7 @@ class SpanMultiTermQueryTest extends \PHPUnit_Framework_TestCase
         $allowedQueries = ['\FuzzyQuery', '\PrefixQuery', '\TermQuery', '\WildcardQuery', '\RegexpQuery'];
         // Same constructors for all of these queries.
         foreach ($allowedQueries as $query) {
-            $this->mock[$query] = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Query' . "{$query}")
+            $this->mock[$query] = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query' . "{$query}")
                 ->setConstructorArgs(['field', 'value'])
                 ->getMock();
             $this->mock[$query]->expects($this->atMost(1))
@@ -79,7 +79,7 @@ class SpanMultiTermQueryTest extends \PHPUnit_Framework_TestCase
     public function testSpanMultiTermQueryToArrayNext()
     {
         /** @var BuilderInterface $mock */
-        $mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Query\RangeQuery')
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\RangeQuery')
             ->setConstructorArgs(['field', ['gte']])
             ->getMock();
         $mock->expects($this->once())

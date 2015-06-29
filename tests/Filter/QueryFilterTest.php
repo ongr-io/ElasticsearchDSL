@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
 
-use ONGR\ElasticsearchBundle\DSL\Filter\QueryFilter;
+use ONGR\ElasticsearchDSL\Filter\QueryFilter;
 
 class QueryFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class QueryFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArrayWithGetTypeFqueryWithCache()
     {
-        $mockBuilder = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $mockBuilder = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->getMock();
         $mockBuilder->expects($this->any())
             ->method('getType')
@@ -36,7 +36,7 @@ class QueryFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArrayWithGetTypeQueryWithoutCache()
     {
-        $mockBuilder = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\BuilderInterface')
+        $mockBuilder = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
             ->getMock();
         $mockBuilder->expects($this->any())
             ->method('getType')

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\DSL\SearchEndpoint\SearchEndpointFactory;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 
 /**
  * Unit test class for search endpoint factory.

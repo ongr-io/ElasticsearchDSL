@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchBundle\DSL\Aggregation\ChildrenAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\ChildrenAggregation;
 
 /**
  * Unit test for children aggregation.
@@ -44,7 +44,7 @@ class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testChildrenAggregationGetArray()
     {
-        $mock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Aggregation\AbstractAggregation')
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $aggregation = new ChildrenAggregation('foo');

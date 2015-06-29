@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderBag;
-use ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\NamedBuilderBag;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 
 class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
 {
@@ -87,7 +87,7 @@ class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     private function getBuilder($name)
     {
-        $friendlyBuilderMock = $this->getMock('ONGR\ElasticsearchBundle\DSL\NamedBuilderInterface');
+        $friendlyBuilderMock = $this->getMock('ONGR\ElasticsearchDSL\NamedBuilderInterface');
 
         $friendlyBuilderMock
             ->expects($this->once())

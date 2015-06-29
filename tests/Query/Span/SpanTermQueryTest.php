@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query\Span;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query\Span;
 
-use ONGR\ElasticsearchBundle\DSL\Query\Span\SpanTermQuery;
+use ONGR\ElasticsearchDSL\Query\Span\SpanTermQuery;
 
 /**
  * Unit test for SpanTermQuery.

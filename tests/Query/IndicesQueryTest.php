@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchBundle\Tests\Unit\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
 
-use ONGR\ElasticsearchBundle\DSL\Query\FilteredQuery;
-use ONGR\ElasticsearchBundle\DSL\Query\IndicesQuery;
-use ONGR\ElasticsearchBundle\Test\EncapsulationTestAwareTrait;
+use ONGR\ElasticsearchDSL\Query\FilteredQuery;
+use ONGR\ElasticsearchDSL\Query\IndicesQuery;
+use ONGR\ElasticsearchDSL\Test\EncapsulationTestAwareTrait;
 
 class IndicesQueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +24,7 @@ class IndicesQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function getArrayWithManyIndicesDataProvider()
     {
-        $queryMock = $this->getMockBuilder('ONGR\ElasticsearchBundle\DSL\Query\Query')
+        $queryMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\Query')
             ->getMock();
         $queryMock->expects($this->any())
             ->method('toArray')
