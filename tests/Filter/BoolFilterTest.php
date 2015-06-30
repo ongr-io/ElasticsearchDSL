@@ -11,23 +11,23 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Bool\Bool;
+use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use ONGR\ElasticsearchDSL\Filter\MissingFilter;
 use ONGR\ElasticsearchDSL\Filter\TermFilter;
 
 /**
  * Unit test for Bool.
  */
-class BoolTest extends \PHPUnit_Framework_TestCase
+class BoolFilterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests isRelevant method.
      */
     public function testBoolIsRelevant()
     {
-        $bool = new Bool();
+        $bool = new BoolFilter();
         $this->assertFalse($bool->isRelevant());
-        $bool->addToBool(new MissingFilter('test'));
+        $bool->add(new MissingFilter('test'));
         $this->assertTrue($bool->isRelevant());
     }
 
@@ -39,8 +39,8 @@ class BoolTest extends \PHPUnit_Framework_TestCase
      */
     public function testBoolAddToBoolException()
     {
-        $bool = new Bool();
-        $bool->addToBool(new MissingFilter('test'), 'Should');
+        $bool = new BoolFilter();
+        $bool->add(new MissingFilter('test'), 'Should');
     }
 
     /**
@@ -48,10 +48,10 @@ class BoolTest extends \PHPUnit_Framework_TestCase
      */
     public function testBoolToArray()
     {
-        $bool = new Bool();
-        $bool->addToBool(new TermFilter('key1', 'value1'), 'should');
-        $bool->addToBool(new TermFilter('key2', 'value2'), 'must');
-        $bool->addToBool(new TermFilter('key3', 'value3'), 'must_not');
+        $bool = new BoolFilter();
+        $bool->add(new TermFilter('key1', 'value1'), 'should');
+        $bool->add(new TermFilter('key2', 'value2'), 'must');
+        $bool->add(new TermFilter('key3', 'value3'), 'must_not');
         $expected = [
             'should' => [
                 [
@@ -83,7 +83,7 @@ class BoolTest extends \PHPUnit_Framework_TestCase
      */
     public function testBoolGetType()
     {
-        $bool = new Bool();
+        $bool = new BoolFilter();
         $result = $bool->getType();
         $this->assertEquals('bool', $result);
     }
