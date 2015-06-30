@@ -2,7 +2,7 @@
 
 Welcome to Elasticsearch DSL library. The main purpose of this library is to provide objective query builder for [elasticsearch-php][1] client.
 
-Everything starts from the `Search` object. We recommend first to take a look at the [Search](How to/HowToSearch.md) chapter.
+Everything starts from the `Search` object. We recommend first to take a look at the [Search](HowTo/HowToSearch.md) chapter.
 
 ### Topics:
 - [Build Queries](Query/index.md)
