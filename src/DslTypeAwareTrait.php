@@ -11,8 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL;
 
-use Elasticsearch\Common\Exceptions\InvalidArgumentException;
-
 /**
  * A trait which handles dsl type.
  */
@@ -38,12 +36,12 @@ trait DslTypeAwareTrait
      *
      * @param string $dslType
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setDslType($dslType)
     {
         if ($dslType !== 'filter' && $dslType !== 'query') {
-            throw new InvalidArgumentException('Not supported dsl type');
+            throw new \InvalidArgumentException('Not supported dsl type');
         }
         $this->dslType = $dslType;
     }
