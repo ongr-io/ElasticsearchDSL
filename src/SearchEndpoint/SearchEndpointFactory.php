@@ -26,7 +26,6 @@ class SearchEndpointFactory
         'sort' => 'ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint',
         'highlight' => 'ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint',
         'aggregations' => 'ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint',
-        'suggest' => 'ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint',
     ];
 
     /**
