@@ -17,7 +17,6 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
 use ONGR\ElasticsearchDSL\Sort\AbstractSort;
 use ONGR\ElasticsearchDSL\Sort\Sorts;
-use ONGR\ElasticsearchDSL\Suggester\AbstractSuggester;
 use ONGR\ElasticsearchBundle\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchBundle\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
@@ -547,34 +546,6 @@ class Search
     {
         return $this
             ->getEndpoint('aggregations')
-            ->getBuilder();
-    }
-
-    /**
-     * Adds suggester to search.
-     *
-     * @param AbstractSuggester $suggester
-     *
-     * @return Search
-     */
-    public function addSuggester(AbstractSuggester $suggester)
-    {
-        $this
-            ->getEndpoint('suggest')
-            ->addBuilder($suggester);
-
-        return $this;
-    }
-
-    /**
-     * Returns all contained suggester's.
-     *
-     * @return AbstractSuggester[]
-     */
-    public function getSuggesters()
-    {
-        return $this
-            ->getEndpoint('suggest')
             ->getBuilder();
     }
 
