@@ -15,11 +15,11 @@ use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
+use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
+use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
 use ONGR\ElasticsearchDSL\Sort\AbstractSort;
 use ONGR\ElasticsearchDSL\Sort\Sorts;
 use ONGR\ElasticsearchDSL\Suggester\AbstractSuggester;
-use ONGR\ElasticsearchBundle\Serializer\Normalizer\CustomReferencedNormalizer;
-use ONGR\ElasticsearchBundle\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 
 /**
