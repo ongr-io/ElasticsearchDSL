@@ -21,6 +21,7 @@ use ONGR\ElasticsearchDSL\Sort\AbstractSort;
 use ONGR\ElasticsearchDSL\Sort\Sorts;
 use ONGR\ElasticsearchDSL\Suggester\AbstractSuggester;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
+
 /**
  * Search object that can be executed by a manager.
  */
