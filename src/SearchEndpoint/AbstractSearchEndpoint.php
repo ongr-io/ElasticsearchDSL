@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchBundle\Serializer\Normalizer\AbstractNormalizable;
+use ONGR\ElasticsearchDSL\Serializer\Normalizer\AbstractNormalizable;
 
 /**
  * Abstract class used to define search endpoint with references.
