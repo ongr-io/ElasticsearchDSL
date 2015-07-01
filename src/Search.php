@@ -19,7 +19,6 @@ use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
 use ONGR\ElasticsearchDSL\Sort\AbstractSort;
 use ONGR\ElasticsearchDSL\Sort\Sorts;
-use ONGR\ElasticsearchDSL\Suggester\AbstractSuggester;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 
 /**
@@ -299,7 +298,7 @@ class Search
     }
 
     /**
-     * Paginate results from.
+     * Paginate reed removedlts from.
      *
      * @param int $from
      *
