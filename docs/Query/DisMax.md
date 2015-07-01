@@ -27,17 +27,33 @@ Lets try to write this example
 In DSL :
 
 ```php
-$term1 = new TermQuery('age', 34);
-$term2 = new TermQuery('age', 35);
+$termQuery1 = new TermQuery('age', 34);
+$termQuery2 = new TermQuery('age', 35);
 
-$disMax = new DisMaxQuery();
-$disMax->addParameter('tie_breaker', 0.7);
-$disMax->addParameter('boost', 1.2);
-$disMax->addQuery($term1);
-$disMax->addQuery($term2);
+$disMaxQuery = new DisMaxQuery();
+$disMaxQuery->addParameter('tie_breaker', 0.7);
+$disMaxQuery->addParameter('boost', 1.2);
+$disMaxQuery->addQuery($termQuery1);
+$disMaxQuery->addQuery($termQuery2);
 
 $search = new Search();
-$search->addQuery($disMax);
+$search->addQuery($disMaxQuery);
+
+$queryArray = $search->toArray();
+```
+
+Parameters can be set in constructor thus shorter version of DisMaxQuery is possible:
+
+```php
+$termQuery1 = new TermQuery('age', 34);
+$termQuery2 = new TermQuery('age', 35);
+
+$disMaxQuery = new DisMaxQuery(['tie_breaker' => 0.7, 'boost' => 1.2]);
+$disMaxQuery->addQuery($termQuery1);
+$disMaxQuery->addQuery($termQuery2);
+
+$search = new Search();
+$search->addQuery($disMaxQuery);
 
 $queryArray = $search->toArray();
 ```
