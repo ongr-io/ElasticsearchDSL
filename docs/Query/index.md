@@ -11,6 +11,10 @@ $search->addQuery($matchAllQuery);
 $queryArray = $search->toArray();
 ```
 
+Query handles are necessary little things like where to put `\stdClass` and where to simple array. So by using DSL builder you can be always sure that it will form a correct query.
+
+Here's `$queryArray` var_dump:
+
 ```php
 //$queryArray content
 'query' =>
@@ -19,21 +23,7 @@ $queryArray = $search->toArray();
     ]
 ```
 
-So now you can easily pass it to the elasticsearch-php client:
-
-```php
-//from elasticsearch/elasticsearch package
-$client = new Elasticsearch\Client();
-
-$searchParams = [
-  'index' => 'people',
-  'type' => 'person',
-  'body' => $queryArray
-];
-
-$docs = $client->search($searchParams);
-```
-> This example works with elasticsearch/elasticsearch ~1.0 version.
+For more information how to combine search queries take a look at [How to search](../HowTo/HowToSearch.md) chapter.
 
 
 ## Queries:
