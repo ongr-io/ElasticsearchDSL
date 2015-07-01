@@ -13,4 +13,4 @@ Everything starts from the `Search` object. We recommend first to take a look at
 - [How to combine `Filter` and `Query`]
 - [How to add sorting]
 
-[1] https://github.com/elastic/elasticsearch-php
+[1]: https://github.com/elastic/elasticsearch-php
