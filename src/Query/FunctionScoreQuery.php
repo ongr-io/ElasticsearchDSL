@@ -162,7 +162,7 @@ class FunctionScoreQuery implements BuilderInterface
     public function addRandomFunction($seed = null, BuilderInterface $filter = null)
     {
         $function = [
-            'random_score' => $seed ? [ 'seed' => $seed ] : [],
+            'random_score' => $seed ? [ 'seed' => $seed ] : new \stdClass(),
         ];
 
         $this->applyFilter($function, $filter);
