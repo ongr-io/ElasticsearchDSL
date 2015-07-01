@@ -81,7 +81,7 @@ class FunctionScoreQuery implements BuilderInterface
      *
      * @return $this
      */
-    public function addFieldValueFactorFunction($field, $factor, $modifier, BuilderInterface $filter = null)
+    public function addFieldValueFactorFunction($field, $factor, $modifier = 'none', BuilderInterface $filter = null)
     {
         $function = [
             'field_value_factor' => [
