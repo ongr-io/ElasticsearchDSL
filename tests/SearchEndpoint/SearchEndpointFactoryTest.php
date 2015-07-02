@@ -27,4 +27,12 @@ class SearchEndpointFactoryTest extends \PHPUnit_Framework_TestCase
     {
         SearchEndpointFactory::get('foo');
     }
+
+    /**
+     * Tests if factory can create endpoint.
+     */
+    public function testFactory()
+    {
+        SearchEndpointFactory::get('aggregations');
+    }
 }

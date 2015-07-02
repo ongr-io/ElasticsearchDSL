@@ -21,17 +21,19 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class AggregationsEndpoint implements SearchEndpointInterface
 {
+    use BuilderContainerAwareTrait;
+
     /**
      * @var NamedBuilderBag
      */
-    private $bag;
+    private $builderContainer;
 
     /**
      * Initialized aggregations bag.
      */
     public function __construct()
     {
-        $this->bag = new NamedBuilderBag();
+        $this->builderContainer = new NamedBuilderBag();
     }
 
     /**
@@ -39,9 +41,11 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if (count($this->bag->all()) > 0) {
-            return $this->bag->toArray();
+        if (count($this->builderContainer->all()) > 0) {
+            return $this->builderContainer->toArray();
         }
+
+        return null;
     }
 
     /**
@@ -49,16 +53,38 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function addBuilder(BuilderInterface $builder, $parameters = [])
     {
-        if ($builder instanceof NamedBuilderInterface) {
-            $this->bag->add($builder);
+        if (!($builder instanceof NamedBuilderInterface)) {
+            throw new \InvalidArgumentException('Builder must be named builder');
         }
+
+        $this->builderContainer->add($builder);
+
+        return $builder->getName();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBuilder()
+    public function getBuilders()
     {
-        return $this->bag->all();
+        return $this->builderContainer->all();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBuilder($key)
+    {
+        return $this->builderContainer->get($key);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeBuilder($key)
+    {
+        $this->builderContainer->remove($key);
+
+        return $this;
     }
 }

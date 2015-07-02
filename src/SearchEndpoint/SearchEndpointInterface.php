@@ -25,14 +25,49 @@ interface SearchEndpointInterface extends NormalizableInterface
      * @param BuilderInterface $builder    Builder to add.
      * @param array            $parameters Additional parameters relevant to builder.
      *
-     * @return SearchEndpointInterface
+     * @return int Returns builder key.
      */
     public function addBuilder(BuilderInterface $builder, $parameters = []);
 
     /**
-     * Returns contained builder.
+     * Removes contained builder.
      *
-     * @return BuilderInterface|BuilderInterface[]
+     * @param int $key
+     *
+     * @return $this
      */
-    public function getBuilder();
+    public function removeBuilder($key);
+
+    /**
+     * Returns contained builder or null if Builder is not found.
+     *
+     * @param int $key
+     *
+     * @return BuilderInterface|null
+     */
+    public function getBuilder($key);
+
+    /**
+     * Returns all contained builders.
+     *
+     * @return BuilderInterface[]
+     */
+    public function getBuilders();
+
+    /**
+     * Returns parameters for contained builder or empty array if parameters are not found.
+     *
+     * @param int $key
+     *
+     * @return array
+     */
+    public function getBuilderParameters($key);
+
+    /**
+     * @param int   $key
+     * @param array $parameters
+     *
+     * @return $this
+     */
+    public function setBuilderParameters($key, $parameters);
 }
