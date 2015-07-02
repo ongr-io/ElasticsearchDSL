@@ -12,12 +12,15 @@
 namespace ONGR\ElasticsearchDSL\Query;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch nested query class.
  */
 class NestedQuery implements BuilderInterface
 {
+    use ParametersTrait;
+
     /**
      * @var string
      */
@@ -51,11 +54,13 @@ class NestedQuery implements BuilderInterface
      */
     public function toArray()
     {
-        return [
-            'path' => $this->path,
-            'query' => [
-                $this->query->getType() => $this->query->toArray(),
-            ],
-        ];
+        return $this->processArray(
+            [
+                'path' => $this->path,
+                'query' => [
+                    $this->query->getType() => $this->query->toArray(),
+                ],
+            ]
+        );
     }
 }
