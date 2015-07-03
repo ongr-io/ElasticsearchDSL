@@ -26,14 +26,14 @@ class AggregationsEndpoint implements SearchEndpointInterface
     /**
      * @var NamedBuilderBag
      */
-    private $builderContainer;
+    private $bag;
 
     /**
      * Initialized aggregations bag.
      */
     public function __construct()
     {
-        $this->builderContainer = new NamedBuilderBag();
+        $this->bag = new NamedBuilderBag();
     }
 
     /**
@@ -41,8 +41,8 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if (count($this->builderContainer->all()) > 0) {
-            return $this->builderContainer->toArray();
+        if (count($this->bag->all()) > 0) {
+            return $this->bag->toArray();
         }
 
         return null;
@@ -57,7 +57,7 @@ class AggregationsEndpoint implements SearchEndpointInterface
             throw new \InvalidArgumentException('Builder must be named builder');
         }
 
-        $this->builderContainer->add($builder);
+        $this->bag->add($builder);
 
         return $builder->getName();
     }
@@ -67,7 +67,7 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function getBuilders()
     {
-        return $this->builderContainer->all();
+        return $this->bag->all();
     }
 
     /**
@@ -75,7 +75,11 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function getBuilder($key)
     {
-        return $this->builderContainer->get($key);
+        if (!$this->bag->has($key)) {
+            return null;
+        }
+
+        return $this->bag->get($key);
     }
 
     /**
@@ -83,7 +87,7 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function removeBuilder($key)
     {
-        $this->builderContainer->remove($key);
+        $this->bag->remove($key);
 
         return $this;
     }

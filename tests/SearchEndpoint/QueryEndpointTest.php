@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -100,6 +101,44 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
                 ],
             ],
             $data
+        );
+    }
+
+    /**
+     * Tests filtered query reference.
+     */
+    public function testFilteredQuery()
+    {
+        $instance = new QueryEndpoint();
+        /** @var NormalizerInterface|MockObject $normalizerInterface */
+        $normalizerInterface = $this->getMockForAbstractClass(
+            'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
+        );
+        /** @var BuilderInterface|MockObject $builderInterface1 */
+        $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
+        $builderInterface1->expects($this->exactly(1))->method('toArray')->willReturn(['array' => 'data']);
+        $builderInterface1->expects($this->exactly(1))->method('getType')->willReturn('test');
+
+        /** @var BuilderInterface|MockObject $builderInterface2 */
+        $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
+        $builderInterface2->expects($this->exactly(1))->method('toArray')->willReturn(['array2' => 'data2']);
+        $builderInterface2->expects($this->exactly(1))->method('getType')->willReturn('test2');
+
+        $filteredQuery = new FilteredQuery($builderInterface1, $builderInterface2);
+        $instance->addReference('filtered_query', $filteredQuery);
+
+        $this->assertSame(
+            [
+                'filtered' => [
+                    'filter' => [
+                        'test2' => ['array2' => 'data2'],
+                    ],
+                    'query' => [
+                        'test' => ['array' => 'data'],
+                    ],
+                ],
+            ],
+            $instance->normalize($normalizerInterface)
         );
     }
 }
