@@ -6,7 +6,7 @@ Everything starts from the `Search` object. We recommend first to take a look at
 
 ### Topics:
 - [Build Queries](Query/index.md)
-- [Build Filters]
+- [Build Filters](Filter/index.md)
 - [Build Aggregations]
 
 ### How to
