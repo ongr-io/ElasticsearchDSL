@@ -7,6 +7,7 @@ and results in parent documents that have child docs matching the query.
 
 ## Simple example
 
+```JSON
 {
     "has_child" : {
         "type" : "blog_tag",

@@ -8,6 +8,7 @@ This filter returns child documents which associated parents have matched.
 
 ## Simple example
 
+```JSON
 {
     "has_child" : {
         "type" : "blog_tag",
