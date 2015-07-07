@@ -69,7 +69,7 @@ Unlike `Query`, when we add a `Filter` with our DSL library it will add a query 
 }
 ```
 
-### Multpile queries and filters
+### Multiple queries and filters
 
 As you know there is possible to use multiple filters and queries in elasticsearch. No problem, if you have several filters just add it to the search. `ElasticsearchDSL` will form a `Bool` query or filter for you when you add more than one.
 
