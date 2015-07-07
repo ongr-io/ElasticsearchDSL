@@ -47,4 +47,44 @@ $search->addFilter($geoBoundingBoxFilter);
 $queryArray = $search->toArray();
 ```
 
+Other format
+
+```JSON
+"filtered" : {
+    "query" : {
+        "match_all" : {}
+    },
+    "filter" : {
+        "geo_bounding_box" : {
+            "pin.location" : {
+                "top" : -74.1,
+                "left" : 40.73,
+                "bottom" : -71.12,
+                "right" : 40.01
+            }
+        }
+    }
+}
+```
+
+In DSL
+
+```php
+$geoBoundingBoxFilter = new GeoBoundingBoxFilter(
+    'pin.location',
+    [
+        -74.1,
+        40.73,
+        -71.12,
+        40.01,
+    ]
+);
+
+$search = new Search();
+$search->addFilter($geoBoundingBoxFilter);
+
+$queryArray = $search->toArray();
+```
+
+
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-bounding-box-filter.html
