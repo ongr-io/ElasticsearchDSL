@@ -60,10 +60,14 @@ abstract class AbstractAggregation implements NamedBuilderInterface
      * Inner aggregations container init.
      *
      * @param string $name
+     * @param string $field
      */
-    public function __construct($name)
+    public function __construct($name, $field = null)
     {
         $this->name = $name;
+        if ($field !== null) {
+            $this->setField($field);
+        }
         $this->aggregations = new NamedBuilderBag();
     }
 
