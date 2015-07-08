@@ -31,26 +31,4 @@ $search->addAggregation($avgAggregation);
 $queryArray = $search->toArray();
 ```
 
-There is also an exception due adding queries to the search. If you add only one query without type it will form simple query. e.g. lets try to create match all query.
-
-```php
-$search = new Search();
-$matchAllQuery = new MatchAllQuery();
-$search->addQuery($matchAllQuery);
-$queryArray = $search->toArray();
-```
-
-You will get this query:
-```JSON
-{
-    "query": {
-        "match_all": {}
-    }
-}
-```
-
-> More info about `Search` look in the [How to search](../HowTo/HowToSearch.md) chapter.
-
-
-
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-avg-aggregation.html
