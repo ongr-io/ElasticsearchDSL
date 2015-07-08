@@ -36,6 +36,17 @@ class ChildrenAggregation extends AbstractAggregation
     }
 
     /**
+     * @param string $name
+     * @param string $children
+     */
+    public function __construct($name, $children = null)
+    {
+        parent::__construct($name);
+
+        $this->setChildren($children);
+    }
+
+    /**
      * Sets children.
      *
      * @param string $children
