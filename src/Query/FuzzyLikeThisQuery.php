@@ -11,16 +11,56 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
+use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
+
 /**
  * Elasticsearch fuzzy_like_this query class.
  */
-class FuzzyLikeThisQuery extends FuzzyLikeThisFieldQuery
+class FuzzyLikeThisQuery implements BuilderInterface
 {
+    use ParametersTrait;
+
+    /**
+     * @var string[]
+     */
+    private $fields;
+
+    /**
+     * @var string
+     */
+    private $likeText;
+
+    /**
+     * @param string[] $fields
+     * @param string   $likeText
+     * @param array    $parameters
+     */
+    public function __construct(array $fields, $likeText, array $parameters = [])
+    {
+        $this->fields = $fields;
+        $this->likeText = $likeText;
+        $this->setParameters($parameters);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getType()
     {
         return 'fuzzy_like_this';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        $output = [
+            'fields' => $this->fields,
+            'like_text' => $this->likeText,
+        ];
+
+        return $this->processArray($output);
     }
 }
