@@ -18,7 +18,7 @@ aggregations supports nesting while metric aggregations will ignore any set nest
 
 ## Nesting aggregations
 
-Bucketing aggregation can have anu number nested aggregations and nesting can go to unlimited depth.
+Bucketing aggregation can have any number nested aggregations and nesting can go to unlimited depth.
 
 Example nested aggregation.
 ```JSON
