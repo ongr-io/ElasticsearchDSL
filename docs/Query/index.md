@@ -49,6 +49,7 @@ For more information how to combine search queries take a look at [How to search
  - [Prefix](Prefix.md)
  - [Query string](QueryString.md)
  - [Range](Range.md)
+ - [Regexp](Regexp.md)
  - [Simple query string](SimpleQueryString.md)
  - [Term](Term.md)
  - [Terms](Terms.md)
