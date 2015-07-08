@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Query\FunctionScoreQuery;
+use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
@@ -20,6 +21,60 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  */
 class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Data provider for testAddRandomFunction.
+     *
+     * @return array
+     */
+    public function addRandomFunctionProvider()
+    {
+        return [
+            // Case #0. No seed.
+            [
+                'seed' => null,
+                'expectedArray' => [
+                    'query' => [ null => null ],
+                    'functions' => [
+                        [
+                            'random_score' => new \stdClass(),
+                        ],
+                    ],
+                ],
+            ],
+            // Case #1. With seed.
+            [
+                'seed' => 'someSeed',
+                'expectedArray' => [
+                    'query' => [ null => null ],
+                    'functions' => [
+                        [
+                            'random_score' => [ 'seed' => 'someSeed'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Tests addRandomFunction method.
+     *
+     * @param mixed $seed
+     * @param array $expectedArray
+     *
+     * @dataProvider addRandomFunctionProvider
+     */
+    public function testAddRandomFunction($seed, $expectedArray)
+    {
+        /** @var MatchAllQuery|MockObject $matchAllQuery */
+        $matchAllQuery = $this->getMock('ONGR\ElasticsearchDSL\Query\MatchAllQuery');
+
+        $functionScoreQuery = new FunctionScoreQuery($matchAllQuery);
+        $functionScoreQuery->addRandomFunction($seed);
+
+        $this->assertEquals($expectedArray, $functionScoreQuery->toArray());
+    }
+    
     /**
      * Tests default argument values.
      */
