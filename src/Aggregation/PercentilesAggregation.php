@@ -33,6 +33,25 @@ class PercentilesAggregation extends AbstractAggregation
     private $compression;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param array  $percents
+     * @param string $script
+     * @param int    $compression
+     */
+    public function __construct($name, $field = null, $percents = null, $script = null, $compression = null)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setPercents($percents);
+        $this->setScript($script);
+        $this->setCompression($compression);
+    }
+
+    /**
      * @return array
      */
     public function getPercents()
