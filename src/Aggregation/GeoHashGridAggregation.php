@@ -36,6 +36,25 @@ class GeoHashGridAggregation extends AbstractAggregation
     private $shardSize;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param int    $precision
+     * @param int    $size
+     * @param int    $shardSize
+     */
+    public function __construct($name, $field = null, $precision = null, $size = null, $shardSize = null)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setPrecision($precision);
+        $this->setSize($size);
+        $this->setShardSize($shardSize);
+    }
+
+    /**
      * @return int
      */
     public function getPrecision()
