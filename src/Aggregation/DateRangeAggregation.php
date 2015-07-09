@@ -41,8 +41,9 @@ class DateRangeAggregation extends AbstractAggregation
      */
     public function __construct($name, $field = null, $format = null, array $ranges = [])
     {
-        parent::__construct($name, $field);
+        parent::__construct($name);
 
+        $this->setField($field);
         $this->setFormat($format);
         foreach ($ranges as $range) {
             $from = isset($range['from']) ? $range['from'] : null;
