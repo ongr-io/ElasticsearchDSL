@@ -27,6 +27,21 @@ class FilterAggregation extends AbstractAggregation
     protected $filter;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string           $name
+     * @param BuilderInterface $filter
+     */
+    public function __construct($name, BuilderInterface $filter = null)
+    {
+        parent::__construct($name);
+
+        if ($filter !== null) {
+            $this->setFilter($filter);
+        }
+    }
+
+    /**
      * Sets a filter.
      *
      * @param BuilderInterface $filter
