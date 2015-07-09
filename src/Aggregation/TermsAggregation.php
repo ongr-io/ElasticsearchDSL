@@ -23,6 +23,21 @@ class TermsAggregation extends AbstractAggregation
     use ScriptAwareTrait;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param string $script
+     */
+    public function __construct($name, $field = null, $script = null)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setScript($script);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getType()
