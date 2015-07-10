@@ -39,4 +39,23 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $aggregation->toArray());
     }
+
+    /**
+     * Tests if adding parameters has any effect.
+     */
+    public function testParameters()
+    {
+        $topHitsAggregation = new TopHitsAggregation('test');
+        $topHitsAggregation->addParameter('_source', ['include' => ['title']]);
+        $expectedAgg = new \stdClass();
+        $expectedAgg->sort = [];
+        $expectedAgg->_source = ['include' => ['title']];
+        $expected = [
+            'agg_test' => [
+                'top_hits' => $expectedAgg,
+            ],
+        ];
+
+        $this->assertEquals($expected, $topHitsAggregation->toArray());
+    }
 }
