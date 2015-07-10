@@ -34,6 +34,25 @@ class DateRangeAggregation extends AbstractAggregation
     }
 
     /**
+     * @param string $name
+     * @param string $field
+     * @param string $format
+     * @param array  $ranges
+     */
+    public function __construct($name, $field = null, $format = null, array $ranges = [])
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setFormat($format);
+        foreach ($ranges as $range) {
+            $from = isset($range['from']) ? $range['from'] : null;
+            $to = isset($range['to']) ? $range['to'] : null;
+            $this->addRange($from, $to);
+        }
+    }
+
+    /**
      * @param string $format
      */
     public function setFormat($format)

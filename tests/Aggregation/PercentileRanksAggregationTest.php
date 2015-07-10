@@ -62,4 +62,32 @@ class PercentileRanksAggregationTest extends \PHPUnit_Framework_TestCase
         $this->agg->setScript('bar');
         $this->agg->toArray();
     }
+
+    /**
+     * Test getType method.
+     */
+    public function testGetType()
+    {
+        $this->assertEquals('percentile_ranks', $this->agg->getType());
+    }
+
+    /**
+     * Test toArray method.
+     */
+    public function testToArray()
+    {
+        $this->agg->setField('bar');
+        $this->agg->setValues(['bar']);
+        $this->assertSame(
+            [
+                'agg_foo' => [
+                    'percentile_ranks' => [
+                        'field' => 'bar',
+                        'values' => ['bar'],
+                    ],
+                ],
+            ],
+            $this->agg->toArray()
+        );
+    }
 }

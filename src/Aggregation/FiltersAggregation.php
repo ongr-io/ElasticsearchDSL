@@ -32,6 +32,27 @@ class FiltersAggregation extends AbstractAggregation
     private $anonymous = false;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string             $name
+     * @param BuilderInterface[] $filters
+     * @param bool               $anonymous
+     */
+    public function __construct($name, $filters = [], $anonymous = false)
+    {
+        parent::__construct($name);
+
+        $this->setAnonymous($anonymous);
+        foreach ($filters as $name => $filter) {
+            if ($anonymous) {
+                $this->addFilter($filter);
+            } else {
+                $this->addFilter($filter, $name);
+            }
+        }
+    }
+
+    /**
      * @param bool $anonymous
      *
      * @return FiltersAggregation

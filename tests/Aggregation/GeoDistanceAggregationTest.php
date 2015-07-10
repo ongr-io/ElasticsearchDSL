@@ -112,4 +112,42 @@ class GeoDistanceAggregationTest extends \PHPUnit_Framework_TestCase
         $result = $aggregation->getType();
         $this->assertEquals('geo_distance', $result);
     }
+
+    /**
+     * Tests if parameters can be passed to constructor.
+     */
+    public function testConstructorFilter()
+    {
+        $aggregation = new GeoDistanceAggregation(
+            'test',
+            'fieldName',
+            'originValue',
+            [
+                ['from' => 'value'],
+                ['to' => 'value'],
+                ['from' => 'value', 'to' => 'value2'],
+            ],
+            'unitValue',
+            'distanceTypeValue'
+        );
+
+        $this->assertSame(
+            [
+                'agg_test' => [
+                    'geo_distance' => [
+                        'field' => 'fieldName',
+                        'origin' => 'originValue',
+                        'unit' => 'unitValue',
+                        'distance_type' => 'distanceTypeValue',
+                        'ranges' => [
+                            ['from' => 'value'],
+                            ['to' => 'value'],
+                            ['from' => 'value', 'to' => 'value2'],
+                        ],
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
+    }
 }

@@ -26,6 +26,29 @@ class Ipv4RangeAggregation extends AbstractAggregation
     private $ranges = [];
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param array  $ranges
+     */
+    public function __construct($name, $field = null, $ranges = [])
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        foreach ($ranges as $range) {
+            if (is_array($range)) {
+                $from = isset($range['from']) ? $range['from'] : null;
+                $to = isset($range['to']) ? $range['to'] : null;
+                $this->addRange($from, $to);
+            } else {
+                $this->addMask($range);
+            }
+        }
+    }
+
+    /**
      * Add range to aggregation.
      *
      * @param string|null $from

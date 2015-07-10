@@ -26,6 +26,19 @@ class NestedAggregation extends AbstractAggregation
     private $path;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $path
+     */
+    public function __construct($name, $path = null)
+    {
+        parent::__construct($name);
+
+        $this->setPath($path);
+    }
+
+    /**
      * Return path.
      *
      * @return string

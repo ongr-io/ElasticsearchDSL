@@ -54,6 +54,40 @@ class HistogramAggregation extends AbstractAggregation
     protected $keyed;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param int    $interval
+     * @param int    $minDocCount
+     * @param string $orderMode
+     * @param string $orderDirection
+     * @param int    $extendedBoundsMin
+     * @param int    $extendedBoundsMax
+     * @param bool   $keyed
+     */
+    public function __construct(
+        $name,
+        $field = null,
+        $interval = null,
+        $minDocCount = null,
+        $orderMode = null,
+        $orderDirection = self::DIRECTION_ASC,
+        $extendedBoundsMin = null,
+        $extendedBoundsMax = null,
+        $keyed = null
+    ) {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setInterval($interval);
+        $this->setMinDocCount($minDocCount);
+        $this->setOrder($orderMode, $orderDirection);
+        $this->setExtendedBounds($extendedBoundsMin, $extendedBoundsMax);
+        $this->setKeyed($keyed);
+    }
+
+    /**
      * @return bool
      */
     public function isKeyed()

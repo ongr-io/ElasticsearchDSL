@@ -31,6 +31,28 @@ class RangeAggregation extends AbstractAggregation
     private $keyed = false;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param array  $ranges
+     * @param bool   $keyed
+     */
+    public function __construct($name, $field = null, $ranges = [], $keyed = false)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setKeyed($keyed);
+        foreach ($ranges as $range) {
+            $from = isset($range['from']) ? $range['from'] : null;
+            $to = isset($range['to']) ? $range['to'] : null;
+            $key = isset($range['key']) ? $range['key'] : null;
+            $this->addRange($from, $to, $key);
+        }
+    }
+
+    /**
      * Sets if result buckets should be keyed.
      *
      * @param bool $keyed

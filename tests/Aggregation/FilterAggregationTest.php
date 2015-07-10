@@ -12,7 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
-use ONGR\ElasticsearchDSL\Filter\AndFilter;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Filter\MissingFilter;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
@@ -142,5 +142,23 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 
         $aggregation->setFilter(new MissingFilter('test'));
         $aggregation->toArray();
+    }
+
+    /**
+     * Tests if filter can be passed to constructor.
+     */
+    public function testConstructorFilter()
+    {
+        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface */
+        $builderInterface = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
+        $aggregation = new FilterAggregation('test', $builderInterface);
+        $this->assertSame(
+            [
+                'agg_test' => [
+                    'filter' => [null => null],
+                ],
+            ],
+            $aggregation->toArray()
+        );
     }
 }
