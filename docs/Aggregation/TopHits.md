@@ -44,7 +44,9 @@ And now the query via DSL:
 
 ```php
 $sort = new Sort('last_activity_date', Sort::ORDER_DESC);
-$topHitsAggregation = new TopHitsAggregation('top_tag_hits', 1, null, $sort);
+$sorts = new Sorts();
+$sorts->addSort($sort);
+$topHitsAggregation = new TopHitsAggregation('top_tag_hits', 1, null, $sorts);
 $topHitsAggregation->addParameter('_source', ['include' => ['title']]);
 
 $termsAggregation = new TermsAggregation('top-tags', 'tags');
