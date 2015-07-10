@@ -122,7 +122,11 @@ class HistogramAggregation extends AbstractAggregation
      */
     public function getOrder()
     {
-        return [$this->orderMode => $this->orderDirection];
+        if ($this->orderMode && $this->orderDirection) {
+            return [$this->orderMode => $this->orderDirection];
+        } else {
+            return null;
+        }
     }
 
     /**
