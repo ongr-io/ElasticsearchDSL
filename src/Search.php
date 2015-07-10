@@ -13,6 +13,9 @@ namespace ONGR\ElasticsearchDSL;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
+use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
+use ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint;
+use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
@@ -110,15 +113,13 @@ class Search
      * @param BuilderInterface $query
      * @param string           $boolType
      *
-     * @return Search
+     * @return int Key of query.
      */
     public function addQuery(BuilderInterface $query, $boolType = '')
     {
-        $this
+        return $this
             ->getEndpoint('query')
             ->addBuilder($query, ['bool_type' => $boolType]);
-
-        return $this;
     }
 
     /**
@@ -128,13 +129,13 @@ class Search
      *                      - minimum_should_match => 1
      *                      - boost => 1.
      *
-     * @return Search
+     * @return $this
      */
     public function setBoolQueryParameters(array $params)
     {
-        $this
-            ->getEndpoint('query')
-            ->setParameters($params);
+        /** @var QueryEndpoint $endpoint */
+        $endpoint = $this->getEndpoint('query');
+        $endpoint->setParameters($params);
 
         return $this;
     }
@@ -142,19 +143,19 @@ class Search
     /**
      * Returns contained query.
      *
-     * @return BuilderInterface
+     * @return BuilderInterface[]
      */
     public function getQuery()
     {
         return $this
             ->getEndpoint('query')
-            ->getBuilder();
+            ->getBuilders();
     }
 
     /**
      * Destroys query part.
      *
-     * @return Search
+     * @return $this
      */
     public function destroyQuery()
     {
@@ -172,29 +173,25 @@ class Search
      *                                   - must_not
      *                                   - should.
      *
-     * @return Search
+     * @return int Key of query.
      */
     public function addFilter(BuilderInterface $filter, $boolType = '')
     {
-        $this->getEndpoint('query');
-
-        $this
+        return $this
             ->getEndpoint('filter')
             ->addBuilder($filter, ['bool_type' => $boolType]);
-
-        return $this;
     }
 
     /**
      * Returns currently contained filters.
      *
-     * @return BuilderInterface
+     * @return BuilderInterface[]
      */
     public function getFilters()
     {
         return $this
             ->getEndpoint('filter')
-            ->getBuilder();
+            ->getBuilders();
     }
 
     /**
@@ -204,13 +201,13 @@ class Search
      *                      _cache => true
      *                      false.
      *
-     * @return Search
+     * @return $this
      */
     public function setBoolFilterParameters($params)
     {
-        $this
-            ->getEndpoint('filter')
-            ->setParameters($params);
+        /** @var FilterEndpoint $endpoint */
+        $endpoint = $this->getEndpoint('filter');
+        $endpoint->setParameters($params);
 
         return $this;
     }
@@ -232,27 +229,25 @@ class Search
      *                                     - must_not
      *                                     - should.
      *
-     * @return Search
+     * @return int Key of post filter.
      */
     public function addPostFilter(BuilderInterface $postFilter, $boolType = '')
     {
-        $this
+        return $this
             ->getEndpoint('post_filter')
             ->addBuilder($postFilter, ['bool_type' => $boolType]);
-
-        return $this;
     }
 
     /**
      * Returns all contained post filters.
      *
-     * @return BuilderInterface
+     * @return BuilderInterface[]
      */
     public function getPostFilters()
     {
         return $this
             ->getEndpoint('post_filter')
-            ->getBuilder();
+            ->getBuilders();
     }
 
     /**
@@ -262,13 +257,13 @@ class Search
      *                      _cache => true
      *                      false.
      *
-     * @return Search
+     * @return $this
      */
     public function setBoolPostFilterParameters($params)
     {
-        $this
-            ->getEndpoint('post_filter')
-            ->setParameters($params);
+        /** @var PostFilterEndpoint $endpoint */
+        $endpoint = $this->getEndpoint('filter');
+        $endpoint->setParameters($params);
 
         return $this;
     }
@@ -288,7 +283,7 @@ class Search
      *
      * @param float $minScore
      *
-     * @return Search
+     * @return $this
      */
     public function setMinScore($minScore)
     {
@@ -302,7 +297,7 @@ class Search
      *
      * @param int $from
      *
-     * @return Search
+     * @return $this
      */
     public function setFrom($from)
     {
@@ -326,7 +321,7 @@ class Search
      *
      * @param int $size
      *
-     * @return Search
+     * @return $this
      */
     public function setSize($size)
     {
@@ -350,15 +345,13 @@ class Search
      *
      * @param AbstractSort $sort
      *
-     * @return Search
+     * @return int Key of sort.
      */
     public function addSort(AbstractSort $sort)
     {
-        $this
+        return $this
             ->getEndpoint('sort')
             ->addBuilder($sort);
-
-        return $this;
     }
 
     /**
@@ -370,7 +363,7 @@ class Search
     {
         return $this
             ->getEndpoint('sort')
-            ->getBuilder();
+            ->getBuilders();
     }
 
     /**
@@ -378,7 +371,7 @@ class Search
      *
      * @param array|bool|string $source
      *
-     * @return Search
+     * @return $this
      */
     public function setSource($source)
     {
@@ -402,7 +395,7 @@ class Search
      *
      * @param array $fields
      *
-     * @return Search
+     * @return $this
      */
     public function setFields(array $fields)
     {
@@ -426,7 +419,7 @@ class Search
      *
      * @param array $scriptFields
      *
-     * @return Search
+     * @return $this
      */
     public function setScriptFields($scriptFields)
     {
@@ -450,27 +443,25 @@ class Search
      *
      * @param Highlight $highlight
      *
-     * @return Search
+     * @return int Key of highlight.
      */
     public function setHighlight($highlight)
     {
-        $this
+        return $this
             ->getEndpoint('highlight')
             ->addBuilder($highlight);
-
-        return $this;
     }
 
     /**
      * Returns containing highlight object.
      *
-     * @return Highlight
+     * @return $this
      */
     public function getHighlight()
     {
         return $this
             ->getEndpoint('highlight')
-            ->getBuilder();
+            ->getBuilders();
     }
 
     /**
@@ -478,7 +469,7 @@ class Search
      *
      * @param bool $explain
      *
-     * @return Search
+     * @return $this
      */
     public function setExplain($explain)
     {
@@ -502,7 +493,7 @@ class Search
      *
      * @param array $stats
      *
-     * @return Search
+     * @return $this
      */
     public function setStats($stats)
     {
@@ -526,15 +517,13 @@ class Search
      *
      * @param AbstractAggregation $aggregation
      *
-     * @return Search
+     * @return int Key of aggregation.
      */
     public function addAggregation(AbstractAggregation $aggregation)
     {
-        $this
+        return $this
             ->getEndpoint('aggregations')
             ->addBuilder($aggregation);
-
-        return $this;
     }
 
     /**
@@ -546,7 +535,7 @@ class Search
     {
         return $this
             ->getEndpoint('aggregations')
-            ->getBuilder();
+            ->getBuilders();
     }
 
     /**
@@ -554,7 +543,7 @@ class Search
      *
      * @param string|null $duration
      *
-     * @return Search
+     * @return $this
      */
     public function setScroll($duration = '5m')
     {
@@ -578,7 +567,7 @@ class Search
      *
      * @param string $searchType
      *
-     * @return Search
+     * @return $this
      */
     public function setSearchType($searchType)
     {
@@ -612,7 +601,7 @@ class Search
      *                                custom value
      *                                string[] combination of params.
      *
-     * @return Search
+     * @return $this
      */
     public function setPreference($preferenceParams)
     {

@@ -24,14 +24,15 @@ class PostFilterEndpoint extends FilterEndpoint
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->getBuilder()) {
-            $postFilter = new PostFilter();
-            !$this->isBool() ? : $this->getBuilder()->setParameters($this->getParameters());
-            $postFilter->setFilter($this->getBuilder());
+        $builder = $this->getBuilderForNormalization();
 
-            return $postFilter->toArray();
+        if (empty($builder)) {
+            return null;
         }
 
-        return null;
+        $postFilter = new PostFilter();
+        $postFilter->setFilter($builder);
+
+        return $postFilter->toArray();
     }
 }

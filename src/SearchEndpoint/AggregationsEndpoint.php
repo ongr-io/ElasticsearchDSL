@@ -21,6 +21,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class AggregationsEndpoint implements SearchEndpointInterface
 {
+    use BuilderContainerAwareTrait;
+
     /**
      * @var NamedBuilderBag
      */
@@ -42,6 +44,8 @@ class AggregationsEndpoint implements SearchEndpointInterface
         if (count($this->bag->all()) > 0) {
             return $this->bag->toArray();
         }
+
+        return null;
     }
 
     /**
@@ -49,16 +53,42 @@ class AggregationsEndpoint implements SearchEndpointInterface
      */
     public function addBuilder(BuilderInterface $builder, $parameters = [])
     {
-        if ($builder instanceof NamedBuilderInterface) {
-            $this->bag->add($builder);
+        if (!($builder instanceof NamedBuilderInterface)) {
+            throw new \InvalidArgumentException('Builder must be named builder');
         }
+
+        $this->bag->add($builder);
+
+        return $builder->getName();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBuilder()
+    public function getBuilders()
     {
         return $this->bag->all();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBuilder($key)
+    {
+        if (!$this->bag->has($key)) {
+            return null;
+        }
+
+        return $this->bag->get($key);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeBuilder($key)
+    {
+        $this->bag->remove($key);
+
+        return $this;
     }
 }
