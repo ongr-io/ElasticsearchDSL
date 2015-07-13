@@ -153,6 +153,6 @@ class TopHitsAggregation extends AbstractAggregation
             }
         );
 
-        return $fd;
+        return $this->processArray($fd);
     }
 }
