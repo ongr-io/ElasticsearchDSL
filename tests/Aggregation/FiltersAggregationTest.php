@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Unit test for filters aggregation.
@@ -96,5 +97,63 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
             ],
         ];
         $this->assertEquals($expected, $results);
+    }
+
+    /**
+     * Tests if filters can be passed to constructor.
+     */
+    public function testConstructorFilter()
+    {
+        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface1 */
+        $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
+        $builderInterface1->expects($this->any())->method('getType')->willReturn('type1');
+        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface2 */
+        $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
+        $builderInterface2->expects($this->any())->method('getType')->willReturn('type2');
+
+        $aggregation = new FiltersAggregation(
+            'test',
+            [
+                'filter1' => $builderInterface1,
+                'filter2' => $builderInterface2,
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'agg_test' => [
+                    'filters' => [
+                        'filters' => [
+                            'filter1' => ['type1' => null],
+                            'filter2' => ['type2' => null],
+                        ],
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
+
+        $aggregation = new FiltersAggregation(
+            'test',
+            [
+                'filter1' => $builderInterface1,
+                'filter2' => $builderInterface2,
+            ],
+            true
+        );
+
+        $this->assertSame(
+            [
+                'agg_test' => [
+                    'filters' => [
+                        'filters' => [
+                            ['type1' => null],
+                            ['type2' => null],
+                        ],
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
     }
 }

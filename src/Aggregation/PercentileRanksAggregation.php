@@ -33,6 +33,25 @@ class PercentileRanksAggregation extends AbstractAggregation
     private $compression;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param array  $values
+     * @param string $script
+     * @param int    $compression
+     */
+    public function __construct($name, $field = null, $values = null, $script = null, $compression = null)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setValues($values);
+        $this->setScript($script);
+        $this->setCompression($compression);
+    }
+
+    /**
      * @return array
      */
     public function getValues()
@@ -98,7 +117,6 @@ class PercentileRanksAggregation extends AbstractAggregation
      * @param array $a
      *
      * @return bool
-     *
      * @throws \LogicException
      */
     private function isRequiredParametersSet($a)

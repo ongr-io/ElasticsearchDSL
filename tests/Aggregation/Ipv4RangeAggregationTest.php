@@ -25,4 +25,36 @@ class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $agg = new Ipv4RangeAggregation('foo');
         $agg->toArray();
     }
+
+    /**
+     * Tests if field and range  can be passed to constructor.
+     */
+    public function testConstructorFilter()
+    {
+        $aggregation = new Ipv4RangeAggregation('test', 'fieldName', [['from' => 'fromValue']]);
+        $this->assertSame(
+            [
+                'agg_test' => [
+                    'ip_range' => [
+                        'field' => 'fieldName',
+                        'ranges' => [['from' => 'fromValue']],
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
+
+        $aggregation = new Ipv4RangeAggregation('test', 'fieldName', ['maskValue']);
+        $this->assertSame(
+            [
+                'agg_test' => [
+                    'ip_range' => [
+                        'field' => 'fieldName',
+                        'ranges' => [['mask' => 'maskValue']],
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
+    }
 }

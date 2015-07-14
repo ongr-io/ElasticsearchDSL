@@ -26,6 +26,21 @@ class GeoBoundsAggregation extends AbstractAggregation
     private $wrapLongitude = true;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param bool   $wrapLongitude
+     */
+    public function __construct($name, $field = null, $wrapLongitude = true)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setWrapLongitude($wrapLongitude);
+    }
+
+    /**
      * @return bool
      */
     public function isWrapLongitude()

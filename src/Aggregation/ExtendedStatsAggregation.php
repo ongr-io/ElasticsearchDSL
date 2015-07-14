@@ -23,6 +23,23 @@ class ExtendedStatsAggregation extends AbstractAggregation
     use ScriptAwareTrait;
 
     /**
+     * Inner aggregations container init.
+     *
+     * @param string $name
+     * @param string $field
+     * @param int    $sigma
+     * @param string $script
+     */
+    public function __construct($name, $field = null, $sigma = null, $script = null)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setSigma($sigma);
+        $this->setScript($script);
+    }
+
+    /**
      * @var int
      */
     private $sigma;

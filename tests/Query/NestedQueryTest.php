@@ -40,4 +40,21 @@ class NestedQueryTest extends \PHPUnit_Framework_TestCase
         $query = new NestedQuery('test_path', $missingFilterMock);
         $this->assertEquals($result, $query->toArray());
     }
+
+    /**
+     * Tests if Nested Query has parameters.
+     */
+    public function testParameters()
+    {
+        $nestedQuery = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\NestedQuery')
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+
+        $this->assertTrue(method_exists($nestedQuery, 'addParameter'), 'Nested query must have addParameter method');
+        $this->assertTrue(method_exists($nestedQuery, 'setParameters'), 'Nested query must have setParameters method');
+        $this->assertTrue(method_exists($nestedQuery, 'getParameters'), 'Nested query must have getParameters method');
+        $this->assertTrue(method_exists($nestedQuery, 'hasParameter'), 'Nested query must have hasParameter method');
+        $this->assertTrue(method_exists($nestedQuery, 'getParameter'), 'Nested query must have getParameter method');
+    }
 }

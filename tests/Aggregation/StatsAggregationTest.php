@@ -31,4 +31,23 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedResult, $aggregation->toArray());
     }
+
+    /**
+     * Tests if parameter can be passed to constructor.
+     */
+    public function testConstructor()
+    {
+        $aggregation = new StatsAggregation('foo', 'fieldValue', 'scriptValue');
+        $this->assertSame(
+            [
+                'agg_foo' => [
+                    'stats' => [
+                        'field' => 'fieldValue',
+                        'script' => 'scriptValue',
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
+    }
 }

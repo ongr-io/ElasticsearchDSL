@@ -199,4 +199,29 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $result = $aggregation->removeRange(500, 700);
         $this->assertFalse($result, 'returns false after removing not-existing range');
     }
+
+    /**
+     * Tests if parameter can be passed to constructor.
+     */
+    public function testConstructor()
+    {
+        $aggregation = new RangeAggregation('foo', 'fieldValue', [['from' => 'now', 'key' => 'nowkey']], true);
+        $this->assertSame(
+            [
+                'agg_foo' => [
+                    'range' => [
+                        'keyed' => true,
+                        'ranges' => [
+                            [
+                                'from' => 'now',
+                                'key' => 'nowkey',
+                            ],
+                        ],
+                        'field' => 'fieldValue',
+                    ],
+                ],
+            ],
+            $aggregation->toArray()
+        );
+    }
 }

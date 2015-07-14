@@ -64,6 +64,7 @@ abstract class AbstractAggregation implements NamedBuilderInterface
     public function __construct($name)
     {
         $this->name = $name;
+
         $this->aggregations = new NamedBuilderBag();
     }
 
