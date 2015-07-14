@@ -293,7 +293,7 @@ class Search
     }
 
     /**
-     * Paginate reed removedlts from.
+     * Paginate from.
      *
      * @param int $from
      *
@@ -535,6 +535,32 @@ class Search
     {
         return $this
             ->getEndpoint('aggregations')
+            ->getBuilders();
+    }
+
+    /**
+     * Adds suggestion into search.
+     *
+     * @param NamedBuilderInterface $suggestion
+     *
+     * @return int Key of aggregation.
+     */
+    public function addSuggestion(NamedBuilderInterface $suggestion)
+    {
+        return $this
+            ->getEndpoint('suggest')
+            ->addBuilder($suggestion);
+    }
+
+    /**
+     * Returns contained suggestions.
+     *
+     * @return NamedBuilderInterface[]
+     */
+    public function getSuggestions()
+    {
+        return $this
+            ->getEndpoint('suggest')
             ->getBuilders();
     }
 
