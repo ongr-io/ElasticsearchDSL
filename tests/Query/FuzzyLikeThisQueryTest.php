@@ -52,4 +52,25 @@ class FuzzyLikeThisQueryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('fuzzy_like_this', $fuzzyLikeThisQuery->getType());
     }
+
+    /**
+     * Tests if query accepts single field as string.
+     */
+    public function testSingleField()
+    {
+        $fuzzyLikeThisQuery = new FuzzyLikeThisQuery(
+            'name.first',
+            'text like this one',
+            [ 'max_query_terms' => 12 ]
+        );
+
+        $this->assertSame(
+            [
+                'fields' => ['name.first'],
+                'like_text' => 'text like this one',
+                'max_query_terms' => 12,
+            ],
+            $fuzzyLikeThisQuery->toArray()
+        );
+    }
 }
