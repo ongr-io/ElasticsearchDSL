@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Sort\AbstractSort;
 use ONGR\ElasticsearchDSL\Sort\Sorts;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -20,17 +21,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class SortEndpoint implements SearchEndpointInterface
 {
-    /**
-     * @var Sorts
-     */
-    protected $sorts;
-
-    /**
-     * Initializes Sorts object.
-     */
-    public function __construct()
-    {
-        $this->sorts = new Sorts();
+    use BuilderContainerAwareTrait {
+        addBuilder as private traitAddBuilder;
     }
 
     /**
@@ -38,9 +30,29 @@ class SortEndpoint implements SearchEndpointInterface
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->sorts->isRelevant()) {
-            return $this->sorts->toArray();
+        $sorts = $this->buildSorts();
+
+        if ($sorts->isRelevant()) {
+            return $sorts->toArray();
         }
+
+        return null;
+    }
+
+    /**
+     * Builds sorts object.
+     *
+     * @return Sorts
+     */
+    protected function buildSorts()
+    {
+        $sorts = new Sorts();
+        /** @var AbstractSort $builder */
+        foreach ($this->getBuilders() as $builder) {
+            $sorts->addSort($builder);
+        }
+
+        return $sorts;
     }
 
     /**
@@ -48,14 +60,10 @@ class SortEndpoint implements SearchEndpointInterface
      */
     public function addBuilder(BuilderInterface $builder, $parameters = [])
     {
-        $this->sorts->addSort($builder);
-    }
+        if (!($builder instanceof AbstractSort)) {
+            throw new \InvalidArgumentException('Sort must must a subtype of AbstractSort');
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBuilder()
-    {
-        return $this->sorts;
+        return $this->traitAddBuilder($builder, $parameters);
     }
 }

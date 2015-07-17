@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\FilteredQuery;
@@ -25,11 +26,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerInterface
 {
     use ParametersTrait;
-
-    /**
-     * @var BuilderInterface|BoolQuery
-     */
-    private $query;
 
     /**
      * @var OptionsResolver
@@ -48,44 +44,46 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     /**
      * {@inheritdoc}
      */
-    public function addBuilder(BuilderInterface $builder, $parameters = [])
-    {
-        if (!$this->query && !(array_key_exists('bool_type', $parameters) && !empty($parameters['bool_type']))) {
-            $this->setBuilder($builder);
-        } else {
-            $parameters = $this->resolver->resolve(array_filter($parameters));
-            $this->isBool() ? : $this->convertToBool();
-            $this->query->add($builder, $parameters['bool_type']);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        $isRelevant = false;
-
         if ($this->hasReference('filtered_query')) {
             /** @var FilteredQuery $query */
             $query = $this->getReference('filtered_query');
             $this->addBuilder($query);
-            $isRelevant = true;
         }
 
-        if ($this->getBuilder()) {
-            if (method_exists($this->getBuilder(), 'setParameters') && count($this->getParameters()) > 0) {
-                $this
-                    ->getBuilder()
-                    ->setParameters($this->processArray($this->getBuilder()->getParameters()));
-            }
+        $builder = $this->getBuilderForNormalization();
 
-            $isRelevant = true;
+        if (empty($builder)) {
+            return null;
         }
 
-        return $isRelevant ? [$this->getBuilder()->getType() => $this->getBuilder()->toArray()] : null;
+        return [$builder->getType() => $builder->toArray()];
+    }
+
+    /**
+     * Return builder that is ready to be normalized.
+     *
+     * @return BuilderInterface|null
+     */
+    protected function getBuilderForNormalization()
+    {
+        $builders = $this->getbuilders();
+        if (empty($builders)) {
+            return null;
+        }
+
+        if (count($builders) > 1) {
+            $builder = $this->buildBool();
+        } else {
+            $builder = end($builders);
+        }
+
+        if (method_exists($builder, 'setParameters') && count($this->getParameters()) > 0) {
+            $builder->setParameters($this->processArray($builder->getParameters()));
+        }
+
+        return $builder;
     }
 
     /**
@@ -94,24 +92,6 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     public function getOrder()
     {
         return 2;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBuilder()
-    {
-        return $this->query;
-    }
-
-    /**
-     * Sets builder.
-     *
-     * @param BuilderInterface $builder
-     */
-    protected function setBuilder(BuilderInterface $builder)
-    {
-        $this->query = $builder;
     }
 
     /**
@@ -128,19 +108,9 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     }
 
     /**
-     * Returns true if query is bool.
-     *
-     * @return bool
-     */
-    protected function isBool()
-    {
-        return $this->getBuilder() instanceof BoolQuery;
-    }
-
-    /**
      * Returns bool instance for this endpoint case.
      *
-     * @return BoolQuery
+     * @return BoolFilter|BoolQuery
      */
     protected function getBoolInstance()
     {
@@ -148,16 +118,19 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     }
 
     /**
-     * Converts query to bool.
+     * Returns bool instance with builders set.
+     *
+     * @return BoolFilter|BoolQuery
      */
-    private function convertToBool()
+    protected function buildBool()
     {
-        $bool = $this->getBoolInstance();
+        $boolInstance = $this->getBoolInstance();
 
-        if ($this->query !== null) {
-            $bool->add($this->query);
+        foreach ($this->getBuilders() as $key => $builder) {
+            $parameters = $this->resolver->resolve(array_filter($this->getBuilderParameters($key)));
+            $boolInstance->add($builder, $parameters['bool_type']);
         }
 
-        $this->query = $bool;
+        return $boolInstance;
     }
 }

@@ -19,8 +19,12 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class HighlightEndpoint implements SearchEndpointInterface
 {
+    use BuilderContainerAwareTrait {
+        addBuilder as private traitAddBuilder;
+    }
+
     /**
-     * @var BuilderInterface
+     * @var int
      */
     private $highlight;
 
@@ -29,9 +33,11 @@ class HighlightEndpoint implements SearchEndpointInterface
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->getBuilder()) {
-            return $this->getBuilder()->toArray();
+        if (!$this->getBuilder($this->highlight)) {
+            return null;
         }
+
+        return $this->getBuilder($this->highlight)->toArray();
     }
 
     /**
@@ -39,14 +45,12 @@ class HighlightEndpoint implements SearchEndpointInterface
      */
     public function addBuilder(BuilderInterface $builder, $parameters = [])
     {
-        $this->highlight = $builder;
-    }
+        if ($this->getBuilders()) {
+            throw new \OverflowException('Only one highlight is expected');
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBuilder()
-    {
+        $this->highlight = $this->traitAddBuilder($builder, $parameters);
+
         return $this->highlight;
     }
 }

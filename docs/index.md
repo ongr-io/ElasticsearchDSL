@@ -8,6 +8,7 @@ Everything starts from the `Search` object. We recommend first to take a look at
 - [Build Queries](Query/index.md)
 - [Build Filters](Filter/index.md)
 - [Build Aggregations](Aggregation/index.md)
+- [Build Suggestions](Suggestion/index.md)
 
 ### How to
 - [How to combine `Filter` and `Query`]

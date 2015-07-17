@@ -11,12 +11,9 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Serializer\Normalizer\AbstractNormalizable;
-
 /**
- * Abstract class used to define search endpoint with references.
+ * Class SuggesterEndpoint.
  */
-abstract class AbstractSearchEndpoint extends AbstractNormalizable implements SearchEndpointInterface
+class SuggestEndpoint extends AggregationsEndpoint
 {
-    use BuilderContainerAwareTrait;
 }

@@ -25,12 +25,14 @@ class FilterEndpoint extends QueryEndpoint
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->getBuilder()) {
-            $query = new FilteredQuery();
-            !$this->isBool() ? : $this->getBuilder()->setParameters($this->getParameters());
-            $query->setFilter($this->getBuilder());
-            $this->addReference('filtered_query', $query);
+        $builder = $this->getBuilderForNormalization();
+        if (empty($builder)) {
+            return;
         }
+
+        $query = new FilteredQuery();
+        $query->setFilter($builder);
+        $this->addReference('filtered_query', $query);
     }
 
     /**
