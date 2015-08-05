@@ -22,7 +22,7 @@ class HighlightEndpoint extends AbstractSearchEndpoint
     /**
      * Endpoint name
      */
-    CONST NAME = 'highlight';
+    const NAME = 'highlight';
 
     /**
      * @var BuilderInterface

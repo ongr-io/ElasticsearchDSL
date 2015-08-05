@@ -23,8 +23,8 @@ interface SearchEndpointInterface extends NormalizableInterface
     /**
      * Adds builder to search endpoint.
      *
-     * @param BuilderInterface $builder    Builder to add.
-     * @param array            $key        Additional parameters relevant to builder.
+     * @param BuilderInterface $builder Builder to add.
+     * @param array            $key     Additional parameters relevant to builder.
      *
      * @return string Key of added builder.
      */
@@ -33,10 +33,10 @@ interface SearchEndpointInterface extends NormalizableInterface
     /**
      * Adds builder to search endpoint's specific bool type container.
      *
-     * @param BuilderInterface $builder    Builder to add.
-     * @param array            $boolType   Bool type for query or filter. If bool type is left null
-     *                                         it will be treated as MUST.
-     * @param array            $key        Additional parameters relevant to builder.
+     * @param BuilderInterface $builder  Builder to add.
+     * @param array            $boolType Bool type for query or filter. If bool type is left null
+     *                                       it will be treated as MUST.
+     * @param array            $key      Additional parameters relevant to builder.
      *
      * @return string Key of added builder.
      */

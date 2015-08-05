@@ -22,7 +22,7 @@ class AggregationsEndpoint extends AbstractSearchEndpoint
     /**
      * Endpoint name
      */
-    CONST NAME = 'aggregations';
+    const NAME = 'aggregations';
 
     /**
      * {@inheritdoc}

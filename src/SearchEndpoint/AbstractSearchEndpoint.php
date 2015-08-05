@@ -68,7 +68,8 @@ abstract class AbstractSearchEndpoint extends AbstractNormalizable implements Se
     /**
      * Checks if builder with specific key exists.
      *
-     * @param $key
+     * @param string $key Key to check if it exists in container.
+     *
      * @return bool
      */
     public function has($key)

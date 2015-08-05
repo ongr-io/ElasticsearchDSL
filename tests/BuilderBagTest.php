@@ -32,7 +32,6 @@ class BuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemove()
     {
-
         $bag = new BuilderBag();
         $fooBuilder = $this->getBuilder('foo');
         $acmeBuilder = $this->getBuilder('acme');

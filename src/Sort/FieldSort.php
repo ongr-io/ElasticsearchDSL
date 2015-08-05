@@ -18,8 +18,8 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  */
 class FieldSort implements BuilderInterface
 {
-    CONST ASC = 'asc';
-    CONST DESC = 'desc';
+    const ASC = 'asc';
+    const DESC = 'desc';
 
     /**
      * @var string.
@@ -37,8 +37,8 @@ class FieldSort implements BuilderInterface
     private $nestedFilter;
 
     /**
-     * @param string    $field  Field name.
-     * @param array     $params Params that can be set to field sort.
+     * @param string $field  Field name.
+     * @param array  $params Params that can be set to field sort.
      */
     public function __construct($field, $params = [])
     {
@@ -80,9 +80,10 @@ class FieldSort implements BuilderInterface
         if ($this->nestedFilter) {
             $fieldValues = array_merge(
                 $this->params,
-                ['nested_filter' => [
-                    $this->nestedFilter->getType() => $this->nestedFilter->toArray(),
-                    ]
+                [
+                    'nested_filter' => [
+                        $this->nestedFilter->getType() => $this->nestedFilter->toArray(),
+                    ],
                 ]
             );
         } else {

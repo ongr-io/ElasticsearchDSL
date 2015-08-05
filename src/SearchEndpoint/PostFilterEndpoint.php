@@ -22,7 +22,7 @@ class PostFilterEndpoint extends FilterEndpoint
     /**
      * Endpoint name
      */
-    CONST NAME = 'post_filter';
+    const NAME = 'post_filter';
 
     /**
      * {@inheritdoc}

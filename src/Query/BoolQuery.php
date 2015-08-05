@@ -32,6 +32,9 @@ class BoolQuery implements BuilderInterface
      */
     private $container = [];
 
+    /**
+     * Constructor to prepare container.
+     */
     public function __construct()
     {
         $this->container = [
@@ -53,6 +56,10 @@ class BoolQuery implements BuilderInterface
             && count($this->container[self::MUST]) == 1;
     }
 
+    /**
+     * @param  null $boolType
+     * @return array
+     */
     public function getQueries($boolType = null)
     {
         if ($boolType === null) {
@@ -69,9 +76,9 @@ class BoolQuery implements BuilderInterface
     /**
      * Add BuilderInterface object to bool operator.
      *
-     * @param BuilderInterface $query   Query add to the bool.
-     * @param string           $type    Bool type. Example: must, must_not, should.
-     * @param string           $key     Key that indicates a builder id.
+     * @param BuilderInterface $query Query add to the bool.
+     * @param string           $type  Bool type. Example: must, must_not, should.
+     * @param string           $key   Key that indicates a builder id.
      *
      * @return string Key of added builder.
      *
@@ -103,6 +110,7 @@ class BoolQuery implements BuilderInterface
             /** @var BuilderInterface $query */
             $mustContainer = $this->container[self::MUST];
             $query = array_shift($mustContainer);
+
             return [$query->getType() => $query->toArray()];
         }
 

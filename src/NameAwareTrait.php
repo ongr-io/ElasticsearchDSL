@@ -13,6 +13,9 @@ namespace ONGR\ElasticsearchDSL;
 
 trait NameAwareTrait
 {
+    /**
+     * @var string
+     */
     private $name;
 
     /**

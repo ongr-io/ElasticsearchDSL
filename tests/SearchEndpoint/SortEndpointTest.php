@@ -50,6 +50,9 @@ class SortEndpointTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tests if endpoint returns builders.
+     */
     public function testEndpointGetter()
     {
         $sortName = 'acme_sort';

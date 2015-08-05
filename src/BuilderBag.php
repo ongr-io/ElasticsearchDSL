@@ -66,7 +66,7 @@ class BuilderBag
     /**
      * Removes a builder by name.
      *
-     * @param string $name builder name.
+     * @param string $name Builder name.
      */
     public function remove($name)
     {
@@ -84,7 +84,7 @@ class BuilderBag
     /**
      * Returns a builder by name.
      *
-     * @param string $name builder name.
+     * @param string $name Builder name.
      *
      * @return BuilderInterface
      */
@@ -96,7 +96,7 @@ class BuilderBag
     /**
      * Returns all builders contained.
      *
-     * @param string|null $type builder type.
+     * @param string|null $type Builder type.
      *
      * @return BuilderInterface[]
      */
@@ -120,6 +120,7 @@ class BuilderBag
         foreach ($this->all() as $builder) {
             $output = array_merge($output, $builder->toArray());
         }
+
         return $output;
     }
 }

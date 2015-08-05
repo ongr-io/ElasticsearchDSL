@@ -24,7 +24,7 @@ class SortEndpoint extends AbstractSearchEndpoint
     /**
      * Endpoint name
      */
-    CONST NAME = 'sort';
+    const NAME = 'sort';
 
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class SortEndpoint extends AbstractSearchEndpoint
     {
         $output = [];
 
-        foreach($this->getAll() as $sort) {
+        foreach ($this->getAll() as $sort) {
             $output[] = $sort->toArray();
         }
 

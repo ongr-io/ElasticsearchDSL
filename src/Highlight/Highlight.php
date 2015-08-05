@@ -32,8 +32,8 @@ class Highlight implements BuilderInterface
     private $tags;
 
     /**
-     * @param $name
-     * @param array $params
+     * @param string $name   Field name to highlight.
+     * @param array  $params
      *
      * @return $this
      */

@@ -59,6 +59,9 @@ class PostFilterEndpointTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tests if endpoint returns builders.
+     */
     public function testEndpointGetter()
     {
         $filterName = 'acme_post_filter';

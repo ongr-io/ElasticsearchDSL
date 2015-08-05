@@ -67,6 +67,9 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($matchAllFilter, $reference->getFilter());
     }
 
+    /**
+     * Tests if endpoint returns builders.
+     */
     public function testEndpointGetter()
     {
         $filterName = 'acme_filter';

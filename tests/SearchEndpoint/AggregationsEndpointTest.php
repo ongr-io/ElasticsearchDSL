@@ -30,6 +30,9 @@ class AggregationsEndpointTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tests if endpoint returns builders.
+     */
     public function testEndpointGetter()
     {
         $aggName = 'acme_agg';

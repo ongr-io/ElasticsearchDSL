@@ -23,7 +23,7 @@ class FilterEndpoint extends QueryEndpoint
     /**
      * Endpoint name
      */
-    CONST NAME = 'filter';
+    const NAME = 'filter';
 
     /**
      * {@inheritdoc}

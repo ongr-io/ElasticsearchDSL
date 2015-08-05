@@ -39,9 +39,9 @@ class TopHitsAggregation extends AbstractAggregation
     /**
      * Constructor for top hits.
      *
-     * @param string     $name Aggregation name.
-     * @param null|int   $size Number of top matching hits to return per bucket.
-     * @param null|int   $from The offset from the first result you want to fetch.
+     * @param string                $name Aggregation name.
+     * @param null|int              $size Number of top matching hits to return per bucket.
+     * @param null|int              $from The offset from the first result you want to fetch.
      * @param null|BuilderInterface $sort How the top matching hits should be sorted.
      */
     public function __construct($name, $size = null, $from = null, $sort = null)

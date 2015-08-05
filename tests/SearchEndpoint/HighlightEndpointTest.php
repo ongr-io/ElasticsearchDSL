@@ -52,6 +52,9 @@ class HighlightEndpointTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tests if endpoint returns builders.
+     */
     public function testEndpointGetter()
     {
         $highlightName = 'acme_highlight';

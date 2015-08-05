@@ -60,6 +60,9 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tests if endpoint returns builders.
+     */
     public function testEndpointGetter()
     {
         $queryName = 'acme_query';
