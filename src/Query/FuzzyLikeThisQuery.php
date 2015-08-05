@@ -32,12 +32,16 @@ class FuzzyLikeThisQuery implements BuilderInterface
     private $likeText;
 
     /**
-     * @param string[] $fields
-     * @param string   $likeText
-     * @param array    $parameters
+     * @param string|string[] $fields
+     * @param string          $likeText
+     * @param array           $parameters
      */
-    public function __construct(array $fields, $likeText, array $parameters = [])
+    public function __construct($fields, $likeText, array $parameters = [])
     {
+        if (!is_array($fields)) {
+            $fields = [$fields];
+        }
+
         $this->fields = $fields;
         $this->likeText = $likeText;
         $this->setParameters($parameters);
