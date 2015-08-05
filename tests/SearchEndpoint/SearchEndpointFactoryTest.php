@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
+use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 
 /**
@@ -26,5 +27,13 @@ class SearchEndpointFactoryTest extends \PHPUnit_Framework_TestCase
     public function testGet()
     {
         SearchEndpointFactory::get('foo');
+    }
+
+    /**
+     * Tests if factory can create endpoint.
+     */
+    public function testFactory()
+    {
+        SearchEndpointFactory::get(AggregationsEndpoint::NAME);
     }
 }

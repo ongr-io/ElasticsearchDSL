@@ -24,6 +24,7 @@ abstract class AbstractNormalizable implements NormalizableInterface
         ParametersTrait::getParameter as getReference;
         ParametersTrait::getParameters as getReferences;
         ParametersTrait::addParameter as addReference;
+        ParametersTrait::removeParameter as removeReference;
         ParametersTrait::setParameters as setReferences;
     }
 }

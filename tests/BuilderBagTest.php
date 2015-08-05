@@ -11,22 +11,20 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 
-use ONGR\ElasticsearchDSL\NamedBuilderBag;
-use ONGR\ElasticsearchDSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\BuilderBag;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
-class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
+class BuilderBagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests if bag knows if he has a builder.
      */
     public function testHas()
     {
-        $bag = new NamedBuilderBag(
-            [
-                $this->getBuilder('foo'),
-            ]
-        );
-        $this->assertTrue($bag->has('foo'));
+        $bag = new BuilderBag();
+        $fooBuilder = $this->getBuilder('foo');
+        $builderName = $bag->add($fooBuilder);
+        $this->assertTrue($bag->has($builderName));
     }
 
     /**
@@ -34,17 +32,18 @@ class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemove()
     {
-        $bag = new NamedBuilderBag(
-            [
-                $this->getBuilder('foo'),
-                $this->getBuilder('baz'),
-            ]
-        );
 
-        $bag->remove('foo');
+        $bag = new BuilderBag();
+        $fooBuilder = $this->getBuilder('foo');
+        $acmeBuilder = $this->getBuilder('acme');
+        $fooBuilderName = $bag->add($fooBuilder);
+        $acmeBuilderName = $bag->add($acmeBuilder);
 
-        $this->assertFalse($bag->has('foo'), 'Foo builder should not exist anymore.');
-        $this->assertTrue($bag->has('baz'), 'Baz builder should exist.');
+        $bag->remove($fooBuilderName);
+
+        $this->assertFalse($bag->has($fooBuilderName), 'Foo builder should not exist anymore.');
+        $this->assertTrue($bag->has($acmeBuilderName), 'Acme builder should exist.');
+        $this->assertCount(1, $bag->all());
     }
 
     /**
@@ -52,7 +51,7 @@ class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testClear()
     {
-        $bag = new NamedBuilderBag(
+        $bag = new BuilderBag(
             [
                 $this->getBuilder('foo'),
                 $this->getBuilder('baz'),
@@ -69,13 +68,11 @@ class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        $bag = new NamedBuilderBag(
-            [
-                $this->getBuilder('baz'),
-            ]
-        );
+        $bag = new BuilderBag();
+        $bazBuilder = $this->getBuilder('baz');
+        $builderName = $bag->add($bazBuilder);
 
-        $this->assertNotEmpty($bag->get('baz'));
+        $this->assertNotEmpty($bag->get($builderName));
     }
 
     /**
@@ -83,14 +80,14 @@ class NamedBuilderBagTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $name
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|NamedBuilderInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|BuilderInterface
      */
     private function getBuilder($name)
     {
-        $friendlyBuilderMock = $this->getMock('ONGR\ElasticsearchDSL\NamedBuilderInterface');
+        $friendlyBuilderMock = $this->getMock('ONGR\ElasticsearchDSL\BuilderInterface');
 
         $friendlyBuilderMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getName')
             ->will($this->returnValue($name));
 

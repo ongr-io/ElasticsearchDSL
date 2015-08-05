@@ -17,36 +17,53 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Search highlight dsl endpoint.
  */
-class HighlightEndpoint implements SearchEndpointInterface
+class HighlightEndpoint extends AbstractSearchEndpoint
 {
+    /**
+     * Endpoint name
+     */
+    CONST NAME = 'highlight';
+
     /**
      * @var BuilderInterface
      */
     private $highlight;
 
     /**
+     * @var string Key for highlight storing.
+     */
+    private $key;
+
+    /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->getBuilder()) {
-            return $this->getBuilder()->toArray();
+        if ($this->highlight) {
+            return $this->highlight->toArray();
         }
+
+        return null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addBuilder(BuilderInterface $builder, $parameters = [])
+    public function add(BuilderInterface $builder, $key = null)
     {
+        if ($this->highlight) {
+            throw new \OverflowException('Only one highlight can be set');
+        }
+
+        $this->key = $key;
         $this->highlight = $builder;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBuilder()
+    public function getAll($boolType = null)
     {
-        return $this->highlight;
+        return [$this->key => $this->highlight];
     }
 }

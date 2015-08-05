@@ -21,16 +21,29 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class FilterEndpoint extends QueryEndpoint
 {
     /**
+     * Endpoint name
+     */
+    CONST NAME = 'filter';
+
+    /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->getBuilder()) {
-            $query = new FilteredQuery();
-            !$this->isBool() ? : $this->getBuilder()->setParameters($this->getParameters());
-            $query->setFilter($this->getBuilder());
-            $this->addReference('filtered_query', $query);
+        if (!$this->getBool()) {
+            return null;
         }
+
+        $query = new FilteredQuery();
+        if ($this->getBool()->isRelevant()) {
+            $filters = $this->getBool()->getQueries(BoolFilter::MUST);
+            $filter = array_shift($filters);
+        } else {
+            $filter = $this->getBool();
+        }
+
+        $query->setFilter($filter);
+        $this->addReference('filtered_query', $query);
     }
 
     /**
@@ -42,7 +55,9 @@ class FilterEndpoint extends QueryEndpoint
     }
 
     /**
-     * {@inheritdoc}
+     * Returns bool instance for this endpoint case.
+     *
+     * @return BoolFilter
      */
     protected function getBoolInstance()
     {

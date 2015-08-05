@@ -80,7 +80,7 @@ class PercentileRanksAggregationTest extends \PHPUnit_Framework_TestCase
         $this->agg->setValues(['bar']);
         $this->assertSame(
             [
-                'agg_foo' => [
+                'foo' => [
                     'percentile_ranks' => [
                         'field' => 'bar',
                         'values' => ['bar'],

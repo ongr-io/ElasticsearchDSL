@@ -12,50 +12,31 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Sort\AbstractSort;
 use ONGR\ElasticsearchDSL\Sort\Sorts;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Search sort dsl endpoint.
  */
-class SortEndpoint implements SearchEndpointInterface
+class SortEndpoint extends AbstractSearchEndpoint
 {
     /**
-     * @var Sorts
+     * Endpoint name
      */
-    protected $sorts;
-
-    /**
-     * Initializes Sorts object.
-     */
-    public function __construct()
-    {
-        $this->sorts = new Sorts();
-    }
+    CONST NAME = 'sort';
 
     /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->sorts->isRelevant()) {
-            return $this->sorts->toArray();
+        $output = [];
+
+        foreach($this->getAll() as $sort) {
+            $output[] = $sort->toArray();
         }
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addBuilder(BuilderInterface $builder, $parameters = [])
-    {
-        $this->sorts->addSort($builder);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBuilder()
-    {
-        return $this->sorts;
+        return $output;
     }
 }

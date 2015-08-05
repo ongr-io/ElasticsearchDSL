@@ -34,6 +34,18 @@ trait ParametersTrait
     }
 
     /**
+     * Removes parameter.
+     *
+     * @param string $name
+     */
+    public function removeParameter($name)
+    {
+        if ($this->hasParameter($name)) {
+            unset($this->parameters[$name]);
+        }
+    }
+
+    /**
      * Returns one parameter by it's name.
      *
      * @param string $name

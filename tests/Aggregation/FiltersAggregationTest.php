@@ -75,7 +75,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addFilter($filter, 'second');
         $results = $aggregation->toArray();
         $expected = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'filters' => [
                     'filters' => [
                         'first' => [
@@ -121,7 +121,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                'agg_test' => [
+                'test' => [
                     'filters' => [
                         'filters' => [
                             'filter1' => ['type1' => null],
@@ -144,7 +144,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                'agg_test' => [
+                'test' => [
                     'filters' => [
                         'filters' => [
                             ['type1' => null],

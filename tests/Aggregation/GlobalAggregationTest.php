@@ -28,7 +28,7 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new GlobalAggregation('test_agg');
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'global' => new \stdClass(),
             ],
         ];
@@ -44,10 +44,10 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'global' => new \stdClass(),
                 'aggregations' => [
-                    'agg_test_agg_2' => [
+                    'test_agg_2' => [
                         'global' => new \stdClass(),
                     ],
                 ],
