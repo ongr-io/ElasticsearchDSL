@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
 use ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -51,5 +50,19 @@ class HighlightEndpointTest extends \PHPUnit_Framework_TestCase
             json_encode($highlight->toArray()),
             json_encode($instance->normalize($normalizerInterface))
         );
+    }
+
+    public function testEndpointGetter()
+    {
+        $highlightName = 'acme_highlight';
+        $highlight = new Highlight();
+        $highlight->addField('acme');
+
+        $endpoint = new HighlightEndpoint();
+        $endpoint->add($highlight, $highlightName);
+        $builders = $endpoint->getAll();
+
+        $this->assertCount(1, $builders);
+        $this->assertSame($highlight, $builders[$highlightName]);
     }
 }

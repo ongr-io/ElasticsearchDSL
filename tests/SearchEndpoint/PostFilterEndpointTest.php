@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Filter\MatchAllFilter;
 use ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -58,5 +57,18 @@ class PostFilterEndpointTest extends \PHPUnit_Framework_TestCase
             json_encode([$matchAll->getType() => $matchAll->toArray()]),
             json_encode($instance->normalize($normalizerInterface))
         );
+    }
+
+    public function testEndpointGetter()
+    {
+        $filterName = 'acme_post_filter';
+        $filter = new MatchAllFilter();
+
+        $endpoint = new PostFilterEndpoint();
+        $endpoint->add($filter, $filterName);
+        $builders = $endpoint->getAll();
+
+        $this->assertCount(1, $builders);
+        $this->assertSame($filter, $builders[$filterName]);
     }
 }

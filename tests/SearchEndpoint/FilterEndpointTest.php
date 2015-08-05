@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Filter\MatchAllFilter;
 use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
@@ -66,5 +65,17 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
         $reference = $instance->getReference('filtered_query');
         $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\FilteredQuery', $reference);
         $this->assertSame($matchAllFilter, $reference->getFilter());
+    }
+
+    public function testEndpointGetter()
+    {
+        $filterName = 'acme_filter';
+        $filter = new MatchAllFilter();
+        $endpoint = new FilterEndpoint();
+        $endpoint->add($filter, $filterName);
+        $builders = $endpoint->getAll();
+
+        $this->assertCount(1, $builders);
+        $this->assertSame($filter, $builders[$filterName]);
     }
 }

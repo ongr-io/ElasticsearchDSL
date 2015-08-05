@@ -11,11 +11,8 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\Aggregation\MissingAggregation;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Class AggregationsEndpointTest.
@@ -31,5 +28,17 @@ class AggregationsEndpointTest extends \PHPUnit_Framework_TestCase
             'ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint',
             new AggregationsEndpoint()
         );
+    }
+
+    public function testEndpointGetter()
+    {
+        $aggName = 'acme_agg';
+        $agg = new MissingAggregation('acme');
+        $endpoint = new AggregationsEndpoint();
+        $endpoint->add($agg, $aggName);
+        $builders = $endpoint->getAll();
+
+        $this->assertCount(1, $builders);
+        $this->assertSame($agg, $builders[$aggName]);
     }
 }

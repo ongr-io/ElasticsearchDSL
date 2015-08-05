@@ -104,4 +104,12 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     {
         return new BoolQuery();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAll($boolType = null)
+    {
+        return $this->bool->getQueries($boolType);
+    }
 }

@@ -30,6 +30,11 @@ class HighlightEndpoint extends AbstractSearchEndpoint
     private $highlight;
 
     /**
+     * @var string Key for highlight storing.
+     */
+    private $key;
+
+    /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
@@ -50,6 +55,15 @@ class HighlightEndpoint extends AbstractSearchEndpoint
             throw new \OverflowException('Only one highlight can be set');
         }
 
+        $this->key = $key;
         $this->highlight = $builder;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAll($boolType = null)
+    {
+        return [$this->key => $this->highlight];
     }
 }

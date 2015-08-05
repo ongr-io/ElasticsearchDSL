@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
 use ONGR\ElasticsearchDSL\Sort\FieldSort;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -49,5 +48,17 @@ class SortEndpointTest extends \PHPUnit_Framework_TestCase
             [$sort->toArray()],
             $instance->normalize($normalizerInterface)
         );
+    }
+
+    public function testEndpointGetter()
+    {
+        $sortName = 'acme_sort';
+        $sort = new FieldSort('acme');
+        $endpoint = new SortEndpoint();
+        $endpoint->add($sort, $sortName);
+        $builders = $endpoint->getAll();
+
+        $this->assertCount(1, $builders);
+        $this->assertSame($sort, $builders[$sortName]);
     }
 }

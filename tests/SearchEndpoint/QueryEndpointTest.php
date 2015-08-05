@@ -11,9 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Query\BoolQuery;
-use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -61,5 +58,17 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
             [$matchAll->getType() => $matchAll->toArray()],
             $instance->normalize($normalizerInterface)
         );
+    }
+
+    public function testEndpointGetter()
+    {
+        $queryName = 'acme_query';
+        $query = new MatchAllQuery();
+        $endpoint = new QueryEndpoint();
+        $endpoint->add($query, $queryName);
+        $builders = $endpoint->getAll();
+
+        $this->assertCount(1, $builders);
+        $this->assertSame($query, $builders[$queryName]);
     }
 }
