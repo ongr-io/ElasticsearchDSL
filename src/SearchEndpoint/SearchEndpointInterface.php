@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**
@@ -23,11 +24,23 @@ interface SearchEndpointInterface extends NormalizableInterface
      * Adds builder to search endpoint.
      *
      * @param BuilderInterface $builder    Builder to add.
-     * @param array            $parameters Additional parameters relevant to builder.
+     * @param array            $key        Additional parameters relevant to builder.
      *
-     * @return int Returns builder key.
+     * @return string Key of added builder.
      */
-    public function addBuilder(BuilderInterface $builder, $parameters = []);
+    public function add(BuilderInterface $builder, $key = null);
+
+    /**
+     * Adds builder to search endpoint's specific bool type container.
+     *
+     * @param BuilderInterface $builder    Builder to add.
+     * @param array            $boolType   Bool type for query or filter. If bool type is left null
+     *                                         it will be treated as MUST.
+     * @param array            $key        Additional parameters relevant to builder.
+     *
+     * @return string Key of added builder.
+     */
+    public function addToBool(BuilderInterface $builder, $boolType = null, $key = null);
 
     /**
      * Removes contained builder.
@@ -36,7 +49,7 @@ interface SearchEndpointInterface extends NormalizableInterface
      *
      * @return $this
      */
-    public function removeBuilder($key);
+    public function remove($key);
 
     /**
      * Returns contained builder or null if Builder is not found.
@@ -45,29 +58,14 @@ interface SearchEndpointInterface extends NormalizableInterface
      *
      * @return BuilderInterface|null
      */
-    public function getBuilder($key);
+    public function get($key);
 
     /**
-     * Returns all contained builders.
+     * Returns contained builder or null if Builder is not found.
      *
-     * @return BuilderInterface[]
-     */
-    public function getBuilders();
-
-    /**
-     * Returns parameters for contained builder or empty array if parameters are not found.
-     *
-     * @param int $key
+     * @param string|null $boolType If bool type is left null it will return all builders from container.
      *
      * @return array
      */
-    public function getBuilderParameters($key);
-
-    /**
-     * @param int   $key
-     * @param array $parameters
-     *
-     * @return $this
-     */
-    public function setBuilderParameters($key, $parameters);
+    public function getAll($boolType = null);
 }

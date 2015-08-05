@@ -19,51 +19,24 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Search sort dsl endpoint.
  */
-class SortEndpoint implements SearchEndpointInterface
+class SortEndpoint extends AbstractSearchEndpoint
 {
-    use BuilderContainerAwareTrait {
-        addBuilder as private traitAddBuilder;
-    }
+    /**
+     * Endpoint name
+     */
+    CONST NAME = 'sort';
 
     /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        $sorts = $this->buildSorts();
+        $output = [];
 
-        if ($sorts->isRelevant()) {
-            return $sorts->toArray();
+        foreach($this->getAll() as $sort) {
+            $output[] = $sort->toArray();
         }
 
-        return null;
-    }
-
-    /**
-     * Builds sorts object.
-     *
-     * @return Sorts
-     */
-    protected function buildSorts()
-    {
-        $sorts = new Sorts();
-        /** @var AbstractSort $builder */
-        foreach ($this->getBuilders() as $builder) {
-            $sorts->addSort($builder);
-        }
-
-        return $sorts;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addBuilder(BuilderInterface $builder, $parameters = [])
-    {
-        if (!($builder instanceof AbstractSort)) {
-            throw new \InvalidArgumentException('Sort must must a subtype of AbstractSort');
-        }
-
-        return $this->traitAddBuilder($builder, $parameters);
+        return $output;
     }
 }

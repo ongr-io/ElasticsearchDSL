@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Filter\PostFilter;
+use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -20,19 +20,34 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class PostFilterEndpoint extends FilterEndpoint
 {
     /**
+     * Endpoint name
+     */
+    CONST NAME = 'post_filter';
+
+    /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        $builder = $this->getBuilderForNormalization();
-
-        if (empty($builder)) {
+        if (!$this->getBool()) {
             return null;
         }
 
-        $postFilter = new PostFilter();
-        $postFilter->setFilter($builder);
+        if ($this->getBool()->isRelevant()) {
+            $filters = $this->getBool()->getQueries(BoolFilter::MUST);
+            $filter = array_shift($filters);
+        } else {
+            $filter = $this->getBool();
+        }
 
-        return $postFilter->toArray();
+        return [$filter->getType() => $filter->toArray()];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOrder()
+    {
+        return 2;
     }
 }

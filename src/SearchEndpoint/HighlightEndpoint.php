@@ -17,14 +17,15 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Search highlight dsl endpoint.
  */
-class HighlightEndpoint implements SearchEndpointInterface
+class HighlightEndpoint extends AbstractSearchEndpoint
 {
-    use BuilderContainerAwareTrait {
-        addBuilder as private traitAddBuilder;
-    }
+    /**
+     * Endpoint name
+     */
+    CONST NAME = 'highlight';
 
     /**
-     * @var int
+     * @var BuilderInterface
      */
     private $highlight;
 
@@ -33,24 +34,22 @@ class HighlightEndpoint implements SearchEndpointInterface
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if (!$this->getBuilder($this->highlight)) {
-            return null;
+        if ($this->highlight) {
+            return $this->highlight->toArray();
         }
 
-        return $this->getBuilder($this->highlight)->toArray();
+        return null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addBuilder(BuilderInterface $builder, $parameters = [])
+    public function add(BuilderInterface $builder, $key = null)
     {
-        if ($this->getBuilders()) {
-            throw new \OverflowException('Only one highlight is expected');
+        if ($this->highlight) {
+            throw new \OverflowException('Only one highlight can be set');
         }
 
-        $this->highlight = $this->traitAddBuilder($builder, $parameters);
-
-        return $this->highlight;
+        $this->highlight = $builder;
     }
 }
