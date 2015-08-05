@@ -12,7 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
-use ONGR\ElasticsearchDSL\Sort\Sorts;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Top hits aggregation.
@@ -32,7 +32,7 @@ class TopHitsAggregation extends AbstractAggregation
     private $from;
 
     /**
-     * @var Sorts How the top matching hits should be sorted.
+     * @var BuilderInterface How the top matching hits should be sorted.
      */
     private $sort;
 
@@ -42,7 +42,7 @@ class TopHitsAggregation extends AbstractAggregation
      * @param string     $name Aggregation name.
      * @param null|int   $size Number of top matching hits to return per bucket.
      * @param null|int   $from The offset from the first result you want to fetch.
-     * @param null|Sorts $sort How the top matching hits should be sorted.
+     * @param null|BuilderInterface $sort How the top matching hits should be sorted.
      */
     public function __construct($name, $size = null, $from = null, $sort = null)
     {
@@ -75,7 +75,7 @@ class TopHitsAggregation extends AbstractAggregation
     /**
      * Return sort.
      *
-     * @return Sorts
+     * @return BuilderInterface
      */
     public function getSort()
     {
@@ -85,7 +85,7 @@ class TopHitsAggregation extends AbstractAggregation
     /**
      * Set sort.
      *
-     * @param Sorts $sort
+     * @param BuilderInterface $sort
      */
     public function setSort($sort)
     {
@@ -142,7 +142,7 @@ class TopHitsAggregation extends AbstractAggregation
      */
     private function getFilteredData()
     {
-        $fd = array_filter(
+        $output = array_filter(
             [
                 'sort' => $this->getSort() ? $this->getSort()->toArray() : [],
                 'size' => $this->getSize(),
@@ -153,6 +153,6 @@ class TopHitsAggregation extends AbstractAggregation
             }
         );
 
-        return $this->processArray($fd);
+        return $output;
     }
 }
