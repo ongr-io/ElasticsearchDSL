@@ -14,27 +14,17 @@ namespace ONGR\ElasticsearchDSL;
 /**
  * Container for named builders.
  */
-class NamedBuilderBag
+class BuilderBag
 {
     /**
-     * @var NamedBuilderInterface[]
+     * @var BuilderInterface[]
      */
     private $bag = [];
 
     /**
-     * @param NamedBuilderInterface[] $builders
+     * @param BuilderInterface[] $builders
      */
-    public function __construct(array $builders = [])
-    {
-        $this->set($builders);
-    }
-
-    /**
-     * Replaces builders with new ones.
-     *
-     * @param NamedBuilderInterface[] $builders
-     */
-    public function set(array $builders)
+    public function __construct($builders = [])
     {
         foreach ($builders as $builder) {
             $this->add($builder);
@@ -44,15 +34,25 @@ class NamedBuilderBag
     /**
      * Adds a builder.
      *
-     * @param NamedBuilderInterface $builder
+     * @param BuilderInterface $builder
+     *
+     * @return string
      */
-    public function add(NamedBuilderInterface $builder)
+    public function add(BuilderInterface $builder)
     {
-        $this->bag[$builder->getName()] = $builder;
+        if (method_exists($builder, 'getName')) {
+            $name = $builder->getName();
+        } else {
+            $name = uniqid();
+        }
+
+        $this->bag[$name] = $builder;
+
+        return $name;
     }
 
     /**
-     * Checks if builder is set by name.
+     * Checks if builder exists by a specific name.
      *
      * @param string $name Builder name.
      *
@@ -66,7 +66,7 @@ class NamedBuilderBag
     /**
      * Removes a builder by name.
      *
-     * @param string $name Builder name.
+     * @param string $name builder name.
      */
     public function remove($name)
     {
@@ -84,9 +84,9 @@ class NamedBuilderBag
     /**
      * Returns a builder by name.
      *
-     * @param string $name Builder name.
+     * @param string $name builder name.
      *
-     * @return NamedBuilderInterface
+     * @return BuilderInterface
      */
     public function get($name)
     {
@@ -96,16 +96,16 @@ class NamedBuilderBag
     /**
      * Returns all builders contained.
      *
-     * @param string|null $type Builder type.
+     * @param string|null $type builder type.
      *
-     * @return NamedBuilderInterface[]
+     * @return BuilderInterface[]
      */
     public function all($type = null)
     {
         return array_filter(
             $this->bag,
-            /** @var NamedBuilderInterface $builder */
-            function (NamedBuilderInterface $builder) use ($type) {
+            /** @var BuilderInterface $builder */
+            function (BuilderInterface $builder) use ($type) {
                 return $type === null || $builder->getType() == $type;
             }
         );
@@ -116,11 +116,10 @@ class NamedBuilderBag
      */
     public function toArray()
     {
-        $out = [];
+        $output = [];
         foreach ($this->all() as $builder) {
-            $out = array_merge($out, $builder->toArray());
+            $output = array_merge($output, $builder->toArray());
         }
-
-        return $out;
+        return $output;
     }
 }
