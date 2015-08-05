@@ -11,15 +11,23 @@
 
 namespace ONGR\ElasticsearchDSL;
 
-/**
- * Interface used by builders with names.
- */
-interface NamedBuilderInterface extends BuilderInterface
+trait NameAwareTrait
 {
+    private $name;
+
     /**
-     * Returns builder name.
-     *
-     * @return string
+     * @return mixed
      */
-    public function getName();
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 }
