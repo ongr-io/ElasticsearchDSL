@@ -12,16 +12,19 @@
 namespace ONGR\ElasticsearchDSL;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
+use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
+use ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
-use ONGR\ElasticsearchDSL\Sort\AbstractSort;
-use ONGR\ElasticsearchDSL\Sort\Sorts;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 
 /**
@@ -108,174 +111,130 @@ class Search
     }
 
     /**
-     * Adds query to search.
+     * Returns endpoint instance.
+     *
+     * @param string $type Endpoint type.
+     *
+     * @return SearchEndpointInterface
+     */
+    public function getEndpoint($type)
+    {
+        if (!array_key_exists($type, $this->endpoints)) {
+            $this->endpoints[$type] = SearchEndpointFactory::get($type);
+        }
+
+        return $this->endpoints[$type];
+    }
+
+    /**
+     * Destroys search endpoint.
+     *
+     * @param string $type Endpoint type.
+     */
+    public function destroyEndpoint($type)
+    {
+        unset($this->endpoints[$type]);
+    }
+
+    /**
+     * Adds query to the search.
      *
      * @param BuilderInterface $query
      * @param string           $boolType
-     *
-     * @return int Key of query.
-     */
-    public function addQuery(BuilderInterface $query, $boolType = '')
-    {
-        return $this
-            ->getEndpoint('query')
-            ->addBuilder($query, ['bool_type' => $boolType]);
-    }
-
-    /**
-     * Sets parameters for bool query.
-     *
-     * @param array $params Example values:
-     *                      - minimum_should_match => 1
-     *                      - boost => 1.
+     * @param string           $key
      *
      * @return $this
      */
-    public function setBoolQueryParameters(array $params)
+    public function addQuery(BuilderInterface $query, $boolType = BoolQuery::MUST, $key = null)
     {
-        /** @var QueryEndpoint $endpoint */
-        $endpoint = $this->getEndpoint('query');
-        $endpoint->setParameters($params);
+        $endpoint = $this->getEndpoint(QueryEndpoint::NAME);
+        $endpoint->addToBool($query, $boolType, $key);
 
         return $this;
     }
 
     /**
-     * Returns contained query.
-     *
-     * @return BuilderInterface[]
-     */
-    public function getQuery()
-    {
-        return $this
-            ->getEndpoint('query')
-            ->getBuilders();
-    }
-
-    /**
-     * Destroys query part.
-     *
-     * @return $this
-     */
-    public function destroyQuery()
-    {
-        $this->destroyEndpoint('query');
-
-        return $this;
-    }
-
-    /**
-     * Adds a filter to search.
+     * Adds a filter to the search.
      *
      * @param BuilderInterface $filter   Filter.
-     * @param string           $boolType Possible boolType values:
+     * @param string           $boolType Example boolType values:
      *                                   - must
      *                                   - must_not
      *                                   - should.
-     *
-     * @return int Key of query.
-     */
-    public function addFilter(BuilderInterface $filter, $boolType = '')
-    {
-        return $this
-            ->getEndpoint('filter')
-            ->addBuilder($filter, ['bool_type' => $boolType]);
-    }
-
-    /**
-     * Returns currently contained filters.
-     *
-     * @return BuilderInterface[]
-     */
-    public function getFilters()
-    {
-        return $this
-            ->getEndpoint('filter')
-            ->getBuilders();
-    }
-
-    /**
-     * Sets bool filter parameters.
-     *
-     * @param array $params Possible values:
-     *                      _cache => true
-     *                      false.
+     * @param string           $key
      *
      * @return $this
      */
-    public function setBoolFilterParameters($params)
+    public function addFilter(BuilderInterface $filter, $boolType = BoolFilter::MUST, $key = null)
     {
-        /** @var FilterEndpoint $endpoint */
-        $endpoint = $this->getEndpoint('filter');
-        $endpoint->setParameters($params);
+        $this->getEndpoint(QueryEndpoint::NAME);
+        $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
+        $endpoint->addToBool($filter, $boolType, $key);
 
         return $this;
     }
 
     /**
-     * Destroys filter part.
+     * Adds aggregation into search.
+     *
+     * @param AbstractAggregation $aggregation
+     *
+     * @return $this;
      */
-    public function destroyFilters()
+    public function addAggregation(AbstractAggregation $aggregation)
     {
-        $this->destroyEndpoint('filter');
+        $this->getEndpoint(AggregationsEndpoint::NAME)->add($aggregation, $aggregation->getName());
+
+        return $this;
     }
 
     /**
      * Adds a post filter to search.
      *
-     * @param BuilderInterface $postFilter Post filter.
-     * @param string           $boolType   Possible boolType values:
-     *                                     - must
-     *                                     - must_not
-     *                                     - should.
+     * @param BuilderInterface $filter   Filter.
+     * @param string           $boolType Example boolType values:
+     *                                   - must
+     *                                   - must_not
+     *                                   - should.
+     * @param string           $key
      *
      * @return int Key of post filter.
      */
-    public function addPostFilter(BuilderInterface $postFilter, $boolType = '')
+    public function addPostFilter(BuilderInterface $filter, $boolType = BoolFilter::MUST, $key = null)
     {
-        return $this
-            ->getEndpoint('post_filter')
-            ->addBuilder($postFilter, ['bool_type' => $boolType]);
-    }
-
-    /**
-     * Returns all contained post filters.
-     *
-     * @return BuilderInterface[]
-     */
-    public function getPostFilters()
-    {
-        return $this
-            ->getEndpoint('post_filter')
-            ->getBuilders();
-    }
-
-    /**
-     * Sets bool post filter parameters.
-     *
-     * @param array $params Possible values:
-     *                      _cache => true
-     *                      false.
-     *
-     * @return $this
-     */
-    public function setBoolPostFilterParameters($params)
-    {
-        /** @var PostFilterEndpoint $endpoint */
-        $endpoint = $this->getEndpoint('filter');
-        $endpoint->setParameters($params);
+        $this
+            ->getEndpoint(PostFilterEndpoint::NAME)
+            ->add($filter, $boolType, $key);
 
         return $this;
     }
 
     /**
-     * Returns min score value.
+     * Adds sort to search.
      *
-     * @return float
+     * @param BuilderInterface $sort
+     *
+     * @return $this
      */
-    public function getMinScore()
+    public function addSort(BuilderInterface $sort)
     {
-        return $this->minScore;
+        $this->getEndpoint(SortEndpoint::NAME)->add($sort);
+
+        return $this;
+    }
+
+    /**
+     * Allows to highlight search results on one or more fields.
+     *
+     * @param Highlight $highlight
+     *
+     * @return int Key of highlight.
+     */
+    public function addHighlight($highlight)
+    {
+        $this->getEndpoint(HighlightEndpoint::NAME)->add($highlight);
+
+        return $this;
     }
 
     /**
@@ -293,7 +252,17 @@ class Search
     }
 
     /**
-     * Paginate reed removedlts from.
+     * Returns min score value.
+     *
+     * @return float
+     */
+    public function getMinScore()
+    {
+        return $this->minScore;
+    }
+
+    /**
+     * Paginate reed removed lts from.
      *
      * @param int $from
      *
@@ -338,32 +307,6 @@ class Search
     public function getSize()
     {
         return $this->size;
-    }
-
-    /**
-     * Adds sort to search.
-     *
-     * @param AbstractSort $sort
-     *
-     * @return int Key of sort.
-     */
-    public function addSort(AbstractSort $sort)
-    {
-        return $this
-            ->getEndpoint('sort')
-            ->addBuilder($sort);
-    }
-
-    /**
-     * Returns sorts object.
-     *
-     * @return Sorts
-     */
-    public function getSorts()
-    {
-        return $this
-            ->getEndpoint('sort')
-            ->getBuilders();
     }
 
     /**
@@ -439,32 +382,6 @@ class Search
     }
 
     /**
-     * Allows to highlight search results on one or more fields.
-     *
-     * @param Highlight $highlight
-     *
-     * @return int Key of highlight.
-     */
-    public function setHighlight($highlight)
-    {
-        return $this
-            ->getEndpoint('highlight')
-            ->addBuilder($highlight);
-    }
-
-    /**
-     * Returns containing highlight object.
-     *
-     * @return $this
-     */
-    public function getHighlight()
-    {
-        return $this
-            ->getEndpoint('highlight')
-            ->getBuilders();
-    }
-
-    /**
      * Sets explain property in request body search.
      *
      * @param bool $explain
@@ -510,32 +427,6 @@ class Search
     public function getStats()
     {
         return $this->stats;
-    }
-
-    /**
-     * Adds aggregation into search.
-     *
-     * @param AbstractAggregation $aggregation
-     *
-     * @return int Key of aggregation.
-     */
-    public function addAggregation(AbstractAggregation $aggregation)
-    {
-        return $this
-            ->getEndpoint('aggregations')
-            ->addBuilder($aggregation);
-    }
-
-    /**
-     * Returns contained aggregations.
-     *
-     * @return AbstractAggregation[]
-     */
-    public function getAggregations()
-    {
-        return $this
-            ->getEndpoint('aggregations')
-            ->getBuilders();
     }
 
     /**
@@ -591,7 +482,7 @@ class Search
      *
      * Controls which shard replicas to execute the search request on.
      *
-     * @param mixed $preferenceParams Possible values:
+     * @param mixed $preferenceParams Example values:
      *                                _primary
      *                                _primary_first
      *                                _local
@@ -667,31 +558,5 @@ class Search
         }
 
         return $output;
-    }
-
-    /**
-     * Returns endpoint instance.
-     *
-     * @param string $type Endpoint type.
-     *
-     * @return SearchEndpointInterface
-     */
-    private function getEndpoint($type)
-    {
-        if (!array_key_exists($type, $this->endpoints)) {
-            $this->endpoints[$type] = SearchEndpointFactory::get($type);
-        }
-
-        return $this->endpoints[$type];
-    }
-
-    /**
-     * Destroys search endpoint.
-     *
-     * @param string $type Endpoint type.
-     */
-    private function destroyEndpoint($type)
-    {
-        unset($this->endpoints[$type]);
     }
 }
