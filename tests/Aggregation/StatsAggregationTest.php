@@ -24,7 +24,7 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('test_field');
 
         $expectedResult = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'stats' => ['field' => 'test_field'],
             ],
         ];
@@ -40,7 +40,7 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new StatsAggregation('foo', 'fieldValue', 'scriptValue');
         $this->assertSame(
             [
-                'agg_foo' => [
+                'foo' => [
                     'stats' => [
                         'field' => 'fieldValue',
                         'script' => 'scriptValue',

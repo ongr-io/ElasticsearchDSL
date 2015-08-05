@@ -48,7 +48,7 @@ class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
         $agg->setField('bar');
         $agg->setWrapLongitude(true);
         $result = [
-            'agg_foo' => [
+            'foo' => [
                 'geo_bounds' => [
                     'field' => 'bar',
                     'wrap_longitude' => true,
@@ -59,7 +59,7 @@ class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
 
         $agg->setWrapLongitude(false);
         $result = [
-            'agg_foo' => [
+            'foo' => [
                 'geo_bounds' => [
                     'field' => 'bar',
                     'wrap_longitude' => false,

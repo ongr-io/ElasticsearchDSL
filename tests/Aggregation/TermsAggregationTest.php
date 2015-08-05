@@ -25,7 +25,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('test_field');
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => ['field' => 'test_field'],
             ],
         ];
@@ -44,7 +44,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('size', 1);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'size' => 1,
@@ -60,7 +60,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('size', 0);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'size' => 0,
@@ -83,7 +83,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('min_doc_count', 10);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'size' => 1,
@@ -107,7 +107,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('exclude', 'pizza_.*');
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'include' => 'test_.*',
@@ -143,7 +143,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         );
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'include' => [
@@ -172,7 +172,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('order', ['_count' => 'asc']);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'order' => ['_count' => 'asc'],
@@ -194,7 +194,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('order', ['_term' => 'desc']);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'order' => ['_term' => 'desc'],

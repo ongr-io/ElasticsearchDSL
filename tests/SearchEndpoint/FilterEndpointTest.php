@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Filter\MatchAllFilter;
 use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -34,7 +35,7 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests if correct order is returned.
+     * Tests if correct order is returned. It's very important that filters must be executed first.
      */
     public function testGetOrder()
     {
@@ -55,31 +56,15 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($instance->normalize($normalizerInterface));
         $this->assertFalse($instance->hasReference('filtered_query'));
 
-        /** @var BuilderInterface|MockObject $builderInterface1 */
-        $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface1->expects($this->exactly(1))->method('toArray')->willReturn(['array' => 'data']);
-        $builderInterface1->expects($this->exactly(1))->method('getType')->willReturn('test');
-        $instance->addBuilder($builderInterface1);
+        $matchAllFilter = new MatchAllFilter();
+        $instance->add($matchAllFilter);
 
         $this->assertNull($instance->normalize($normalizerInterface));
         $this->assertTrue($instance->hasReference('filtered_query'));
+
         /** @var FilteredQuery $reference */
         $reference = $instance->getReference('filtered_query');
         $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\FilteredQuery', $reference);
-        $this->assertSame($builderInterface1, $reference->getFilter());
-
-        $instance = new FilterEndpoint();
-        /** @var BuilderInterface|MockObject $builderInterface2 */
-        $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface2->expects($this->exactly(1))->method('toArray')->willReturn(['array2' => 'data2']);
-        $builderInterface2->expects($this->exactly(1))->method('getType')->willReturn('test2');
-        $instance->addBuilder($builderInterface1);
-        $instance->addBuilder($builderInterface2);
-
-        $this->assertNull($instance->normalize($normalizerInterface));
-        $this->assertTrue($instance->hasReference('filtered_query'));
-        $reference = $instance->getReference('filtered_query');
-        $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\FilteredQuery', $reference);
-        $this->assertInstanceOf('ONGR\ElasticsearchDSL\Filter\BoolFilter', $reference->getFilter());
+        $this->assertSame($matchAllFilter, $reference->getFilter());
     }
 }

@@ -133,7 +133,7 @@ class GeoDistanceAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                'agg_test' => [
+                'test' => [
                     'geo_distance' => [
                         'field' => 'fieldName',
                         'origin' => 'originValue',

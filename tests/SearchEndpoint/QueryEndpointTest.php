@@ -14,6 +14,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\FilteredQuery;
+use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -32,12 +33,12 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests if correct order is returned.
+     * Tests if correct order is returned. Query must be executed after filter and post filter.
      */
     public function testGetOrder()
     {
         $instance = new QueryEndpoint();
-        $this->assertEquals(2, $instance->getOrder());
+        $this->assertEquals(3, $instance->getOrder());
     }
 
     /**
@@ -52,92 +53,12 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertNull($instance->normalize($normalizerInterface));
-        /** @var BuilderInterface|MockObject $builderInterface1 */
-        $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface1->expects($this->exactly(3))->method('toArray')->willReturn(['array' => 'data']);
-        $builderInterface1->expects($this->exactly(3))->method('getType')->willReturn('test');
 
-        $instance->addBuilder($builderInterface1);
-        $data = $instance->normalize($normalizerInterface);
-        $this->assertEquals(['test' => ['array' => 'data']], $data);
+        $matchAll = new MatchAllQuery();
+        $instance->add($matchAll);
 
-        /** @var BuilderInterface|MockObject $builderInterface2 */
-        $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface2->expects($this->exactly(2))->method('toArray')->willReturn(['array2' => 'data2']);
-        $builderInterface2->expects($this->exactly(2))->method('getType')->willReturn('test2');
-
-        $instance->addBuilder($builderInterface2);
-        $data = $instance->normalize($normalizerInterface);
         $this->assertEquals(
-            [
-                'bool' => [
-                    'must' => [
-                        [ 'test' => [ 'array' => 'data' ] ],
-                        [ 'test2' => [ 'array2' => 'data2' ] ],
-                    ],
-                ],
-            ],
-            $data
-        );
-
-        /** @var BuilderInterface|MockObject $builderInterface3 */
-        $builderInterface3 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface3->expects($this->once())->method('toArray')->willReturn(['array3' => 'data3']);
-        $builderInterface3->expects($this->once())->method('getType')->willReturn('test3');
-        $instance->addBuilder($builderInterface3, ['bool_type' => BoolQuery::SHOULD]);
-        $instance->setParameters(['some' => 'parameter']);
-        $data = $instance->normalize($normalizerInterface);
-        $this->assertEquals(
-            [
-                'bool' => [
-                    'must' => [
-                        [ 'test' => [ 'array' => 'data' ] ],
-                        [ 'test2' => [ 'array2' => 'data2' ] ],
-                    ],
-                    'should' => [
-                        [ 'test3' => [ 'array3' => 'data3' ] ],
-                    ],
-                    'some' => 'parameter',
-                ],
-            ],
-            $data
-        );
-    }
-
-    /**
-     * Tests filtered query reference.
-     */
-    public function testFilteredQuery()
-    {
-        $instance = new QueryEndpoint();
-        /** @var NormalizerInterface|MockObject $normalizerInterface */
-        $normalizerInterface = $this->getMockForAbstractClass(
-            'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
-        );
-        /** @var BuilderInterface|MockObject $builderInterface1 */
-        $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface1->expects($this->exactly(1))->method('toArray')->willReturn(['array' => 'data']);
-        $builderInterface1->expects($this->exactly(1))->method('getType')->willReturn('test');
-
-        /** @var BuilderInterface|MockObject $builderInterface2 */
-        $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface2->expects($this->exactly(1))->method('toArray')->willReturn(['array2' => 'data2']);
-        $builderInterface2->expects($this->exactly(1))->method('getType')->willReturn('test2');
-
-        $filteredQuery = new FilteredQuery($builderInterface1, $builderInterface2);
-        $instance->addReference('filtered_query', $filteredQuery);
-
-        $this->assertSame(
-            [
-                'filtered' => [
-                    'filter' => [
-                        'test2' => ['array2' => 'data2'],
-                    ],
-                    'query' => [
-                        'test' => ['array' => 'data'],
-                    ],
-                ],
-            ],
+            [$matchAll->getType() => $matchAll->toArray()],
             $instance->normalize($normalizerInterface)
         );
     }

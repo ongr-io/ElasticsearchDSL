@@ -42,7 +42,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setFilter($filter);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'filter' => [
                     'test_filter' => [
                         'test_field' => ['test_value' => 'test'],
@@ -66,22 +66,22 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $aggregation2->expects($this->any())
             ->method('toArray')
-            ->willReturn(['agg_test_agg2' => ['avg' => []]]);
+            ->willReturn(['test_agg2' => ['avg' => []]]);
         $aggregation2->expects($this->any())
             ->method('getName')
-            ->willReturn('agg_test_agg2');
+            ->willReturn('test_agg2');
 
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'filter' => [
                     'test_filter' => [
                         'test_field' => ['test_value' => 'test'],
                     ],
                 ],
                 'aggregations' => [
-                    'agg_test_agg2' => [
+                    'test_agg2' => [
                         'avg' => [],
                     ],
                 ],
@@ -154,7 +154,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new FilterAggregation('test', $builderInterface);
         $this->assertSame(
             [
-                'agg_test' => [
+                'test' => [
                     'filter' => [null => null],
                 ],
             ],

@@ -26,7 +26,7 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setPath('test_path');
 
         $expectedResult = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'nested' => ['path' => 'test_path'],
             ],
         ];
@@ -54,7 +54,7 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($termMock);
 
         $expectedResult = [
-            'agg_test_nested_agg' => [
+            'test_nested_agg' => [
                 'nested' => ['path' => 'test_path'],
                 'aggregations' => [
                     'terms' => [],

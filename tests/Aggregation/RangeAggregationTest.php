@@ -25,7 +25,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addRange('10', 20);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
@@ -54,7 +54,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addRange(null, '20', 'range_2');
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
@@ -90,7 +90,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            'agg_test_agg' => [
+            'test_agg' => [
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
@@ -102,7 +102,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                     'keyed' => false,
                 ],
                 'aggregations' => [
-                    'agg_test_agg_2' => [
+                    'test_agg_2' => [
                         'range' => [
                             'ranges' => [
                                 [
@@ -208,7 +208,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new RangeAggregation('foo', 'fieldValue', [['from' => 'now', 'key' => 'nowkey']], true);
         $this->assertSame(
             [
-                'agg_foo' => [
+                'foo' => [
                     'range' => [
                         'keyed' => true,
                         'ranges' => [
