@@ -12,68 +12,34 @@
 namespace ONGR\ElasticsearchDSL\Highlight;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\NamedBuilderBag;
-use ONGR\ElasticsearchDSL\NamedBuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Data holder for highlight api.
  */
-class Highlight extends NamedBuilderBag implements BuilderInterface
+class Highlight implements BuilderInterface
 {
-    const TYPE_PLAIN = 'plain';
-    const TYPE_POSTINGS = 'postings';
-    const TYPE_FVH = 'fvh';
+    use ParametersTrait;
 
     /**
-     * @var array Holds html tag name and class that highlight will be put in (default 'em' tag).
+     * @var array Holds fields for highlight.
      */
-    private $tags = [];
+    private $fields = [];
 
     /**
-     * @var string Holds tag schema name. 'styled' is the only option yet.
+     * @var array
      */
-    private $tagsSchema = null;
+    private $tags;
 
     /**
-     * @var string Fragments sort type.
-     */
-    private $order = null;
-
-    /**
-     * @var string Highlighter type. By default plain.
-     */
-    private $type = null;
-
-    /**
-     * @var int Size of the highlighted fragment in characters. By default 100.
-     */
-    private $fragmentSize = null;
-
-    /**
-     * @var int Maximum number of fragments to return. By default 5.
-     */
-    private $numberOfFragments = null;
-
-    /**
-     * {@inheritdoc}
+     * @param $name
+     * @param array $params
      *
-     * @return Highlight
+     * @return $this
      */
-    public function add(NamedBuilderInterface $builder)
+    public function addField($name, array $params = [])
     {
-        parent::add($builder);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return Highlight
-     */
-    public function set(array $builders)
-    {
-        parent::set($builders);
+        $this->fields[$name] = $params;
 
         return $this;
     }
@@ -81,92 +47,15 @@ class Highlight extends NamedBuilderBag implements BuilderInterface
     /**
      * Sets html tag and its class used in highlighting.
      *
-     * @param string $tag
-     * @param string $class
+     * @param array $preTags
+     * @param array $postTags
      *
-     * @return Highlight
+     * @return $this
      */
-    public function setTag($tag, $class = null)
+    public function setTags(array $preTags, array $postTags)
     {
-        $this->tags[] = array_filter(
-            [
-                'tag' => $tag,
-                'class' => $class,
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * Sets html tag and its class used in highlighting.
-     *
-     * @param string $tagsSchema
-     *
-     * @return Highlight
-     */
-    public function setTagsSchema($tagsSchema)
-    {
-        $this->tagsSchema = $tagsSchema;
-
-        return $this;
-    }
-
-    /**
-     * Sets fragments sort order.
-     *
-     * @param string $order
-     *
-     * @return Highlight
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Sets highlighter type (forces). Available options plain, postings, fvh.
-     *
-     * @param string $type
-     *
-     * @return Highlight
-     */
-    public function setHighlighterType($type)
-    {
-        $reflection = new \ReflectionClass(__CLASS__);
-        if (in_array($type, $reflection->getConstants())) {
-            $this->type = $type;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Sets field fragment size.
-     *
-     * @param int $fragmentSize
-     *
-     * @return Highlight
-     */
-    public function setFragmentSize($fragmentSize)
-    {
-        $this->fragmentSize = $fragmentSize;
-
-        return $this;
-    }
-
-    /**
-     * Sets maximum number of fragments to return.
-     *
-     * @param int $numberOfFragments
-     *
-     * @return Highlight
-     */
-    public function setNumberOfFragments($numberOfFragments)
-    {
-        $this->numberOfFragments = $numberOfFragments;
+        $this->tags['pre_tags'] = $preTags;
+        $this->tags['post_tags'] = $postTags;
 
         return $this;
     }
@@ -184,44 +73,18 @@ class Highlight extends NamedBuilderBag implements BuilderInterface
      */
     public function toArray()
     {
-        $highlight = array_filter(
-            [
-                'order' => $this->order,
-                'type' => $this->type,
-                'fragment_size' => $this->fragmentSize,
-                'number_of_fragments' => $this->numberOfFragments,
-                'tags_schema' => $this->tagsSchema,
-                'fields' => $this->getFields(),
-            ]
-        );
+        $output = [];
 
-        foreach ($this->tags as $tag) {
-            if (isset($tag['tag'])) {
-                $highlight['post_tags'][] = sprintf('</%s>', $tag['tag']);
-
-                if (isset($tag['class'])) {
-                    $highlight['pre_tags'][] = sprintf('<%s class="%s">', $tag['tag'], $tag['class']);
-                } else {
-                    $highlight['pre_tags'][] = sprintf('<%s>', $tag['tag']);
-                }
-            }
+        if (is_array($this->tags)) {
+            $output = $this->tags;
         }
 
-        return $highlight;
-    }
+        $output = $this->processArray($output);
 
-    /**
-     * Returns fields as array.
-     *
-     * @return array
-     */
-    private function getFields()
-    {
-        $out = [];
-        foreach ($this->all() as $builder) {
-            $out = array_merge($out, [$builder->getName() => $builder->toArray()]);
+        foreach ($this->fields as $field => $params) {
+            $output['fields'][$field] = count($params) ? $params : new \stdClass();
         }
 
-        return $out;
+        return $output;
     }
 }
