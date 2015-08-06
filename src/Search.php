@@ -204,7 +204,7 @@ class Search
     {
         $this
             ->getEndpoint(PostFilterEndpoint::NAME)
-            ->add($filter, $boolType, $key);
+            ->addToBool($filter, $boolType, $key);
 
         return $this;
     }
