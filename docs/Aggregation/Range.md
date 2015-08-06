@@ -10,9 +10,10 @@ ranges - each representing a bucket.
 ```JSON
 {
     "aggs" : {
-        "agg_price_ranges" : {
+        "price_ranges" : {
             "range" : {
                 "field" : "price",
+                "keyed" : false,
                 "ranges" : [
                     { "to" : 50 },
                     { "from" : 50, "to" : 100 },
