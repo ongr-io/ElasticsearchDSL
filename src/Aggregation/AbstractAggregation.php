@@ -108,7 +108,7 @@ abstract class AbstractAggregation implements BuilderInterface
         $array = $this->getArray();
         $result = [
             $this->getName() => [
-                $this->getType() => is_array($array) ? $this->processArray($array) : $array,
+                $this->getType() => is_array($array) ? $this->processArray($array) : $this->processObject($array),
             ],
         ];
 
