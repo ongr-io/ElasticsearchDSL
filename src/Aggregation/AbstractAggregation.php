@@ -151,9 +151,9 @@ abstract class AbstractAggregation implements BuilderInterface
     /**
      * Returns given object merged with parameters.
      *
-     * @param $object
+     * @param \stdClass $object
      *
-     * @return Object
+     * @return \stdClass
      */
     protected function processObject($object)
     {
