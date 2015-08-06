@@ -10,7 +10,7 @@ in the current document set context that are missing a field value.
 ```JSON
 {
      "aggregations" : {
-         "agg_products_without_a_price" : {
+         "products_without_a_price" : {
              "missing" : { "field" : "price" }
          }
      }
