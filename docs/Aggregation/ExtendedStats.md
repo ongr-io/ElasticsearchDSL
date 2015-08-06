@@ -9,7 +9,7 @@ A multi-value metrics aggregation that computes stats over numeric values extrac
 ```JSON
 {
     "aggregations" : {
-        "agg_grades_stats" : {
+        "grades_stats" : {
             "extended_stats" : { "field" : "grade" }
         }
     }
