@@ -10,7 +10,7 @@ ranks over numeric values extracted from the aggregated documents.
 ```JSON
 {
     "aggregations" : {
-        "agg_load_time_outlier" : {
+        "load_time_outlier" : {
             "percentile_ranks" : {
                 "field" : "load_time",
                 "values" : [15, 30]
