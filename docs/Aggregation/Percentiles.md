@@ -10,7 +10,7 @@ numeric values extracted from the aggregated documents.
 ```JSON
 {
     "aggregations" : {
-        "agg_load_time_outlier" : {
+        "load_time_outlier" : {
             "percentiles" : {
                 "field" : "load_time"
             }
