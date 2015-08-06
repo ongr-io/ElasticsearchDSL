@@ -131,6 +131,7 @@ class TopHitsAggregation extends AbstractAggregation
         foreach ($filteredData as $key => $value) {
             $data->{$key} = $value;
         }
+        $data  = $this->processObject($data);
 
         return $data;
     }
