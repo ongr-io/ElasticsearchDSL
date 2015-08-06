@@ -34,7 +34,7 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $expectedAgg->from = 1;
         $expectedAgg->sort = $sort->toArray();
         $expectedAgg->_source = [
-            'include' => ['title']
+            'include' => ['title'],
         ];
         $expected = [
             'acme' => [

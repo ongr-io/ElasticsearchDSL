@@ -157,10 +157,10 @@ abstract class AbstractAggregation implements BuilderInterface
      */
     protected function processObject($object)
     {
-        foreach($this->getParameters() as $key => $value) {
+        foreach ($this->getParameters() as $key => $value) {
             $object->{$key} = $value;
         }
+
         return $object;
     }
-
 }
