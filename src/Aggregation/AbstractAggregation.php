@@ -153,7 +153,7 @@ abstract class AbstractAggregation implements BuilderInterface
      *
      * @param $object
      *
-     * @return array
+     * @return Object
      */
     protected function processObject($object)
     {
