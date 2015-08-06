@@ -14,15 +14,15 @@ in exception.
 ```JSON
 {
   "aggregations" : {
-    "agg_messages" : {
+    "grades_stats" : {
       "filters" : {
         "filters" : {
-          "errors" :   { "term" : { "body" : "error"   }},
-          "warnings" : { "term" : { "body" : "warning" }}
+          "error" :   { "term" : { "body" : "error"   }},
+          "warning" : { "term" : { "body" : "warning" }}
         }
       },
       "aggregations" : {
-        "agg_monthly" : {
+        "monthly" : {
           "histogram" : {
             "field" : "timestamp",
             "interval" : "1M"
@@ -59,6 +59,31 @@ $queryArray = $search->toArray();
 ```
 
 ## Anonymous example
+
+```JSON
+{
+  "aggregations" : {
+    "grades_stats" : {
+      "filters" : {
+        "filters" : [
+            { "term" : { "body" : "error"   }},
+            { "term" : { "body" : "warning" }}
+          ]
+        }
+      },
+      "aggregations" : {
+        "monthly" : {
+          "histogram" : {
+            "field" : "timestamp",
+            "interval" : "1M"
+          }
+        }
+      }
+    }
+  }
+}
+```
+And now the query via DSL:
 
 ```php
 $errorTermFilter = new TermFilter('body', 'error');
