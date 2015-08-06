@@ -41,12 +41,16 @@ $termQueryForTag1 = new TermQuery("tag", "wow");
 $termQueryForTag2 = new TermQuery("tag", "elasticsearch");
 $rangeQuery = new RangeQuery("age", ["from" => 10, "to" => 20]);
 
+$bool = new BoolQuery();
+$bool->addParameter("minimum_should_match", 1);
+$bool->addParameter("boost", 1);
+$bool->add($termQueryForUser, BoolQuery::MUST);
+$bool->add($rangeQuery, BoolQuery::MUST_NOT);
+$bool->add($termQueryForTag1, BoolQuery::SHOULD);
+$bool->add($termQueryForTag2, BoolQuery::SHOULD);
+
 $search = new Search();
-$search->addQuery($termQueryForUser, BoolQuery::MUST);
-$search->addQuery($rangeQuery, BoolQuery::MUST_NOT);
-$search->addQuery($termQueryForTag1, BoolQuery::SHOULD);
-$search->addQuery($termQueryForTag2, BoolQuery::SHOULD);
-$search->setBoolQueryParameters(["minimum_should_match" => 1, "boost" => 1]);
+$search->addQuery($bool);
 
 $queryArray = $search->toArray();
 ```
