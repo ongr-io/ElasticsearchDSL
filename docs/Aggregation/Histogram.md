@@ -10,7 +10,7 @@ the documents. It dynamically builds fixed size (a.k.a. interval) buckets over t
 ```JSON
 {
     "aggregations": {
-        "agg_prices": {
+        "prices": {
             "histogram": {
                 "field": "price",
                 "interval": 50
