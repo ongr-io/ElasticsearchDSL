@@ -9,7 +9,7 @@ A single-value metrics aggregation that sums up numeric values that are extracte
 ```JSON
 {
     "aggregations" : {
-        "agg_intraday_return" : { "sum" : { "field" : "change" } }
+        "intraday_return" : { "sum" : { "field" : "change" } }
     }
 }
 ```
