@@ -9,7 +9,7 @@ A single-value metrics aggregation that calculates an approximate count of disti
 ```JSON
 {
      "aggregations" : {
-         "agg_author_count" : {
+         "author_count" : {
              "cardinality" : {
                  "field" : "author"
              }
@@ -21,7 +21,8 @@ A single-value metrics aggregation that calculates an approximate count of disti
 And now the query via DSL:
 
 ```php
-$cardinalityAggregation = new CardinalityAggregation('author_count', 'author');
+$cardinalityAggregation = new CardinalityAggregation('author_count');
+$cardinalityAggregation->setField('author');
 
 $search = new Search();
 $search->addAggregation($cardinalityAggregation);
