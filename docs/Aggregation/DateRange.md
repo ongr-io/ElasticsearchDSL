@@ -9,13 +9,13 @@ A range aggregation that is dedicated for date values.
 ```JSON
 {
     "aggregations": {
-        "agg_range": {
+        "range": {
             "date_range": {
                 "field": "date",
                 "format": "MM-yyy",
                 "ranges": [
-                    { "to": "now-10M/M" }, 
-                    { "from": "now-10M/M" } 
+                    { "to": "now-10M/M" },
+                    { "from": "now-10M/M" }
                 ]
             }
         }
@@ -31,9 +31,14 @@ $dateRangeAggregation->setField('date');
 $dateRangeAggregation->setFormat('MM-yyy');
 $dateRangeAggregation->addRange(null, 'now-10M/M');
 $dateRangeAggregation->addRange('now-10M/M', null);
+
+$search = new Search();
+$search->addAggregation($dateRangeAggregation);
+
+$queryArray = $search->toArray();
 ```
 
-Or : 
+Or :
 
 ```php
 $dateRangeAggregation = new DateRangeAggregation(
@@ -48,6 +53,8 @@ $dateRangeAggregation = new DateRangeAggregation(
 
 $search = new Search();
 $search->addAggregation($dateRangeAggregation);
+
+$queryArray = $search->toArray();
 ```
 
 [1]: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-daterange-aggregation.html
