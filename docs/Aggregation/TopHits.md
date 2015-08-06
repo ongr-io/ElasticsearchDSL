@@ -16,7 +16,7 @@ so that the top matching documents can be aggregated per bucket.
                 "field": "tags",
                 "size": 3
             },
-            "aggs": {
+            "aggregations": {
                 "top_tag_hits": {
                     "top_hits": {
                         "sort": [
