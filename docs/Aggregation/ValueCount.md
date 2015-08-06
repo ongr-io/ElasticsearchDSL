@@ -8,7 +8,7 @@ A single-value metrics aggregation that counts the number of values that are ext
 
 ```JSON
 {
-    "aggs" : {
+    "aggregations" : {
         "grades_count" : { "value_count" : { "field" : "grade" } }
     }
 }
