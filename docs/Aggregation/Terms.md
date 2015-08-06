@@ -10,7 +10,7 @@ built - one per unique value.
 ```JSON
 {
     "aggregations" : {
-        "agg_genders" : {
+        "genders" : {
             "terms" : { "field" : "gender" }
         }
     }
