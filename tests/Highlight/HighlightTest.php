@@ -92,7 +92,7 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
         $result = $highlight->toArray();
         $expectedResult = [
             'fields' => [
-                'ok' => new \StdClass
+                'ok' => new \StdClass,
             ],
             '_source' => [
                 'include' => [
