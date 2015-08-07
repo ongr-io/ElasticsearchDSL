@@ -10,7 +10,7 @@ A single-value metrics aggregation that computes the average of numeric values t
 ```JSON
 {
     "aggregations": {
-        "agg_avg_grade": {
+        "avg_grade": {
             "avg": {
                 "field": "grade"
             }

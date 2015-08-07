@@ -11,10 +11,10 @@ context to a specific set of documents.
 ```JSON
 {
     "aggregations" : {
-        "agg_red_products" : {
+        "grades_stats" : {
             "filter" : { "term": { "color": "red" } },
-            "aggs" : {
-                "agg_avg_price" : { "avg" : { "field" : "price" } }
+            "aggregations" : {
+                "avg_price" : { "avg" : { "field" : "price" } }
             }
         }
     }

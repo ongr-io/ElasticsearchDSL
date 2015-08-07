@@ -10,7 +10,7 @@ that represent cells in a grid.
 ```JSON
 {
     "aggregations" : {
-        "agg_GrainGeoHashGrid" : {
+        "GrainGeoHashGrid" : {
             "geohash_grid" : {
                 "field" : "location",
                 "precision" : 3

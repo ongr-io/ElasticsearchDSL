@@ -10,12 +10,12 @@ document types to buckets on child documents.
 ```JSON
 {
     "aggregations": {
-        "agg_author_count": {
+        "author_count": {
             "children": {
                 "type": "answer"
             },
             "aggregations": {
-                "agg_top_names": {
+                "top_names": {
                     "terms": {
                         "field": "owner.display_name"
                     }

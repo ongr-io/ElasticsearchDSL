@@ -10,7 +10,7 @@ values extracted from the aggregated documents.
 ```JSON
 {
     "aggregations" : {
-        "agg_grades_stats" : { "stats" : { "field" : "grade" } }
+        "grades_stats" : { "stats" : { "field" : "grade" } }
     }
 }
 ```

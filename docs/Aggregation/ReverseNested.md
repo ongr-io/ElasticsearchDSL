@@ -9,17 +9,17 @@ A special single bucket aggregation that enables aggregating on parent docs from
 ```JSON
 {
   "aggregations": {
-    "agg_comments": {
+    "comments": {
       "nested": {
         "path": "comments"
       },
       "aggregations": {
-        "agg_top_usernames": {
+        "top_usernames": {
           "terms": {
             "field": "comments.username"
           },
           "aggregations": {
-            "agg_comment_to_issue": {
+            "comment_to_issue": {
               "reverse_nested": {},
               "aggregations": {
                 "top_tags_per_comment": {

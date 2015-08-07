@@ -9,7 +9,7 @@ A metric aggregation that computes the bounding box containing all geo_point val
 ```JSON
 {
     "aggregations" : {
-        "agg_viewport" : {
+        "viewport" : {
             "geo_bounds" : {
                 "field" : "location",
                 "wrap_longitude" : true

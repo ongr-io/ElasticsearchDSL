@@ -9,12 +9,12 @@ A special single bucket aggregation that enables aggregating nested documents.
 ```JSON
 {
     "aggregations" : {
-        "agg_resellers" : {
+        "resellers" : {
             "nested" : {
                 "path" : "resellers"
             },
             "aggregations" : {
-                "agg_min_price" : { "min" : { "field" : "resellers.price" } }
+                "min_price" : { "min" : { "field" : "resellers.price" } }
             }
         }
     }

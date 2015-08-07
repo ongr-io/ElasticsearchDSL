@@ -11,10 +11,10 @@ you’re searching on, but is **not influenced** by the search query itself.
 ```JSON
 {
     "aggregations": {
-        "agg_all_products": {
+        "all_products": {
             "global": {},
             "aggregations": {
-                "agg_avg_price": {
+                "avg_price": {
                     "avg": {
                         "field": "price"
                     }

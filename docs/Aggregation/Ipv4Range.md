@@ -10,7 +10,7 @@ range aggregation for IPv4 typed fields.
 ```JSON
 {
     "aggregations" : {
-        "agg_ip_range" : {
+        "ip_range" : {
             "ip_range" : {
                 "field" : "ip",
                 "ranges" : [
