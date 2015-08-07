@@ -67,8 +67,10 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
         $highlight = new Highlight();
         $highlight->setParameters(
             [
-            '_source', ['include' => 'title'],
-            'content', ['force_source' => true],
+                '_source',
+                ['include' => 'title'],
+                'content',
+                ['force_source' => true],
             ]
         );
         $expectedResult = [
@@ -96,14 +98,14 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
             ],
             '_source' => [
                 'include' => [
-                    'title'
+                    'title',
                 ],
             ],
             'pre_tags' => [
-                '<tag>'
+                '<tag>',
             ],
             'post_tags' => [
-                '</tag>'
+                '</tag>',
             ],
         ];
         $this->assertEquals($expectedResult, $result);
