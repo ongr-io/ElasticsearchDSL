@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Highlight\Highlight;
 class HighlightTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests GetType method, it should return 'match_all'.
+     * Tests GetType method, it should return 'highlight'.
      */
     public function testGetType()
     {
@@ -60,9 +60,9 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ParametersTrait getParameter method.
+     * Tests ParametersTrait getParameters and setParameters methods.
      */
-    public function testTraitsetParameters()
+    public function testTraitsetgetParameters()
     {
         $highlight = new Highlight();
         $highlight->setParameters([
