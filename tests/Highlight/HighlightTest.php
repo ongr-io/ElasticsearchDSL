@@ -65,10 +65,12 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
     public function testTraitsetgetParameters()
     {
         $highlight = new Highlight();
-        $highlight->setParameters([
+        $highlight->setParameters(
+            [
             '_source', ['include' => 'title'],
             'content', ['force_source' => true],
-        ]);
+            ]
+        );
         $expectedResult = [
             '_source',
             ['include' => 'title'],
@@ -102,7 +104,7 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
             ],
             'post_tags' => [
                 '</tag>'
-            ]
+            ],
         ];
         $this->assertEquals($expectedResult, $result);
     }
