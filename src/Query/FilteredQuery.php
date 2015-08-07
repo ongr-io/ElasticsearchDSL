@@ -22,7 +22,7 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 class FilteredQuery implements BuilderInterface
 {
     use ParametersTrait;
-    
+
     /**
      * @var BuilderInterface Used query inside filtered query.
      */
@@ -42,7 +42,7 @@ class FilteredQuery implements BuilderInterface
         if ($query !== null) {
             $this->setQuery($query);
         }
-        
+
         if ($filter !== null) {
             $this->setFilter($filter);
         }
@@ -98,7 +98,7 @@ class FilteredQuery implements BuilderInterface
     public function toArray()
     {
         $output = [];
-        
+
         if ($this->getFilter()) {
             $output['filter'][$this->getFilter()->getType()] = $this->getFilter()->toArray();
         }
@@ -107,6 +107,6 @@ class FilteredQuery implements BuilderInterface
             $output['query'][$this->getQuery()->getType()] = $this->getQuery()->toArray();
         }
 
-        return count($output) > 0 ? $this->processArray($output) : [];
+        return count($output) > 0 ? $this->processArray($output) : $this->processObject($output);
     }
 }

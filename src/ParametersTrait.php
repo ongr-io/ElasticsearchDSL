@@ -97,4 +97,20 @@ trait ParametersTrait
     {
         return array_merge($array, $this->parameters);
     }
+
+    /**
+     * Returns given object merged with parameters.
+     *
+     * @param \stdClass $object
+     *
+     * @return \stdClass
+     */
+    protected function processObject($object)
+    {
+        foreach ($this->getParameters() as $key => $value) {
+            $object->{$key} = $value;
+        }
+
+        return $object;
+    }
 }
