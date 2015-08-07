@@ -147,4 +147,20 @@ abstract class AbstractAggregation implements BuilderInterface
     {
         return new BuilderBag();
     }
+
+    /**
+     * Returns given object merged with parameters.
+     *
+     * @param \stdClass $object
+     *
+     * @return \stdClass
+     */
+    protected function processObject($object)
+    {
+        foreach ($this->getParameters() as $key => $value) {
+            $object->{$key} = $value;
+        }
+
+        return $object;
+    }
 }

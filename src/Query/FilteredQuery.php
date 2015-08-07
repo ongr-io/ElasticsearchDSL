@@ -107,6 +107,6 @@ class FilteredQuery implements BuilderInterface
             $output['query'][$this->getQuery()->getType()] = $this->getQuery()->toArray();
         }
 
-        return count($output) > 0 ? $this->processArray($output) : $this->processObject($output);
+        return count($output) > 0 ? $this->processArray($output) : [];
     }
 }
