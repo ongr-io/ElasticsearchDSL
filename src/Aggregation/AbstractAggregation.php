@@ -108,7 +108,7 @@ abstract class AbstractAggregation implements BuilderInterface
         $array = $this->getArray();
         $result = [
             $this->getName() => [
-                $this->getType() => is_array($array) ? $this->processArray($array) : $array,
+                $this->getType() => is_array($array) ? $this->processArray($array) : $this->processObject($array),
             ],
         ];
 
@@ -146,5 +146,21 @@ abstract class AbstractAggregation implements BuilderInterface
     private function createBuilderBag()
     {
         return new BuilderBag();
+    }
+
+    /**
+     * Returns given object merged with parameters.
+     *
+     * @param \stdClass $object
+     *
+     * @return \stdClass
+     */
+    protected function processObject($object)
+    {
+        foreach ($this->getParameters() as $key => $value) {
+            $object->{$key} = $value;
+        }
+
+        return $object;
     }
 }

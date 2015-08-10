@@ -27,11 +27,15 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $sort = new FieldSort('acme');
         $aggregation = new TopHitsAggregation('acme', 0, 1, $sort);
+        $aggregation->addParameter('_source', ['include' => ['title']]);
 
         $expectedAgg = new \stdClass();
         $expectedAgg->size = 0;
         $expectedAgg->from = 1;
         $expectedAgg->sort = $sort->toArray();
+        $expectedAgg->_source = [
+            'include' => ['title'],
+        ];
         $expected = [
             'acme' => [
                 'top_hits' => $expectedAgg,
