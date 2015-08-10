@@ -58,7 +58,7 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
                     'from' => 1,
                     '_source' => [
                         'include' => ['title'],
-                    ]
+                    ],
                 ],
             ],
         ];
