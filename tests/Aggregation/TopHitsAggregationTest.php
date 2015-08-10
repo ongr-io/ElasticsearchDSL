@@ -26,18 +26,43 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $sort = new FieldSort('acme');
-        $aggregation = new TopHitsAggregation('acme', 0, 1, $sort);
+        $aggregation = new TopHitsAggregation('acme', 1, 1, $sort);
 
-        $expectedAgg = new \stdClass();
-        $expectedAgg->size = 0;
-        $expectedAgg->from = 1;
-        $expectedAgg->sort = $sort->toArray();
         $expected = [
             'acme' => [
-                'top_hits' => $expectedAgg,
+                'top_hits' => [
+                    'sort' => [
+                        'acme' => [],
+                    ],
+                    'size' => 1,
+                    'from' => 1,
+                ],
             ],
         ];
 
-        $this->assertEquals($expected, $aggregation->toArray());
+        $this->assertSame($expected, $aggregation->toArray());
+    }
+
+    /**
+     * Check if parameters can be set to agg.
+     */
+    public function testParametersAddition()
+    {
+        $aggregation = new TopHitsAggregation('acme', 0, 1);
+        $aggregation->addParameter('_source', ['include' => ['title']]);
+
+        $expected = [
+            'acme' => [
+                'top_hits' => [
+                    'size' => 0,
+                    'from' => 1,
+                    '_source' => [
+                        'include' => ['title'],
+                    ]
+                ],
+            ],
+        ];
+
+        $this->assertSame($expected, $aggregation->toArray());
     }
 }

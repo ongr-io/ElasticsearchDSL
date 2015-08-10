@@ -125,26 +125,9 @@ class TopHitsAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        $data = new \stdClass();
-
-        $filteredData = $this->getFilteredData();
-        foreach ($filteredData as $key => $value) {
-            $data->{$key} = $value;
-        }
-
-        return $data;
-    }
-
-    /**
-     * Filters the data.
-     *
-     * @return array
-     */
-    private function getFilteredData()
-    {
         $output = array_filter(
             [
-                'sort' => $this->getSort() ? $this->getSort()->toArray() : [],
+                'sort' => $this->getSort() ? $this->getSort()->toArray() : null,
                 'size' => $this->getSize(),
                 'from' => $this->getFrom(),
             ],
@@ -152,6 +135,8 @@ class TopHitsAggregation extends AbstractAggregation
                 return (($val || is_array($val) || ($val || is_numeric($val))));
             }
         );
+
+        $output = $this->processArray($output);
 
         return $output;
     }
