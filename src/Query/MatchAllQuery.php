@@ -46,6 +46,6 @@ class MatchAllQuery implements BuilderInterface
             return $this->getParameters();
         }
 
-        return new \stdClass();
+        return [];
     }
 }
