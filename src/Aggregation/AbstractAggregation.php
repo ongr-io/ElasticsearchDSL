@@ -24,6 +24,8 @@ abstract class AbstractAggregation implements BuilderInterface
     use ParametersTrait;
     use NameAwareTrait;
 
+    const PREFIX = 'agg_';
+
     /**
      * @var string
      */
@@ -53,7 +55,7 @@ abstract class AbstractAggregation implements BuilderInterface
      */
     public function __construct($name)
     {
-        $this->setName($name);
+        $this->setName(self::PREFIX.$name);
     }
 
     /**
@@ -95,6 +97,20 @@ abstract class AbstractAggregation implements BuilderInterface
     {
         if ($this->aggregations) {
             return $this->aggregations->all();
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * Returns sub aggregation.
+     *
+     * @return AbstractAggregation
+     */
+    public function getAggregation($name)
+    {
+        if ($this->aggregations && $this->aggregations->has(self::PREFIX.$name)) {
+            return $this->aggregations->get(self::PREFIX.$name);
         } else {
             return [];
         }
