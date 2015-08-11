@@ -104,15 +104,16 @@ abstract class AbstractAggregation implements BuilderInterface
 
     /**
      * Returns sub aggregation.
+     * @param string $name Aggregation name to return.
      *
-     * @return AbstractAggregation
+     * @return AbstractAggregation|null
      */
     public function getAggregation($name)
     {
         if ($this->aggregations && $this->aggregations->has(self::PREFIX.$name)) {
             return $this->aggregations->get(self::PREFIX.$name);
         } else {
-            return [];
+            return null;
         }
     }
 
