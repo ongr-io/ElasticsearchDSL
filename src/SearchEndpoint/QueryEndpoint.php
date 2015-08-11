@@ -76,7 +76,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
             $this->bool = $this->getBoolInstance();
         }
 
-        $this->bool->add($builder, $boolType, $key);
+        return $this->bool->add($builder, $boolType, $key);
     }
 
     /**
