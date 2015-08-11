@@ -15,8 +15,10 @@ use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\HistogramAggregation;
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use ONGR\ElasticsearchDSL\Filter\MatchAllFilter;
 use ONGR\ElasticsearchDSL\Filter\MissingFilter;
+use ONGR\ElasticsearchDSL\Filter\TermFilter;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -61,6 +63,28 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
                 $histogramAgg->getName() => $histogramAgg->toArray(),
             ],
         ];
+
+        $out[] = [
+            $aggregation,
+            $result,
+        ];
+
+        // Case #2 testing bool filter.
+        $aggregation = new FilterAggregation('test_agg');
+        $matchAllFilter = new MatchAllFilter();
+        $termFilter = new TermFilter('acme', 'foo');
+        $boolFilter = new BoolFilter();
+        $boolFilter->add($matchAllFilter);
+        $boolFilter->add($termFilter);
+
+        $aggregation->setFilter($boolFilter);
+
+        $result = [
+            'filter' => [
+                $boolFilter->getType() => $boolFilter->toArray(),
+            ]
+        ];
+
 
         $out[] = [
             $aggregation,
@@ -123,12 +147,13 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorFilter()
     {
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface */
-        $builderInterface = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $aggregation = new FilterAggregation('test', $builderInterface);
+        $matchAllFilter = new MatchAllFilter();
+        $aggregation = new FilterAggregation('test', $matchAllFilter);
         $this->assertSame(
             [
-                'filter' => [null => null],
+                'filter' => [
+                    $matchAllFilter->getType() => $matchAllFilter->toArray(),
+                ],
             ],
             $aggregation->toArray()
         );
