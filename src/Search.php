@@ -15,6 +15,7 @@ use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\SearchEndpoint\AbstractSearchEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint;
@@ -138,6 +139,18 @@ class Search
     }
 
     /**
+     * Sets parameters to the endpoint.
+     *
+     * @param string    $endpointName
+     * @param array     $parameters
+     */
+    private function setEndpointParameters($endpointName, array $parameters) {
+        /** @var AbstractSearchEndpoint $endpoint */
+        $endpoint = $this->getEndpoint($endpointName);
+        $endpoint->setParameters($parameters);
+    }
+
+    /**
      * Adds query to the search.
      *
      * @param BuilderInterface $query
@@ -164,6 +177,20 @@ class Search
         $endpoint = $this->getEndpoint(QueryEndpoint::NAME);
 
         return $endpoint->getBool();
+    }
+
+    /**
+     * Sets query endpoint parameters.
+     *
+     * @param array $parameters
+     *
+     * @return $this
+     */
+    public function setQueryParameters(array $parameters)
+    {
+        $this->setEndpointParameters(QueryEndpoint::NAME, $parameters);
+
+        return $this;
     }
 
     /**
@@ -200,6 +227,20 @@ class Search
     }
 
     /**
+     * Sets filter endpoint parameters.
+     *
+     * @param array $parameters
+     *
+     * @return $this
+     */
+    public function setFilterParameters(array $parameters)
+    {
+        $this->setEndpointParameters(FilterEndpoint::NAME, $parameters);
+
+        return $this;
+    }
+
+    /**
      * Adds a post filter to search.
      *
      * @param BuilderInterface $filter   Filter.
@@ -230,6 +271,20 @@ class Search
         $endpoint = $this->getEndpoint(PostFilterEndpoint::NAME);
 
         return $endpoint->getBool();
+    }
+
+    /**
+     * Sets post filter endpoint parameters.
+     *
+     * @param array $parameters
+     *
+     * @return $this
+     */
+    public function setPostFilterParameters(array $parameters)
+    {
+        $this->setEndpointParameters(PostFilterEndpoint::NAME, $parameters);
+
+        return $this;
     }
 
     /**
