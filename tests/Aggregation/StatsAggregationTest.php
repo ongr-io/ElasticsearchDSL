@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\StatsAggregation;
 
 class StatsAggregationTest extends \PHPUnit_Framework_TestCase
@@ -24,7 +25,7 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('test_field');
 
         $expectedResult = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'stats' => ['field' => 'test_field'],
             ],
         ];
@@ -40,7 +41,7 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new StatsAggregation('foo', 'fieldValue', 'scriptValue');
         $this->assertSame(
             [
-                'foo' => [
+                AbstractAggregation::PREFIX.'foo' => [
                     'stats' => [
                         'field' => 'fieldValue',
                         'script' => 'scriptValue',

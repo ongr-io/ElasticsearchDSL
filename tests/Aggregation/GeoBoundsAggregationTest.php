@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\GeoBoundsAggregation;
 
 /**
@@ -48,7 +49,7 @@ class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
         $agg->setField('bar');
         $agg->setWrapLongitude(true);
         $result = [
-            'foo' => [
+            AbstractAggregation::PREFIX.'foo' => [
                 'geo_bounds' => [
                     'field' => 'bar',
                     'wrap_longitude' => true,
@@ -59,7 +60,7 @@ class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
 
         $agg->setWrapLongitude(false);
         $result = [
-            'foo' => [
+            AbstractAggregation::PREFIX.'foo' => [
                 'geo_bounds' => [
                     'field' => 'bar',
                     'wrap_longitude' => false,

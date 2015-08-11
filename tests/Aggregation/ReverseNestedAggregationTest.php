@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\ReverseNestedAggregation;
 
 class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
@@ -26,7 +27,7 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setPath('test_path');
 
         $expectedResult = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'reverse_nested' => ['path' => 'test_path'],
             ],
         ];
@@ -54,7 +55,7 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($termMock);
 
         $expectedResult = [
-            'test_nested_agg' => [
+            AbstractAggregation::PREFIX.'test_nested_agg' => [
                 'reverse_nested' => ['path' => 'test_path'],
                 'aggregations' => [
                     'terms' => [],
@@ -84,7 +85,7 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($termMock);
 
         $expectedResult = [
-            'test_nested_agg' => [
+            AbstractAggregation::PREFIX.'test_nested_agg' => [
                 'reverse_nested' => new \stdClass(),
                 'aggregations' => [
                     'terms' => [],

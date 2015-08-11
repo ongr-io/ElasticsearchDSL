@@ -11,9 +11,9 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
 use ONGR\ElasticsearchDSL\Sort\FieldSort;
-use ONGR\ElasticsearchDSL\Sort\Sorts;
 
 /**
  * Unit tests for top hits aggregation.
@@ -29,7 +29,7 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new TopHitsAggregation('acme', 1, 1, $sort);
 
         $expected = [
-            'acme' => [
+            AbstractAggregation::PREFIX.'acme' => [
                 'top_hits' => [
                     'sort' => [
                         'acme' => [],
@@ -52,7 +52,7 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('_source', ['include' => ['title']]);
 
         $expected = [
-            'acme' => [
+            AbstractAggregation::PREFIX.'acme' => [
                 'top_hits' => [
                     'size' => 0,
                     'from' => 1,

@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\GeoDistanceAggregation;
 
 class GeoDistanceAggregationTest extends \PHPUnit_Framework_TestCase
@@ -133,7 +134,7 @@ class GeoDistanceAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                'test' => [
+                AbstractAggregation::PREFIX.'test' => [
                     'geo_distance' => [
                         'field' => 'fieldName',
                         'origin' => 'originValue',

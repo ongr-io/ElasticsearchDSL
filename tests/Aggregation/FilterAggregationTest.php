@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Filter\MissingFilter;
@@ -42,7 +43,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setFilter($filter);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'filter' => [
                     'test_filter' => [
                         'test_field' => ['test_value' => 'test'],
@@ -66,7 +67,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $aggregation2->expects($this->any())
             ->method('toArray')
-            ->willReturn(['test_agg2' => ['avg' => []]]);
+            ->willReturn([AbstractAggregation::PREFIX.'test_agg2' => ['avg' => []]]);
         $aggregation2->expects($this->any())
             ->method('getName')
             ->willReturn('test_agg2');
@@ -74,14 +75,14 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'filter' => [
                     'test_filter' => [
                         'test_field' => ['test_value' => 'test'],
                     ],
                 ],
                 'aggregations' => [
-                    'test_agg2' => [
+                    AbstractAggregation::PREFIX.'test_agg2' => [
                         'avg' => [],
                     ],
                 ],
@@ -154,7 +155,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new FilterAggregation('test', $builderInterface);
         $this->assertSame(
             [
-                'test' => [
+                AbstractAggregation::PREFIX.'test' => [
                     'filter' => [null => null],
                 ],
             ],

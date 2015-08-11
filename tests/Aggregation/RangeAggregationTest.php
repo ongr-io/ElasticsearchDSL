@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\RangeAggregation;
 
 class RangeAggregationTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +26,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addRange('10', 20);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
@@ -54,7 +55,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addRange(null, '20', 'range_2');
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
@@ -90,7 +91,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'range' => [
                     'field' => 'test_field',
                     'ranges' => [
@@ -102,7 +103,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                     'keyed' => false,
                 ],
                 'aggregations' => [
-                    'test_agg_2' => [
+                    AbstractAggregation::PREFIX.'test_agg_2' => [
                         'range' => [
                             'ranges' => [
                                 [
@@ -208,7 +209,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new RangeAggregation('foo', 'fieldValue', [['from' => 'now', 'key' => 'nowkey']], true);
         $this->assertSame(
             [
-                'foo' => [
+                AbstractAggregation::PREFIX.'foo' => [
                     'range' => [
                         'keyed' => true,
                         'ranges' => [

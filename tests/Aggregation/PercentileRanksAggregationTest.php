@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\PercentileRanksAggregation;
 
 /**
@@ -80,7 +81,7 @@ class PercentileRanksAggregationTest extends \PHPUnit_Framework_TestCase
         $this->agg->setValues(['bar']);
         $this->assertSame(
             [
-                'foo' => [
+                AbstractAggregation::PREFIX.'foo' => [
                     'percentile_ranks' => [
                         'field' => 'bar',
                         'values' => ['bar'],

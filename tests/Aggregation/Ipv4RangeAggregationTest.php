@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Ipv4RangeAggregation;
 
 class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
@@ -34,7 +35,7 @@ class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new Ipv4RangeAggregation('test', 'fieldName', [['from' => 'fromValue']]);
         $this->assertSame(
             [
-                'test' => [
+                AbstractAggregation::PREFIX.'test' => [
                     'ip_range' => [
                         'field' => 'fieldName',
                         'ranges' => [['from' => 'fromValue']],
@@ -47,7 +48,7 @@ class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new Ipv4RangeAggregation('test', 'fieldName', ['maskValue']);
         $this->assertSame(
             [
-                'test' => [
+                AbstractAggregation::PREFIX.'test' => [
                     'ip_range' => [
                         'field' => 'fieldName',
                         'ranges' => [['mask' => 'maskValue']],

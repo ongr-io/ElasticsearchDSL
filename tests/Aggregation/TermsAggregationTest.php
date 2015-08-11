@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 
 class TermsAggregationTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +26,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('test_field');
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => ['field' => 'test_field'],
             ],
         ];
@@ -44,7 +45,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('size', 1);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'size' => 1,
@@ -60,7 +61,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('size', 0);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'size' => 0,
@@ -83,7 +84,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('min_doc_count', 10);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'size' => 1,
@@ -107,7 +108,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('exclude', 'pizza_.*');
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'include' => 'test_.*',
@@ -143,7 +144,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         );
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'include' => [
@@ -172,7 +173,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('order', ['_count' => 'asc']);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'order' => ['_count' => 'asc'],
@@ -194,7 +195,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('order', ['_term' => 'desc']);
 
         $result = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'terms' => [
                     'field' => 'test_field',
                     'order' => ['_term' => 'desc'],

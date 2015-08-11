@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
@@ -75,7 +76,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addFilter($filter, 'second');
         $results = $aggregation->toArray();
         $expected = [
-            'test_agg' => [
+            AbstractAggregation::PREFIX.'test_agg' => [
                 'filters' => [
                     'filters' => [
                         'first' => [
@@ -121,7 +122,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                'test' => [
+                AbstractAggregation::PREFIX.'test' => [
                     'filters' => [
                         'filters' => [
                             'filter1' => ['type1' => null],
@@ -144,7 +145,7 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                'test' => [
+                AbstractAggregation::PREFIX.'test' => [
                     'filters' => [
                         'filters' => [
                             ['type1' => null],
