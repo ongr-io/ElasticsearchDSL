@@ -33,6 +33,6 @@ class MatchAllFilter implements BuilderInterface
      */
     public function toArray()
     {
-        return new \stdClass();
+        return [];
     }
 }

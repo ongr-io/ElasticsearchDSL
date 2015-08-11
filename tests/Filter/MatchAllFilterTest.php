@@ -32,7 +32,7 @@ class MatchAllFilterTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new MatchAllFilter();
         $result = $filter->toArray();
-        $expectedResult = new \stdClass();
+        $expectedResult = [];
         $this->assertEquals($expectedResult, $result);
     }
 }
