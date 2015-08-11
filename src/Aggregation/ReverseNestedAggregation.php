@@ -75,11 +75,11 @@ class ReverseNestedAggregation extends AbstractAggregation
             throw new \LogicException("Reverse Nested aggregation `{$this->getName()}` has no aggregations added");
         }
 
-        $data = [];
+        $output = new \stdClass();
         if ($this->getPath()) {
-            $data['path'] = $this->getPath();
+            $output['path'] = $this->getPath();
         }
 
-        return $data;
+        return $output;
     }
 }
