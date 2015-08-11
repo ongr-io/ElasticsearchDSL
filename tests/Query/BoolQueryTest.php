@@ -11,9 +11,9 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Filter\BoolFilter;
-use ONGR\ElasticsearchDSL\Filter\MissingFilter;
-use ONGR\ElasticsearchDSL\Filter\TermFilter;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
+use ONGR\ElasticsearchDSL\Query\TermQuery;
 
 /**
  * Unit test for Bool.
@@ -23,11 +23,37 @@ class BoolFilterTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests isRelevant method.
      */
-    public function testBoolIsRelevant()
+    public function testBoolIsRelevantWithOneQuery()
     {
-        $bool = new BoolFilter();
+        $bool = new BoolQuery();
         $this->assertFalse($bool->isRelevant());
-        $bool->add(new MissingFilter('test'));
+        $bool->add(new TermQuery('acme', 'foo'));
+
+        $this->assertFalse($bool->isRelevant());
+    }
+
+    /**
+     * Tests isRelevant method when there is query added to should case.
+     */
+    public function testBoolIsRelevantWithOneShouldQuery()
+    {
+        $bool = new BoolQuery();
+        $this->assertFalse($bool->isRelevant());
+        $bool->add(new TermQuery('acme', 'foo'), BoolQuery::SHOULD);
+
+        $this->assertFalse($bool->isRelevant());
+    }
+
+    /**
+     * Tests isRelevant method with 2 queries.
+     */
+    public function testBoolIsRelevantWithTwoQuery()
+    {
+        $bool = new BoolQuery();
+        $this->assertFalse($bool->isRelevant());
+        $bool->add(new TermQuery('acme', 'foo'));
+        $bool->add(new TermQuery('bar', 'go'));
+
         $this->assertTrue($bool->isRelevant());
     }
 
@@ -35,12 +61,12 @@ class BoolFilterTest extends \PHPUnit_Framework_TestCase
      * Test for addToBool() without setting a correct bool operator.
      *
      * @expectedException        \UnexpectedValueException
-     * @expectedExceptionMessage The bool operator Should is not supported
+     * @expectedExceptionMessage The provided bool operator is not supported
      */
     public function testBoolAddToBoolException()
     {
-        $bool = new BoolFilter();
-        $bool->add(new MissingFilter('test'), 'Should');
+        $bool = new BoolQuery();
+        $bool->add(new MatchAllQuery(), 'acme');
     }
 
     /**
@@ -48,10 +74,10 @@ class BoolFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testBoolToArray()
     {
-        $bool = new BoolFilter();
-        $bool->add(new TermFilter('key1', 'value1'), 'should');
-        $bool->add(new TermFilter('key2', 'value2'), 'must');
-        $bool->add(new TermFilter('key3', 'value3'), 'must_not');
+        $bool = new BoolQuery();
+        $bool->add(new TermQuery('key1', 'value1'), BoolQuery::SHOULD);
+        $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
+        $bool->add(new TermQuery('key3', 'value3'), BoolQuery::MUST_NOT);
         $expected = [
             'should' => [
                 [
@@ -83,7 +109,7 @@ class BoolFilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testBoolGetType()
     {
-        $bool = new BoolFilter();
+        $bool = new BoolQuery();
         $result = $bool->getType();
         $this->assertEquals('bool', $result);
     }
