@@ -227,7 +227,7 @@ class Search
      */
     public function getPostFilters()
     {
-        $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
+        $endpoint = $this->getEndpoint(PostFilterEndpoint::NAME);
 
         return $endpoint->getBool();
     }
