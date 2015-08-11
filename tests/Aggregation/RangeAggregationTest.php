@@ -26,17 +26,15 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addRange('10', 20);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'range' => [
-                    'field' => 'test_field',
-                    'ranges' => [
-                        [
-                            'from' => '10',
-                            'to' => 20,
-                        ],
+            'range' => [
+                'field' => 'test_field',
+                'ranges' => [
+                    [
+                        'from' => '10',
+                        'to' => 20,
                     ],
-                    'keyed' => false,
                 ],
+                'keyed' => false,
             ],
         ];
 
@@ -55,21 +53,19 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addRange(null, '20', 'range_2');
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'range' => [
-                    'field' => 'test_field',
-                    'ranges' => [
-                        [
-                            'from' => '10',
-                            'key' => 'range_1',
-                        ],
-                        [
-                            'to' => '20',
-                            'key' => 'range_2',
-                        ],
+            'range' => [
+                'field' => 'test_field',
+                'ranges' => [
+                    [
+                        'from' => '10',
+                        'key' => 'range_1',
                     ],
-                    'keyed' => true,
+                    [
+                        'to' => '20',
+                        'key' => 'range_2',
+                    ],
                 ],
+                'keyed' => true,
             ],
         ];
 
@@ -91,28 +87,26 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'range' => [
-                    'field' => 'test_field',
-                    'ranges' => [
-                        [
-                            'from' => '10',
-                            'to' => '10',
-                        ],
+            'range' => [
+                'field' => 'test_field',
+                'ranges' => [
+                    [
+                        'from' => '10',
+                        'to' => '10',
                     ],
-                    'keyed' => false,
                 ],
-                'aggregations' => [
-                    AbstractAggregation::PREFIX.'test_agg_2' => [
-                        'range' => [
-                            'ranges' => [
-                                [
-                                    'from' => '20',
-                                    'to' => '20',
-                                ],
+                'keyed' => false,
+            ],
+            'aggregations' => [
+                AbstractAggregation::PREFIX.'test_agg_2' => [
+                    'range' => [
+                        'ranges' => [
+                            [
+                                'from' => '20',
+                                'to' => '20',
                             ],
-                            'keyed' => false,
                         ],
+                        'keyed' => false,
                     ],
                 ],
             ],
@@ -209,17 +203,15 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new RangeAggregation('foo', 'fieldValue', [['from' => 'now', 'key' => 'nowkey']], true);
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'foo' => [
-                    'range' => [
-                        'keyed' => true,
-                        'ranges' => [
-                            [
-                                'from' => 'now',
-                                'key' => 'nowkey',
-                            ],
+                'range' => [
+                    'keyed' => true,
+                    'ranges' => [
+                        [
+                            'from' => 'now',
+                            'key' => 'nowkey',
                         ],
-                        'field' => 'fieldValue',
                     ],
+                    'field' => 'fieldValue',
                 ],
             ],
             $aggregation->toArray()

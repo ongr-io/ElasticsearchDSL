@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\BuilderBag;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -29,10 +30,11 @@ class AggregationsEndpoint extends AbstractSearchEndpoint
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
+        $output = [];
         if (count($this->getAll()) > 0) {
-            $output = [];
+            /** @var AbstractAggregation $aggregation */
             foreach ($this->getAll() as $aggregation) {
-                $output[] = $aggregation->toArray();
+                $output[$aggregation->getName()] = $aggregation->toArray();
             }
         }
 

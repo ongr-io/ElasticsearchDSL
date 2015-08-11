@@ -25,6 +25,7 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 
 /**
@@ -117,7 +118,7 @@ class Search
      *
      * @return SearchEndpointInterface
      */
-    public function getEndpoint($type)
+    private function getEndpoint($type)
     {
         if (!array_key_exists($type, $this->endpoints)) {
             $this->endpoints[$type] = SearchEndpointFactory::get($type);
@@ -154,6 +155,18 @@ class Search
     }
 
     /**
+     * Returns queries inside BoolQuery instance.
+     *
+     * @return BuilderInterface
+     */
+    public function getQueries()
+    {
+        $endpoint = $this->getEndpoint(QueryEndpoint::NAME);
+
+        return $endpoint->getBool();
+    }
+
+    /**
      * Adds a filter to the search.
      *
      * @param BuilderInterface $filter   Filter.
@@ -175,17 +188,15 @@ class Search
     }
 
     /**
-     * Adds aggregation into search.
+     * Returns queries inside BoolFilter instance.
      *
-     * @param AbstractAggregation $aggregation
-     *
-     * @return $this;
+     * @return BuilderInterface
      */
-    public function addAggregation(AbstractAggregation $aggregation)
+    public function getFilters()
     {
-        $this->getEndpoint(AggregationsEndpoint::NAME)->add($aggregation, $aggregation->getName());
+        $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
 
-        return $this;
+        return $endpoint->getBool();
     }
 
     /**
@@ -210,6 +221,42 @@ class Search
     }
 
     /**
+     * Returns queries inside BoolFilter instance.
+     *
+     * @return BuilderInterface
+     */
+    public function getPostFilters()
+    {
+        $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
+
+        return $endpoint->getBool();
+    }
+
+    /**
+     * Adds aggregation into search.
+     *
+     * @param AbstractAggregation $aggregation
+     *
+     * @return $this;
+     */
+    public function addAggregation(AbstractAggregation $aggregation)
+    {
+        $this->getEndpoint(AggregationsEndpoint::NAME)->add($aggregation, $aggregation->getName());
+
+        return $this;
+    }
+
+    /**
+     * Returns all aggregations.
+     *
+     * @return BuilderInterface[]
+     */
+    public function getAggregations()
+    {
+        return $this->getEndpoint(AggregationsEndpoint::NAME)->getAll();
+    }
+
+    /**
      * Adds sort to search.
      *
      * @param BuilderInterface $sort
@@ -224,6 +271,16 @@ class Search
     }
 
     /**
+     * Returns all set sorts.
+     *
+     * @return BuilderInterface[]
+     */
+    public function getSorts()
+    {
+        return $this->getEndpoint(SortEndpoint::NAME)->getAll();
+    }
+
+    /**
      * Allows to highlight search results on one or more fields.
      *
      * @param Highlight $highlight
@@ -235,6 +292,19 @@ class Search
         $this->getEndpoint(HighlightEndpoint::NAME)->add($highlight);
 
         return $this;
+    }
+
+    /**
+     * Returns highlight builder.
+     *
+     * @return BuilderInterface
+     */
+    public function getHighlight()
+    {
+        /** @var HighlightEndpoint $highlightEndpoint */
+        $highlightEndpoint = $this->getEndpoint(HighlightEndpoint::NAME);
+
+        return $highlightEndpoint->getHighlight();
     }
 
     /**

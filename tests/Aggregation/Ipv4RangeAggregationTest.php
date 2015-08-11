@@ -35,11 +35,9 @@ class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new Ipv4RangeAggregation('test', 'fieldName', [['from' => 'fromValue']]);
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'test' => [
-                    'ip_range' => [
-                        'field' => 'fieldName',
-                        'ranges' => [['from' => 'fromValue']],
-                    ],
+                'ip_range' => [
+                    'field' => 'fieldName',
+                    'ranges' => [['from' => 'fromValue']],
                 ],
             ],
             $aggregation->toArray()
@@ -48,11 +46,9 @@ class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new Ipv4RangeAggregation('test', 'fieldName', ['maskValue']);
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'test' => [
-                    'ip_range' => [
-                        'field' => 'fieldName',
-                        'ranges' => [['mask' => 'maskValue']],
-                    ],
+                'ip_range' => [
+                    'field' => 'fieldName',
+                    'ranges' => [['mask' => 'maskValue']],
                 ],
             ],
             $aggregation->toArray()

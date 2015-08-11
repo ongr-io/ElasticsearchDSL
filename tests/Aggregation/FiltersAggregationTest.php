@@ -76,21 +76,19 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addFilter($filter, 'second');
         $results = $aggregation->toArray();
         $expected = [
-            AbstractAggregation::PREFIX.'test_agg' => [
+            'filters' => [
                 'filters' => [
-                    'filters' => [
-                        'first' => [
-                            'test_filter' => [
-                                'test_field' => [
-                                    'test_value' => 'test',
-                                ],
+                    'first' => [
+                        'test_filter' => [
+                            'test_field' => [
+                                'test_value' => 'test',
                             ],
                         ],
-                        'second' => [
-                            'test_filter' => [
-                                'test_field' => [
-                                    'test_value' => 'test',
-                                ],
+                    ],
+                    'second' => [
+                        'test_filter' => [
+                            'test_field' => [
+                                'test_value' => 'test',
                             ],
                         ],
                     ],
@@ -122,12 +120,10 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'test' => [
+                'filters' => [
                     'filters' => [
-                        'filters' => [
-                            'filter1' => ['type1' => null],
-                            'filter2' => ['type2' => null],
-                        ],
+                        'filter1' => ['type1' => null],
+                        'filter2' => ['type2' => null],
                     ],
                 ],
             ],
@@ -145,12 +141,10 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'test' => [
+                'filters' => [
                     'filters' => [
-                        'filters' => [
-                            ['type1' => null],
-                            ['type2' => null],
-                        ],
+                        ['type1' => null],
+                        ['type2' => null],
                     ],
                 ],
             ],

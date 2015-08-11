@@ -68,4 +68,11 @@ interface SearchEndpointInterface extends NormalizableInterface
      * @return array
      */
     public function getAll($boolType = null);
+
+    /**
+     * Returns Bool filter or query instance with all builder objects inside.
+     *
+     * @return BuilderInterface
+     */
+    public function getBool();
 }

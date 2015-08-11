@@ -29,14 +29,12 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new TopHitsAggregation('acme', 1, 1, $sort);
 
         $expected = [
-            AbstractAggregation::PREFIX.'acme' => [
-                'top_hits' => [
-                    'sort' => [
-                        'acme' => [],
-                    ],
-                    'size' => 1,
-                    'from' => 1,
+            'top_hits' => [
+                'sort' => [
+                    'acme' => [],
                 ],
+                'size' => 1,
+                'from' => 1,
             ],
         ];
 
@@ -52,13 +50,11 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('_source', ['include' => ['title']]);
 
         $expected = [
-            AbstractAggregation::PREFIX.'acme' => [
-                'top_hits' => [
-                    'size' => 0,
-                    'from' => 1,
-                    '_source' => [
-                        'include' => ['title'],
-                    ],
+            'top_hits' => [
+                'size' => 0,
+                'from' => 1,
+                '_source' => [
+                    'include' => ['title'],
                 ],
             ],
         ];

@@ -124,16 +124,14 @@ abstract class AbstractAggregation implements BuilderInterface
     {
         $array = $this->getArray();
         $result = [
-            $this->getName() => [
-                $this->getType() => is_array($array) ? $this->processArray($array) : $array,
-            ],
+            $this->getType() => is_array($array) ? $this->processArray($array) : $array,
         ];
 
         if ($this->supportsNesting()) {
             $nestedResult = $this->collectNestedAggregations();
 
             if (!empty($nestedResult)) {
-                $result[$this->getName()]['aggregations'] = $nestedResult;
+                $result['aggregations'] = $nestedResult;
             }
         }
 
@@ -148,8 +146,9 @@ abstract class AbstractAggregation implements BuilderInterface
     protected function collectNestedAggregations()
     {
         $result = [];
+        /** @var AbstractAggregation $aggregation */
         foreach ($this->getAggregations() as $aggregation) {
-            $result = array_merge($result, $aggregation->toArray());
+            $result[$aggregation->getName()] = $aggregation->toArray();
         }
 
         return $result;

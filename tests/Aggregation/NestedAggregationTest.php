@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\NestedAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 
 class NestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,26 +41,16 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $termMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\TermsAggregation')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $termMock
-            ->expects($this->once())
-            ->method('toArray')
-            ->will($this->returnValue(['terms' => []]));
+        $termAggregation = new TermsAggregation('acme');
 
         $aggregation = new NestedAggregation('test_nested_agg');
         $aggregation->setPath('test_path');
-        $aggregation->addAggregation($termMock);
+        $aggregation->addAggregation($termAggregation);
 
         $expectedResult = [
-            AbstractAggregation::PREFIX.'test_nested_agg' => [
-                'nested' => ['path' => 'test_path'],
-                'aggregations' => [
-                    'terms' => [],
-                ],
+            'nested' => ['path' => 'test_path'],
+            'aggregations' => [
+                $termAggregation->getName() => $termAggregation->toArray(),
             ],
         ];
 

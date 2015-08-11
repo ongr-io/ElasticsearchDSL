@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\ReverseNestedAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 
 class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,9 +28,7 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setPath('test_path');
 
         $expectedResult = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'reverse_nested' => ['path' => 'test_path'],
-            ],
+            'reverse_nested' => ['path' => 'test_path'],
         ];
 
         $this->assertEquals($expectedResult, $aggregation->toArray());
@@ -40,26 +39,16 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $termMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\TermsAggregation')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $termMock
-            ->expects($this->once())
-            ->method('toArray')
-            ->will($this->returnValue(['terms' => []]));
+        $termAggregation = new TermsAggregation('acme');
 
         $aggregation = new ReverseNestedAggregation('test_nested_agg');
         $aggregation->setPath('test_path');
-        $aggregation->addAggregation($termMock);
+        $aggregation->addAggregation($termAggregation);
 
         $expectedResult = [
-            AbstractAggregation::PREFIX.'test_nested_agg' => [
-                'reverse_nested' => ['path' => 'test_path'],
-                'aggregations' => [
-                    'terms' => [],
-                ],
+            'reverse_nested' => ['path' => 'test_path'],
+            'aggregations' => [
+                $termAggregation->getName() => $termAggregation->toArray(),
             ],
         ];
 
@@ -71,25 +60,15 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArrayNoPath()
     {
-        $termMock = $this
-            ->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\TermsAggregation')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $termMock
-            ->expects($this->once())
-            ->method('toArray')
-            ->will($this->returnValue(['terms' => []]));
+        $termAggregation = new TermsAggregation('acme');
 
         $aggregation = new ReverseNestedAggregation('test_nested_agg');
-        $aggregation->addAggregation($termMock);
+        $aggregation->addAggregation($termAggregation);
 
         $expectedResult = [
-            AbstractAggregation::PREFIX.'test_nested_agg' => [
-                'reverse_nested' => new \stdClass(),
-                'aggregations' => [
-                    'terms' => [],
-                ],
+            'reverse_nested' => [],
+            'aggregations' => [
+                $termAggregation->getName() => $termAggregation->toArray(),
             ],
         ];
 

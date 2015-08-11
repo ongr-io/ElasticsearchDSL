@@ -41,6 +41,6 @@ class GlobalAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        return new \stdClass();
+        return [];
     }
 }

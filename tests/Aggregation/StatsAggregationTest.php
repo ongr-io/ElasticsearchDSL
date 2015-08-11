@@ -25,9 +25,7 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('test_field');
 
         $expectedResult = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'stats' => ['field' => 'test_field'],
-            ],
+            'stats' => ['field' => 'test_field'],
         ];
 
         $this->assertEquals($expectedResult, $aggregation->toArray());
@@ -41,11 +39,9 @@ class StatsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new StatsAggregation('foo', 'fieldValue', 'scriptValue');
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'foo' => [
-                    'stats' => [
-                        'field' => 'fieldValue',
-                        'script' => 'scriptValue',
-                    ],
+                'stats' => [
+                    'field' => 'fieldValue',
+                    'script' => 'scriptValue',
                 ],
             ],
             $aggregation->toArray()

@@ -13,7 +13,9 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\HistogramAggregation;
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Filter\MatchAllFilter;
 use ONGR\ElasticsearchDSL\Filter\MissingFilter;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
@@ -29,26 +31,13 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 
         // Case #0 filter aggregation.
         $aggregation = new FilterAggregation('test_agg');
-
-        $filter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
-            ->setMethods(['toArray', 'getType'])
-            ->getMockForAbstractClass();
-        $filter->expects($this->any())
-            ->method('getType')
-            ->willReturn('test_filter');
-        $filter->expects($this->any())
-            ->method('toArray')
-            ->willReturn(['test_field' => ['test_value' => 'test']]);
+        $filter = new MatchAllFilter();
 
         $aggregation->setFilter($filter);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'filter' => [
-                    'test_filter' => [
-                        'test_field' => ['test_value' => 'test'],
-                    ],
-                ],
+            'filter' => [
+                $filter->getType() => $filter->toArray(),
             ],
         ];
 
@@ -61,31 +50,15 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new FilterAggregation('test_agg');
         $aggregation->setFilter($filter);
 
-        $aggregation2 = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation')
-            ->disableOriginalConstructor()
-            ->setMethods(['toArray', 'getName'])
-            ->getMockForAbstractClass();
-        $aggregation2->expects($this->any())
-            ->method('toArray')
-            ->willReturn([AbstractAggregation::PREFIX.'test_agg2' => ['avg' => []]]);
-        $aggregation2->expects($this->any())
-            ->method('getName')
-            ->willReturn('test_agg2');
-
-        $aggregation->addAggregation($aggregation2);
+        $histogramAgg = new HistogramAggregation('acme', 'bar', 10);
+        $aggregation->addAggregation($histogramAgg);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'filter' => [
-                    'test_filter' => [
-                        'test_field' => ['test_value' => 'test'],
-                    ],
-                ],
-                'aggregations' => [
-                    AbstractAggregation::PREFIX.'test_agg2' => [
-                        'avg' => [],
-                    ],
-                ],
+            'filter' => [
+                $filter->getType() => $filter->toArray(),
+            ],
+            'aggregations' => [
+                $histogramAgg->getName() => $histogramAgg->toArray(),
             ],
         ];
 
@@ -155,9 +128,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new FilterAggregation('test', $builderInterface);
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'test' => [
-                    'filter' => [null => null],
-                ],
+                'filter' => [null => null],
             ],
             $aggregation->toArray()
         );

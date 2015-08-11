@@ -81,11 +81,9 @@ class PercentileRanksAggregationTest extends \PHPUnit_Framework_TestCase
         $this->agg->setValues(['bar']);
         $this->assertSame(
             [
-                AbstractAggregation::PREFIX.'foo' => [
-                    'percentile_ranks' => [
-                        'field' => 'bar',
-                        'values' => ['bar'],
-                    ],
+                'percentile_ranks' => [
+                    'field' => 'bar',
+                    'values' => ['bar'],
                 ],
             ],
             $this->agg->toArray()

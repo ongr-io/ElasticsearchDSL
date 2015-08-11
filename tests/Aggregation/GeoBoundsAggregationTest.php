@@ -49,22 +49,18 @@ class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
         $agg->setField('bar');
         $agg->setWrapLongitude(true);
         $result = [
-            AbstractAggregation::PREFIX.'foo' => [
-                'geo_bounds' => [
-                    'field' => 'bar',
-                    'wrap_longitude' => true,
-                ],
+            'geo_bounds' => [
+                'field' => 'bar',
+                'wrap_longitude' => true,
             ],
         ];
         $this->assertEquals($result, $agg->toArray(), 'when wraplongitude is true');
 
         $agg->setWrapLongitude(false);
         $result = [
-            AbstractAggregation::PREFIX.'foo' => [
-                'geo_bounds' => [
-                    'field' => 'bar',
-                    'wrap_longitude' => false,
-                ],
+            'geo_bounds' => [
+                'field' => 'bar',
+                'wrap_longitude' => false,
             ],
         ];
         $this->assertEquals($result, $agg->toArray(), 'when wraplongitude is false');

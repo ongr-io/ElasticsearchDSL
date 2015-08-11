@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\GlobalAggregation;
 
 class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
@@ -29,9 +28,7 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new GlobalAggregation('test_agg');
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'global' => new \stdClass(),
-            ],
+            'global' => [],
         ];
 
         $out[] = [
@@ -45,13 +42,9 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'global' => new \stdClass(),
-                'aggregations' => [
-                    AbstractAggregation::PREFIX.'test_agg_2' => [
-                        'global' => new \stdClass(),
-                    ],
-                ],
+            'global' => [],
+            'aggregations' => [
+                $aggregation2->getName() => $aggregation2->toArray(),
             ],
         ];
 

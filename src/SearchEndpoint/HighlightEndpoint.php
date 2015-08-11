@@ -66,4 +66,12 @@ class HighlightEndpoint extends AbstractSearchEndpoint
     {
         return [$this->key => $this->highlight];
     }
+
+    /**
+     * @return BuilderInterface
+     */
+    public function getHighlight()
+    {
+        return $this->highlight;
+    }
 }

@@ -26,9 +26,7 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setField('test_field');
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => ['field' => 'test_field'],
-            ],
+            'terms' => ['field' => 'test_field'],
         ];
 
         $this->assertEquals($aggregation->toArray(), $result);
@@ -45,11 +43,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('size', 1);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'size' => 1,
-                ],
+            'terms' => [
+                'field' => 'test_field',
+                'size' => 1,
+
             ],
         ];
 
@@ -61,11 +58,9 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('size', 0);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'size' => 0,
-                ],
+            'terms' => [
+                'field' => 'test_field',
+                'size' => 0,
             ],
         ];
 
@@ -84,12 +79,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('min_doc_count', 10);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'size' => 1,
-                    'min_doc_count' => 10,
-                ],
+            'terms' => [
+                'field' => 'test_field',
+                'size' => 1,
+                'min_doc_count' => 10,
             ],
         ];
 
@@ -108,12 +101,10 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('exclude', 'pizza_.*');
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'include' => 'test_.*',
-                    'exclude' => 'pizza_.*',
-                ],
+            'terms' => [
+                'field' => 'test_field',
+                'include' => 'test_.*',
+                'exclude' => 'pizza_.*',
             ],
         ];
 
@@ -144,17 +135,15 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         );
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'include' => [
-                        'pattern' => 'test_.*',
-                        'flags' => 'CANON_EQ|CASE_INSENSITIVE',
-                    ],
-                    'exclude' => [
-                        'pattern' => 'pizza_.*',
-                        'flags' => 'CASE_INSENSITIVE',
-                    ],
+            'terms' => [
+                'field' => 'test_field',
+                'include' => [
+                    'pattern' => 'test_.*',
+                    'flags' => 'CANON_EQ|CASE_INSENSITIVE',
+                ],
+                'exclude' => [
+                    'pattern' => 'pizza_.*',
+                    'flags' => 'CASE_INSENSITIVE',
                 ],
             ],
         ];
@@ -173,11 +162,9 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('order', ['_count' => 'asc']);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'order' => ['_count' => 'asc'],
-                ],
+            'terms' => [
+                'field' => 'test_field',
+                'order' => ['_count' => 'asc'],
             ],
         ];
 
@@ -195,11 +182,9 @@ class TermsAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addParameter('order', ['_term' => 'desc']);
 
         $result = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'terms' => [
-                    'field' => 'test_field',
-                    'order' => ['_term' => 'desc'],
-                ],
+            'terms' => [
+                'field' => 'test_field',
+                'order' => ['_term' => 'desc'],
             ],
         ];
 
