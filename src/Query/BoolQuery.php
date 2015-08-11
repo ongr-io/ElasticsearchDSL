@@ -52,8 +52,8 @@ class BoolQuery implements BuilderInterface
     public function isRelevant()
     {
         return
-            (count($this->container[self::MUST_NOT]) + count($this->container[self::SHOULD])) === 0
-            && count($this->container[self::MUST]) == 1;
+            (count($this->container[self::MUST_NOT]) + count($this->container[self::SHOULD])) > 0
+            || count($this->container[self::MUST]) > 1;
     }
 
     /**
@@ -106,7 +106,7 @@ class BoolQuery implements BuilderInterface
     {
         $output = $this->processArray();
 
-        if ($this->isRelevant()) {
+        if (!$this->isRelevant()) {
             /** @var BuilderInterface $query */
             $mustContainer = $this->container[self::MUST];
             $query = array_shift($mustContainer);
