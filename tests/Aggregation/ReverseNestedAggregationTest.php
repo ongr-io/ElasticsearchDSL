@@ -66,12 +66,15 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($termAggregation);
 
         $expectedResult = [
-            'reverse_nested' => [],
+            'reverse_nested' => new \stdClass(),
             'aggregations' => [
                 $termAggregation->getName() => $termAggregation->toArray(),
             ],
         ];
 
-        $this->assertEquals($expectedResult, $aggregation->toArray());
+        $this->assertEquals(
+            json_encode($expectedResult),
+            json_encode($aggregation->toArray())
+        );
     }
 }

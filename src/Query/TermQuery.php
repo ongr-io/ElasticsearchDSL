@@ -56,12 +56,16 @@ class TermQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            'value' => $this->value,
-        ];
+        $query = $this->processArray();
+
+        if (empty($query)) {
+            $query = $this->value;
+        } else {
+            $query['value'] = $this->value;
+        }
 
         $output = [
-            $this->field => $this->processArray($query),
+            $this->field => $query,
         ];
 
         return $output;

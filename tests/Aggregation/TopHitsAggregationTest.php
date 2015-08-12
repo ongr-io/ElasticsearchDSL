@@ -25,13 +25,13 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $sort = new FieldSort('acme');
+        $sort = new FieldSort('acme', ['order' => 'asc']);
         $aggregation = new TopHitsAggregation('acme', 1, 1, $sort);
 
         $expected = [
             'top_hits' => [
                 'sort' => [
-                    'acme' => [],
+                    'acme' => ['order' => 'asc'],
                 ],
                 'size' => 1,
                 'from' => 1,

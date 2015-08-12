@@ -28,7 +28,7 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation = new GlobalAggregation('test_agg');
 
         $result = [
-            'global' => [],
+            'global' => new \stdClass(),
         ];
 
         $out[] = [
@@ -42,7 +42,7 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($aggregation2);
 
         $result = [
-            'global' => [],
+            'global' => new \stdClass(),
             'aggregations' => [
                 $aggregation2->getName() => $aggregation2->toArray(),
             ],
@@ -66,7 +66,10 @@ class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray($aggregation, $expectedResult)
     {
-        $this->assertEquals($expectedResult, $aggregation->toArray());
+        $this->assertEquals(
+            json_encode($expectedResult),
+            json_encode($aggregation->toArray())
+        );
     }
 
     /**

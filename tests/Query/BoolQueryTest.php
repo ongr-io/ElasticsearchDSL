@@ -41,7 +41,7 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($bool->isRelevant());
         $bool->add(new TermQuery('acme', 'foo'), BoolQuery::SHOULD);
 
-        $this->assertFalse($bool->isRelevant());
+        $this->assertTrue($bool->isRelevant());
     }
 
     /**
@@ -61,7 +61,7 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
      * Test for addToBool() without setting a correct bool operator.
      *
      * @expectedException        \UnexpectedValueException
-     * @expectedExceptionMessage The provided bool operator is not supported
+     * @expectedExceptionMessage The bool operator acme is not supported
      */
     public function testBoolAddToBoolException()
     {
