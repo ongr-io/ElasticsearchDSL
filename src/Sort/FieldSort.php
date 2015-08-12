@@ -91,7 +91,7 @@ class FieldSort implements BuilderInterface
         }
 
         $output = [
-            $this->field => $fieldValues,
+            $this->field => empty($fieldValues) ? new \stdClass() : $fieldValues,
         ];
 
         return $output;
