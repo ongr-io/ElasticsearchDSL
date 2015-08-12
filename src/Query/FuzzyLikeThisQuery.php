@@ -32,7 +32,7 @@ class FuzzyLikeThisQuery implements BuilderInterface
     private $likeText;
 
     /**
-     * @param string|string[] $fields Multiple fields can be set via comma or just an array.
+     * @param string|string[] $fields     Multiple fields can be set via comma or just an array.
      * @param string          $likeText
      * @param array           $parameters
      */

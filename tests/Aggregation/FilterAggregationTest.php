@@ -82,7 +82,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $result = [
             'filter' => [
                 $boolFilter->getType() => $boolFilter->toArray(),
-            ]
+            ],
         ];
 
 

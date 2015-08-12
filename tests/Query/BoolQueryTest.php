@@ -18,7 +18,7 @@ use ONGR\ElasticsearchDSL\Query\TermQuery;
 /**
  * Unit test for Bool.
  */
-class BoolFilterTest extends \PHPUnit_Framework_TestCase
+class BoolQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests isRelevant method.

@@ -141,10 +141,11 @@ class Search
     /**
      * Sets parameters to the endpoint.
      *
-     * @param string    $endpointName
-     * @param array     $parameters
+     * @param string $endpointName
+     * @param array  $parameters
      */
-    private function setEndpointParameters($endpointName, array $parameters) {
+    private function setEndpointParameters($endpointName, array $parameters)
+    {
         /** @var AbstractSearchEndpoint $endpoint */
         $endpoint = $this->getEndpoint($endpointName);
         $endpoint->setParameters($parameters);
