@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TopHitsAggregation;
 use ONGR\ElasticsearchDSL\Sort\FieldSort;
 
@@ -25,7 +24,7 @@ class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $sort = new FieldSort('acme', ['order' => 'asc']);
+        $sort = new FieldSort('acme', FieldSort::ASC);
         $aggregation = new TopHitsAggregation('acme', 1, 1, $sort);
 
         $expected = [
