@@ -120,7 +120,7 @@ class FunctionScoreQuery implements BuilderInterface
             $type => array_merge(
                 [$field => $function],
                 $options
-            )
+            ),
         ];
 
         $this->applyFilter($function, $filter);
