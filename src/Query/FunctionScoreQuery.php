@@ -117,10 +117,10 @@ class FunctionScoreQuery implements BuilderInterface
         BuilderInterface $filter = null
     ) {
         $function = [
-            $type => [
-                $field => $function,
-            ],
-            $options
+            $type => array_merge(
+                [$field => $function],
+                $options
+            ),
         ];
 
         $this->applyFilter($function, $filter);
