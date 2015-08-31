@@ -28,7 +28,7 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests ParametersTrait hasParameter method.
      */
-    public function testTraithasParameter()
+    public function testTraitHasParameter()
     {
         $highlight = new Highlight();
         $highlight->addParameter('_source', ['include' => ['title']]);
@@ -51,7 +51,7 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests ParametersTrait getParameter method.
      */
-    public function testTraitgetParameter()
+    public function testTraitGetParameter()
     {
         $highlight = new Highlight();
         $highlight->addParameter('_source', ['include' => 'title']);
@@ -62,7 +62,7 @@ class HighlightTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests ParametersTrait getParameters and setParameters methods.
      */
-    public function testTraitsetgetParameters()
+    public function testTraitSetGetParameters()
     {
         $highlight = new Highlight();
         $highlight->setParameters(
