@@ -10,7 +10,7 @@ Everything starts from the `Search` object. We recommend first to take a look at
 - [Build Aggregations](Aggregation/index.md)
 
 ### How to
-- [How to combine `Filter` and `Query`]
-- [How to add sorting]
+- [How to Search](HowTo/HowToSearch.md)
+- more coming soon..
 
 [1]: https://github.com/elastic/elasticsearch-php
