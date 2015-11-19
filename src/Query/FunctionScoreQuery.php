@@ -189,11 +189,13 @@ class FunctionScoreQuery implements BuilderInterface
         BuilderInterface $filter = null
     ) {
         $function = [
-            'script_score' => [
-                'script' => $script,
-                'params' => $params,
+            'script_score' => array_merge(
+                [
+                    'script' => $script,
+                    'params' => $params,
+                ],
                 $options
-            ],
+            ),
         ];
 
         $this->applyFilter($function, $filter);
