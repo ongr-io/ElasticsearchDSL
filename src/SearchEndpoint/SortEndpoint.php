@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Sort\AbstractSort;
-use ONGR\ElasticsearchDSL\Sort\Sorts;
+use ONGR\ElasticsearchDSL\Sort\FieldSort;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
