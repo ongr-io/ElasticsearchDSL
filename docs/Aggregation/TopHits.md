@@ -43,7 +43,7 @@ so that the top matching documents can be aggregated per bucket.
 And now the query via DSL:
 
 ```php
-$sort = new FieldSort('last_activity_date', Sort::DESC);
+$sort = new FieldSort('last_activity_date', FieldSort::DESC);
 $sorts = new Sorts();
 $sorts->addSort($sort);
 $topHitsAggregation = new TopHitsAggregation('top_tag_hits', 1, null, $sorts);
