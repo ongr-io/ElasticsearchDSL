@@ -104,4 +104,48 @@ class SearchTest extends \PHPUnit_Framework_TestCase
             $search->toArray()
         );
     }
+
+    /**
+     * Data provider for test testSettingQueryParams()
+     *
+     * @return array
+     */
+    public function getTestSettingQueryParamsData()
+    {
+        $cases = [];
+
+        $search = new Search();
+        $search->setSearchType('dfs_query_then_fetch');
+        $cases['Only search_type is set'] = [
+            $search,
+            [
+                'search_type' => 'dfs_query_then_fetch',
+            ],
+        ];
+
+        $search = new Search();
+        $search->setRequestCache(true);
+        $cases['Only request_cache is set'] = [
+            $search,
+            [
+                'request_cache' => true,
+            ],
+        ];
+
+        return $cases;
+    }
+
+    /**
+     * @dataProvider getTestSettingQueryParamsData()
+     *
+     * @param Search    $search
+     * @param array     $expected
+     */
+    public function testSettingQueryParams($search, $expected)
+    {
+        $this->assertEquals(
+            $expected,
+            $search->getQueryParams()
+        );
+    }
 }

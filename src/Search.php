@@ -79,6 +79,11 @@ class Search
     private $searchType;
 
     /**
+     * @var string
+     */
+    private $requestCache;
+
+    /**
      * @var bool
      */
     private $explain;
@@ -640,6 +645,31 @@ class Search
         return $this->searchType;
     }
 
+
+    /**
+     * Set request cache.
+     *
+     * @param string $requestCache
+     *
+     * @return $this
+     */
+    public function setRequestCache($requestCache)
+    {
+        $this->requestCache = $requestCache;
+
+        return $this;
+    }
+
+    /**
+     * Returns request cache.
+     *
+     * @return string
+     */
+    public function getRequestCache()
+    {
+        return $this->requestCache;
+    }
+
     /**
      * Setter for preference.
      *
@@ -691,6 +721,7 @@ class Search
             [
                 'scroll' => $this->getScroll(),
                 'search_type' => $this->getSearchType(),
+                'request_cache' => $this->getRequestCache(),
                 'preference' => $this->getPreference(),
             ]
         );
