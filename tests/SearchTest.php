@@ -132,10 +132,45 @@ class SearchTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
+        $search = new Search();
+        $search->setScroll('1m');
+        $cases['Only scroll is set'] = [
+            $search,
+            [
+                'scroll' => '1m',
+            ],
+        ];
+
+        $search = new Search();
+        $search->setPreference('_local');
+        $cases['Only preference is set'] = [
+            $search,
+            [
+                'preference' => '_local',
+            ],
+        ];
+
+        $search = new Search();
+        $search->setSearchType('dfs_query_then_fetch');
+        $search->setRequestCache(true);
+        $search->setScroll('1m');
+        $search->setPreference('_local');
+        $cases['Multiple parameters are set'] = [
+            $search,
+            [
+                'search_type' => 'dfs_query_then_fetch',
+                'request_cache' => true,
+                'scroll' => '1m',
+                'preference' => '_local',
+            ],
+        ];
+
         return $cases;
     }
 
     /**
+     * Test if query params are constructed correctly.
+     *
      * @dataProvider getTestSettingQueryParamsData()
      *
      * @param Search    $search
