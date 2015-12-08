@@ -44,6 +44,16 @@ class Search
     private $from;
 
     /**
+     * @var string
+     */
+    private $timeout;
+
+    /**
+     * @var int
+     */
+    private $terminateAfter;
+
+    /**
      * @var string|null
      */
     private $scroll;
@@ -67,6 +77,11 @@ class Search
      * @var string
      */
     private $searchType;
+
+    /**
+     * @var string
+     */
+    private $requestCache;
 
     /**
      * @var bool
@@ -401,6 +416,34 @@ class Search
     }
 
     /**
+     * Sets timeout for query execution.
+     *
+     * @param $timeout
+     *
+     * @return $this
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    /**
+     * Sets maximum number of documents per shard.
+     *
+     * @param $terminateAfter
+     *
+     * @return $this
+     */
+    public function setTerminateAfter($terminateAfter)
+    {
+        $this->terminateAfter = $terminateAfter;
+
+        return $this;
+    }
+
+    /**
      * Returns results offset value.
      *
      * @return int
@@ -602,6 +645,31 @@ class Search
         return $this->searchType;
     }
 
+
+    /**
+     * Set request cache.
+     *
+     * @param string $requestCache
+     *
+     * @return $this
+     */
+    public function setRequestCache($requestCache)
+    {
+        $this->requestCache = $requestCache;
+
+        return $this;
+    }
+
+    /**
+     * Returns request cache.
+     *
+     * @return string
+     */
+    public function getRequestCache()
+    {
+        return $this->requestCache;
+    }
+
     /**
      * Setter for preference.
      *
@@ -653,6 +721,7 @@ class Search
             [
                 'scroll' => $this->getScroll(),
                 'search_type' => $this->getSearchType(),
+                'request_cache' => $this->getRequestCache(),
                 'preference' => $this->getPreference(),
             ]
         );
@@ -674,6 +743,8 @@ class Search
             'stats' => 'stats',
             'minScore' => 'min_score',
             'source' => '_source',
+            'timeout' => 'timeout',
+            'terminateAfter' => 'terminate_after',
         ];
 
         foreach ($params as $field => $param) {
