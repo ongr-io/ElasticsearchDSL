@@ -44,6 +44,16 @@ class Search
     private $from;
 
     /**
+     * @var string
+     */
+    private $timeout;
+
+    /**
+     * @var int
+     */
+    private $terminateAfter;
+
+    /**
      * @var string|null
      */
     private $scroll;
@@ -401,6 +411,34 @@ class Search
     }
 
     /**
+     * Sets timeout for query execution.
+     *
+     * @param $timeout
+     *
+     * @return $this
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    /**
+     * Sets maximum number of documents per shard.
+     *
+     * @param $terminateAfter
+     *
+     * @return $this
+     */
+    public function setTerminateAfter($terminateAfter)
+    {
+        $this->terminateAfter = $terminateAfter;
+
+        return $this;
+    }
+
+    /**
      * Returns results offset value.
      *
      * @return int
@@ -674,6 +712,8 @@ class Search
             'stats' => 'stats',
             'minScore' => 'min_score',
             'source' => '_source',
+            'timeout' => 'timeout',
+            'terminateAfter' => 'terminate_after',
         ];
 
         foreach ($params as $field => $param) {
