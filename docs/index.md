@@ -11,6 +11,7 @@ Everything starts from the `Search` object. We recommend first to take a look at
 
 ### How to
 - [How to Search](HowTo/HowToSearch.md)
+- [How to set custom parameters to Search](HowTo/CustomParameters.md)
 - more coming soon..
 
 [1]: https://github.com/elastic/elasticsearch-php
