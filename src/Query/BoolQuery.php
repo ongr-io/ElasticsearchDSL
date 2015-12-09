@@ -112,7 +112,7 @@ class BoolQuery implements BuilderInterface
             $query = array_shift($mustContainer);
 
             if ($query->getType() == 'match') {
-                $output = [self::MUST => [$query->getType() => $query->toArray()]];
+                $output = [self::MUST => [[$query->getType() => $query->toArray()]]];
             } else {
                 $output = [$query->getType() => $query->toArray()];
             }
@@ -123,11 +123,7 @@ class BoolQuery implements BuilderInterface
         foreach ($this->container as $boolType => $builders) {
             /** @var BuilderInterface $builder */
             foreach ($builders as $builder) {
-                if (count($this->container[$boolType]) == 1) {
-                    $output[$boolType] = [$builder->getType() => $builder->toArray()];
-                } else {
-                    $output[$boolType][] = [$builder->getType() => $builder->toArray()];
-                }
+                $output[$boolType][] = [$builder->getType() => $builder->toArray()];
             }
         }
 

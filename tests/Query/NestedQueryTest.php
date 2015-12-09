@@ -88,7 +88,9 @@ class NestedQueryTest extends \PHPUnit_Framework_TestCase
                     'query' => [
                         'bool' => [
                             'must' => [
-                                'match' => ['some.field' => ['query' => 'someValue']]
+                                [
+                                    'match' => ['some.field' => ['query' => 'someValue']]
+                                ]
                             ]
                         ]
                     ]
@@ -123,7 +125,9 @@ class NestedQueryTest extends \PHPUnit_Framework_TestCase
                     'query' => [
                         'bool' => [
                             'should' => [
-                                'match' => ['some.field' => ['query' => 'someValue']]
+                                [
+                                    'match' => ['some.field' => ['query' => 'someValue']]
+                                ]
                             ]
                         ]
                     ]
@@ -245,9 +249,9 @@ class NestedQueryTest extends \PHPUnit_Framework_TestCase
                     'score_mode' => 'avg',
                     'query'      => [
                         'bool' => [
-                            'must' => ['match' => ['obj1.name' => ['query' => 'blue']]],
-                            'must_not' => ['term' => ['obj1.nickname' => 'color']],
-                            'should' => ['range' => ['obj1.count' => ['gt' => 5]]]
+                            'must' => [['match' => ['obj1.name' => ['query' => 'blue']]]],
+                            'must_not' => [['term' => ['obj1.nickname' => 'color']]],
+                            'should' => [['range' => ['obj1.count' => ['gt' => 5]]]]
                         ]
                     ]
                 ]
