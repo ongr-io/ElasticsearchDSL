@@ -123,7 +123,11 @@ class BoolQuery implements BuilderInterface
         foreach ($this->container as $boolType => $builders) {
             /** @var BuilderInterface $builder */
             foreach ($builders as $builder) {
-                $output[$boolType][] = [$builder->getType() => $builder->toArray()];
+                if (count($this->container[$boolType]) == 1) {
+                    $output[$boolType] = [$builder->getType() => $builder->toArray()];
+                } else {
+                    $output[$boolType][] = [$builder->getType() => $builder->toArray()];
+                }
             }
         }
 
