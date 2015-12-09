@@ -20,7 +20,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 class SpanOrQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Object.
+     * @var SpanQueryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $mock;
 
@@ -61,10 +61,8 @@ class SpanOrQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSpanOrQueryToArray()
     {
-        /** @var SpanQueryInterface $mock */
-        $mock = $this->mock;
         $query = new SpanOrQuery();
-        $query->addQuery($mock);
+        $query->addQuery($this->mock);
         $result = [
             'clauses' => [
                 0 => [

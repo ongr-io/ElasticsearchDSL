@@ -20,7 +20,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 class SpanFirstQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Object.
+     * @var SpanQueryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $mock;
 
@@ -51,9 +51,7 @@ class SpanFirstQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSpanFirstQueryToArray()
     {
-        /** @var SpanQueryInterface $mock */
-        $mock = $this->mock;
-        $query = new SpanFirstQuery($mock, 5);
+        $query = new SpanFirstQuery($this->mock, 5);
         $result = [
             'match' => [
                 'span_or' => [ 'key' => 'value'],
@@ -68,9 +66,7 @@ class SpanFirstQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSpanFirstQueryGetType()
     {
-        /** @var SpanQueryInterface $mock */
-        $mock = $this->mock;
-        $query = new SpanFirstQuery($mock, 5);
+        $query = new SpanFirstQuery($this->mock, 5);
         $result = $query->getType();
         $this->assertEquals('span_first', $result);
     }

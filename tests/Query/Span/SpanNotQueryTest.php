@@ -20,7 +20,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 class SpanNotQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Object.
+     * @var SpanQueryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $mock;
 
@@ -51,9 +51,7 @@ class SpanNotQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSpanNotQueryGetType()
     {
-        /** @var SpanQueryInterface $mock */
-        $mock = $this->mock;
-        $query = new SpanNotQuery($mock, $mock);
+        $query = new SpanNotQuery($this->mock, $this->mock);
         $result = $query->getType();
         $this->assertEquals('span_not', $result);
     }
@@ -63,9 +61,7 @@ class SpanNotQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSpanNotQueryToArray()
     {
-        /** @var SpanQueryInterface $mock */
-        $mock = $this->mock;
-        $query = new SpanNotQuery($mock, $mock);
+        $query = new SpanNotQuery($this->mock, $this->mock);
         $result = [
             'include' => [
                 'span_or' => ['key' => 'value'],

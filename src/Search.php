@@ -307,7 +307,7 @@ class Search
      *
      * @param AbstractAggregation $aggregation
      *
-     * @return $this;
+     * @return $this
      */
     public function addAggregation(AbstractAggregation $aggregation)
     {
