@@ -20,7 +20,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanMultiTermQuery;
 class SpanMultiTermQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var array.
+     * @var array
      */
     protected $mock;
 
