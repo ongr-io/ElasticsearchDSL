@@ -113,4 +113,31 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
         $result = $bool->getType();
         $this->assertEquals('bool', $result);
     }
+
+    /**
+     * Tests bool query in filter context.
+     */
+    public function testBoolInFilterContext()
+    {
+        $bool = new BoolQuery();
+        $bool->add(new TermQuery('key1', 'value1'), BoolQuery::FILTER);
+        $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
+        $expected = [
+            'filter' => [
+                [
+                    'term' => [
+                        'key1' => 'value1',
+                    ],
+                ],
+            ],
+            'must' => [
+                [
+                    'term' => [
+                        'key2' => 'value2',
+                    ],
+                ],
+            ],
+        ];
+        $this->assertEquals($expected, $bool->toArray());
+    }
 }

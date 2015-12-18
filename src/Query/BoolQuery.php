@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 /**
  * Represents Elasticsearch "bool" query.
  *
- * @link http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
  */
 class BoolQuery implements BuilderInterface
 {
@@ -26,6 +26,7 @@ class BoolQuery implements BuilderInterface
     const MUST = 'must';
     const MUST_NOT = 'must_not';
     const SHOULD = 'should';
+    const FILTER = 'filter';
 
     /**
      * @var array
@@ -41,6 +42,7 @@ class BoolQuery implements BuilderInterface
             self::MUST => [],
             self::MUST_NOT => [],
             self::SHOULD => [],
+            self::FILTER => [],
         ];
     }
 
@@ -52,8 +54,8 @@ class BoolQuery implements BuilderInterface
     public function isRelevant()
     {
         return
-            (count($this->container[self::MUST_NOT]) + count($this->container[self::SHOULD])) > 0
-            || count($this->container[self::MUST]) > 1;
+            count($this->container[self::MUST]) > 1 || count($this->container[self::MUST_NOT]) ||
+            count($this->container[self::SHOULD]) || count($this->container[self::FILTER]);
     }
 
     /**
@@ -66,7 +68,8 @@ class BoolQuery implements BuilderInterface
             return array_merge(
                 $this->container[self::MUST],
                 $this->container[self::MUST_NOT],
-                $this->container[self::SHOULD]
+                $this->container[self::SHOULD],
+                $this->container[self::FILTER]
             );
         }
 
@@ -86,7 +89,7 @@ class BoolQuery implements BuilderInterface
      */
     public function add(BuilderInterface $query, $type = self::MUST, $key = null)
     {
-        if (!in_array($type, (new \ReflectionObject($this))->getConstants())) {
+        if (!in_array($type, [self::MUST, self::MUST_NOT, self::SHOULD, self::FILTER])) {
             throw new \UnexpectedValueException(sprintf('The bool operator %s is not supported', $type));
         }
 
