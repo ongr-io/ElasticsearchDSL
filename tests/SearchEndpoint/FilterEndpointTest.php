@@ -64,7 +64,15 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
         /** @var FilteredQuery $reference */
         $reference = $instance->getReference('filtered_query');
         $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\FilteredQuery', $reference);
-        $this->assertSame($matchAllFilter, $reference->getFilter());
+
+        /** @var \ONGR\ElasticsearchDSL\Query\BoolQuery $bool */
+        $bool = $reference->getFilter();
+        $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\BoolQuery', $bool);
+
+        $must = $bool->getQueries('must');
+        $realReference = reset($must);
+
+        $this->assertSame($matchAllFilter, $realReference);
     }
 
     /**

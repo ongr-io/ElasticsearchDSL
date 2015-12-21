@@ -51,10 +51,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
         }
 
         $queryArray = $this->bool->toArray();
-
-        if ($this->bool->isRelevant()) {
-            $queryArray = [$this->bool->getType() => $queryArray];
-        }
+        $queryArray = [$this->bool->getType() => $queryArray];
 
         return $queryArray;
     }

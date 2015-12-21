@@ -35,14 +35,8 @@ class FilterEndpoint extends QueryEndpoint
         }
 
         $query = new FilteredQuery();
-        if (!$this->getBool()->isRelevant()) {
-            $filters = $this->getBool()->getQueries(BoolFilter::MUST);
-            $filter = array_shift($filters);
-        } else {
-            $filter = $this->getBool();
-        }
+        $query->setFilter($this->getBool());
 
-        $query->setFilter($filter);
         $this->addReference('filtered_query', $query);
     }
 

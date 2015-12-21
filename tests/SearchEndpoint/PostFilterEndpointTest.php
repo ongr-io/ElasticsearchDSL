@@ -54,7 +54,7 @@ class PostFilterEndpointTest extends \PHPUnit_Framework_TestCase
         $instance->add($matchAll);
 
         $this->assertEquals(
-            json_encode([$matchAll->getType() => $matchAll->toArray()]),
+            json_encode(['bool' => ['must' => [[$matchAll->getType() => $matchAll->toArray()]]]]),
             json_encode($instance->normalize($normalizerInterface))
         );
     }
