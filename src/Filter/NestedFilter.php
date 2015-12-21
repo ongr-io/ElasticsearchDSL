@@ -11,60 +11,29 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The NestedFilter class is deprecated and will be removed in 2.0. Use NestedQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\NestedQuery;
 
 /**
  * Nested filter implementation.
+ *
+ * @deprecated Will be removed in 2.0. Use the NestedQuery instead.
  */
-class NestedFilter implements BuilderInterface
+class NestedFilter extends NestedQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param string           $path
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     */
-    public function __construct($path, BuilderInterface $query, array $parameters = [])
-    {
-        $this->path = $path;
-        $this->query = $query;
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'nested';
-    }
-
     /**
      * {@inheritdoc}
      */
     public function toArray()
     {
-        $query = [
-            'path' => $this->path,
-            'filter' => [
-                $this->query->getType() => $this->query->toArray(),
-            ],
-        ];
+        $result = parent::toArray();
+        $result['filter'] = $result['query'];
+        unset($result['query']);
 
-        $output = $this->processArray($query);
-
-        return $output;
+        return $result;
     }
 }

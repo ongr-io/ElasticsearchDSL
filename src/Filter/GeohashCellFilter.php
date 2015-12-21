@@ -11,56 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The GeohashCellFilter class is deprecated and will be removed in 2.0. Use GeohashCellQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\GeohashCellQuery;
 
 /**
  * Represents Elasticsearch "Geohash Cell" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the GeohashCellQuery instead.
  */
-class GeohashCellFilter implements BuilderInterface
+class GeohashCellFilter extends GeohashCellQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var mixed
-     */
-    private $location;
-
-    /**
-     * @param string $field
-     * @param mixed  $location
-     * @param array  $parameters
-     */
-    public function __construct($field, $location, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->location = $location;
-
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'geohash_cell';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [];
-        $query[$this->field] = $this->location;
-        $output = $this->processArray($query);
-
-        return $output;
-    }
 }

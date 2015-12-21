@@ -15,35 +15,26 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Represents Elasticsearch "terms" query.
+ * Represents Elasticsearch "script" query.
  *
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-script-query.html
  */
-class TermsQuery implements BuilderInterface
+class ScriptQuery implements BuilderInterface
 {
     use ParametersTrait;
 
     /**
      * @var string
      */
-    private $field;
+    private $script;
 
     /**
-     * @var array
-     */
-    private $terms;
-
-    /**
-     * Constructor.
-     *
-     * @param string $field      Field name
-     * @param array  $terms      An array of terms
+     * @param string $script     Script
      * @param array  $parameters Optional parameters
      */
-    public function __construct($field, $terms, array $parameters = [])
+    public function __construct($script, array $parameters = [])
     {
-        $this->field = $field;
-        $this->terms = $terms;
+        $this->script = $script;
         $this->setParameters($parameters);
     }
 
@@ -52,7 +43,7 @@ class TermsQuery implements BuilderInterface
      */
     public function getType()
     {
-        return 'terms';
+        return 'script';
     }
 
     /**
@@ -60,12 +51,9 @@ class TermsQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            $this->field => $this->terms,
-        ];
-
+        $query = ['inline' => $this->script];
         $output = $this->processArray($query);
 
-        return $output;
+        return ['script' => $output];
     }
 }

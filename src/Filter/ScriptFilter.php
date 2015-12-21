@@ -11,6 +11,11 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
+@trigger_error(
+    'The ScriptFilter class is deprecated and will be removed in 2.0. Use ScriptQuery instead.',
+    E_USER_DEPRECATED
+);
+
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
@@ -18,6 +23,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
  * Represents Elasticsearch "script" filter.
  *
  * Allows to define scripts as filters.
+ *
+ * @deprecated Will be removed in 2.0. Use the ScriptQuery instead.
  */
 class ScriptFilter implements BuilderInterface
 {

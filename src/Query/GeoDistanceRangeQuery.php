@@ -15,11 +15,11 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Represents Elasticsearch "terms" query.
+ * Represents Elasticsearch "geo_distance_range" query.
  *
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-distance-range-query.html
  */
-class TermsQuery implements BuilderInterface
+class GeoDistanceRangeQuery implements BuilderInterface
 {
     use ParametersTrait;
 
@@ -31,19 +31,25 @@ class TermsQuery implements BuilderInterface
     /**
      * @var array
      */
-    private $terms;
+    private $range;
 
     /**
-     * Constructor.
-     *
-     * @param string $field      Field name
-     * @param array  $terms      An array of terms
-     * @param array  $parameters Optional parameters
+     * @var mixed
      */
-    public function __construct($field, $terms, array $parameters = [])
+    private $location;
+
+    /**
+     * @param string $field
+     * @param array  $range
+     * @param mixed  $location
+     * @param array  $parameters
+     */
+    public function __construct($field, $range, $location, array $parameters = [])
     {
         $this->field = $field;
-        $this->terms = $terms;
+        $this->range = $range;
+        $this->location = $location;
+
         $this->setParameters($parameters);
     }
 
@@ -52,7 +58,7 @@ class TermsQuery implements BuilderInterface
      */
     public function getType()
     {
-        return 'terms';
+        return 'geo_distance_range';
     }
 
     /**
@@ -60,10 +66,7 @@ class TermsQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            $this->field => $this->terms,
-        ];
-
+        $query = $this->range + [$this->field => $this->location];
         $output = $this->processArray($query);
 
         return $output;

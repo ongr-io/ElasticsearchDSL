@@ -11,55 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The TermsFilter class is deprecated and will be removed in 2.0. Use TermsQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\TermsQuery;
 
 /**
  * Represents Elasticsearch "terms" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the TermsQuery instead.
  */
-class TermsFilter implements BuilderInterface
+class TermsFilter extends TermsQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $terms;
-
-    /**
-     * @param string $field      Field name.
-     * @param array  $terms      An array of terms.
-     * @param array  $parameters Optional parameters.
-     */
-    public function __construct($field, $terms, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->terms = $terms;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'terms';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [$this->field => $this->terms];
-
-        $output = $this->processArray($query);
-
-        return $output;
-    }
 }

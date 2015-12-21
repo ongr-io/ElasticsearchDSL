@@ -15,11 +15,11 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Represents Elasticsearch "terms" query.
+ * Represents Elasticsearch "geo_polygon" query.
  *
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-polygon-query.html
  */
-class TermsQuery implements BuilderInterface
+class GeoPolygonQuery implements BuilderInterface
 {
     use ParametersTrait;
 
@@ -31,19 +31,17 @@ class TermsQuery implements BuilderInterface
     /**
      * @var array
      */
-    private $terms;
+    private $points;
 
     /**
-     * Constructor.
-     *
-     * @param string $field      Field name
-     * @param array  $terms      An array of terms
-     * @param array  $parameters Optional parameters
+     * @param string $field
+     * @param array  $points
+     * @param array  $parameters
      */
-    public function __construct($field, $terms, array $parameters = [])
+    public function __construct($field, array $points = [], array $parameters = [])
     {
         $this->field = $field;
-        $this->terms = $terms;
+        $this->points = $points;
         $this->setParameters($parameters);
     }
 
@@ -52,7 +50,7 @@ class TermsQuery implements BuilderInterface
      */
     public function getType()
     {
-        return 'terms';
+        return 'geo_polygon';
     }
 
     /**
@@ -60,10 +58,7 @@ class TermsQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            $this->field => $this->terms,
-        ];
-
+        $query = [$this->field => ['points' => $this->points]];
         $output = $this->processArray($query);
 
         return $output;

@@ -11,49 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The IdsFilter class is deprecated and will be removed in 2.0. Use IdsQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\IdsQuery;
 
 /**
  * Represents Elasticsearch "ids" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the IdsQuery instead.
  */
-class IdsFilter implements BuilderInterface
+class IdsFilter extends IdsQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string[]
-     */
-    private $values;
-
-    /**
-     * @param string[] $values     Ids' values.
-     * @param array    $parameters Optional parameters.
-     */
-    public function __construct($values, array $parameters = [])
-    {
-        $this->values = $values;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'ids';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [];
-        $query['values'] = $this->values;
-
-        $output = $this->processArray($query);
-
-        return $output;
-    }
 }

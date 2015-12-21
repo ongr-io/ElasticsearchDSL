@@ -1,5 +1,7 @@
 # Or Filter
 
+__DEPRECATED:__ `OrFilter` is deprecated and will be removed in 2.0. Use `BoolQuery` instead.
+
 > More info about or filter is in the [official elasticsearch docs][1]
 
 A filter that matches documents using the OR boolean operator on other filters.

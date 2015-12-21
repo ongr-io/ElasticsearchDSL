@@ -11,43 +11,20 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
+@trigger_error(
+    'The LimitFilter class is deprecated and will be removed in 2.0. Use LimitQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\LimitQuery;
 
 /**
  * Represents Elasticsearch "limit" filter.
  *
  * A limit filter limits the number of documents (per shard) to execute on.
+ *
+ * @deprecated Will be removed in 2.0. Use the LimitQuery instead.
  */
-class LimitFilter implements BuilderInterface
+class LimitFilter extends LimitQuery
 {
-    /**
-     * @var int
-     */
-    private $value;
-
-    /**
-     * @param int $value Number of documents (per shard) to execute on.
-     */
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'limit';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return [
-            'value' => $this->value,
-        ];
-    }
 }

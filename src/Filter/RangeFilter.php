@@ -11,28 +11,22 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The RangeFilter class is deprecated and will be removed in 2.0. Use RangeQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\RangeQuery;
 
 /**
  * Represents Elasticsearch "range" filter.
  *
  * Filters documents with fields that have terms within a certain range.
+ *
+ * @deprecated Will be removed in 2.0. Use the RangeQuery instead.
  */
-class RangeFilter implements BuilderInterface
+class RangeFilter extends RangeQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $range;
-
     /**
      * @param string $field      Field name.
      * @param array  $range      Range values.
@@ -40,28 +34,6 @@ class RangeFilter implements BuilderInterface
      */
     public function __construct($field, $range, array $parameters = [])
     {
-        $this->field = $field;
-        $this->range = $range;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'range';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [$this->field => $this->range];
-
-        $output = $this->processArray($query);
-
-        return $output;
+        parent::__construct($field, array_merge($range, $parameters));
     }
 }

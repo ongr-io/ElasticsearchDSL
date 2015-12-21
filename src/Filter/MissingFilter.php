@@ -11,49 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The MissingFilter class is deprecated and will be removed in 2.0. Use MissingQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\MissingQuery;
 
 /**
  * Represents Elasticsearch "missing" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the MissingQuery instead.
  */
-class MissingFilter implements BuilderInterface
+class MissingFilter extends MissingQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @param string $field      Field name.
-     * @param array  $parameters Optional parameters.
-     */
-    public function __construct($field, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'missing';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [];
-        $query['field'] = $this->field;
-
-        $output = $this->processArray($query);
-
-        return $output;
-    }
 }

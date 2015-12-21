@@ -15,11 +15,11 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Represents Elasticsearch "terms" query.
+ * Represents Elasticsearch "geohash_cell" query.
  *
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geohash-cell-query.html
  */
-class TermsQuery implements BuilderInterface
+class GeohashCellQuery implements BuilderInterface
 {
     use ParametersTrait;
 
@@ -29,21 +29,20 @@ class TermsQuery implements BuilderInterface
     private $field;
 
     /**
-     * @var array
+     * @var mixed
      */
-    private $terms;
+    private $location;
 
     /**
-     * Constructor.
-     *
-     * @param string $field      Field name
-     * @param array  $terms      An array of terms
-     * @param array  $parameters Optional parameters
+     * @param string $field
+     * @param mixed  $location
+     * @param array  $parameters
      */
-    public function __construct($field, $terms, array $parameters = [])
+    public function __construct($field, $location, array $parameters = [])
     {
         $this->field = $field;
-        $this->terms = $terms;
+        $this->location = $location;
+
         $this->setParameters($parameters);
     }
 
@@ -52,7 +51,7 @@ class TermsQuery implements BuilderInterface
      */
     public function getType()
     {
-        return 'terms';
+        return 'geohash_cell';
     }
 
     /**
@@ -60,10 +59,7 @@ class TermsQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            $this->field => $this->terms,
-        ];
-
+        $query = [$this->field => $this->location];
         $output = $this->processArray($query);
 
         return $output;

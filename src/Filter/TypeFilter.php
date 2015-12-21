@@ -11,45 +11,20 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
+@trigger_error(
+    'The TypeFilter class is deprecated and will be removed in 2.0. Use TypeQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\TypeQuery;
 
 /**
  * Represents Elasticsearch "type" filter.
  *
  * Filters documents matching the provided type.
+ *
+ * @deprecated Will be removed in 2.0. Use the TypeQuery instead.
  */
-class TypeFilter implements BuilderInterface
+class TypeFilter extends TypeQuery
 {
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * Constructor.
-     *
-     * @param string $type Type name.
-     */
-    public function __construct($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'type';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return [
-            'value' => $this->type,
-        ];
-    }
 }

@@ -11,16 +11,20 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The TermFilter class is deprecated and will be removed in 2.0. Use TermQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\TermQuery;
 
 /**
  * Represents Elasticsearch "term" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the TermQuery instead.
  */
-class TermFilter implements BuilderInterface
+class TermFilter extends TermQuery
 {
-    use ParametersTrait;
-
     /**
      * @var string
      */
@@ -29,26 +33,17 @@ class TermFilter implements BuilderInterface
     /**
      * @var string
      */
-    private $term;
-
-    /**
-     * @param string $field      Field name.
-     * @param string $term       Field value.
-     * @param array  $parameters Optional parameters.
-     */
-    public function __construct($field, $term, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->term = $term;
-        $this->setParameters($parameters);
-    }
+    private $value;
 
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function __construct($field, $value, array $parameters = [])
     {
-        return 'term';
+        $this->field = $field;
+        $this->value = $value;
+
+        parent::__construct($field, $value, $parameters);
     }
 
     /**
@@ -56,7 +51,7 @@ class TermFilter implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [$this->field => $this->term];
+        $query = [$this->field => $this->value];
 
         $output = $this->processArray($query);
 

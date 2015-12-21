@@ -15,11 +15,11 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Represents Elasticsearch "terms" query.
+ * Represents Elasticsearch "missing" query.
  *
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-missing-query.html
  */
-class TermsQuery implements BuilderInterface
+class MissingQuery implements BuilderInterface
 {
     use ParametersTrait;
 
@@ -29,21 +29,14 @@ class TermsQuery implements BuilderInterface
     private $field;
 
     /**
-     * @var array
-     */
-    private $terms;
-
-    /**
      * Constructor.
      *
      * @param string $field      Field name
-     * @param array  $terms      An array of terms
      * @param array  $parameters Optional parameters
      */
-    public function __construct($field, $terms, array $parameters = [])
+    public function __construct($field, array $parameters = [])
     {
         $this->field = $field;
-        $this->terms = $terms;
         $this->setParameters($parameters);
     }
 
@@ -52,7 +45,7 @@ class TermsQuery implements BuilderInterface
      */
     public function getType()
     {
-        return 'terms';
+        return 'missing';
     }
 
     /**
@@ -60,10 +53,7 @@ class TermsQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            $this->field => $this->terms,
-        ];
-
+        $query = ['field' => $this->field];
         $output = $this->processArray($query);
 
         return $output;

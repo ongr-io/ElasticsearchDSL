@@ -11,43 +11,20 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
+@trigger_error(
+    'The ExistsFilter class is deprecated and will be removed in 2.0. Use ExistsQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\ExistsQuery;
 
 /**
  * Represents Elasticsearch "exists" filter.
  *
  * @link http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-exists-filter.html
+ *
+ * @deprecated Will be removed in 2.0. Use the ExistsQuery instead.
  */
-class ExistsFilter implements BuilderInterface
+class ExistsFilter extends ExistsQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @param string $field Field value.
-     */
-    public function __construct($field)
-    {
-        $this->field = $field;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'exists';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return [
-            'field' => $this->field,
-        ];
-    }
 }

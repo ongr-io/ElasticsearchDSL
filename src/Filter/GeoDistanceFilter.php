@@ -11,65 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The GeoDistanceFilter class is deprecated and will be removed in 2.0. Use GeoDistanceQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\GeoDistanceQuery;
 
 /**
  * Represents Elasticsearch "Geo Distance Filter" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the GeoDistanceQuery instead.
  */
-class GeoDistanceFilter implements BuilderInterface
+class GeoDistanceFilter extends GeoDistanceQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $distance;
-
-    /**
-     * @var mixed
-     */
-    private $location;
-
-    /**
-     * @param string $field
-     * @param string $distance
-     * @param mixed  $location
-     * @param array  $parameters
-     */
-    public function __construct($field, $distance, $location, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->distance = $distance;
-        $this->location = $location;
-
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'geo_distance';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'distance' => $this->distance,
-            $this->field => $this->location,
-        ];
-        $output = $this->processArray($query);
-
-        return $output;
-    }
 }

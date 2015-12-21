@@ -14,7 +14,9 @@ namespace ONGR\ElasticsearchDSL\Query;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
- * Elasticsearch indices query class.
+ * Represents Elasticsearch "indices" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-indices-query.html
  */
 class IndicesQuery implements BuilderInterface
 {

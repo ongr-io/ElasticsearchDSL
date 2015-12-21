@@ -11,55 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The GeoPolygonFilter class is deprecated and will be removed in 2.0. Use GeoPolygonQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\GeoPolygonQuery;
 
 /**
  * Elasticsearch geo polygon filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the GeoPolygonQuery instead.
  */
-class GeoPolygonFilter implements BuilderInterface
+class GeoPolygonFilter extends GeoPolygonQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $points;
-
-    /**
-     * @param string $field
-     * @param array  $points
-     * @param array  $parameters
-     */
-    public function __construct($field, array $points = [], array $parameters = [])
-    {
-        $this->field = $field;
-        $this->points = $points;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'geo_polygon';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [];
-        $query[$this->field] = ['points' => $this->points];
-        $output = $this->processArray($query);
-
-        return $output;
-    }
 }

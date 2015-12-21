@@ -11,11 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
+@trigger_error(
+    'The RegexpFilter class is deprecated and will be removed in 2.0. Use RegexpQuery instead.',
+    E_USER_DEPRECATED
+);
+
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Represents Elasticsearch "regexp" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the RegexpQuery instead.
  */
 class RegexpFilter implements BuilderInterface
 {
