@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query\Span;
+namespace ONGR\ElasticsearchDSL\Tests\Query\Span;
 
 use ONGR\ElasticsearchDSL\Query\Span\SpanFirstQuery;
 use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;

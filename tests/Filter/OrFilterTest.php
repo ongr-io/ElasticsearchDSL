@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Filter;
 
 use ONGR\ElasticsearchDSL\Filter\OrFilter;
 

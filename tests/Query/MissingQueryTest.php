@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Query;
 
 use ONGR\ElasticsearchDSL\Query\MissingQuery;
 
