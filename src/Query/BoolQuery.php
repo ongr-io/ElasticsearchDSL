@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 /**
  * Represents Elasticsearch "bool" query.
  *
- * @link http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
  */
 class BoolQuery implements BuilderInterface
 {
@@ -26,11 +26,12 @@ class BoolQuery implements BuilderInterface
     const MUST = 'must';
     const MUST_NOT = 'must_not';
     const SHOULD = 'should';
+    const FILTER = 'filter';
 
     /**
      * @var array
      */
-    private $container;
+    private $container = [];
 
     /**
      * Constructor to prepare container.
@@ -84,7 +85,7 @@ class BoolQuery implements BuilderInterface
      */
     public function add(BuilderInterface $query, $type = self::MUST, $key = null)
     {
-        if (!in_array($type, (new \ReflectionObject($this))->getConstants())) {
+        if (!in_array($type, [self::MUST, self::MUST_NOT, self::SHOULD, self::FILTER])) {
             throw new \UnexpectedValueException(sprintf('The bool operator %s is not supported', $type));
         }
 
