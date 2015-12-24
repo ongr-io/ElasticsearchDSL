@@ -55,7 +55,7 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
         $instance->add($matchAll);
 
         $this->assertEquals(
-            [$matchAll->getType() => $matchAll->toArray()],
+            ['bool' => ['must' => [[$matchAll->getType() => $matchAll->toArray()]]]],
             $instance->normalize($normalizerInterface)
         );
     }

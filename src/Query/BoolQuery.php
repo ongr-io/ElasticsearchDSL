@@ -30,30 +30,26 @@ class BoolQuery implements BuilderInterface
     /**
      * @var array
      */
-    private $container = [];
+    private $container;
 
     /**
      * Constructor to prepare container.
      */
     public function __construct()
     {
-        $this->container = [
-            self::MUST => [],
-            self::MUST_NOT => [],
-            self::SHOULD => [],
-        ];
+        $this->container = [];
     }
 
     /**
      * Checks if bool expression is relevant.
      *
      * @return bool
+     *
+     * @deprecated Will be removed in 2.0. No replacement. Always use full structure.
      */
     public function isRelevant()
     {
-        return
-            (count($this->container[self::MUST_NOT]) + count($this->container[self::SHOULD])) > 0
-            || count($this->container[self::MUST]) > 1;
+        return true;
     }
 
     /**
@@ -63,11 +59,13 @@ class BoolQuery implements BuilderInterface
     public function getQueries($boolType = null)
     {
         if ($boolType === null) {
-            return array_merge(
-                $this->container[self::MUST],
-                $this->container[self::MUST_NOT],
-                $this->container[self::SHOULD]
-            );
+            $queries = [];
+
+            foreach ($this->container as $item) {
+                $queries = array_merge($queries, $item);
+            }
+
+            return $queries;
         }
 
         return $this->container[$boolType];
@@ -104,15 +102,7 @@ class BoolQuery implements BuilderInterface
      */
     public function toArray()
     {
-        $output = $this->processArray();
-
-        if (!$this->isRelevant()) {
-            /** @var BuilderInterface $query */
-            $mustContainer = $this->container[self::MUST];
-            $query = array_shift($mustContainer);
-
-            return [$query->getType() => $query->toArray()];
-        }
+        $output = [];
 
         foreach ($this->container as $boolType => $builders) {
             /** @var BuilderInterface $builder */

@@ -23,40 +23,11 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests isRelevant method.
      */
-    public function testBoolIsRelevantWithOneQuery()
+    public function testIsRelevant()
     {
         $bool = new BoolQuery();
-        $this->assertFalse($bool->isRelevant());
-        $bool->add(new TermQuery('acme', 'foo'));
-
-        $this->assertFalse($bool->isRelevant());
-    }
-
-    /**
-     * Tests isRelevant method when there is query added to should case.
-     */
-    public function testBoolIsRelevantWithOneShouldQuery()
-    {
-        $bool = new BoolQuery();
-        $this->assertFalse($bool->isRelevant());
-        $bool->add(new TermQuery('acme', 'foo'), BoolQuery::SHOULD);
-
         $this->assertTrue($bool->isRelevant());
     }
-
-    /**
-     * Tests isRelevant method with 2 queries.
-     */
-    public function testBoolIsRelevantWithTwoQuery()
-    {
-        $bool = new BoolQuery();
-        $this->assertFalse($bool->isRelevant());
-        $bool->add(new TermQuery('acme', 'foo'));
-        $bool->add(new TermQuery('bar', 'go'));
-
-        $this->assertTrue($bool->isRelevant());
-    }
-
     /**
      * Test for addToBool() without setting a correct bool operator.
      *

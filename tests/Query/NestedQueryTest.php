@@ -11,7 +11,9 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
 
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
+use ONGR\ElasticsearchDSL\Query\TermQuery;
 
 class NestedQueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -56,5 +58,31 @@ class NestedQueryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(method_exists($nestedQuery, 'getParameters'), 'Nested query must have getParameters method');
         $this->assertTrue(method_exists($nestedQuery, 'hasParameter'), 'Nested query must have hasParameter method');
         $this->assertTrue(method_exists($nestedQuery, 'getParameter'), 'Nested query must have getParameter method');
+    }
+
+    /**
+     * Test for toArray() in case bool with single clause given.
+     */
+    public function testSingleBoolMust()
+    {
+        $bool = new BoolQuery();
+        $bool->add(new TermQuery('field1', 'value1'));
+
+        $query = new NestedQuery('obj1', $bool);
+
+        $expected = [
+            'path' => 'obj1',
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        [
+                            'term' => ['field1' => 'value1'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expected, $query->toArray());
     }
 }

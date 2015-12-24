@@ -69,13 +69,7 @@ class FilterAggregation extends AbstractAggregation
             throw new \LogicException("Filter aggregation `{$this->getName()}` has no filter added");
         }
 
-        if ($this->filter instanceof BoolFilter && $this->filter->isRelevant()
-            || !$this->filter instanceof BoolFilter
-        ) {
-            $filterData = [$this->filter->getType() => $this->filter->toArray()];
-        } else {
-            $filterData = $this->filter->toArray();
-        }
+        $filterData = [$this->filter->getType() => $this->filter->toArray()];
 
         return $filterData;
     }
