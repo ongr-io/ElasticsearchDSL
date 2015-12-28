@@ -1,4 +1,4 @@
-# Query
+# Filter
 
 Objective filter builder represents all available [Elasticsearch filters][1].
 
