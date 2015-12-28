@@ -15,7 +15,9 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Elasticsearch terms query class.
+ * Represents Elasticsearch "terms" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
  */
 class TermsQuery implements BuilderInterface
 {
@@ -29,17 +31,19 @@ class TermsQuery implements BuilderInterface
     /**
      * @var array
      */
-    private $tags;
+    private $terms;
 
     /**
-     * @param string $field
-     * @param array  $tags
-     * @param array  $parameters
+     * Constructor.
+     *
+     * @param string $field      Field name
+     * @param array  $terms      An array of terms
+     * @param array  $parameters Optional parameters
      */
-    public function __construct($field, $tags, array $parameters = [])
+    public function __construct($field, $terms, array $parameters = [])
     {
         $this->field = $field;
-        $this->tags = $tags;
+        $this->terms = $terms;
         $this->setParameters($parameters);
     }
 
@@ -57,7 +61,7 @@ class TermsQuery implements BuilderInterface
     public function toArray()
     {
         $query = [
-            $this->field => $this->tags,
+            $this->field => $this->terms,
         ];
 
         $output = $this->processArray($query);

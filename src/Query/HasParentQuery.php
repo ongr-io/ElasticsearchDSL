@@ -15,7 +15,9 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Elasticsearch has_parent query class.
+ * Represents Elasticsearch "has_parent" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-parent-query.html
  */
 class HasParentQuery implements BuilderInterface
 {

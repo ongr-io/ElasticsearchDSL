@@ -9,55 +9,62 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Query;
 
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
+use ONGR\ElasticsearchDSL\Query\TermsQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 
 class NestedQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests toArray method.
+     * Data provider to testGetToArray.
+     *
+     * @return array
      */
-    public function testToArray()
+    public function getArrayDataProvider()
     {
-        $missingFilterMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
-            ->setConstructorArgs(['test_field'])
-            ->getMock();
-        $missingFilterMock->expects($this->any())
-            ->method('getType')
-            ->willReturn('test_type');
-        $missingFilterMock->expects($this->any())
-            ->method('toArray')
-            ->willReturn(['testKey' => 'testValue']);
-
-        $result = [
-            'path' => 'test_path',
-            'query' => [
-                'test_type' => ['testKey' => 'testValue'],
+        $query = [
+            'terms' => [
+                'foo' => 'bar',
             ],
         ];
 
-        $query = new NestedQuery('test_path', $missingFilterMock);
-        $this->assertEquals($result, $query->toArray());
+        return [
+            'query_only' => [
+                'product.sub_item',
+                [],
+                ['path' => 'product.sub_item', 'query' => $query],
+            ],
+            'query_with_parameters' => [
+                'product.sub_item',
+                ['_cache' => true, '_name' => 'named_result'],
+                [
+                    'path' => 'product.sub_item',
+                    'query' => $query,
+                    '_cache' => true,
+                    '_name' => 'named_result',
+                ],
+            ],
+        ];
     }
 
     /**
-     * Tests if Nested Query has parameters.
+     * Test for query toArray() method.
+     *
+     * @param string $path
+     * @param array  $parameters
+     * @param array  $expected
+     *
+     * @dataProvider getArrayDataProvider
      */
-    public function testParameters()
+    public function testToArray($path, $parameters, $expected)
     {
-        $nestedQuery = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\NestedQuery')
-            ->disableOriginalConstructor()
-            ->setMethods(null)
-            ->getMock();
-
-        $this->assertTrue(method_exists($nestedQuery, 'addParameter'), 'Nested query must have addParameter method');
-        $this->assertTrue(method_exists($nestedQuery, 'setParameters'), 'Nested query must have setParameters method');
-        $this->assertTrue(method_exists($nestedQuery, 'getParameters'), 'Nested query must have getParameters method');
-        $this->assertTrue(method_exists($nestedQuery, 'hasParameter'), 'Nested query must have hasParameter method');
-        $this->assertTrue(method_exists($nestedQuery, 'getParameter'), 'Nested query must have getParameter method');
+        $query = new TermsQuery('foo', 'bar');
+        $query = new NestedQuery($path, $query, $parameters);
+        $result = $query->toArray();
+        $this->assertEquals($expected, $result);
     }
 
     /**

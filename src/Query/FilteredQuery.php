@@ -18,6 +18,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
  * Represents Elasticsearch "bool" filter.
  *
  * @link http://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-filtered-query.html
+ *
+ * @deprecated Will be removed in 2.0. Use the `bool` query instead with a `filter` clause.
  */
 class FilteredQuery implements BuilderInterface
 {
@@ -39,6 +41,12 @@ class FilteredQuery implements BuilderInterface
      */
     public function __construct($query = null, $filter = null)
     {
+        @trigger_error(
+            'The FilteredQuery class is deprecated and will be removed in 2.0. ' .
+            'Use the "bool" query instead with a "filter" clause.',
+            E_USER_DEPRECATED
+        );
+
         if ($query !== null) {
             $this->setQuery($query);
         }

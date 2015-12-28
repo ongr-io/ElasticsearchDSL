@@ -11,11 +11,18 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
+@trigger_error(
+    'The QueryFilter class is deprecated and will be removed in 2.0.',
+    E_USER_DEPRECATED
+);
+
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Represents Elasticsearch "query" filter.
+ *
+ * @deprecated Will be removed in 2.0. The query filter has been removed as queries and filters have been merged.
  */
 class QueryFilter implements BuilderInterface
 {

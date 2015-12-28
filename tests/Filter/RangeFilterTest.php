@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL\Filter;
+namespace ONGR\ElasticsearchDSL\Tests\Filter;
 
 use ONGR\ElasticsearchDSL\Filter\RangeFilter;
 
@@ -35,9 +35,14 @@ class RangeFilterTest extends \PHPUnit_Framework_TestCase
             // Case #1.
             ['', [], [], ['' => []]],
             // Case #2.
-            ['foo', [1, 5], [], ['foo' => [0 => 1, 1 => 5]]],
+            ['foo', ['gte' => 1, 'lte' => 5], [], ['foo' => ['gte' => 1, 'lte' => 5]]],
             // Case #3.
-            ['test', ['foo', 'bar'], ['type' => 'acme'], ['test' => [0 => 'foo', 1 => 'bar'], 'type' => 'acme']],
+            [
+                'test',
+                ['gte' => 1, 'lte' => 5],
+                ['type' => 'acme'],
+                ['test' => ['gte' => 1, 'lte' => 5, 'type' => 'acme']]
+            ],
         ];
     }
 

@@ -11,49 +11,32 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
+@trigger_error(
+    'The HasChildFilter class is deprecated and will be removed in 2.0. Use HasChildQuery instead.',
+    E_USER_DEPRECATED
+);
+
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\DslTypeAwareTrait;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\Query\HasChildQuery;
 
 /**
  * Elasticsearch has_child filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the BoolQuery instead.
  */
-class HasChildFilter implements BuilderInterface
+class HasChildFilter extends HasChildQuery
 {
-    use ParametersTrait;
     use DslTypeAwareTrait;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param string           $type
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function __construct($type, BuilderInterface $query, array $parameters = [])
-    {
-        $this->type = $type;
-        $this->query = $query;
-        $this->setParameters($parameters);
-        $this->setDslType('filter');
-    }
 
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function __construct($type, BuilderInterface $query, array $parameters = [])
     {
-        return 'has_child';
+        $this->setDslType('filter');
+
+        parent::__construct($type, $query, $parameters);
     }
 
     /**
@@ -61,13 +44,13 @@ class HasChildFilter implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            'type' => $this->type,
-            $this->getDslType() => [$this->query->getType() => $this->query->toArray()],
-        ];
+        $result = parent::toArray();
 
-        $output = $this->processArray($query);
+        if ($this->getDslType() !== 'query') {
+            $result[$this->getDslType()] = $result['query'];
+            unset($result['query']);
+        }
 
-        return $output;
+        return $result;
     }
 }

@@ -11,10 +11,17 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
+@trigger_error(
+    'The IndicesFilter class is deprecated and will be removed in 2.0. Use IndicesQuery instead.',
+    E_USER_DEPRECATED
+);
+
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Represents Elasticsearch "indices" filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the IndicesQuery instead.
  */
 class IndicesFilter implements BuilderInterface
 {

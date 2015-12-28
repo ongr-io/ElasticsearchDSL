@@ -15,7 +15,9 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Elasticsearch nested query class.
+ * Represents Elasticsearch "nested" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-nested-query.html
  */
 class NestedQuery implements BuilderInterface
 {
@@ -34,11 +36,13 @@ class NestedQuery implements BuilderInterface
     /**
      * @param string           $path
      * @param BuilderInterface $query
+     * @param array            $parameters
      */
-    public function __construct($path, BuilderInterface $query)
+    public function __construct($path, BuilderInterface $query, array $parameters = [])
     {
         $this->path = $path;
         $this->query = $query;
+        $this->parameters = $parameters;
     }
 
     /**

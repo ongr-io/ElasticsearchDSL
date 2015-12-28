@@ -15,7 +15,9 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Elasticsearch match_all query class.
+ * Represents Elasticsearch "bool" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html
  */
 class MatchAllQuery implements BuilderInterface
 {

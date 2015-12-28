@@ -11,48 +11,22 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+@trigger_error(
+    'The PrefixFilter class is deprecated and will be removed in 2.0. Use PrefixQuery instead.',
+    E_USER_DEPRECATED
+);
+
+use ONGR\ElasticsearchDSL\Query\PrefixQuery;
 
 /**
  * Represents Elasticsearch "prefix" filter.
  *
  * Filters documents that have fields containing terms with a specified prefix.
+ *
+ * @deprecated Will be removed in 2.0. Use the PrefixQuery instead.
  */
-class PrefixFilter implements BuilderInterface
+class PrefixFilter extends PrefixQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    protected $field;
-
-    /**
-     * @var string
-     */
-    protected $value;
-
-    /**
-     * @param string $field      Field name.
-     * @param string $value      Value.
-     * @param array  $parameters Optional parameters.
-     */
-    public function __construct($field, $value, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->value = $value;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'prefix';
-    }
-
     /**
      * {@inheritdoc}
      */

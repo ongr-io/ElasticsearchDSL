@@ -11,49 +11,32 @@
 
 namespace ONGR\ElasticsearchDSL\Filter;
 
+@trigger_error(
+    'The HasParentFilter class is deprecated and will be removed in 2.0. Use HasParentQuery instead.',
+    E_USER_DEPRECATED
+);
+
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\DslTypeAwareTrait;
-use ONGR\ElasticsearchDSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\Query\HasParentQuery;
 
 /**
  * Elasticsearch has_parent filter.
+ *
+ * @deprecated Will be removed in 2.0. Use the HasParentQuery instead.
  */
-class HasParentFilter implements BuilderInterface
+class HasParentFilter extends HasParentQuery
 {
-    use ParametersTrait;
     use DslTypeAwareTrait;
-
-    /**
-     * @var string
-     */
-    private $parentType;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param string           $parentType
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function __construct($parentType, BuilderInterface $query, array $parameters = [])
-    {
-        $this->parentType = $parentType;
-        $this->query = $query;
-        $this->setParameters($parameters);
-        $this->setDslType('filter');
-    }
 
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function __construct($type, BuilderInterface $query, array $parameters = [])
     {
-        return 'has_parent';
+        $this->setDslType('filter');
+
+        parent::__construct($type, $query, $parameters);
     }
 
     /**
@@ -61,13 +44,13 @@ class HasParentFilter implements BuilderInterface
      */
     public function toArray()
     {
-        $query = [
-            'parent_type' => $this->parentType,
-            $this->getDslType() => [$this->query->getType() => $this->query->toArray()],
-        ];
+        $result = parent::toArray();
 
-        $output = $this->processArray($query);
+        if ($this->getDslType() !== 'query') {
+            $result[$this->getDslType()] = $result['query'];
+            unset($result['query']);
+        }
 
-        return $output;
+        return $result;
     }
 }
