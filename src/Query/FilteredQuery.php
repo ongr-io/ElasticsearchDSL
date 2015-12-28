@@ -11,12 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-@trigger_error(
-    'The FilteredQuery class is deprecated and will be removed in 2.0. ' .
-    'Use the "bool" query instead with a "filter" clause.',
-    E_USER_DEPRECATED
-);
-
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
@@ -47,6 +41,12 @@ class FilteredQuery implements BuilderInterface
      */
     public function __construct($query = null, $filter = null)
     {
+        @trigger_error(
+            'The FilteredQuery class is deprecated and will be removed in 2.0. ' .
+            'Use the "bool" query instead with a "filter" clause.',
+            E_USER_DEPRECATED
+        );
+
         if ($query !== null) {
             $this->setQuery($query);
         }
