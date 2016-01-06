@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
-use ONGR\ElasticsearchDSL\BuilderBag;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

@@ -13,7 +13,6 @@ namespace ONGR\ElasticsearchDSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 
 /**
  * Class representing FilterAggregation.

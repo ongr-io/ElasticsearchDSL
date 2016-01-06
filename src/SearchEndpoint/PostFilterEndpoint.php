@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

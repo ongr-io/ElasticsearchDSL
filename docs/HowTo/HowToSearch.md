@@ -119,7 +119,7 @@ $missingFilter = new MissingFilter('disabled');
 $existsFilter = new ExistsFilter('tag');
 $search->addFilter($termFilter);
 $search->addFilter($missingFilter);
-$search->addFilter($existsFilter, BoolFilter::MUST_NOT);
+$search->addFilter($existsFilter, BoolQuery::MUST_NOT);
 ```
 
 Elasticsearch DSL will form this query:

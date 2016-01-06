@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**

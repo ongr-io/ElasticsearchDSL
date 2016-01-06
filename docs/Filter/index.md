@@ -1,6 +1,6 @@
 # Filter
 
-> WARNING: Filters are deprecated since 1.1 and will be removed in 2.0. Elasticsearch from 2.0 casts queries the same way as filters, so there is no reason to have both. More information in [the elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.0/query-dsl-filters.html)
+> __WARNING:__ Filters are deprecated since 1.1 and will be removed in 2.0. Elasticsearch from 2.0 casts queries the same way as filters, so there is no reason to have both. More information in [the elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.0/query-dsl-filters.html)
 
 Objective filter builder represents all available [Elasticsearch filters][1].
 
