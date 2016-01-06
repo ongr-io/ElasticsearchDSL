@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
-use ONGR\ElasticsearchDSL\Filter\BoolFilter;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AbstractSearchEndpoint;
@@ -220,7 +219,7 @@ class Search
      *
      * @return $this
      */
-    public function addFilter(BuilderInterface $filter, $boolType = BoolFilter::MUST, $key = null)
+    public function addFilter(BuilderInterface $filter, $boolType = BoolQuery::MUST, $key = null)
     {
         $this->getEndpoint(QueryEndpoint::NAME);
         $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
@@ -267,7 +266,7 @@ class Search
      *
      * @return int Key of post filter.
      */
-    public function addPostFilter(BuilderInterface $filter, $boolType = BoolFilter::MUST, $key = null)
+    public function addPostFilter(BuilderInterface $filter, $boolType = BoolQuery::MUST, $key = null)
     {
         $this
             ->getEndpoint(PostFilterEndpoint::NAME)

@@ -12,12 +12,9 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Filter\BoolFilter;
-use ONGR\ElasticsearchDSL\ParametersTrait;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\OrderedNormalizerInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
