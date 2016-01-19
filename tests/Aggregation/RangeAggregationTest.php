@@ -98,7 +98,7 @@ class RangeAggregationTest extends \PHPUnit_Framework_TestCase
                 'keyed' => false,
             ],
             'aggregations' => [
-                AbstractAggregation::PREFIX.'test_agg_2' => [
+                'test_agg_2' => [
                     'range' => [
                         'ranges' => [
                             [
