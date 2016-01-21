@@ -266,5 +266,8 @@ class SearchTest extends \PHPUnit_Framework_TestCase
     public function testToArray($expected, $search)
     {
         $this->assertEquals($expected, $search->toArray());
+
+        // Double check
+        $this->assertEquals($expected, $search->toArray());
     }
 }

@@ -32,14 +32,20 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     private $bool;
 
     /**
+     * @var bool
+     */
+    private $filtersSet = false;
+
+    /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        if ($this->hasReference('filter_query')) {
+        if (!$this->filtersSet && $this->hasReference('filter_query')) {
             /** @var BuilderInterface $filter */
             $filter = $this->getReference('filter_query');
             $this->addToBool($filter, BoolQuery::FILTER);
+            $this->filtersSet = true;
         }
 
         if (!$this->bool) {

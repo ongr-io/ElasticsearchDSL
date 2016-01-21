@@ -12,7 +12,7 @@ $search = new Search();
 
 So, when we have a `Search` object we can start add something to it. Usually you will add `Query`, `Filter` and `Aggregation`.
 
-> More info how create [queries](../Query/index.md), [filters](../Filter/index.md) and [aggregations](../Aggregation/index.md) objects.
+> More info how create [queries](../Query/index.md) and [aggregations](../Aggregation/index.md) objects.
 
 ### Form a Query
 
@@ -43,11 +43,8 @@ At the end it will form this query:
 
 ### Form a Filter
 
-> Since Elasticsearch 2.0 all filters were replaced by queries. Queries acts like
-> filters when you use them in filter context. For easier future migration use query
-> classes instead of filter. (Note, for Elasticsearch 1.* you still should use `ScriptFilter`,
-> `HasChildFilter`, `HasParentFilter`, `IndicesFilter`, `NestedFilter`, `PrefixFilter`,
-> `RegexpFilter`, `TermFilter` instead of query as they has different structure.)
+Since Elasticsearch 2.0 all filters were replaced by queries. Queries acts like
+filters when you use them in filter context.
 
 To add a filter is the same way like a query. First, lets create some `Filter` object.
 
@@ -66,7 +63,7 @@ Unlike `Query`, when we add a `Filter` with our DSL library it will add a query 
 ```JSON
 {
   "query": {
-      "filtered": {
+      "bool": {
           "filter": {
               "match_all": {}
           }
@@ -120,7 +117,7 @@ The same way it works with a `Filter`. Take a look at this example:
 
 ```php
 $search = new Search();
-$termFilter = new TermFilter('name', 'ongr');
+$termFilter = new TermQuery('name', 'ongr');
 $missingFilter = new MissingQuery('disabled');
 $existsFilter = new ExistsQuery('tag');
 $search->addFilter($termFilter);
@@ -133,7 +130,7 @@ Elasticsearch DSL will form this query:
 ```JSON
 {
   "query": {
-    "filtered": {
+    "bool": {
         "filter": {
             "bool": {
                 "must": [

@@ -37,8 +37,8 @@ in exception.
 And now the query via DSL:
 
 ```php
-$errorTermFilter = new TermFilter('body', 'error');
-$warningTermFilter = new TermFilter('body', 'warning');
+$errorTermFilter = new TermQuery('body', 'error');
+$warningTermFilter = new TermQuery('body', 'warning');
 
 $histogramAggregation = new HistogramAggregation('monthly', 'timestamp');
 $histogramAggregation->setInterval('1M');
@@ -86,8 +86,8 @@ $queryArray = $search->toArray();
 And now the query via DSL:
 
 ```php
-$errorTermFilter = new TermFilter('body', 'error');
-$warningTermFilter = new TermFilter('body', 'warning');
+$errorTermFilter = new TermQuery('body', 'error');
+$warningTermFilter = new TermQuery('body', 'warning');
 
 $histogramAggregation = new HistogramAggregation('monthly', 'timestamp');
 $histogramAggregation->setInterval('1M');
