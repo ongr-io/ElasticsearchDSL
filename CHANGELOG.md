@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-v1.x (201x)
+v2.0.0 (2016-x)
 ---
 
+- [BC break] Aggregation name is not prefixed anymore
 
 v1.1.0 (2015-12-28)
 ---

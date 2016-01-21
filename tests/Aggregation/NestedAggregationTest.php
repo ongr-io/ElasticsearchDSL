@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\NestedAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\TermsAggregation;
 
@@ -26,14 +25,7 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $aggregation = new NestedAggregation('test_agg');
         $aggregation->setPath('test_path');
-
-        $expectedResult = [
-            AbstractAggregation::PREFIX.'test_agg' => [
-                'nested' => ['path' => 'test_path'],
-            ],
-        ];
-
-        $this->assertEquals($expectedResult, $aggregation->toArray());
+        $aggregation->toArray();
     }
 
     /**
