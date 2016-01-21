@@ -10,6 +10,7 @@ If you have any questions, don't hesitate to ask them on [![Join the chat at htt
 [![Latest Stable Version](https://poser.pugx.org/ongr/elasticsearch-dsl/v/stable)](https://packagist.org/packages/ongr/elasticsearch-dsl)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/?branch=master)
 
+__This component requires Elasticsearch 2.0 or newer.__
 
 ## Documentation
 
@@ -21,8 +22,8 @@ If you have any questions, don't hesitate to ask them on [![Join the chat at htt
 
 Install library with [composer](https://getcomposer.org):
 
-```
-composer require ongr/elasticsearch-dsl "~1.0"
+```bash
+$ composer require ongr/elasticsearch-dsl
 ```
 
 ### Search
@@ -33,8 +34,8 @@ If you dont want to use Symfony or Elasticsearch bundle, no worries, you can use
 
 Install `elasticsearch-php`:
 
-```
-composer require "elasticsearch/elasticsearch": "~2.0"
+```bash
+$ composer require elasticsearch/elasticsearch
 ```
 
 Create search:

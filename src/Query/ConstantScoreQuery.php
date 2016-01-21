@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\Query;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\FilterOrQueryDetectionTrait;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
@@ -21,7 +20,6 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 class ConstantScoreQuery implements BuilderInterface
 {
     use ParametersTrait;
-    use FilterOrQueryDetectionTrait;
 
     /**
      * @var BuilderInterface
@@ -52,7 +50,7 @@ class ConstantScoreQuery implements BuilderInterface
     public function toArray()
     {
         $query = [
-            $this->detectDslType($this->query) => [
+            'filter' => [
                 $this->query->getType() => $this->query->toArray(),
             ],
         ];
