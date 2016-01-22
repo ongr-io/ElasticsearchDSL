@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Query;
 
-use ONGR\ElasticsearchDSL\Filter\GeoBoundingBoxFilter;
+use ONGR\ElasticsearchDSL\Query\GeoBoundingBoxQuery;
 
 class GeoBoundingBoxQueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,10 +20,10 @@ class GeoBoundingBoxQueryTest extends \PHPUnit_Framework_TestCase
      *
      * @expectedException \LogicException
      */
-    public function testGeoBoundBoxFilterException()
+    public function testGeoBoundBoxQueryException()
     {
-        $filter = new GeoBoundingBoxFilter('location', []);
-        $filter->toArray();
+        $query = new GeoBoundingBoxQuery('location', []);
+        $query->toArray();
     }
 
     /**
@@ -80,8 +80,8 @@ class GeoBoundingBoxQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray($field, $values, $parameters, $expected)
     {
-        $filter = new GeoBoundingBoxFilter($field, $values, $parameters);
-        $result = $filter->toArray();
+        $query = new GeoBoundingBoxQuery($field, $values, $parameters);
+        $result = $query->toArray();
         $this->assertEquals($expected, $result);
     }
 }

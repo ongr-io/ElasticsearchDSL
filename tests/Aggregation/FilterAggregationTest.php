@@ -11,13 +11,11 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\HistogramAggregation;
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Filter\BoolFilter;
-use ONGR\ElasticsearchDSL\Filter\MatchAllFilter;
-use ONGR\ElasticsearchDSL\Filter\MissingFilter;
+use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
+use ONGR\ElasticsearchDSL\Query\MissingQuery;
 use ONGR\ElasticsearchDSL\Filter\TermFilter;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
@@ -33,7 +31,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 
         // Case #0 filter aggregation.
         $aggregation = new FilterAggregation('test_agg');
-        $filter = new MatchAllFilter();
+        $filter = new MatchAllQuery();
 
         $aggregation->setFilter($filter);
 
@@ -71,9 +69,9 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 
         // Case #2 testing bool filter.
         $aggregation = new FilterAggregation('test_agg');
-        $matchAllFilter = new MatchAllFilter();
+        $matchAllFilter = new MatchAllQuery();
         $termFilter = new TermFilter('acme', 'foo');
-        $boolFilter = new BoolFilter();
+        $boolFilter = new BoolQuery();
         $boolFilter->add($matchAllFilter);
         $boolFilter->add($termFilter);
 
@@ -138,7 +136,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $aggregation = new FilterAggregation('test_agg');
 
-        $aggregation->setFilter(new MissingFilter('test'));
+        $aggregation->setFilter(new MissingQuery('test'));
         $aggregation->toArray();
     }
 
@@ -147,7 +145,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorFilter()
     {
-        $matchAllFilter = new MatchAllFilter();
+        $matchAllFilter = new MatchAllQuery();
         $aggregation = new FilterAggregation('test', $matchAllFilter);
         $this->assertSame(
             [

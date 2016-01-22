@@ -13,6 +13,8 @@ namespace ONGR\ElasticsearchDSL;
 
 /**
  * A trait which handles dsl type.
+ *
+ * @deprecated Will be removed in 2.0.
  */
 trait DslTypeAwareTrait
 {

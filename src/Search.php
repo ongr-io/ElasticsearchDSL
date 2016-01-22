@@ -221,7 +221,9 @@ class Search
      */
     public function addFilter(BuilderInterface $filter, $boolType = BoolQuery::MUST, $key = null)
     {
+        // Trigger creation of QueryEndpoint as filters depends on it
         $this->getEndpoint(QueryEndpoint::NAME);
+
         $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
         $endpoint->addToBool($filter, $boolType, $key);
 

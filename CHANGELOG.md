@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-v1.x (201x)
+v1.1.x (2016-x)
 ---
 
+- Deprecated `DslTypeAwareTrait` and `FilterOrQueryDetectionTrait` traits
 
 v1.1.0 (2015-12-28)
 ---

@@ -1,5 +1,7 @@
 # Filtered query
 
+__DEPRECATED__: filtered query is deprecated and will be removed in ElasticsearchDSL 2.0
+
 > More info about filtered query is in the [official elasticsearch docs][1]
 
 The filtered query is used to combine another query with any filter. Filters are usually faster than queries.

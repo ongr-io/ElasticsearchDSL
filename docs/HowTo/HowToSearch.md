@@ -43,16 +43,22 @@ At the end it will form this query:
 
 ### Form a Filter
 
+> Since Elasticsearch 2.0 all filters were replaced by queries. Queries acts like
+> filters when you use them in filter context. For easier future migration use query
+> classes instead of filter. (Note, for Elasticsearch 1.* you still should use `ScriptFilter`,
+> `HasChildFilter`, `HasParentFilter`, `IndicesFilter`, `NestedFilter`, `PrefixFilter`,
+> `RegexpFilter`, `TermFilter` instead of query as they has different structure.)
+
 To add a filter is the same way like a query. First, lets create some `Filter` object.
 
 ```php
-$matchAllFilter = new MatchAllFilter();
+$matchAllQuery = new MatchAllQuery();
 ```
 
 And simply add to the `Search`:
 
 ```php
-$search->addFilter($matchAllFilter);
+$search->addFilter($matchAllQuery);
 ```
 
 Unlike `Query`, when we add a `Filter` with our DSL library it will add a query and all necessary stuff for you. So when we add one filter we will get this query:
@@ -115,8 +121,8 @@ The same way it works with a `Filter`. Take a look at this example:
 ```php
 $search = new Search();
 $termFilter = new TermFilter('name', 'ongr');
-$missingFilter = new MissingFilter('disabled');
-$existsFilter = new ExistsFilter('tag');
+$missingFilter = new MissingQuery('disabled');
+$existsFilter = new ExistsQuery('tag');
 $search->addFilter($termFilter);
 $search->addFilter($missingFilter);
 $search->addFilter($existsFilter, BoolQuery::MUST_NOT);
