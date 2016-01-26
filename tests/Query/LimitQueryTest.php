@@ -21,7 +21,9 @@ class LimitQueryTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $query = new LimitQuery(3);
-        $expectedResult = ['value' => 3];
+        $expectedResult = [
+            'limit' => ['value' => 3]
+        ];
         $this->assertEquals($expectedResult, $query->toArray());
     }
 }

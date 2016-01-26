@@ -54,6 +54,6 @@ class GeohashCellQueryTest extends \PHPUnit_Framework_TestCase
     {
         $query = new GeohashCellQuery($field, $location, $parameters);
         $result = $query->toArray();
-        $this->assertEquals($expected, $result);
+        $this->assertEquals(['geohash_cell' => $expected], $result);
     }
 }

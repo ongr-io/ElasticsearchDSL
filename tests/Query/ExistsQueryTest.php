@@ -19,11 +19,11 @@ use ONGR\ElasticsearchDSL\Query\ExistsQuery;
 class ExistsQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests ExistsQuery#toArray() method.
+     * Tests toArray() method.
      */
     public function testToArray()
     {
         $query = new ExistsQuery('bar');
-        $this->assertEquals(['field' => 'bar'], $query->toArray());
+        $this->assertEquals(['exists' => ['field' => 'bar']], $query->toArray());
     }
 }

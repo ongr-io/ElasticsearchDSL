@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\Tests\Query\Span;
 
 use ONGR\ElasticsearchDSL\Query\Span\SpanNearQuery;
-use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 
 /**
  * Unit test for SpanNearQuery.
@@ -20,61 +19,32 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 class SpanNearQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SpanQueryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * Tests for toArray().
      */
-    protected $mock;
-
-    /**
-     * Create mock object.
-     */
-    protected function setUp()
+    public function testToArray()
     {
-        $this->mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface')->getMock();
-        $this->mock->expects($this->atMost(1))
-            ->method('getType')
-            ->will($this->returnValue('span_or'));
-        $this->mock->expects($this->atMost(1))
+        $mock = $this->getMock('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface');
+        $mock
+            ->expects($this->once())
             ->method('toArray')
-            ->will($this->returnValue(['key' => 'value']));
-    }
+            ->willReturn(['span_term' => ['key' => 'value']]);
 
-    /**
-     * Reset mock object.
-     */
-    public function tearDown()
-    {
-        unset($this->mock);
-    }
-
-    /**
-     * Tests toArray method.
-     */
-    public function testSpanMultiTermQueryToArray()
-    {
-        $query = new SpanNearQuery(['name']);
+        $query = new SpanNearQuery(['in_order' => false]);
         $query->setSlop(5);
-        $query->addQuery($this->mock);
+        $query->addQuery($mock);
         $result = [
-            'clauses' => [
-                0 => [
-                    'span_or' => [
-                        'key' => 'value',
+            'span_near' => [
+                'clauses' => [
+                    0 => [
+                        'span_term' => [
+                            'key' => 'value',
+                        ],
                     ],
                 ],
+                'slop' => 5,
+                'in_order' => false,
             ],
-            'slop' => 5,
-            0 => 'name',
         ];
         $this->assertEquals($result, $query->toArray());
-    }
-
-    /**
-     * Tests get Type method.
-     */
-    public function testSpanNearQueryGetType()
-    {
-        $query = new SpanNearQuery(['name']);
-        $result = $query->getType();
-        $this->assertEquals('span_near', $result);
     }
 }

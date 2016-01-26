@@ -72,6 +72,6 @@ class GeoDistanceQuery implements BuilderInterface
         ];
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

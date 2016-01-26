@@ -15,6 +15,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch span or query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-or-query.html
  */
 class SpanOrQuery implements SpanQueryInterface
 {
@@ -70,10 +72,10 @@ class SpanOrQuery implements SpanQueryInterface
     {
         $query = [];
         foreach ($this->queries as $type) {
-            $query['clauses'][] = [$type->getType() => $type->toArray()];
+            $query['clauses'][] = $type->toArray();
         }
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

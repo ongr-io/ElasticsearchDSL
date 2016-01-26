@@ -92,9 +92,7 @@ class FieldSort implements BuilderInterface
             $fieldValues = array_merge(
                 $this->params,
                 [
-                    'nested_filter' => [
-                        $this->nestedFilter->getType() => $this->nestedFilter->toArray(),
-                    ],
+                    'nested_filter' => $this->nestedFilter->toArray(),
                 ]
             );
         } else {
@@ -105,6 +103,6 @@ class FieldSort implements BuilderInterface
             $this->field => empty($fieldValues) ? new \stdClass() : $fieldValues,
         ];
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

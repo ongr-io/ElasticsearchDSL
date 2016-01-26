@@ -70,6 +70,6 @@ class TermQuery implements BuilderInterface
             $this->field => $query,
         ];
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

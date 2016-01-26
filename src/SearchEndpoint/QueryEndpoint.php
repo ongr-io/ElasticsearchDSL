@@ -52,7 +52,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
             return null;
         }
 
-        return [$this->bool->getType() => $this->bool->toArray()];
+        return $this->bool->toArray();
     }
 
     /**

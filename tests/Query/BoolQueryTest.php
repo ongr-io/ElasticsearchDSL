@@ -21,14 +21,6 @@ use ONGR\ElasticsearchDSL\Query\TermQuery;
 class BoolQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests isRelevant method.
-     */
-    public function testIsRelevant()
-    {
-        $bool = new BoolQuery();
-        $this->assertTrue($bool->isRelevant());
-    }
-    /**
      * Test for addToBool() without setting a correct bool operator.
      *
      * @expectedException        \UnexpectedValueException
@@ -50,39 +42,31 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
         $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
         $bool->add(new TermQuery('key3', 'value3'), BoolQuery::MUST_NOT);
         $expected = [
-            'should' => [
-                [
-                    'term' => [
-                        'key1' => 'value1',
+            'bool' => [
+                'should' => [
+                    [
+                        'term' => [
+                            'key1' => 'value1',
+                        ],
                     ],
                 ],
-            ],
-            'must' => [
-                [
-                    'term' => [
-                        'key2' => 'value2',
+                'must' => [
+                    [
+                        'term' => [
+                            'key2' => 'value2',
+                        ],
                     ],
                 ],
-            ],
-            'must_not' => [
-                [
-                    'term' => [
-                        'key3' => 'value3',
+                'must_not' => [
+                    [
+                        'term' => [
+                            'key3' => 'value3',
+                        ],
                     ],
                 ],
             ],
         ];
         $this->assertEquals($expected, $bool->toArray());
-    }
-
-    /**
-     * Test getType method.
-     */
-    public function testBoolGetType()
-    {
-        $bool = new BoolQuery();
-        $result = $bool->getType();
-        $this->assertEquals('bool', $result);
     }
 
     /**
@@ -94,19 +78,36 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
         $bool->add(new TermQuery('key1', 'value1'), BoolQuery::FILTER);
         $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
         $expected = [
-            'filter' => [
-                [
-                    'term' => [
-                        'key1' => 'value1',
+            'bool' => [
+                'filter' => [
+                    [
+                        'term' => [
+                            'key1' => 'value1',
+                        ],
+                    ],
+                ],
+                'must' => [
+                    [
+                        'term' => [
+                            'key2' => 'value2',
+                        ],
                     ],
                 ],
             ],
-            'must' => [
-                [
-                    'term' => [
-                        'key2' => 'value2',
-                    ],
-                ],
+        ];
+        $this->assertEquals($expected, $bool->toArray());
+    }
+
+    /**
+     * Test if simplified structure is returned in case single MUST query given.
+     */
+    public function testSingleMust()
+    {
+        $bool = new BoolQuery();
+        $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
+        $expected = [
+            'term' => [
+                'key2' => 'value2',
             ],
         ];
         $this->assertEquals($expected, $bool->toArray());

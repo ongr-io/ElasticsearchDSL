@@ -49,7 +49,9 @@ class ExistsQuery implements BuilderInterface
     public function toArray()
     {
         return [
-            'field' => $this->field,
+            $this->getType() => [
+                'field' => $this->field,
+            ],
         ];
     }
 }

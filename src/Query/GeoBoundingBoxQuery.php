@@ -80,6 +80,6 @@ class GeoBoundingBoxQuery implements BuilderInterface
 
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

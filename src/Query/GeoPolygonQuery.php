@@ -61,6 +61,6 @@ class GeoPolygonQuery implements BuilderInterface
         $query = [$this->field => ['points' => $this->points]];
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

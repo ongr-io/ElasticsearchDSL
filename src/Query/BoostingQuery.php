@@ -59,11 +59,11 @@ class BoostingQuery implements BuilderInterface
     public function toArray()
     {
         $query = [
-            'positive' => [$this->positive->getType() => $this->positive->toArray()],
-            'negative' => [$this->negative->getType() => $this->negative->toArray()],
+            'positive' => $this->positive->toArray(),
+            'negative' => $this->negative->toArray(),
             'negative_boost' => $this->negativeBoost,
         ];
 
-        return $query;
+        return [$this->getType() => $query];
     }
 }

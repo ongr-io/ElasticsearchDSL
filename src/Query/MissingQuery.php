@@ -56,6 +56,6 @@ class MissingQuery implements BuilderInterface
         $query = ['field' => $this->field];
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

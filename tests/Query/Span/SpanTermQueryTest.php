@@ -19,12 +19,28 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanTermQuery;
 class SpanTermQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests get Type method.
+     * Tests for toArray().
      */
-    public function testSpanTermQueryGetType()
+    public function testToArray()
     {
-        $query = new SpanTermQuery('field', 'value');
-        $result = $query->getType();
-        $this->assertEquals('span_term', $result);
+        $query = new SpanTermQuery('user', 'bob');
+        $expected = [
+            'span_term' => ['user' => 'bob'],
+        ];
+
+        $this->assertEquals($expected, $query->toArray());
+    }
+
+    /**
+     * Tests for toArray() with parameters.
+     */
+    public function testToArrayWithParameters()
+    {
+        $query = new SpanTermQuery('user', 'bob', ['boost' => 2]);
+        $expected = [
+            'span_term' => ['user' => ['value' => 'bob', 'boost' => 2]],
+        ];
+
+        $this->assertEquals($expected, $query->toArray());
     }
 }

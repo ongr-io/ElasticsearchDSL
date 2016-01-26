@@ -50,13 +50,11 @@ class ConstantScoreQuery implements BuilderInterface
     public function toArray()
     {
         $query = [
-            'filter' => [
-                $this->query->getType() => $this->query->toArray(),
-            ],
+            'filter' => $this->query->toArray(),
         ];
 
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

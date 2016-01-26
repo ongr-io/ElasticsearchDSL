@@ -15,7 +15,7 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Represents Elasticsearch "bool" query.
+ * Represents Elasticsearch "match_all" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html
  */
@@ -44,10 +44,6 @@ class MatchAllQuery implements BuilderInterface
      */
     public function toArray()
     {
-        if (count($this->getParameters()) > 0) {
-            return $this->getParameters();
-        }
-
-        return [];
+        return [$this->getType() => $this->getParameters()];
     }
 }

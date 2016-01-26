@@ -24,13 +24,15 @@ class GeoShapeQueryTest extends \PHPUnit_Framework_TestCase
         $filter->addShape('location', 'envelope', [[13, 53], [14, 52]]);
 
         $expected = [
-            'location' => [
-                'shape' => [
-                    'type' => 'envelope',
-                    'coordinates' => [[13, 53], [14, 52]],
+            'geo_shape' => [
+                'location' => [
+                    'shape' => [
+                        'type' => 'envelope',
+                        'coordinates' => [[13, 53], [14, 52]],
+                    ],
                 ],
+                'param1' => 'value1',
             ],
-            'param1' => 'value1',
         ];
 
         $this->assertEquals($expected, $filter->toArray());
@@ -45,15 +47,17 @@ class GeoShapeQueryTest extends \PHPUnit_Framework_TestCase
         $filter->addPreIndexedShape('location', 'DEU', 'countries', 'shapes', 'location');
 
         $expected = [
-            'location' => [
-                'indexed_shape' => [
-                    'id' => 'DEU',
-                    'type' => 'countries',
-                    'index' => 'shapes',
-                    'path' => 'location',
+            'geo_shape' => [
+                'location' => [
+                    'indexed_shape' => [
+                        'id' => 'DEU',
+                        'type' => 'countries',
+                        'index' => 'shapes',
+                        'path' => 'location',
+                    ],
                 ],
+                'param1' => 'value1',
             ],
-            'param1' => 'value1',
         ];
 
         $this->assertEquals($expected, $filter->toArray());

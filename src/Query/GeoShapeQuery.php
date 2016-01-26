@@ -97,6 +97,6 @@ class GeoShapeQuery implements BuilderInterface
     {
         $output = $this->processArray($this->fields);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

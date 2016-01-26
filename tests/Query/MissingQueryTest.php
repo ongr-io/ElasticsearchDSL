@@ -43,6 +43,6 @@ class MissingQueryTest extends \PHPUnit_Framework_TestCase
     {
         $query = new MissingQuery($field, $parameters);
         $result = $query->toArray();
-        $this->assertEquals($expected, $result);
+        $this->assertEquals(['missing' => $expected], $result);
     }
 }

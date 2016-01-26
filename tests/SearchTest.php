@@ -203,11 +203,7 @@ class SearchTest extends \PHPUnit_Framework_TestCase
         $cases['single_term_query'] = [
             [
                 'query' => [
-                    'bool' => [
-                        'must' => [
-                            ['term' => ['foo' => 'bar']],
-                        ],
-                    ],
+                    'term' => ['foo' => 'bar'],
                 ],
             ],
             (new Search())->addQuery(new TermQuery('foo', 'bar')),
@@ -219,11 +215,7 @@ class SearchTest extends \PHPUnit_Framework_TestCase
                     'bool' => [
                         'filter' => [
                             [
-                                'bool' => [
-                                    'must' => [
-                                        ['term' => ['foo' => 'bar']],
-                                    ],
-                                ],
+                                'term' => ['foo' => 'bar'],
                             ],
                         ],
                     ],
@@ -241,11 +233,7 @@ class SearchTest extends \PHPUnit_Framework_TestCase
                         ],
                         'filter' => [
                             [
-                                'bool' => [
-                                    'must' => [
-                                        ['missing' => ['field' => 'baz']],
-                                    ],
-                                ],
+                                'missing' => ['field' => 'baz'],
                             ],
                         ],
                     ],

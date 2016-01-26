@@ -15,6 +15,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch span first query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-first-query.html
  */
 class SpanFirstQuery implements SpanQueryInterface
 {
@@ -58,10 +60,10 @@ class SpanFirstQuery implements SpanQueryInterface
     public function toArray()
     {
         $query = [];
-        $query['match'] = [$this->query->getType() => $this->query->toArray()];
+        $query['match'] = $this->query->toArray();
         $query['end'] = $this->end;
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

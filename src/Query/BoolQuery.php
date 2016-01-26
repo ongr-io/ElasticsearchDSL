@@ -42,18 +42,6 @@ class BoolQuery implements BuilderInterface
     }
 
     /**
-     * Checks if bool expression is relevant.
-     *
-     * @return bool
-     *
-     * @deprecated Will be removed in 2.0. No replacement. Always use full structure.
-     */
-    public function isRelevant()
-    {
-        return true;
-    }
-
-    /**
      * @param  null $boolType
      * @return array
      */
@@ -103,16 +91,23 @@ class BoolQuery implements BuilderInterface
      */
     public function toArray()
     {
+        if (count($this->container) === 1 && isset($this->container[self::MUST])
+                && count($this->container[self::MUST]) === 1) {
+            $query = reset($this->container[self::MUST]);
+
+            return $query->toArray();
+        }
+
         $output = [];
 
         foreach ($this->container as $boolType => $builders) {
             /** @var BuilderInterface $builder */
             foreach ($builders as $builder) {
-                $output[$boolType][] = [$builder->getType() => $builder->toArray()];
+                $output[$boolType][] = $builder->toArray();
             }
         }
 
-        return $output;
+        return [$this->getType() => $output];
     }
 
     /**

@@ -47,7 +47,9 @@ class LimitQuery implements BuilderInterface
     public function toArray()
     {
         return [
-            'value' => $this->value,
+            $this->getType() => [
+                'value' => $this->value,
+            ],
         ];
     }
 }

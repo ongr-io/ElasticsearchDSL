@@ -68,9 +68,7 @@ class FilterAggregation extends AbstractAggregation
             throw new \LogicException("Filter aggregation `{$this->getName()}` has no filter added");
         }
 
-        $filterData = [$this->filter->getType() => $this->filter->toArray()];
-
-        return $filterData;
+        return $this->filter->toArray();
     }
 
     /**

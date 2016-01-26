@@ -15,6 +15,10 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch Span not query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-not-query.html
+ *
+ * @todo Add options support
  */
 class SpanNotQuery implements SpanQueryInterface
 {
@@ -56,10 +60,10 @@ class SpanNotQuery implements SpanQueryInterface
     public function toArray()
     {
         $query = [
-            'include' => [$this->include->getType() => $this->include->toArray()],
-            'exclude' => [$this->exclude->getType() => $this->exclude->toArray()],
+            'include' => $this->include->toArray(),
+            'exclude' => $this->exclude->toArray(),
         ];
 
-        return $query;
+        return [$this->getType() => $query];
     }
 }

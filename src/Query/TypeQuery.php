@@ -49,7 +49,9 @@ class TypeQuery implements BuilderInterface
     public function toArray()
     {
         return [
-            'value' => $this->type,
+            $this->getType() => [
+                'value' => $this->type,
+            ],
         ];
     }
 }

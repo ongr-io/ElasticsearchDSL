@@ -15,17 +15,15 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Elasticsearch function_score query class.
+ * Represents Elasticsearch "function_score" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html
  */
 class FunctionScoreQuery implements BuilderInterface
 {
     use ParametersTrait;
 
     /**
-     * Query of filter.
-     *
-     * In Function score could be used query or filter. Use setDslType() to change type.
-     *
      * @var BuilderInterface
      */
     private $query;
@@ -62,9 +60,7 @@ class FunctionScoreQuery implements BuilderInterface
     private function applyQuery(array &$function, BuilderInterface $query = null)
     {
         if ($query) {
-            $function['query'] = [
-                $query->getType() => $query->toArray(),
-            ];
+            $function['query'] = $query->toArray();
         }
     }
 
@@ -222,14 +218,12 @@ class FunctionScoreQuery implements BuilderInterface
     public function toArray()
     {
         $query = [
-            'query' => [
-                $this->query->getType() => $this->query->toArray(),
-            ],
+            'query' => $this->query->toArray(),
             'functions' => $this->functions,
         ];
 
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

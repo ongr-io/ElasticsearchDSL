@@ -62,6 +62,6 @@ class GeohashCellQuery implements BuilderInterface
         $query = [$this->field => $this->location];
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }
