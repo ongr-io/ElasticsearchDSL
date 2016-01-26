@@ -34,8 +34,6 @@ For more information how to combine search queries take a look at [How to search
  - [DisMax](DisMax.md)
  - [Function score](FunctionScore.md)
  - [Fuzzy](Fuzzy.md)
- - [Fuzzy like this field](FuzzyLikeThisField.md)
- - [Fuzzy like this query](FuzzyLikeThisQuery.md)
  - [Has child](HasChild.md)
  - [Has parent](HasParent.md)
  - [Ids](Ids.md)
