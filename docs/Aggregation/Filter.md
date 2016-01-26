@@ -24,7 +24,7 @@ context to a specific set of documents.
 And now the query via DSL:
 
 ```php
-$termFilter = new TermFilter('color', 'red');
+$termFilter = new TermQuery('color', 'red');
 $avgAggregation = new AvgAggregation('avg_price', 'price');
 
 $filterAggregation = new FilterAggregation('grades_stats', $termFilter);

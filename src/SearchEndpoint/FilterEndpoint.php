@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -33,10 +32,7 @@ class FilterEndpoint extends QueryEndpoint
             return null;
         }
 
-        $query = new FilteredQuery();
-        $query->setFilter($this->getBool());
-
-        $this->addReference('filtered_query', $query);
+        $this->addReference('filter_query', $this->getBool());
     }
 
     /**

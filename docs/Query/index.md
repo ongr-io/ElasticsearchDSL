@@ -32,7 +32,6 @@ For more information how to combine search queries take a look at [How to search
  - [Common terms](CommonTerms.md)
  - [Constant Score](ConstantScore.md)
  - [DisMax](DisMax.md)
- - [Filtered](Filtered.md)
  - [Function score](FunctionScore.md)
  - [Fuzzy](Fuzzy.md)
  - [Fuzzy like this field](FuzzyLikeThisField.md)

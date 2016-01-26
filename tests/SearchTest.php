@@ -11,6 +11,8 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 
+use ONGR\ElasticsearchDSL\Query\MissingQuery;
+use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
 
 /**
@@ -182,5 +184,90 @@ class SearchTest extends \PHPUnit_Framework_TestCase
             $expected,
             $search->getQueryParams()
         );
+    }
+
+    /**
+     * Data provider for testToArray().
+     *
+     * @return array
+     */
+    public function getTestToArrayData()
+    {
+        $cases = [];
+
+        $cases['empty_search'] = [
+            [],
+            new Search(),
+        ];
+
+        $cases['single_term_query'] = [
+            [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            ['term' => ['foo' => 'bar']],
+                        ],
+                    ],
+                ],
+            ],
+            (new Search())->addQuery(new TermQuery('foo', 'bar')),
+        ];
+
+        $cases['single_term_filter'] = [
+            [
+                'query' => [
+                    'bool' => [
+                        'filter' => [
+                            [
+                                'bool' => [
+                                    'must' => [
+                                        ['term' => ['foo' => 'bar']],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            (new Search())->addFilter(new TermQuery('foo', 'bar')),
+        ];
+
+        $cases['single_query_query_and_filter'] = [
+            [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            ['term' => ['foo' => 'bar']],
+                        ],
+                        'filter' => [
+                            [
+                                'bool' => [
+                                    'must' => [
+                                        ['missing' => ['field' => 'baz']],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            (new Search())->addQuery(new TermQuery('foo', 'bar'))->addFilter(new MissingQuery('baz')),
+        ];
+
+        return $cases;
+    }
+
+    /**
+     * @param array  $expected
+     * @param Search $search
+     *
+     * @dataProvider getTestToArrayData()
+     */
+    public function testToArray($expected, $search)
+    {
+        $this->assertEquals($expected, $search->toArray());
+
+        // Double check
+        $this->assertEquals($expected, $search->toArray());
     }
 }

@@ -91,7 +91,7 @@ In DSL:
 
 ```php
 $functionScoreQuery = new FunctionScoreQuery(new MatchAllQuery());
-$rangeFilter = new RangeFilter('price', ['gte' => 10, 'lte' => 100]);
+$rangeFilter = new RangeQuery('price', ['gte' => 10, 'lte' => 100]);
 $functionScoreQuery->addWeightFunction(2, $rangeFilter);
 
 $search = new Search();
@@ -104,8 +104,8 @@ $queryArray = $search->toArray();
 
 ```php
 $functionScoreQuery = new FunctionScoreQuery(new MatchAllQuery());
-$existsFilter = new ExistsFilter('price');
-$functionScoreQuery->addFieldValueFactorFunction('price', 0.5, 'ln', $existsFilter);
+$existsQuery = new ExistsQuery('price');
+$functionScoreQuery->addFieldValueFactorFunction('price', 0.5, 'ln', $existsQuery);
 
 $search = new Search();
 $search->addQuery($functionScoreQuery);

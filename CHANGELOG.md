@@ -5,6 +5,7 @@ v2.0.0 (2016-x)
 ---
 
 - [BC break] Aggregation name is not prefixed anymore
+- [BC break] Removed all filters and filtered query
 
 v1.1.1 (2016-01-26)
 ---

@@ -13,10 +13,10 @@ namespace ONGR\ElasticsearchDSL\Tests\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\HistogramAggregation;
-use ONGR\ElasticsearchDSL\Filter\TermFilter;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\Query\MissingQuery;
+use ONGR\ElasticsearchDSL\Query\TermQuery;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -70,7 +70,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         // Case #2 testing bool filter.
         $aggregation = new FilterAggregation('test_agg');
         $matchAllFilter = new MatchAllQuery();
-        $termFilter = new TermFilter('acme', 'foo');
+        $termFilter = new TermQuery('acme', 'foo');
         $boolFilter = new BoolQuery();
         $boolFilter->add($matchAllFilter);
         $boolFilter->add($termFilter);

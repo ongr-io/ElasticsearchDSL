@@ -20,7 +20,7 @@ Lets take an example to write a constant score query with filter inside.
 And now the query via DSL:
 
 ```php
-$termFilter = new TermFilter("user", "kimchy");
+$termFilter = new TermQuery("user", "kimchy");
 $constantScoreQuery = new ConstantScoreQuery($termFilter, ["boost" => 1.2]);
 
 $search = new Search();

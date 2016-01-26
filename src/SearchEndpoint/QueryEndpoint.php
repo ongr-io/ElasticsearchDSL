@@ -13,7 +13,6 @@ namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
-use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\OrderedNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -33,28 +32,27 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     private $bool;
 
     /**
+     * @var bool
+     */
+    private $filtersSet = false;
+
+    /**
      * {@inheritdoc}
      */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
-        $query = $this->getBool();
-
-        if ($this->hasReference('filtered_query')) {
-            /** @var FilteredQuery $filteredQuery */
-            $filteredQuery = $this->getReference('filtered_query');
-
-            if ($query) {
-                $filteredQuery->setQuery($query);
-            }
-
-            $query = $filteredQuery;
+        if (!$this->filtersSet && $this->hasReference('filter_query')) {
+            /** @var BuilderInterface $filter */
+            $filter = $this->getReference('filter_query');
+            $this->addToBool($filter, BoolQuery::FILTER);
+            $this->filtersSet = true;
         }
 
-        if (!$query) {
+        if (!$this->bool) {
             return null;
         }
 
-        return [$query->getType() => $query->toArray()];
+        return [$this->bool->getType() => $this->bool->toArray()];
     }
 
     /**
@@ -71,7 +69,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     public function addToBool(BuilderInterface $builder, $boolType = null, $key = null)
     {
         if (!$this->bool) {
-            $this->bool = $this->getBoolInstance();
+            $this->bool = new BoolQuery();
         }
 
         return $this->bool->add($builder, $boolType, $key);
@@ -91,16 +89,6 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     public function getBool()
     {
         return $this->bool;
-    }
-
-    /**
-     * Returns new bool instance for the endpoint.
-     *
-     * @return BoolQuery
-     */
-    protected function getBoolInstance()
-    {
-        return new BoolQuery();
     }
 
     /**

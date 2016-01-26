@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -53,20 +52,16 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );
         $this->assertNull($instance->normalize($normalizerInterface));
-        $this->assertFalse($instance->hasReference('filtered_query'));
+        $this->assertFalse($instance->hasReference('filter_query'));
 
         $matchAllFilter = new MatchAllQuery();
         $instance->add($matchAllFilter);
 
         $this->assertNull($instance->normalize($normalizerInterface));
-        $this->assertTrue($instance->hasReference('filtered_query'));
-
-        /** @var FilteredQuery $reference */
-        $reference = $instance->getReference('filtered_query');
-        $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\FilteredQuery', $reference);
+        $this->assertTrue($instance->hasReference('filter_query'));
 
         /** @var \ONGR\ElasticsearchDSL\Query\BoolQuery $bool */
-        $bool = $reference->getFilter();
+        $bool = $instance->getReference('filter_query');
         $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\BoolQuery', $bool);
 
         $must = $bool->getQueries('must');
