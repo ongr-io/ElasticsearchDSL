@@ -64,6 +64,6 @@ class WildcardQuery implements BuilderInterface
             $this->field => $this->processArray($query),
         ];
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

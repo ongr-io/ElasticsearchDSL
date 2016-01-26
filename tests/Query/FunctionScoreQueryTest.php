@@ -33,7 +33,7 @@ class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
             [
                 'seed' => null,
                 'expectedArray' => [
-                    'query' => [ null => null ],
+                    'query' => null,
                     'functions' => [
                         [
                             'random_score' => new \stdClass(),
@@ -45,7 +45,7 @@ class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
             [
                 'seed' => 'someSeed',
                 'expectedArray' => [
-                    'query' => [ null => null ],
+                    'query' => null,
                     'functions' => [
                         [
                             'random_score' => [ 'seed' => 'someSeed'],
@@ -72,7 +72,7 @@ class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
         $functionScoreQuery = new FunctionScoreQuery($matchAllQuery);
         $functionScoreQuery->addRandomFunction($seed);
 
-        $this->assertEquals($expectedArray, $functionScoreQuery->toArray());
+        $this->assertEquals(['function_score' => $expectedArray], $functionScoreQuery->toArray());
     }
     
     /**
@@ -86,9 +86,9 @@ class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
         $functionScoreQuery->addFieldValueFactorFunction('field1', 2);
         $functionScoreQuery->addFieldValueFactorFunction('field2', 1.5, 'ln');
 
-        $this->assertSame(
+        $this->assertEquals(
             [
-                'query' => [null => null],
+                'query' => null,
                 'functions' => [
                     [
                         'field_value_factor' => [
@@ -106,7 +106,7 @@ class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            $functionScoreQuery->toArray()
+            $functionScoreQuery->toArray()['function_score']
         );
     }
 }

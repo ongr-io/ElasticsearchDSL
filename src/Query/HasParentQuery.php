@@ -60,13 +60,11 @@ class HasParentQuery implements BuilderInterface
     {
         $query = [
             'parent_type' => $this->parentType,
-            'query' => [
-                $this->query->getType() => $this->query->toArray(),
-            ],
+            'query' => $this->query->toArray(),
         ];
 
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\Tests\Query\Span;
 
 use ONGR\ElasticsearchDSL\Query\Span\SpanFirstQuery;
-use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 
 /**
  * Unit test for SpanFirstQuery.
@@ -20,54 +19,25 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface;
 class SpanFirstQueryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SpanQueryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * Tests for toArray().
      */
-    protected $mock;
-
-    /**
-     * Create mock object.
-     */
-    protected function setUp()
+    public function testToArray()
     {
-        $this->mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface')->getMock();
-        $this->mock->expects($this->atMost(1))
-            ->method('getType')
-            ->will($this->returnValue('span_or'));
-        $this->mock->expects($this->atMost(1))
+        $mock = $this->getMock('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface');
+        $mock
+            ->expects($this->once())
             ->method('toArray')
-            ->will($this->returnValue(['key' => 'value']));
-    }
+            ->willReturn(['span_term' => ['user' => 'bob']]);
 
-    /**
-     * Reset mock object.
-     */
-    public function tearDown()
-    {
-        unset($this->mock);
-    }
-
-    /**
-     * Tests toArray method.
-     */
-    public function testSpanFirstQueryToArray()
-    {
-        $query = new SpanFirstQuery($this->mock, 5);
+        $query = new SpanFirstQuery($mock, 5);
         $result = [
-            'match' => [
-                'span_or' => [ 'key' => 'value'],
+            'span_first' => [
+                'match' => [
+                    'span_term' => ['user' => 'bob'],
+                ],
+                'end' => 5,
             ],
-            'end' => 5,
         ];
         $this->assertEquals($result, $query->toArray());
-    }
-
-    /**
-     * Tests get Type method.
-     */
-    public function testSpanFirstQueryGetType()
-    {
-        $query = new SpanFirstQuery($this->mock, 5);
-        $result = $query->getType();
-        $this->assertEquals('span_first', $result);
     }
 }

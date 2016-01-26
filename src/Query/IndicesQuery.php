@@ -66,16 +66,16 @@ class IndicesQuery implements BuilderInterface
             $output = ['index' => $this->indices[0]];
         }
 
-        $output['query'] = [$this->query->getType() => $this->query->toArray()];
+        $output['query'] = $this->query->toArray();
 
         if ($this->noMatchQuery !== null) {
             if (is_a($this->noMatchQuery, 'ONGR\ElasticsearchDSL\BuilderInterface')) {
-                $output['no_match_query'] = [$this->noMatchQuery->getType() => $this->noMatchQuery->toArray()];
+                $output['no_match_query'] = $this->noMatchQuery->toArray();
             } else {
                 $output['no_match_query'] = $this->noMatchQuery;
             }
         }
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

@@ -13,6 +13,8 @@ namespace ONGR\ElasticsearchDSL\Query\Span;
 
 /**
  * Elasticsearch span near query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-near-query.html
  */
 class SpanNearQuery extends SpanOrQuery implements SpanQueryInterface
 {
@@ -52,11 +54,11 @@ class SpanNearQuery extends SpanOrQuery implements SpanQueryInterface
     {
         $query = [];
         foreach ($this->getQueries() as $type) {
-            $query['clauses'][] = [$type->getType() => $type->toArray()];
+            $query['clauses'][] = $type->toArray();
         }
         $query['slop'] = $this->getSlop();
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

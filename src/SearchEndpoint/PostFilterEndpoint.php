@@ -32,9 +32,7 @@ class PostFilterEndpoint extends FilterEndpoint
             return null;
         }
 
-        $filter = $this->getBool();
-
-        return [$filter->getType() => $filter->toArray()];
+        return $this->getBool()->toArray();
     }
 
     /**

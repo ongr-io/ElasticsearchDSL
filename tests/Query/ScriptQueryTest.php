@@ -37,11 +37,11 @@ class ScriptQueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for filter toArray() method.
+     * Test for toArray().
      *
-     * @param string $script     Script.
-     * @param array  $parameters Optional parameters.
-     * @param array  $expected   Expected values.
+     * @param string $script     Script
+     * @param array  $parameters Optional parameters
+     * @param array  $expected   Expected values
      *
      * @dataProvider getArrayDataProvider
      */
@@ -49,6 +49,6 @@ class ScriptQueryTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new ScriptQuery($script, $parameters);
         $result = $filter->toArray();
-        $this->assertEquals($expected, $result);
+        $this->assertEquals(['script' => $expected], $result);
     }
 }

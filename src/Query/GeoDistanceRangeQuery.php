@@ -69,6 +69,6 @@ class GeoDistanceRangeQuery implements BuilderInterface
         $query = $this->range + [$this->field => $this->location];
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

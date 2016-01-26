@@ -70,6 +70,6 @@ class RangeQuery implements BuilderInterface
             $this->field => $this->getParameters(),
         ];
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

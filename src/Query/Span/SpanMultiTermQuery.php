@@ -16,6 +16,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch span multi term query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-multi-term-query.html
  */
 class SpanMultiTermQuery implements SpanQueryInterface
 {
@@ -54,9 +56,9 @@ class SpanMultiTermQuery implements SpanQueryInterface
     public function toArray()
     {
         $query = [];
-        $query['match'] = [$this->query->getType() => $this->query->toArray()];
+        $query['match'] = $this->query->toArray();
         $output = $this->processArray($query);
 
-        return $output;
+        return [$this->getType() => $output];
     }
 }

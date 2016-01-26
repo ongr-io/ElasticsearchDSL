@@ -82,6 +82,6 @@ class GeoBoundingBoxQueryTest extends \PHPUnit_Framework_TestCase
     {
         $query = new GeoBoundingBoxQuery($field, $values, $parameters);
         $result = $query->toArray();
-        $this->assertEquals($expected, $result);
+        $this->assertEquals(['geo_bounding_box' => $expected], $result);
     }
 }

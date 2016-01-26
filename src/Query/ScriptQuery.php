@@ -54,6 +54,6 @@ class ScriptQuery implements BuilderInterface
         $query = ['inline' => $this->script];
         $output = $this->processArray($query);
 
-        return ['script' => $output];
+        return [$this->getType() => ['script' => $output]];
     }
 }

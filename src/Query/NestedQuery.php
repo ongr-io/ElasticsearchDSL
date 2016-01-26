@@ -58,13 +58,13 @@ class NestedQuery implements BuilderInterface
      */
     public function toArray()
     {
-        return $this->processArray(
-            [
-                'path' => $this->path,
-                'query' => [
-                    $this->query->getType() => $this->query->toArray(),
-                ],
-            ]
-        );
+        return [
+            $this->getType() => $this->processArray(
+                [
+                    'path' => $this->path,
+                    'query' => $this->query->toArray(),
+                ]
+            )
+        ];
     }
 }

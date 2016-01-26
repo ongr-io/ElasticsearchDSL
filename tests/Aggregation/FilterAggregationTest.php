@@ -36,9 +36,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setFilter($filter);
 
         $result = [
-            'filter' => [
-                $filter->getType() => $filter->toArray(),
-            ],
+            'filter' => $filter->toArray(),
         ];
 
         $out[] = [
@@ -54,9 +52,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->addAggregation($histogramAgg);
 
         $result = [
-            'filter' => [
-                $filter->getType() => $filter->toArray(),
-            ],
+            'filter' => $filter->toArray(),
             'aggregations' => [
                 $histogramAgg->getName() => $histogramAgg->toArray(),
             ],
@@ -78,9 +74,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
         $aggregation->setFilter($boolFilter);
 
         $result = [
-            'filter' => [
-                $boolFilter->getType() => $boolFilter->toArray(),
-            ],
+            'filter' => $boolFilter->toArray(),
         ];
 
 
@@ -147,11 +141,9 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $matchAllFilter = new MatchAllQuery();
         $aggregation = new FilterAggregation('test', $matchAllFilter);
-        $this->assertSame(
+        $this->assertEquals(
             [
-                'filter' => [
-                    $matchAllFilter->getType() => $matchAllFilter->toArray(),
-                ],
+                'filter' => $matchAllFilter->toArray(),
             ],
             $aggregation->toArray()
         );
