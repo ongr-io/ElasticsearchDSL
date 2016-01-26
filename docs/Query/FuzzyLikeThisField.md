@@ -1,4 +1,6 @@
 # Fuzzy Like This Field Query
+          
+__DEPRECATED__: this query is deprecated and will be removed in ElasticsearchDSL 2.0
 
 > More info about fuzzy like this field query is in the [official elasticsearch docs][1]
 
