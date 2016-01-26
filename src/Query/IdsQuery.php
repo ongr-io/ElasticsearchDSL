@@ -18,6 +18,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
  * Represents Elasticsearch "ids" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html
+ *
+ * @todo Add "type" support
  */
 class IdsQuery implements BuilderInterface
 {

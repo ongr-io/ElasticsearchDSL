@@ -15,7 +15,9 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
- * Elasticsearch dis max query class.
+ * Represents Elasticsearch "dis_max" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-dis-max-query.html
  */
 class DisMaxQuery implements BuilderInterface
 {
@@ -65,7 +67,7 @@ class DisMaxQuery implements BuilderInterface
     {
         $query = [];
         foreach ($this->queries as $type) {
-            $query = array_merge($query, $type->toArray());
+            $query[] = $type->toArray();
         }
         $output = $this->processArray(['queries' => $query]);
 

@@ -14,7 +14,9 @@ namespace ONGR\ElasticsearchDSL\Query;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
- * Elasticsearch boosting query class.
+ * Represents Elasticsearch "boosting" query.
+ *
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-boosting-query.html
  */
 class BoostingQuery implements BuilderInterface
 {
