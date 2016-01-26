@@ -16,6 +16,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Elasticsearch fuzzy_like_this query class.
+ *
+ * @deprecated Will be removed in 2.0.
  */
 class FuzzyLikeThisQuery implements BuilderInterface
 {
@@ -38,6 +40,11 @@ class FuzzyLikeThisQuery implements BuilderInterface
      */
     public function __construct($fields, $likeText, array $parameters = [])
     {
+        @trigger_error(
+            'The FuzzyLikeThisQuery class is deprecated and will be removed in 2.0.',
+            E_USER_DEPRECATED
+        );
+
         if (!is_array($fields)) {
             $fields = explode(',', $fields);
         }
