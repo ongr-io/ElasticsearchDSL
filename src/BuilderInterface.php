@@ -19,6 +19,9 @@ interface BuilderInterface
     /**
      * Generates array which will be passed to elasticsearch-php client.
      *
+     * WARNING: the output of this method will change in version v2.0. It will
+     * always return array WITH query/aggregation type as key.
+     *
      * @return array|object
      */
     public function toArray();

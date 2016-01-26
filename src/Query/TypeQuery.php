@@ -18,7 +18,7 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html
  */
-class TypeQuery implements BuilderInterface  // TODO: add test
+class TypeQuery implements BuilderInterface
 {
     /**
      * @var string

@@ -13,6 +13,8 @@ namespace ONGR\ElasticsearchDSL;
 
 /**
  * A trait which can detect query or filter is passed.
+ *
+ * @deprecated Will be removed in 2.0.
  */
 trait FilterOrQueryDetectionTrait
 {

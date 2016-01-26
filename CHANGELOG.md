@@ -1,10 +1,16 @@
 CHANGELOG
 =========
-
+   
 v2.0.0 (2016-x)
 ---
 
 - [BC break] Aggregation name is not prefixed anymore
+
+v1.1.1 (2016-01-26)
+---
+
+- Fixed query endpoint normalization when called repeatedly [#56](https://github.com/ongr-io/ElasticsearchDSL/pull/56)
+- Deprecated `DslTypeAwareTrait` and `FilterOrQueryDetectionTrait` traits
 
 v1.1.0 (2015-12-28)
 ---

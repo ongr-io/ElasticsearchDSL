@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\FilteredQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -46,15 +45,5 @@ class FilterEndpoint extends QueryEndpoint
     public function getOrder()
     {
         return 1;
-    }
-
-    /**
-     * Returns bool instance for this endpoint case.
-     *
-     * @return BoolQuery
-     */
-    protected function getBoolInstance()
-    {
-        return new BoolQuery();
     }
 }

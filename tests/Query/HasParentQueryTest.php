@@ -20,10 +20,8 @@ class HasParentQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $missingFilter = $this->getMockBuilder('ONGR\ElasticsearchDSL\Filter\MissingFilter')
-            ->setConstructorArgs(['test_field'])
-            ->getMock();
-        $query = new HasParentQuery('test_type', $missingFilter, ['test_parameter1']);
+        $parentQuery = $this->getMock('ONGR\ElasticsearchDSL\BuilderInterface');
+        $query = new HasParentQuery('test_type', $parentQuery, ['test_parameter1']);
         $this->assertEquals(['test_parameter1'], $query->getParameters());
     }
 }
