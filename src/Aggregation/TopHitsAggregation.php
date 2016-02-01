@@ -125,15 +125,12 @@ class TopHitsAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        $output = $this->getSort() ? $this->getSort()->toArray() : [];
         $output = array_filter(
-            array_merge(
-                $output,
-                [
-                    'size' => $this->getSize(),
-                    'from' => $this->getFrom(),
-                ]
-            ),
+            [
+                'sort' => $this->getSort() ? $this->getSort()->toArray() : null,
+                'size' => $this->getSize(),
+                'from' => $this->getFrom(),
+            ],
             function ($val) {
                 return (($val || is_array($val) || ($val || is_numeric($val))));
             }

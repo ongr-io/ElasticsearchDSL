@@ -14,6 +14,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 use ONGR\ElasticsearchDSL\Query\MissingQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
+use ONGR\ElasticsearchDSL\Sort\FieldSort;
 
 /**
  * Test for Search.
@@ -240,6 +241,19 @@ class SearchTest extends \PHPUnit_Framework_TestCase
                 ],
             ],
             (new Search())->addQuery(new TermQuery('foo', 'bar'))->addFilter(new MissingQuery('baz')),
+        ];
+
+        $cases['sort_by_price'] = [
+            [
+                'sort' => [
+                    [
+                        'price' => [
+                            'order' => 'asc',
+                        ],
+                    ],
+                ],
+            ],
+            (new Search())->addSort(new FieldSort('price', 'asc')),
         ];
 
         return $cases;
