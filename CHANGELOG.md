@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-v1.x (2016-x)
+v1.1.2 (2016-02-01)
 ---
 
 - Deprecated `FuzzyLikeThisQuery` and `FuzzyLikeThisFieldQuery` queries
