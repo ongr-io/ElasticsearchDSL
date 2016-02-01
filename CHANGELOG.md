@@ -8,7 +8,7 @@ v2.0.0 (2016-x)
 - [BC break] Removed all filters and filtered query
 - [BC break] Query's `toArray()` now returns array WITH query type
 
-v1.x (2016-x)
+v1.1.2 (2016-02-01)
 ---
 
 - Deprecated `FuzzyLikeThisQuery` and `FuzzyLikeThisFieldQuery` queries
