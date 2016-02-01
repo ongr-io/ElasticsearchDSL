@@ -14,7 +14,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 use ONGR\ElasticsearchDSL\Query\MissingQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
-use ONGR\ElasticsearchDSL\Sort\FieldSort;
+use ONGR\ElasticsearchDSL\Suggest\Suggest;
 
 /**
  * Test for Search.
@@ -243,17 +243,34 @@ class SearchTest extends \PHPUnit_Framework_TestCase
             (new Search())->addQuery(new TermQuery('foo', 'bar'))->addFilter(new MissingQuery('baz')),
         ];
 
-        $cases['sort_by_price'] = [
+        $cases['single_suggest'] = [
             [
-                'sort' => [
-                    [
-                        'price' => [
-                            'order' => 'asc',
-                        ],
+                'suggest' => [
+                    'foo' => [
+                        'text' => 'bar',
+                        'term' => ['field' => 'title', 'size' => 2],
                     ],
                 ],
             ],
-            (new Search())->addSort(new FieldSort('price', 'asc')),
+            (new Search())->addSuggest(new Suggest('foo', 'bar', ['field' => 'title', 'size' => 2])),
+        ];
+
+        $cases['multiple_suggests'] = [
+            [
+                'suggest' => [
+                    'foo' => [
+                        'text' => 'bar',
+                        'term' => ['field' => 'title', 'size' => 2],
+                    ],
+                    'bar' => [
+                        'text' => 'foo',
+                        'term' => ['field' => 'title', 'size' => 2],
+                    ],
+                ],
+            ],
+            (new Search())
+                ->addSuggest(new Suggest('foo', 'bar', ['field' => 'title', 'size' => 2]))
+                ->addSuggest(new Suggest('bar', 'foo', ['field' => 'title', 'size' => 2])),
         ];
 
         return $cases;
