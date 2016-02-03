@@ -12,9 +12,12 @@
 namespace ONGR\ElasticsearchDSL\Suggest;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 class Suggest implements BuilderInterface
 {
+    use ParametersTrait;
+
     const DEFAULT_SIZE = 3;
 
     /**
@@ -27,16 +30,11 @@ class Suggest implements BuilderInterface
      */
     private $text;
 
-    /**
-     * @var array
-     */
-    private $params;
-
-    public function __construct($name, $text, $params = [])
+    public function __construct($name, $text, $parameters = [])
     {
         $this->name = $name;
         $this->text = $text;
-        $this->params = $params;
+        $this->setParameters($parameters);
     }
 
     /**
@@ -64,17 +62,17 @@ class Suggest implements BuilderInterface
      */
     public function toArray()
     {
-        if (!isset($this->params['field'])) {
-            $this->params['field'] = '_all';
+        if (!$this->hasParameter('field')) {
+            $this->addParameter('field', '_all');
         }
 
-        if (!isset($this->params['size'])) {
-            $this->params['size'] = self::DEFAULT_SIZE;
+        if (!$this->hasParameter('size')) {
+            $this->addParameter('size', self::DEFAULT_SIZE);
         }
 
         $output = [
             'text' => $this->text,
-            'term' => $this->params,
+            'term' => $this->getParameters(),
         ];
 
         return $output;
