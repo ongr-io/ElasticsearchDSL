@@ -26,6 +26,8 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
+use ONGR\ElasticsearchDSL\Suggest\Suggest;
 
 /**
  * Search object that can be executed by a manager.
@@ -376,6 +378,30 @@ class Search
         $highlightEndpoint = $this->getEndpoint(HighlightEndpoint::NAME);
 
         return $highlightEndpoint->getHighlight();
+    }
+
+    /**
+    * Adds suggest into search.
+    *
+    * @param Suggest $suggest
+    *
+    * @return $this
+    */
+    public function addSuggest(Suggest $suggest)
+    {
+        $this->getEndpoint(SuggestEndpoint::NAME)->add($suggest, $suggest->getName());
+
+        return $this;
+    }
+
+    /**
+    * Returns all suggests.
+    *
+    * @return BuilderInterface[]
+    */
+    public function getSuggests()
+    {
+        return $this->getEndpoint(SuggestEndpoint::NAME)->getAll();
     }
 
     /**
