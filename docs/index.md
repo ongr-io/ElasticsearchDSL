@@ -7,6 +7,7 @@ Everything starts from the `Search` object. We recommend first to take a look at
 ### Topics:
 - [Build Queries](Query/index.md)
 - [Build Aggregations](Aggregation/index.md)
+- [Build Suggest](Suggest/index.md)
 
 ### How to
 - [How to Search](HowTo/HowToSearch.md)
