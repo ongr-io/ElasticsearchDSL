@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Suggest;
 
-use ONGR\ElasticsearchDSL\Suggest\Suggest;
+use ONGR\ElasticsearchDSL\Suggest\TermSuggest;
 
 class SuggestTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,9 +20,9 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuggestGetType()
     {
-        $suggest = new Suggest('foo', 'bar');
+        $suggest = new TermSuggest('foo', 'bar');
         $result = $suggest->getType();
-        $this->assertEquals('suggest', $result);
+        $this->assertEquals('term_suggest', $result);
     }
 
     /**
@@ -31,14 +31,14 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
     public function testSuggestWithoutFieldAndSize()
     {
         // Case #1 suggest without field and size params.
-        $suggest = new Suggest('foo', 'bar');
-        $expected = [
+        $suggest = new TermSuggest('foo', 'bar');
+        $expected = ['foo' => [
             'text' => 'bar',
             'term' => [
                 'field' => '_all',
                 'size' => 3,
             ],
-        ];
+        ]];
         $this->assertEquals($expected, $suggest->toArray());
     }
 
@@ -47,7 +47,7 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $suggest = new Suggest(
+        $suggest = new TermSuggest(
             'foo',
             'bar',
             [
@@ -56,14 +56,14 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
                 'analyzer' => 'whitespace',
             ]
         );
-        $expected = [
+        $expected = ['foo' => [
             'text' => 'bar',
             'term' => [
                 'field' => 'title',
                 'size' => 5,
                 'analyzer' => 'whitespace',
             ],
-        ];
+        ]];
         $this->assertEquals($expected, $suggest->toArray());
     }
 }
