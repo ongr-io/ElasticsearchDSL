@@ -383,11 +383,11 @@ class Search
     /**
     * Adds suggest into search.
     *
-    * @param Suggest $suggest
+    * @param BuilderInterface $suggest
     *
     * @return $this
     */
-    public function addSuggest(Suggest $suggest)
+    public function addSuggest(BuilderInterface $suggest)
     {
         $this->getEndpoint(SuggestEndpoint::NAME)->add($suggest, $suggest->getName());
 

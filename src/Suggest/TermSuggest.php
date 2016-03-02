@@ -14,7 +14,7 @@ namespace ONGR\ElasticsearchDSL\Suggest;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
-class Suggest implements BuilderInterface
+class TermSuggest implements BuilderInterface
 {
     use ParametersTrait;
 
@@ -44,7 +44,7 @@ class Suggest implements BuilderInterface
      */
     public function getType()
     {
-        return 'suggest';
+        return 'term_suggest';
     }
 
     /**
@@ -70,10 +70,10 @@ class Suggest implements BuilderInterface
             $this->addParameter('size', self::DEFAULT_SIZE);
         }
 
-        $output = [
+        $output = [$this->name => [
             'text' => $this->text,
             'term' => $this->getParameters(),
-        ];
+        ]];
 
         return $output;
     }
