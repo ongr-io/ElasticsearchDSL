@@ -1,12 +1,16 @@
 CHANGELOG
 =========
    
-v2.0.0 (2016-x)
+v2.x (2016-x)
+---
+
+v2.0.0 (2016-03-03)
 ---
 
 - [BC break] Aggregation name is not prefixed anymore
 - [BC break] Removed all filters and filtered query
 - [BC break] Query's `toArray()` now returns array WITH query type
+- [Feature] Added TermSuggest and Suggest endpoint
 
 v1.1.2 (2016-02-01)
 ---
