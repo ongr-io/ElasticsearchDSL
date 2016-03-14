@@ -71,10 +71,6 @@ class NestedAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        if (count($this->getAggregations()) == 0) {
-            throw new \LogicException("Nested aggregation `{$this->getName()}` has no aggregations added");
-        }
-
         return ['path' => $this->getPath()];
     }
 }

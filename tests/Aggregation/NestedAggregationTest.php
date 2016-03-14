@@ -18,18 +18,6 @@ class NestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test for nested aggregation toArray() method exception.
-     *
-     * @expectedException \LogicException
-     */
-    public function testToArrayException()
-    {
-        $aggregation = new NestedAggregation('test_agg');
-        $aggregation->setPath('test_path');
-        $aggregation->toArray();
-    }
-
-    /**
-     * Test for nested aggregation toArray() method exception.
      */
     public function testToArray()
     {
