@@ -445,7 +445,7 @@ class Search
     /**
      * Sets timeout for query execution.
      *
-     * @param $timeout
+     * @param string $timeout
      *
      * @return $this
      */
@@ -459,7 +459,7 @@ class Search
     /**
      * Sets maximum number of documents per shard.
      *
-     * @param $terminateAfter
+     * @param int $terminateAfter
      *
      * @return $this
      */
