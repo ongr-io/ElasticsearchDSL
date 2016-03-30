@@ -4,6 +4,8 @@ CHANGELOG
 v2.x (2016-x)
 ---
 
+- [Feature] Added PhraseSuggest
+
 v2.0.0 (2016-03-03)
 ---
 
