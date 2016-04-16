@@ -49,6 +49,8 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
         $bool->add(new TermQuery('key1', 'value1'), BoolQuery::SHOULD);
         $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
         $bool->add(new TermQuery('key3', 'value3'), BoolQuery::MUST_NOT);
+        $bool->addParameter('minimum_should_match', 1);
+
         $expected = [
             'should' => [
                 [
@@ -71,7 +73,9 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
+            'minimum_should_match' => 1,
         ];
+
         $this->assertEquals($expected, $bool->toArray());
     }
 
