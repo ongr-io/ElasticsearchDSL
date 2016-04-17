@@ -112,6 +112,8 @@ class BoolQuery implements BuilderInterface
             }
         }
 
+        $output = $this->processArray($output);
+
         return $output;
     }
 
