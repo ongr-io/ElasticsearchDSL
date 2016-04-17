@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+v1.1.3 (2016-04-17)
+-------------------
+
+- Fixed parameters handling in `BoolQuery` query [#89](https://github.com/ongr-io/ElasticsearchDSL/pull/89) 
+
 v1.1.2 (2016-02-01)
 ---
 
