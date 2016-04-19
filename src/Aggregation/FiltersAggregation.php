@@ -77,9 +77,9 @@ class FiltersAggregation extends AbstractAggregation
         if ($this->anonymous === false && empty($name)) {
             throw new \LogicException('In not anonymous filters filter name must be set.');
         } elseif ($this->anonymous === false && !empty($name)) {
-            $this->filters['filters'][$name] = [$filter->getType() => $filter->toArray()];
+            $this->filters['filters'][$name] = $filter->toArray();
         } else {
-            $this->filters['filters'][] = [$filter->getType() => $filter->toArray()];
+            $this->filters['filters'][] = $filter->toArray();
         }
 
         return $this;
