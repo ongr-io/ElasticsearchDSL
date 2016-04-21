@@ -11,6 +11,7 @@ If you have any questions, don't hesitate to ask them on [![Join the chat at htt
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/?branch=master)
 
 __This component requires Elasticsearch 2.0 or newer.__
+> Warning: Amazon Elasticsearch Service currently supports only Elasticsearch 1.5.2. and cannot be used.
 
 ## Documentation
 
