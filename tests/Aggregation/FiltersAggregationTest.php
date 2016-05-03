@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
@@ -66,9 +65,6 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['toArray', 'getType'])
             ->getMockForAbstractClass();
         $filter->expects($this->any())
-            ->method('getType')
-            ->willReturn('test_filter');
-        $filter->expects($this->any())
             ->method('toArray')
             ->willReturn(['test_field' => ['test_value' => 'test']]);
 
@@ -79,17 +75,13 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
             'filters' => [
                 'filters' => [
                     'first' => [
-                        'test_filter' => [
-                            'test_field' => [
-                                'test_value' => 'test',
-                            ],
+                        'test_field' => [
+                            'test_value' => 'test',
                         ],
                     ],
                     'second' => [
-                        'test_filter' => [
-                            'test_field' => [
-                                'test_value' => 'test',
-                            ],
+                        'test_field' => [
+                            'test_value' => 'test',
                         ],
                     ],
                 ],
@@ -105,10 +97,8 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
     {
         /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface1 */
         $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface1->expects($this->any())->method('getType')->willReturn('type1');
         /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface2 */
         $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        $builderInterface2->expects($this->any())->method('getType')->willReturn('type2');
 
         $aggregation = new FiltersAggregation(
             'test',
@@ -122,8 +112,8 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
             [
                 'filters' => [
                     'filters' => [
-                        'filter1' => ['type1' => null],
-                        'filter2' => ['type2' => null],
+                        'filter1' => null,
+                        'filter2' => null,
                     ],
                 ],
             ],
@@ -143,8 +133,8 @@ class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
             [
                 'filters' => [
                     'filters' => [
-                        ['type1' => null],
-                        ['type2' => null],
+                        null,
+                        null,
                     ],
                 ],
             ],
