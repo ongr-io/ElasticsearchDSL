@@ -12,12 +12,15 @@
 namespace ONGR\ElasticsearchDSL\Sort;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * Holds all the values required for basic sorting.
  */
 class FieldSort implements BuilderInterface
 {
+    use ParametersTrait;
+
     const ASC = 'asc';
     const DESC = 'desc';
 
@@ -30,11 +33,6 @@ class FieldSort implements BuilderInterface
      * @var string
      */
     private $order;
-
-    /**
-     * @var array
-     */
-    private $params;
 
     /**
      * @var BuilderInterface
@@ -50,7 +48,7 @@ class FieldSort implements BuilderInterface
     {
         $this->field = $field;
         $this->order = $order;
-        $this->params = $params;
+        $this->setParameters($params);
     }
 
     /**
@@ -85,22 +83,15 @@ class FieldSort implements BuilderInterface
     public function toArray()
     {
         if ($this->order) {
-            $this->params['order'] = $this->order;
+            $this->addParameter('order', $this->order);
         }
 
         if ($this->nestedFilter) {
-            $fieldValues = array_merge(
-                $this->params,
-                [
-                    'nested_filter' => $this->nestedFilter->toArray(),
-                ]
-            );
-        } else {
-            $fieldValues = $this->params;
+            $this->addParameter('nested_filter', $this->nestedFilter->toArray());
         }
 
         $output = [
-            $this->field => empty($fieldValues) ? new \stdClass() : $fieldValues,
+            $this->field => !$this->getParameters() ? new \stdClass() : $this->getParameters(),
         ];
 
         return $output;
