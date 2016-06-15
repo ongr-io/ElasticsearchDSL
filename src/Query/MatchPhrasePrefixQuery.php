@@ -15,7 +15,7 @@ namespace ONGR\ElasticsearchDSL\Query;
  * Represents Elasticsearch "match_phrase_prefix" query.
  *
  * @author Ron Rademaker
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html#query-dsl-match-query-phrase-prefix
+ * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
  */
 class MatchPhrasePrefixQuery extends MatchQuery
 {
