@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\Pipeline\AbstractPipelineAggregation;
 use ONGR\ElasticsearchDSL\BuilderBag;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\NameAwareTrait;
@@ -33,6 +34,11 @@ abstract class AbstractAggregation implements BuilderInterface
      * @var BuilderBag
      */
     private $aggregations;
+
+    /**
+     * @var BuilderBag[]
+     */
+    private $pipelines = [];
 
     /**
      * Abstract supportsNesting method.
@@ -87,6 +93,64 @@ abstract class AbstractAggregation implements BuilderInterface
     }
 
     /**
+     * Adds a sub-aggregation.
+     *
+     * @param AbstractPipelineAggregation $pipeline
+     */
+    public function addPipeline(AbstractPipelineAggregation $pipeline)
+    {
+        $family = $pipeline->getPipelineFamily();
+        if (!isset($this->pipelines[$family])) {
+            $this->pipelines[$family] = $this->createBuilderBag();
+        }
+
+        $this->pipelines[$family]->add($pipeline);
+    }
+
+    /**
+     * Returns all sibling pipeline aggregations.
+     *
+     * @return AbstractPipelineAggregation[]
+     */
+    public function getSiblingPipelines()
+    {
+        if (isset($this->pipelines['sibling'])) {
+            return $this->pipelines['sibling']->all();
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * Returns all parent pipeline aggregations.
+     *
+     * @return AbstractPipelineAggregation[]
+     */
+    public function getParentPipelines()
+    {
+        if (isset($this->pipelines['parent'])) {
+            return $this->pipelines['parent']->all();
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * Checks if pipelines or a given family of pipeline
+     * aggregations is set
+     *
+     * @param string $family
+     *
+     * @return bool
+     */
+    public function hasPipelines($family = null)
+    {
+        return $family ? isset($this->pipelines[$family]) :
+            !empty($this->pipelines);
+    }
+
+
+    /**
      * Returns all sub aggregations.
      *
      * @return BuilderBag[]
@@ -125,7 +189,7 @@ abstract class AbstractAggregation implements BuilderInterface
             $this->getType() => is_array($array) ? $this->processArray($array) : $array,
         ];
 
-        if ($this->supportsNesting()) {
+        if ($this->supportsNesting() || $this->hasPipelines('parent')) {
             $nestedResult = $this->collectNestedAggregations();
 
             if (!empty($nestedResult)) {
@@ -147,6 +211,14 @@ abstract class AbstractAggregation implements BuilderInterface
         /** @var AbstractAggregation $aggregation */
         foreach ($this->getAggregations() as $aggregation) {
             $result[$aggregation->getName()] = $aggregation->toArray();
+            if ($aggregation->hasPipelines('parent')) {
+                foreach ($aggregation->getParentPipelines() as $pipeline) {
+                    $result[$pipeline->getName()] = $pipeline->toArray();
+                }
+            }
+        }
+        foreach ($this->getParentPipelines() as $pipeline) {
+            $result[$pipeline->getName()] = $pipeline->toArray();
         }
 
         return $result;

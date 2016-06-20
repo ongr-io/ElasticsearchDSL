@@ -315,6 +315,13 @@ class Search
     {
         $this->getEndpoint(AggregationsEndpoint::NAME)->add($aggregation, $aggregation->getName());
 
+        if ($aggregation->hasPipelines('sibling')) {
+            foreach ($aggregation->getSiblingPipelines() as $pipeline) {
+                $this->getEndpoint(AggregationsEndpoint::NAME)
+                    ->add($pipeline, $pipeline->getName());
+            }
+        }
+
         return $this;
     }
 
