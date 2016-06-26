@@ -62,7 +62,9 @@ class CompletionSuggest implements BuilderInterface
      */
     public function toArray()
     {
-        $this->addParameter('field', 'suggest');
+        if (!$this->hasParameter('field')) {
+            $this->addParameter('field', 'suggest');
+        }
 
         if (!$this->hasParameter('size')) {
             $this->addParameter('size', self::DEFAULT_SIZE);

@@ -59,6 +59,27 @@ class CompletionSuggestTest extends \PHPUnit_Framework_TestCase
         $expected = ['foo' => [
             'text' => 'bar',
             'completion' => [
+                'field' => 'title',
+                'size' => 5,
+                'fuzzy' => ['fuzziness' => 2]
+            ],
+        ]];
+        $this->assertEquals($expected, $suggest->toArray());
+    }
+
+    public function testToArrayWithoutField()
+    {
+        $suggest = new CompletionSuggest(
+            'foo',
+            'bar',
+            [
+                'size' => 5,
+                'fuzzy' => ['fuzziness' => 2]
+            ]
+        );
+        $expected = ['foo' => [
+            'text' => 'bar',
+            'completion' => [
                 'field' => 'suggest',
                 'size' => 5,
                 'fuzzy' => ['fuzziness' => 2]
