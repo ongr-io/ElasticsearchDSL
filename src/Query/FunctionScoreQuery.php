@@ -60,7 +60,7 @@ class FunctionScoreQuery implements BuilderInterface
     private function applyQuery(array &$function, BuilderInterface $query = null)
     {
         if ($query) {
-            $function['query'] = $query->toArray();
+            $function['filter'] = $query->toArray();
         }
     }
 
