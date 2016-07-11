@@ -52,15 +52,15 @@ class FunctionScoreQuery implements BuilderInterface
     }
 
     /**
-     * Modifier to apply query to the function score function.
+     * Modifier to apply filter to the function score function.
      *
      * @param array            $function
      * @param BuilderInterface $query
      */
-    private function applyQuery(array &$function, BuilderInterface $query = null)
+    private function applyFilter(array &$function, BuilderInterface $query = null)
     {
         if ($query) {
-            $function['query'] = $query->toArray();
+            $function['filter'] = $query->toArray();
         }
     }
 
@@ -84,7 +84,7 @@ class FunctionScoreQuery implements BuilderInterface
             ],
         ];
 
-        $this->applyQuery($function, $query);
+        $this->applyFilter($function, $query);
 
         $this->functions[] = $function;
 
@@ -116,7 +116,7 @@ class FunctionScoreQuery implements BuilderInterface
             ),
         ];
 
-        $this->applyQuery($function, $query);
+        $this->applyFilter($function, $query);
 
         $this->functions[] = $function;
 
@@ -137,7 +137,7 @@ class FunctionScoreQuery implements BuilderInterface
             'weight' => $weight,
         ];
 
-        $this->applyQuery($function, $query);
+        $this->applyFilter($function, $query);
 
         $this->functions[] = $function;
 
@@ -158,7 +158,7 @@ class FunctionScoreQuery implements BuilderInterface
             'random_score' => $seed ? [ 'seed' => $seed ] : new \stdClass(),
         ];
 
-        $this->applyQuery($function, $query);
+        $this->applyFilter($function, $query);
 
         $this->functions[] = $function;
 
@@ -191,7 +191,7 @@ class FunctionScoreQuery implements BuilderInterface
             ),
         ];
 
-        $this->applyQuery($function, $query);
+        $this->applyFilter($function, $query);
 
         $this->functions[] = $function;
 
