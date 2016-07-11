@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
 /**
  * Class representing Histogram aggregation.
  *
- * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-datehistogram-aggregation.html
+ * @link https://goo.gl/hGCdDd
  */
 class DateHistogramAggregation extends AbstractAggregation
 {
