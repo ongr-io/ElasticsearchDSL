@@ -11,6 +11,9 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\DSL;
 
+use ONGR\ElasticsearchDSL\Aggregation\MissingAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Pipeline\AvgBucketAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Pipeline\DerivativeAggregation;
 use ONGR\ElasticsearchDSL\Query\MissingQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
@@ -285,6 +288,36 @@ class SearchTest extends \PHPUnit_Framework_TestCase
             (new Search())
                 ->addSuggest(new TermSuggest('foo', 'bar', ['field' => 'title', 'size' => 2]))
                 ->addSuggest(new TermSuggest('bar', 'foo', ['field' => 'title', 'size' => 2])),
+        ];
+
+        $aggregation = new MissingAggregation('foo', 'bar');
+        $aggregation->addPipeline(new AvgBucketAggregation('sibling', 'path1'));
+        $aggregation->addPipeline(new DerivativeAggregation('parent', 'path2'));
+        $cases['pipeline_aggregations'] = [
+            [
+                'aggregations' => [
+                    'foo' => [
+                        'missing' => [
+                            'field' => 'bar',
+                        ],
+                        'aggregations' => [
+                            'parent' => [
+                                'derivative' => [
+                                    'buckets_path' => 'path2',
+                                    'gap_policy' => 'skip',
+                                ]
+                            ]
+                        ]
+                    ],
+                    'sibling' => [
+                        'avg_bucket' => [
+                            'buckets_path' => 'path1',
+                            'gap_policy' => 'skip',
+                        ]
+                    ]
+                ]
+            ],
+            (new Search())->addAggregation($aggregation)
         ];
 
         return $cases;
