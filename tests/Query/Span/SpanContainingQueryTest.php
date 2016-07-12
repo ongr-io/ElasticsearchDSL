@@ -24,16 +24,16 @@ class SpanContainingQueryTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $query = new SpanContainingQuery(
-            $this->getSpanQueryMack('foo'),
-            $this->getSpanQueryMack('bar')
+            $this->getSpanQueryMock('foo'),
+            $this->getSpanQueryMock('bar')
         );
         $result = [
             'span_containing' => [
                 'little' => [
-                    'span_term' => ['user' => 'bar'],
+                    'span_term' => ['user' => 'foo'],
                 ],
                 'big' => [
-                    'span_term' => ['user' => 'foo'],
+                    'span_term' => ['user' => 'bar'],
                 ],
             ],
         ];
@@ -45,7 +45,7 @@ class SpanContainingQueryTest extends \PHPUnit_Framework_TestCase
      *
      * @returns \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getSpanQueryMack($value)
+    private function getSpanQueryMock($value)
     {
         $mock = $this->getMock('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface');
         $mock

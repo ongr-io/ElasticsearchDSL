@@ -11,6 +11,8 @@
 
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
+use ONGR\ElasticsearchDSL\ParametersTrait;
+
 /**
  * Elasticsearch span containing query.
  *
@@ -18,10 +20,7 @@ namespace ONGR\ElasticsearchDSL\Query\Span;
  */
 class SpanContainingQuery implements SpanQueryInterface
 {
-    /**
-     * @param SpanQueryInterface
-     */
-    private $big;
+    use ParametersTrait;
 
     /**
      * @param SpanQueryInterface
@@ -29,13 +28,50 @@ class SpanContainingQuery implements SpanQueryInterface
     private $little;
 
     /**
+     * @param SpanQueryInterface
+     */
+    private $big;
+
+    /**
+     * @param SpanQueryInterface $little
      * @param SpanQueryInterface $big
+     */
+    public function __construct(SpanQueryInterface $little, SpanQueryInterface $big)
+    {
+        $this->setLittle($little);
+        $this->setBig($big);
+    }
+
+    /**
+     * @return SpanQueryInterface
+     */
+    public function getLittle()
+    {
+        return $this->little;
+    }
+
+    /**
      * @param SpanQueryInterface $little
      */
-    public function __construct(SpanQueryInterface $big, SpanQueryInterface $little)
+    public function setLittle(SpanQueryInterface $little)
+    {
+        $this->little = $little;
+    }
+
+    /**
+     * @return SpanQueryInterface
+     */
+    public function getBig()
+    {
+        return $this->big;
+    }
+
+    /**
+     * @param SpanQueryInterface $big
+     */
+    public function setBig(SpanQueryInterface $big)
     {
         $this->big = $big;
-        $this->little = $little;
     }
 
     /**
@@ -51,11 +87,13 @@ class SpanContainingQuery implements SpanQueryInterface
      */
     public function toArray()
     {
-        $out = [
-            'little' => $this->little->toArray(),
-            'big' => $this->big->toArray(),
+        $output = [
+            'little' => $this->getLittle()->toArray(),
+            'big' => $this->getBig()->toArray(),
         ];
 
-        return [$this->getType() => $out];
+        $output = $this->processArray($output);
+
+        return [$this->getType() => $output];
     }
 }
