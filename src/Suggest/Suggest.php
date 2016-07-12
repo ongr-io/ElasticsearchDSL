@@ -19,11 +19,6 @@ class Suggest implements BuilderInterface
 {
     use ParametersTrait;
 
-    const TERM = 'term';
-    const COMPLETION = 'completion';
-    const PHRASE = 'phrase';
-    const CONTEXT = 'completion';
-
     /**
      * @var string
      */
@@ -37,29 +32,46 @@ class Suggest implements BuilderInterface
     /**
      * @var string
      */
-    private $field;
+    private $text;
 
     /**
      * @var string
      */
-    private $text;
+    private $field;
 
     /**
      * TermSuggest constructor.
      * @param string $name
-     * @param string $field
      * @param string $type
      * @param string $text
+     * @param string $field
      * @param array $parameters
      */
-    public function __construct($name, $field, $type, $text, $parameters = [])
+    public function __construct($name, $type, $text, $field, $parameters = [])
     {
         $this->setName($name);
-        $this->validateType($type);
-        $this->setField($field);
         $this->setType($type);
         $this->setText($text);
+        $this->setField($field);
         $this->setParameters($parameters);
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Returns suggest name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -110,48 +122,6 @@ class Suggest implements BuilderInterface
     public function setField($field)
     {
         $this->field = $field;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Returns suggest name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Checks if the type is valid
-     *
-     * @param string $type
-     *
-     * @return bool
-     *
-     * @throws InvalidArgumentException
-     */
-    private function validateType($type)
-    {
-        if (in_array($type, [
-            self::COMPLETION,
-            self::CONTEXT,
-            self::PHRASE,
-            self::TERM
-        ])) {
-            return true;
-        }
-        throw new InvalidArgumentException(
-            'You must provide a valid type to the Suggest()'
-        );
     }
 
     /**

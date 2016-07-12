@@ -20,7 +20,7 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuggestGetType()
     {
-        $suggest = new Suggest('foo', 'bar', Suggest::TERM, 'acme');
+        $suggest = new Suggest('foo', 'term', 'acme', 'bar');
         $this->assertEquals('term', $suggest->getType());
     }
 
@@ -35,48 +35,9 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
             [
                 'suggest' => new Suggest(
                     'foo',
-                    'acme',
-                    Suggest::PHRASE,
+                    'term',
                     'bar',
-                    ['max_errors' => 0.5]
-                ),
-                'expected' => [
-                    'foo' => [
-                        'text' => 'bar',
-                        'phrase' => [
-                            'field' => 'acme',
-                            'max_errors' => 0.5,
-                        ],
-                    ]
-                ]
-            ],
-            [
-                'suggest' => new Suggest(
-                    'foo',
                     'acme',
-                    Suggest::CONTEXT,
-                    'bar',
-                    ['context' => ['color' => 'red'], 'size' => 3]
-                ),
-                'expected' => [
-                    'foo' => [
-                        'text' => 'bar',
-                        'completion' => [
-                            'field' => 'acme',
-                            'size' => 3,
-                            'context' => [
-                                'color' => 'red'
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            [
-                'suggest' => new Suggest(
-                    'foo',
-                    'acme',
-                    Suggest::TERM,
-                    'bar',
                     ['size' => 5]
                 ),
                 'expected' => [
@@ -92,15 +53,56 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
             [
                 'suggest' => new Suggest(
                     'foo',
+                    'phrase',
+                    'bar',
                     'acme',
-                    Suggest::COMPLETION,
-                    'bar'
+                    ['max_errors' => 0.5]
+                ),
+                'expected' => [
+                    'foo' => [
+                        'text' => 'bar',
+                        'phrase' => [
+                            'field' => 'acme',
+                            'max_errors' => 0.5,
+                        ],
+                    ]
+                ]
+            ],
+            [
+                'suggest' => new Suggest(
+                    'foo',
+                    'completion',
+                    'bar',
+                    'acme',
+                    ['fuzziness' => 2]
                 ),
                 'expected' => [
                     'foo' => [
                         'text' => 'bar',
                         'completion' => [
-                            'field' => 'acme'
+                            'field' => 'acme',
+                            'fuzziness' => 2
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'suggest' => new Suggest(
+                    'foo',
+                    'completion',
+                    'bar',
+                    'acme',
+                    ['context' => ['color' => 'red'], 'size' => 3]
+                ),
+                'expected' => [
+                    'foo' => [
+                        'text' => 'bar',
+                        'completion' => [
+                            'field' => 'acme',
+                            'size' => 3,
+                            'context' => [
+                                'color' => 'red'
+                            ]
                         ]
                     ]
                 ]
@@ -117,15 +119,5 @@ class SuggestTest extends \PHPUnit_Framework_TestCase
     public function testToArray(Suggest $suggest, array $expected)
     {
         $this->assertEquals($expected, $suggest->toArray());
-    }
-
-    /**
-     * Tests exception that is thrown when wrong type is provided
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testValidateTypeException()
-    {
-        new Suggest('foo', 'bar', 'wrong-type', 'acme');
     }
 }
