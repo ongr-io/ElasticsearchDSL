@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Suggest;
 
 use ONGR\ElasticsearchDSL\Suggest\TermSuggest;
 
-class SuggestTest extends \PHPUnit_Framework_TestCase
+class TermSuggestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests getType method.

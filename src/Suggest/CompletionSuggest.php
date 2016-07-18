@@ -14,6 +14,9 @@ namespace ONGR\ElasticsearchDSL\Suggest;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
+/**
+ * @deprecated CompletionSuggest is deprecated, use Suggest instead
+ */
 class CompletionSuggest implements BuilderInterface
 {
     use ParametersTrait;
