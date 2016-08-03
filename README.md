@@ -11,7 +11,6 @@ is the preffered and recommended way to ask ONGR support questions.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/?branch=master)
 
 __This component requires Elasticsearch 2.0 or newer.__
-> Warning: If you are using Amazon Elasticsearch Service (currently supports only Elasticsearch 1.x) use Elasticsearch DSL 1.x version. 
 
 ## Documentation
 
