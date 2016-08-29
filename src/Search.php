@@ -13,11 +13,13 @@ namespace ONGR\ElasticsearchDSL;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
+use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AbstractSearchEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint;
+use ONGR\ElasticsearchDSL\SearchEndpoint\InnerHitsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
@@ -326,6 +328,30 @@ class Search
     public function getAggregations()
     {
         return $this->getEndpoint(AggregationsEndpoint::NAME)->getAll();
+    }
+
+    /**
+     * Adds inner hit into search.
+     *
+     * @param NestedInnerHit $innerHit
+     *
+     * @return $this
+     */
+    public function addInnerHit(NestedInnerHit $innerHit)
+    {
+        $this->getEndpoint(InnerHitsEndpoint::NAME)->add($innerHit, $innerHit->getName());
+
+        return $this;
+    }
+
+    /**
+     * Returns all inner hits.
+     *
+     * @return BuilderInterface[]
+     */
+    public function getInnerHits()
+    {
+        return $this->getEndpoint(InnerHitsEndpoint::NAME)->getAll();
     }
 
     /**
