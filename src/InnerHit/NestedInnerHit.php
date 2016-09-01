@@ -99,6 +99,8 @@ class NestedInnerHit implements BuilderInterface
      * Adds a sub-innerHit.
      *
      * @param NestedInnerHit $innerHit
+     *
+     * @return $this
      */
     public function addInnerHit(NestedInnerHit $innerHit)
     {
@@ -107,6 +109,8 @@ class NestedInnerHit implements BuilderInterface
         }
 
         $this->innerHits->add($innerHit);
+
+        return $this;
     }
 
     /**
