@@ -57,6 +57,8 @@ class TermsAggregation extends AbstractAggregation
             ]
         );
 
+        $data = $this->processArray($data);
+
         return $data;
     }
 }
