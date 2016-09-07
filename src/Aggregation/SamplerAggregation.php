@@ -11,77 +11,16 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\SamplerAggregation as Base;
 
 /**
  * Class representing geo bounds aggregation.
  *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
+ *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/2.3/search-aggregations-bucket-sampler-aggregation.html
  */
-class SamplerAggregation extends AbstractAggregation
+class SamplerAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * Defines how many results will be received from each shard
-     * @param string $shardSize
-     */
-    private $shardSize;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param int    $shardSize
-     */
-    public function __construct(
-        $name,
-        $field = null,
-        $shardSize = null
-    ) {
-        parent::__construct($name);
-
-        $this->setField($field);
-        $this->setShardSize($shardSize);
-    }
-
-    /**
-     * @return int
-     */
-    public function getShardSize()
-    {
-        return $this->shardSize;
-    }
-
-    /**
-     * @param int $shardSize
-     */
-    public function setShardSize($shardSize)
-    {
-        $this->shardSize = $shardSize;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'sampler';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $out = array_filter(
-            [
-                'field' => $this->getField(),
-                'shard_size' => $this->getShardSize(),
-            ]
-        );
-
-        return $out;
-    }
 }

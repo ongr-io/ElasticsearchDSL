@@ -11,93 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
-use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FiltersAggregation as Base;
 
 /**
  * Class representing filters aggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class FiltersAggregation extends AbstractAggregation
+class FiltersAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * @var BuilderInterface[]
-     */
-    private $filters = [];
-
-    /**
-     * @var bool
-     */
-    private $anonymous = false;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string             $name
-     * @param BuilderInterface[] $filters
-     * @param bool               $anonymous
-     */
-    public function __construct($name, $filters = [], $anonymous = false)
-    {
-        parent::__construct($name);
-
-        $this->setAnonymous($anonymous);
-        foreach ($filters as $name => $filter) {
-            if ($anonymous) {
-                $this->addFilter($filter);
-            } else {
-                $this->addFilter($filter, $name);
-            }
-        }
-    }
-
-    /**
-     * @param bool $anonymous
-     *
-     * @return FiltersAggregation
-     */
-    public function setAnonymous($anonymous)
-    {
-        $this->anonymous = $anonymous;
-
-        return $this;
-    }
-
-    /**
-     * @param BuilderInterface $filter
-     * @param string           $name
-     *
-     * @throws \LogicException
-     *
-     * @return FiltersAggregation
-     */
-    public function addFilter(BuilderInterface $filter, $name = '')
-    {
-        if ($this->anonymous === false && empty($name)) {
-            throw new \LogicException('In not anonymous filters filter name must be set.');
-        } elseif ($this->anonymous === false && !empty($name)) {
-            $this->filters['filters'][$name] = $filter->toArray();
-        } else {
-            $this->filters['filters'][] = $filter->toArray();
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        return $this->filters;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'filters';
-    }
 }

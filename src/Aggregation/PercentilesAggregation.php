@@ -11,117 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
-use ONGR\ElasticsearchDSL\ScriptAwareTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentilesAggregation as Base;
 
 /**
  * Class representing PercentilesAggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class PercentilesAggregation extends AbstractAggregation
+class PercentilesAggregation extends Base
 {
-    use MetricTrait;
-    use ScriptAwareTrait;
-
-    /**
-     * @var array
-     */
-    private $percents;
-
-    /**
-     * @var int
-     */
-    private $compression;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param array  $percents
-     * @param string $script
-     * @param int    $compression
-     */
-    public function __construct($name, $field = null, $percents = null, $script = null, $compression = null)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-        $this->setPercents($percents);
-        $this->setScript($script);
-        $this->setCompression($compression);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPercents()
-    {
-        return $this->percents;
-    }
-
-    /**
-     * @param array $percents
-     */
-    public function setPercents($percents)
-    {
-        $this->percents = $percents;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCompression()
-    {
-        return $this->compression;
-    }
-
-    /**
-     * @param int $compression
-     */
-    public function setCompression($compression)
-    {
-        $this->compression = $compression;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'percentiles';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $out = array_filter(
-            [
-                'compression' => $this->getCompression(),
-                'percents' => $this->getPercents(),
-                'field' => $this->getField(),
-                'script' => $this->getScript(),
-            ],
-            function ($val) {
-                return ($val || is_numeric($val));
-            }
-        );
-
-        $this->isRequiredParametersSet($out);
-
-        return $out;
-    }
-
-    /**
-     * @param array $a
-     *
-     * @throws \LogicException
-     */
-    private function isRequiredParametersSet($a)
-    {
-        if (!array_key_exists('field', $a) && !array_key_exists('script', $a)) {
-            throw new \LogicException('Percentiles aggregation must have field or script set.');
-        }
-    }
 }

@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\InnerHit\AbstractInnerHit;
+use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -31,7 +31,7 @@ class InnerHitsEndpoint extends AbstractSearchEndpoint
     {
         $output = [];
         if (count($this->getAll()) > 0) {
-            /** @var AbstractInnerHit $innerHit */
+            /** @var NestedInnerHit $innerHit */
             foreach ($this->getAll() as $innerHit) {
                 $output[$innerHit->getName()] = $innerHit->toArray();
             }

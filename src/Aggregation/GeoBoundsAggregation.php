@@ -11,73 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoBoundsAggregation as Base;
 
 /**
  * Class representing geo bounds aggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class GeoBoundsAggregation extends AbstractAggregation
+class GeoBoundsAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * @var bool
-     */
-    private $wrapLongitude = true;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param bool   $wrapLongitude
-     */
-    public function __construct($name, $field = null, $wrapLongitude = true)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-        $this->setWrapLongitude($wrapLongitude);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isWrapLongitude()
-    {
-        return $this->wrapLongitude;
-    }
-
-    /**
-     * @param bool $wrapLongitude
-     */
-    public function setWrapLongitude($wrapLongitude)
-    {
-        $this->wrapLongitude = $wrapLongitude;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $data = [];
-        if ($this->getField()) {
-            $data['field'] = $this->getField();
-        } else {
-            throw new \LogicException('Geo bounds aggregation must have a field set.');
-        }
-
-        $data['wrap_longitude'] = $this->isWrapLongitude();
-
-        return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'geo_bounds';
-    }
 }

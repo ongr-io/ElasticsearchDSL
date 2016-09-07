@@ -11,18 +11,16 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\SignificantTermsAggregation as Base;
+
 /**
  * Class representing TermsAggregation.
  *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
+ *
  * @link https://goo.gl/xI7zoa
  */
-class SignificantTermsAggregation extends TermsAggregation
+class SignificantTermsAggregation extends Base
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'significant_terms';
-    }
 }
