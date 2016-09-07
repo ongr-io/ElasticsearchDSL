@@ -48,7 +48,7 @@ class NestedInnerHit implements BuilderInterface
      * @param string           $path
      * @param BuilderInterface $query
      */
-    public function __construct($name, $path, BuilderInterface $query)
+    public function __construct($name, $path, BuilderInterface $query = null)
     {
         $this->setName($name);
         $this->setPath($path);
@@ -82,7 +82,7 @@ class NestedInnerHit implements BuilderInterface
     /**
      * @param BuilderInterface $query
      */
-    public function setQuery(BuilderInterface $query)
+    public function setQuery(BuilderInterface $query = null)
     {
         $this->query = $query;
     }
@@ -145,14 +145,16 @@ class NestedInnerHit implements BuilderInterface
     {
         $out = array_filter(
             [
-                'query' => $this->getQuery()->toArray(),
+                'query' => $this->getQuery() ? $this->getQuery()->toArray() : null,
                 'inner_hits' => $this->collectNestedInnerHits(),
             ]
         );
 
+        $out = $this->processArray($out);
+
         $out = [
             $this->getPathType() => [
-                $this->getPath() => $this->processArray($out),
+                $this->getPath() => $out ? $out : new \stdClass(),
             ],
         ];
 
