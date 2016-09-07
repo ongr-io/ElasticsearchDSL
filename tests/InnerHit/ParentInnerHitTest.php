@@ -4,13 +4,18 @@ namespace ONGR\ElasticsearchDSL\Tests\InnerHit;
 
 use ONGR\ElasticsearchDSL\InnerHit\ParentInnerHit;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
+use ONGR\ElasticsearchDSL\Search;
 
 class ParentInnerHitTest extends \PHPUnit_Framework_TestCase
 {
     public function testToArray()
     {
         $query = new TermQuery('foo', 'bar');
-        $hit = new ParentInnerHit('test', 'acme', $query);
+        $search = new Search();
+        $search->addQuery($query);
+
+
+        $hit = new ParentInnerHit('test', 'acme', $search);
         $expected = [
             'type' => [
                 'acme' => [
