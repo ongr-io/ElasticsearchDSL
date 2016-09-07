@@ -11,10 +11,10 @@
 
 namespace ONGR\ElasticsearchDSL\InnerHit;
 
-use ONGR\ElasticsearchDSL\BuilderBag;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\NameAwareTrait;
 use ONGR\ElasticsearchDSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\Search;
 
 /**
  * Represents Elasticsearch top level nested inner hits.
@@ -37,18 +37,13 @@ class NestedInnerHit implements BuilderInterface
     private $query;
 
     /**
-     * @var BuilderBag
-     */
-    private $innerHits;
-
-    /**
      * Inner hits container init.
      *
-     * @param string           $name
-     * @param string           $path
-     * @param BuilderInterface $query
+     * @param string $name
+     * @param string $path
+     * @param Search $query
      */
-    public function __construct($name, $path, BuilderInterface $query = null)
+    public function __construct($name, $path, Search $query = null)
     {
         $this->setName($name);
         $this->setPath($path);
@@ -65,14 +60,10 @@ class NestedInnerHit implements BuilderInterface
 
     /**
      * @param string $path
-     *
-     * @return $this
      */
     public function setPath($path)
     {
         $this->path = $path;
-
-        return $this;
     }
 
     /**
@@ -84,15 +75,11 @@ class NestedInnerHit implements BuilderInterface
     }
 
     /**
-     * @param BuilderInterface $query
-     *
-     * @return $this
+     * @param Search $query
      */
-    public function setQuery(BuilderInterface $query)
+    public function setQuery(Search $query = null)
     {
         $this->query = $query;
-
-        return $this;
     }
 
     /**
@@ -104,69 +91,15 @@ class NestedInnerHit implements BuilderInterface
     }
 
     /**
-     * Adds a sub-innerHit.
-     *
-     * @param NestedInnerHit $innerHit
-     *
-     * @return $this
-     */
-    public function addInnerHit(NestedInnerHit $innerHit)
-    {
-        if (!$this->innerHits) {
-            $this->innerHits = new BuilderBag();
-        }
-
-        $this->innerHits->add($innerHit);
-
-        return $this;
-    }
-
-    /**
-     * Returns all sub inner hits.
-     *
-     * @return BuilderInterface[]
-     */
-    public function getInnerHits()
-    {
-        if ($this->innerHits) {
-            return $this->innerHits->all();
-        } else {
-            return [];
-        }
-    }
-
-    /**
-     * Returns sub inner hit.
-     * @param string $name inner hit name to return.
-     *
-     * @return NestedInnerHit|null
-     */
-    public function getInnerHit($name)
-    {
-        if ($this->innerHits && $this->innerHits->has($name)) {
-            return $this->innerHits->get($name);
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray()
     {
-        $out = array_filter(
-            [
-                'query' => $this->getQuery() ? $this->getQuery()->toArray() : null,
-                'inner_hits' => $this->collectNestedInnerHits(),
-            ]
-        );
-
-        $out = $this->processArray($out);
+        $out = $this->getQuery() ? $this->getQuery()->toArray() : new \stdClass();
 
         $out = [
             $this->getPathType() => [
-                $this->getPath() => $out ? $out : new \stdClass(),
+                $this->getPath() => $out ,
             ],
         ];
 
@@ -174,7 +107,7 @@ class NestedInnerHit implements BuilderInterface
     }
 
     /**
-     * Returns 'path' for neted and 'type' for parent inner hits
+     * Returns 'path' for nested and 'type' for parent inner hits
      *
      * @return null|string
      */
@@ -191,21 +124,5 @@ class NestedInnerHit implements BuilderInterface
                 $type = null;
         }
         return $type;
-    }
-
-    /**
-     * Process all nested inner hits.
-     *
-     * @return array
-     */
-    private function collectNestedInnerHits()
-    {
-        $result = [];
-        /** @var NestedInnerHit $innerHit */
-        foreach ($this->getInnerHits() as $innerHit) {
-            $result[$innerHit->getName()] = $innerHit->toArray();
-        }
-
-        return $result;
     }
 }
