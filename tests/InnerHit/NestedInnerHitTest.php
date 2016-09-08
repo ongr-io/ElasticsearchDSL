@@ -111,10 +111,10 @@ class NestedInnerHitTest extends \PHPUnit_Framework_TestCase
         $hit = new NestedInnerHit('test', 'acme', new Search());
         $hit->setName('foo');
         $hit->setPath('bar');
-        $hit->setQuery($search);
+        $hit->setSearch($search);
 
         $this->assertEquals('foo', $hit->getName());
         $this->assertEquals('bar', $hit->getPath());
-        $this->assertEquals($search, $hit->getQuery());
+        $this->assertEquals($search, $hit->getSearch());
     }
 }

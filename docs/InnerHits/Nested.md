@@ -37,7 +37,9 @@ And now the query via DSL:
 ```php
 $matchQuery = new MatchQuery('comments.message', '[different query]');
 $nestedQuery = new NestedQuery('comments', $matchQuery);
-$innerHit = new NestedInnerHit('comment', 'comments', $matchQuery);
+$searchQuery = new Search();
+$searchQuery->add($matchQuery);
+$innerHit = new NestedInnerHit('comment', 'comments', $searchQuery);
 
 $search = new Search();
 $search->addQuery(new MatchQuery('comments.message', '[actual query]'));
@@ -98,10 +100,17 @@ And now the query via DSL:
 ```php
 
 $matchQuery = new MatchQuery('cars.manufacturers.country', 'Japan');
+$matchSearch = new Search();
+$matchSearch->addQuery($matchQuery);
+
 $nestedQuery = new NestedQuery('cars.manufacturers', $matchQuery);
-$innerHitNested = new NestedInnerHit('manufacturers', 'cars.manufacturers', $matchQuery);
-$innerHit = new NestedInnerHit('cars', 'cars', $nestedQuery);
-$innerHit->addInnerHit($innerHitNested);
+$nestedSearch = new Search();
+$nestedSearch->addQuery($nestedQuery);
+
+$innerHitNested = new NestedInnerHit('manufacturers', 'cars.manufacturers', $matchSearch);
+
+$innerHit = new NestedInnerHit('cars', 'cars', $nestedSearch);
+$nestedSearch->addInnerHit($innerHitNested);
 
 $search = new Search();
 $search->addInnerHit($innerHit);
