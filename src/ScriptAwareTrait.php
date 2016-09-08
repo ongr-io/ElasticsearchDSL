@@ -31,9 +31,13 @@ trait ScriptAwareTrait
 
     /**
      * @param string $script
+     *
+     * @return $this
      */
     public function setScript($script)
     {
         $this->script = $script;
+
+        return $this;
     }
 }

@@ -70,20 +70,28 @@ trait ParametersTrait
     /**
      * @param string                 $name
      * @param array|string|\stdClass $value
+     *
+     * @return $this
      */
     public function addParameter($name, $value)
     {
         $this->parameters[$name] = $value;
+
+        return $this;
     }
 
     /**
      * Sets an array of parameters.
      *
      * @param array $parameters
+     *
+     * @return $this
      */
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
+
+        return $this;
     }
 
     /**

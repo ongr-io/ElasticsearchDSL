@@ -66,10 +66,14 @@ class TopHitsAggregation extends AbstractAggregation
      * Set from.
      *
      * @param int $from
+     *
+     * @return $this
      */
     public function setFrom($from)
     {
         $this->from = $from;
+
+        return $this;
     }
 
     /**
@@ -86,20 +90,28 @@ class TopHitsAggregation extends AbstractAggregation
      * Set sort.
      *
      * @param BuilderInterface $sort
+     *
+     * @return $this
      */
     public function setSort($sort)
     {
         $this->sort = $sort;
+
+        return $this;
     }
 
     /**
      * Set size.
      *
      * @param int $size
+     *
+     * @return $this
      */
     public function setSize($size)
     {
         $this->size = $size;
+
+        return $this;
     }
 
     /**

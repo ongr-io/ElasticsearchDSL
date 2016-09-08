@@ -58,10 +58,14 @@ abstract class AbstractAggregation implements BuilderInterface
 
     /**
      * @param string $field
+     *
+     * @return $this
      */
     public function setField($field)
     {
         $this->field = $field;
+
+        return $this;
     }
 
     /**
@@ -86,7 +90,7 @@ abstract class AbstractAggregation implements BuilderInterface
         }
 
         $this->aggregations->add($abstractAggregation);
-        
+
         return $this;
     }
 

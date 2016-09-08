@@ -55,7 +55,7 @@ class FiltersAggregation extends AbstractAggregation
     /**
      * @param bool $anonymous
      *
-     * @return FiltersAggregation
+     * @return $this
      */
     public function setAnonymous($anonymous)
     {
@@ -70,7 +70,7 @@ class FiltersAggregation extends AbstractAggregation
      *
      * @throws \LogicException
      *
-     * @return FiltersAggregation
+     * @return $this
      */
     public function addFilter(BuilderInterface $filter, $name = '')
     {

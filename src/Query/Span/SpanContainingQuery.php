@@ -52,10 +52,14 @@ class SpanContainingQuery implements SpanQueryInterface
 
     /**
      * @param SpanQueryInterface $little
+     *
+     * @return $this
      */
     public function setLittle(SpanQueryInterface $little)
     {
         $this->little = $little;
+
+        return $this;
     }
 
     /**
@@ -68,10 +72,14 @@ class SpanContainingQuery implements SpanQueryInterface
 
     /**
      * @param SpanQueryInterface $big
+     *
+     * @return $this
      */
     public function setBig(SpanQueryInterface $big)
     {
         $this->big = $big;
+
+        return $this;
     }
 
     /**

@@ -75,10 +75,14 @@ class GeoDistanceAggregation extends AbstractAggregation
 
     /**
      * @param mixed $origin
+     *
+     * @return $this
      */
     public function setOrigin($origin)
     {
         $this->origin = $origin;
+
+        return $this;
     }
 
     /**
@@ -91,10 +95,14 @@ class GeoDistanceAggregation extends AbstractAggregation
 
     /**
      * @param string $distanceType
+     *
+     * @return $this
      */
     public function setDistanceType($distanceType)
     {
         $this->distanceType = $distanceType;
+
+        return $this;
     }
 
     /**
@@ -107,10 +115,14 @@ class GeoDistanceAggregation extends AbstractAggregation
 
     /**
      * @param string $unit
+     *
+     * @return $this
      */
     public function setUnit($unit)
     {
         $this->unit = $unit;
+
+        return $this;
     }
 
     /**
