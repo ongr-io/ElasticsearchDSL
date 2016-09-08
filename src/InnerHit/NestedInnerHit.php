@@ -65,10 +65,14 @@ class NestedInnerHit implements BuilderInterface
 
     /**
      * @param string $path
+     *
+     * @return $this
      */
     public function setPath($path)
     {
         $this->path = $path;
+
+        return $this;
     }
 
     /**
@@ -81,10 +85,14 @@ class NestedInnerHit implements BuilderInterface
 
     /**
      * @param BuilderInterface $query
+     *
+     * @return $this
      */
-    public function setQuery(BuilderInterface $query = null)
+    public function setQuery(BuilderInterface $query)
     {
         $this->query = $query;
+
+        return $this;
     }
 
     /**
@@ -99,6 +107,8 @@ class NestedInnerHit implements BuilderInterface
      * Adds a sub-innerHit.
      *
      * @param NestedInnerHit $innerHit
+     *
+     * @return $this
      */
     public function addInnerHit(NestedInnerHit $innerHit)
     {
@@ -107,6 +117,8 @@ class NestedInnerHit implements BuilderInterface
         }
 
         $this->innerHits->add($innerHit);
+
+        return $this;
     }
 
     /**
