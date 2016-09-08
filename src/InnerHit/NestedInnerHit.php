@@ -32,22 +32,24 @@ class NestedInnerHit implements BuilderInterface
     private $path;
 
     /**
-     * @var BuilderInterface
+     * @var Search
      */
-    private $query;
+    private $search;
 
     /**
      * Inner hits container init.
      *
      * @param string $name
      * @param string $path
-     * @param Search $query
+     * @param Search $search
      */
-    public function __construct($name, $path, Search $query = null)
+    public function __construct($name, $path, Search $search = null)
     {
         $this->setName($name);
         $this->setPath($path);
-        $this->setQuery($query);
+        if ($search) {
+            $this->setSearch($search);
+        }
     }
 
     /**
@@ -60,26 +62,34 @@ class NestedInnerHit implements BuilderInterface
 
     /**
      * @param string $path
+     *
+     * @return $this
      */
     public function setPath($path)
     {
         $this->path = $path;
+
+        return $this;
     }
 
     /**
-     * @return BuilderInterface
+     * @return Search
      */
-    public function getQuery()
+    public function getSearch()
     {
-        return $this->query;
+        return $this->search;
     }
 
     /**
-     * @param Search $query
+     * @param Search $search
+     *
+     * @return $this
      */
-    public function setQuery(Search $query = null)
+    public function setSearch(Search $search)
     {
-        $this->query = $query;
+        $this->search = $search;
+
+        return $this;
     }
 
     /**
@@ -95,7 +105,7 @@ class NestedInnerHit implements BuilderInterface
      */
     public function toArray()
     {
-        $out = $this->getQuery() ? $this->getQuery()->toArray() : new \stdClass();
+        $out = $this->getSearch() ? $this->getSearch()->toArray() : new \stdClass();
 
         $out = [
             $this->getPathType() => [
