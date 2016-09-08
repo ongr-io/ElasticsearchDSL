@@ -23,6 +23,19 @@ class CardinalityAggregation extends AbstractAggregation
     use ScriptAwareTrait;
 
     /**
+     * @param string $name
+     * @param string $field
+     * @param string $script
+     */
+    public function __construct($name, $field = null, $script = null)
+    {
+        parent::__construct($name);
+
+        $this->setField($field);
+        $this->setScript($script);
+    }
+
+    /**
      * @var int
      */
     private $precisionThreshold;
