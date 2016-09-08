@@ -11,10 +11,10 @@
 
 namespace ONGR\ElasticsearchDSL\InnerHit;
 
-use ONGR\ElasticsearchDSL\BuilderBag;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\NameAwareTrait;
 use ONGR\ElasticsearchDSL\ParametersTrait;
+use ONGR\ElasticsearchDSL\Search;
 
 /**
  * Represents Elasticsearch top level nested inner hits.
@@ -32,27 +32,24 @@ class NestedInnerHit implements BuilderInterface
     private $path;
 
     /**
-     * @var BuilderInterface
+     * @var Search
      */
-    private $query;
-
-    /**
-     * @var BuilderBag
-     */
-    private $innerHits;
+    private $search;
 
     /**
      * Inner hits container init.
      *
-     * @param string           $name
-     * @param string           $path
-     * @param BuilderInterface $query
+     * @param string $name
+     * @param string $path
+     * @param Search $search
      */
-    public function __construct($name, $path, BuilderInterface $query = null)
+    public function __construct($name, $path, Search $search = null)
     {
         $this->setName($name);
         $this->setPath($path);
-        $this->setQuery($query);
+        if ($search) {
+            $this->setSearch($search);
+        }
     }
 
     /**
@@ -76,21 +73,21 @@ class NestedInnerHit implements BuilderInterface
     }
 
     /**
-     * @return BuilderInterface
+     * @return Search
      */
-    public function getQuery()
+    public function getSearch()
     {
-        return $this->query;
+        return $this->search;
     }
 
     /**
-     * @param BuilderInterface $query
+     * @param Search $search
      *
      * @return $this
      */
-    public function setQuery(BuilderInterface $query)
+    public function setSearch(Search $search)
     {
-        $this->query = $query;
+        $this->search = $search;
 
         return $this;
     }
@@ -104,69 +101,15 @@ class NestedInnerHit implements BuilderInterface
     }
 
     /**
-     * Adds a sub-innerHit.
-     *
-     * @param NestedInnerHit $innerHit
-     *
-     * @return $this
-     */
-    public function addInnerHit(NestedInnerHit $innerHit)
-    {
-        if (!$this->innerHits) {
-            $this->innerHits = new BuilderBag();
-        }
-
-        $this->innerHits->add($innerHit);
-
-        return $this;
-    }
-
-    /**
-     * Returns all sub inner hits.
-     *
-     * @return BuilderInterface[]
-     */
-    public function getInnerHits()
-    {
-        if ($this->innerHits) {
-            return $this->innerHits->all();
-        } else {
-            return [];
-        }
-    }
-
-    /**
-     * Returns sub inner hit.
-     * @param string $name inner hit name to return.
-     *
-     * @return NestedInnerHit|null
-     */
-    public function getInnerHit($name)
-    {
-        if ($this->innerHits && $this->innerHits->has($name)) {
-            return $this->innerHits->get($name);
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function toArray()
     {
-        $out = array_filter(
-            [
-                'query' => $this->getQuery() ? $this->getQuery()->toArray() : null,
-                'inner_hits' => $this->collectNestedInnerHits(),
-            ]
-        );
-
-        $out = $this->processArray($out);
+        $out = $this->getSearch() ? $this->getSearch()->toArray() : new \stdClass();
 
         $out = [
             $this->getPathType() => [
-                $this->getPath() => $out ? $out : new \stdClass(),
+                $this->getPath() => $out ,
             ],
         ];
 
@@ -174,7 +117,7 @@ class NestedInnerHit implements BuilderInterface
     }
 
     /**
-     * Returns 'path' for neted and 'type' for parent inner hits
+     * Returns 'path' for nested and 'type' for parent inner hits
      *
      * @return null|string
      */
@@ -191,21 +134,5 @@ class NestedInnerHit implements BuilderInterface
                 $type = null;
         }
         return $type;
-    }
-
-    /**
-     * Process all nested inner hits.
-     *
-     * @return array
-     */
-    private function collectNestedInnerHits()
-    {
-        $result = [];
-        /** @var NestedInnerHit $innerHit */
-        foreach ($this->getInnerHits() as $innerHit) {
-            $result[$innerHit->getName()] = $innerHit->toArray();
-        }
-
-        return $result;
     }
 }

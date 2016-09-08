@@ -5,7 +5,7 @@ namespace ONGR\ElasticsearchDSL\Tests\InnerHit;
 use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
 use ONGR\ElasticsearchDSL\Query\MatchQuery;
 use ONGR\ElasticsearchDSL\Query\NestedQuery;
-use ONGR\ElasticsearchDSL\Query\TermQuery;
+use ONGR\ElasticsearchDSL\Search;
 
 class NestedInnerHitTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,11 +20,28 @@ class NestedInnerHitTest extends \PHPUnit_Framework_TestCase
 
         $matchQuery = new MatchQuery('foo.bar.aux', 'foo');
         $nestedQuery = new NestedQuery('foo.bar', $matchQuery);
-        $innerHit = new NestedInnerHit('acme', 'foo', $nestedQuery);
-        $nestedInnerHit1 = new NestedInnerHit('aux', 'foo.bar.aux', $matchQuery);
-        $nestedInnerHit2 = new NestedInnerHit('lux', 'foo.bar.aux', $matchQuery);
-        $innerHit->addInnerHit($nestedInnerHit1);
-        $innerHit->addInnerHit($nestedInnerHit2);
+        $searchQuery = new Search();
+        $searchQuery->addQuery($nestedQuery);
+
+        $matchSearch = new Search();
+        $matchSearch->addQuery($matchQuery);
+
+        $innerHit = new NestedInnerHit('acme', 'foo', $searchQuery);
+        $emptyInnerHit = new NestedInnerHit('acme', 'foo');
+
+        $nestedInnerHit1 = new NestedInnerHit('aux', 'foo.bar.aux', $matchSearch);
+        $nestedInnerHit2 = new NestedInnerHit('lux', 'foo.bar.aux', $matchSearch);
+        $searchQuery->addInnerHit($nestedInnerHit1);
+        $searchQuery->addInnerHit($nestedInnerHit2);
+
+        $out[] = [
+            $emptyInnerHit,
+            [
+                'path' => [
+                    'foo' => new \stdClass(),
+                ],
+            ],
+        ];
 
         $out[] = [
             $nestedInnerHit1,
@@ -88,30 +105,16 @@ class NestedInnerHitTest extends \PHPUnit_Framework_TestCase
     public function testGettersAndSetters()
     {
         $query = new MatchQuery('acme', 'test');
-        $hit = new NestedInnerHit('test', 'acme', new TermQuery('foo', 'bar'));
+        $search = new Search();
+        $search->addQuery($query);
+
+        $hit = new NestedInnerHit('test', 'acme', new Search());
         $hit->setName('foo');
         $hit->setPath('bar');
-        $hit->setQuery($query);
+        $hit->setSearch($search);
 
         $this->assertEquals('foo', $hit->getName());
         $this->assertEquals('bar', $hit->getPath());
-        $this->assertEquals($query, $hit->getQuery());
-    }
-
-    /**
-     * Tests getInnerHit() method
-     */
-    public function testGetInnerHit()
-    {
-        $query = new MatchQuery('acme', 'test');
-        $hit = new NestedInnerHit('test', 'acme', $query);
-        $nestedInnerHit1 = new NestedInnerHit('foo', 'acme.foo', $query);
-        $nestedInnerHit2 = new NestedInnerHit('bar', 'acme.bar', $query);
-        $hit->addInnerHit($nestedInnerHit1);
-        $hit->addInnerHit($nestedInnerHit2);
-
-        $this->assertEquals($nestedInnerHit1, $hit->getInnerHit('foo'));
-        $this->assertEquals($nestedInnerHit2, $hit->getInnerHit('bar'));
-        $this->assertNull($hit->getInnerHit('non_existing_hit'));
+        $this->assertEquals($search, $hit->getSearch());
     }
 }
