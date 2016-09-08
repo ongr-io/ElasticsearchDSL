@@ -52,10 +52,14 @@ class ReverseNestedAggregation extends AbstractAggregation
      * Sets path.
      *
      * @param string $path
+     *
+     * @return $this
      */
     public function setPath($path)
     {
         $this->path = $path;
+
+        return $this;
     }
 
     /**

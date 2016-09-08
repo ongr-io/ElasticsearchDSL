@@ -61,10 +61,14 @@ class FieldSort implements BuilderInterface
 
     /**
      * @param BuilderInterface $nestedFilter
+     *
+     * @return $this
      */
     public function setNestedFilter(BuilderInterface $nestedFilter)
     {
         $this->nestedFilter = $nestedFilter;
+
+        return $this;
     }
 
     /**

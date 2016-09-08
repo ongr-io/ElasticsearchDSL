@@ -51,6 +51,8 @@ class GeoShapeQuery implements BuilderInterface
      * @param string $type        Shape type.
      * @param array  $coordinates Shape coordinates.
      * @param array  $parameters  Additional parameters.
+     *
+     * @return $this
      */
     public function addShape($field, $type, array $coordinates, array $parameters = [])
     {
@@ -63,6 +65,8 @@ class GeoShapeQuery implements BuilderInterface
         );
 
         $this->fields[$field]['shape'] = $filter;
+
+        return $this;
     }
 
     /**
@@ -74,6 +78,8 @@ class GeoShapeQuery implements BuilderInterface
      * @param string $index      Index type where the pre-indexed shape is.
      * @param string $path       The field specified as path containing the pre-indexed shape.
      * @param array  $parameters Additional parameters.
+     *
+     * @return $this
      */
     public function addPreIndexedShape($field, $id, $type, $index, $path, array $parameters = [])
     {
@@ -88,6 +94,8 @@ class GeoShapeQuery implements BuilderInterface
         );
 
         $this->fields[$field]['indexed_shape'] = $filter;
+
+        return $this;
     }
 
     /**

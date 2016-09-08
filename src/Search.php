@@ -158,13 +158,17 @@ class Search
      * Sets parameters to the endpoint.
      *
      * @param string $endpointName
-     * @param array  $parameters
+     * @param array $parameters
+     *
+     * @return $this
      */
     private function setEndpointParameters($endpointName, array $parameters)
     {
         /** @var AbstractSearchEndpoint $endpoint */
         $endpoint = $this->getEndpoint($endpointName);
         $endpoint->setParameters($parameters);
+
+        return $this;
     }
 
     /**
@@ -269,7 +273,7 @@ class Search
      *                                   - should.
      * @param string           $key
      *
-     * @return int Key of post filter.
+     * @return $this
      */
     public function addPostFilter(BuilderInterface $filter, $boolType = BoolQuery::MUST, $key = null)
     {
@@ -383,7 +387,7 @@ class Search
      *
      * @param Highlight $highlight
      *
-     * @return int Key of highlight.
+     * @return $this
      */
     public function addHighlight($highlight)
     {

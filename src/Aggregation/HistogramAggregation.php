@@ -99,10 +99,14 @@ class HistogramAggregation extends AbstractAggregation
      * Get response as a hash instead keyed by the buckets keys.
      *
      * @param bool $keyed
+     *
+     * @return $this
      */
     public function setKeyed($keyed)
     {
         $this->keyed = $keyed;
+
+        return $this;
     }
 
     /**
@@ -110,11 +114,15 @@ class HistogramAggregation extends AbstractAggregation
      *
      * @param string $mode
      * @param string $direction
+     *
+     * @return $this
      */
     public function setOrder($mode, $direction = self::DIRECTION_ASC)
     {
         $this->orderMode = $mode;
         $this->orderDirection = $direction;
+
+        return $this;
     }
 
     /**
@@ -143,6 +151,8 @@ class HistogramAggregation extends AbstractAggregation
     public function setInterval($interval)
     {
         $this->interval = $interval;
+
+        return $this;
     }
 
     /**
@@ -157,10 +167,14 @@ class HistogramAggregation extends AbstractAggregation
      * Set limit for document count buckets should have.
      *
      * @param int $minDocCount
+     *
+     * @return $this
      */
     public function setMinDocCount($minDocCount)
     {
         $this->minDocCount = $minDocCount;
+
+        return $this;
     }
 
     /**
@@ -174,6 +188,8 @@ class HistogramAggregation extends AbstractAggregation
     /**
      * @param int $min
      * @param int $max
+     *
+     * @return $this
      */
     public function setExtendedBounds($min = null, $max = null)
     {
@@ -184,6 +200,8 @@ class HistogramAggregation extends AbstractAggregation
             ]
         );
         $this->extendedBounds = $bounds;
+
+        return $this;
     }
 
     /**

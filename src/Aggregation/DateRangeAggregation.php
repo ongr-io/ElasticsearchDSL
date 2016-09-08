@@ -54,10 +54,14 @@ class DateRangeAggregation extends AbstractAggregation
 
     /**
      * @param string $format
+     *
+     * @return $this
      */
     public function setFormat($format)
     {
         $this->format = $format;
+
+        return $this;
     }
 
     /**
@@ -71,7 +75,7 @@ class DateRangeAggregation extends AbstractAggregation
      * @param string|null $from
      * @param string|null $to
      *
-     * @return RangeAggregation
+     * @return $this
      *
      * @throws \LogicException
      */
