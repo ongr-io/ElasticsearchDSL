@@ -71,10 +71,6 @@ class ReverseNestedAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        if (count($this->getAggregations()) == 0) {
-            throw new \LogicException("Reverse Nested aggregation `{$this->getName()}` has no aggregations added");
-        }
-
         $output = new \stdClass();
         if ($this->getPath()) {
             $output = ['path' => $this->getPath()];
