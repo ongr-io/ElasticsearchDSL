@@ -11,16 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\Metric\AvgAggregation as Base;
+
 /**
  * Class representing Avg Aggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class AvgAggregation extends StatsAggregation
+class AvgAggregation extends Base
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'avg';
-    }
 }

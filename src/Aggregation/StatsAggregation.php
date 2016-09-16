@@ -11,53 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
-use ONGR\ElasticsearchDSL\ScriptAwareTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Metric\StatsAggregation as Base;
 
 /**
  * Class representing StatsAggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class StatsAggregation extends AbstractAggregation
+class StatsAggregation extends Base
 {
-    use MetricTrait;
-    use ScriptAwareTrait;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param string $script
-     */
-    public function __construct($name, $field = null, $script = null)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-        $this->setScript($script);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'stats';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $out = [];
-        if ($this->getField()) {
-            $out['field'] = $this->getField();
-        }
-        if ($this->getScript()) {
-            $out['script'] = $this->getScript();
-        }
-
-        return $out;
-    }
 }

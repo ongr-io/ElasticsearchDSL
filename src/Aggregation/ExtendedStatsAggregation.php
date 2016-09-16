@@ -11,79 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
-use ONGR\ElasticsearchDSL\ScriptAwareTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Metric\ExtendedStatsAggregation as Base;
 
 /**
  * Class representing Extended stats aggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class ExtendedStatsAggregation extends AbstractAggregation
+class ExtendedStatsAggregation extends Base
 {
-    use MetricTrait;
-    use ScriptAwareTrait;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param int    $sigma
-     * @param string $script
-     */
-    public function __construct($name, $field = null, $sigma = null, $script = null)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-        $this->setSigma($sigma);
-        $this->setScript($script);
-    }
-
-    /**
-     * @var int
-     */
-    private $sigma;
-
-    /**
-     * @return int
-     */
-    public function getSigma()
-    {
-        return $this->sigma;
-    }
-
-    /**
-     * @param int $sigma
-     */
-    public function setSigma($sigma)
-    {
-        $this->sigma = $sigma;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'extended_stats';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $out = array_filter(
-            [
-                'field' => $this->getField(),
-                'script' => $this->getScript(),
-                'sigma' => $this->getSigma(),
-            ],
-            function ($val) {
-                return ($val || is_numeric($val));
-            }
-        );
-
-        return $out;
-    }
 }

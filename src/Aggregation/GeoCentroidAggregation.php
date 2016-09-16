@@ -11,50 +11,16 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoCentroidAggregation as Base;
 
 /**
  * Class representing geo centroid aggregation.
  *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
+ *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-geocentroid-aggregation.html
  */
-class GeoCentroidAggregation extends AbstractAggregation
+class GeoCentroidAggregation extends Base
 {
-    use MetricTrait;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     */
-    public function __construct($name, $field = null)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $data = [];
-        if ($this->getField()) {
-            $data['field'] = $this->getField();
-        } else {
-            throw new \LogicException('Geo centroid aggregation must have a field set.');
-        }
-
-        return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'geo_centroid';
-    }
 }

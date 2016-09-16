@@ -11,71 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\ReverseNestedAggregation as Base;
 
 /**
  * Class representing ReverseNestedAggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class ReverseNestedAggregation extends AbstractAggregation
+class ReverseNestedAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $path
-     */
-    public function __construct($name, $path = null)
-    {
-        parent::__construct($name);
-
-        $this->setPath($path);
-    }
-
-    /**
-     * Return path.
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Sets path.
-     *
-     * @param string $path
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'reverse_nested';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $output = new \stdClass();
-        if ($this->getPath()) {
-            $output = ['path' => $this->getPath()];
-        }
-
-        return $output;
-    }
 }

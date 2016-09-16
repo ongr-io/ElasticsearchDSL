@@ -11,71 +11,15 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FilterAggregation as Base;
 
 /**
  * Class representing FilterAggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class FilterAggregation extends AbstractAggregation
+class FilterAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * @var BuilderInterface
-     */
-    protected $filter;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string           $name
-     * @param BuilderInterface $filter
-     */
-    public function __construct($name, BuilderInterface $filter = null)
-    {
-        parent::__construct($name);
-
-        if ($filter !== null) {
-            $this->setFilter($filter);
-        }
-    }
-
-    /**
-     * Sets a filter.
-     *
-     * @param BuilderInterface $filter
-     */
-    public function setFilter(BuilderInterface $filter)
-    {
-        $this->filter = $filter;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setField($field)
-    {
-        throw new \LogicException("Filter aggregation, doesn't support `field` parameter");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        if (!$this->filter) {
-            throw new \LogicException("Filter aggregation `{$this->getName()}` has no filter added");
-        }
-
-        return $this->filter->toArray();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'filter';
-    }
 }

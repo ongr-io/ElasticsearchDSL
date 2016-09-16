@@ -11,16 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
+use ONGR\ElasticsearchDSL\Aggregation\Metric\MinAggregation as Base;
+
 /**
  * Class representing Min Aggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class MinAggregation extends StatsAggregation
+class MinAggregation extends Base
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'min';
-    }
 }

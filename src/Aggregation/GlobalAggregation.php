@@ -11,36 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GlobalAggregation as Base;
 
 /**
  * Class representing GlobalAggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class GlobalAggregation extends AbstractAggregation
+class GlobalAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setField($field)
-    {
-        throw new \LogicException("Global aggregation, doesn't support `field` parameter");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'global';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        return new \stdClass();
-    }
 }

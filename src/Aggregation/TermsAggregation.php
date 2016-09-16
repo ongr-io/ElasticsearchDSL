@@ -11,52 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
-use ONGR\ElasticsearchDSL\ScriptAwareTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation as Base;
 
 /**
  * Class representing TermsAggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class TermsAggregation extends AbstractAggregation
+class TermsAggregation extends Base
 {
-    use BucketingTrait;
-    use ScriptAwareTrait;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param string $script
-     */
-    public function __construct($name, $field = null, $script = null)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-        $this->setScript($script);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'terms';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        $data = array_filter(
-            [
-                'field' => $this->getField(),
-                'script' => $this->getScript(),
-            ]
-        );
-
-        return $data;
-    }
 }

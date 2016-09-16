@@ -11,44 +11,14 @@
 
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\MissingAggregation as Base;
 
 /**
  * Class representing missing aggregation.
+ *
+ * @deprecated Aggregations was moved to it's type namespace. Add `Metric` or `Bucketing` after `Aggregation`.
+ *     This class will be removed in 3.0.
  */
-class MissingAggregation extends AbstractAggregation
+class MissingAggregation extends Base
 {
-    use BucketingTrait;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     */
-    public function __construct($name, $field = null)
-    {
-        parent::__construct($name);
-
-        $this->setField($field);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
-    {
-        if ($this->getField()) {
-            return ['field' => $this->getField()];
-        }
-        throw new \LogicException('Missing aggregation must have a field set.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'missing';
-    }
 }
