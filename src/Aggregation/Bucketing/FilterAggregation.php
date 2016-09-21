@@ -55,6 +55,16 @@ class FilterAggregation extends AbstractAggregation
     }
 
     /**
+     * Returns a filter.
+     *
+     * @return BuilderInterface
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setField($field)
@@ -71,7 +81,7 @@ class FilterAggregation extends AbstractAggregation
             throw new \LogicException("Filter aggregation `{$this->getName()}` has no filter added");
         }
 
-        return $this->filter->toArray();
+        return $this->getFilter()->toArray();
     }
 
     /**
