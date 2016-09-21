@@ -112,4 +112,54 @@ class BoolQueryTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($expected, $bool->toArray());
     }
+
+    /**
+     * Tests if BoolQuery::getQueries returns an empty array.
+     */
+    public function testGetQueriesEmpty()
+    {
+        $bool = new BoolQuery();
+
+        $this->assertInternalType('array', $bool->getQueries());
+    }
+
+    /**
+     * Tests if BoolQuery::getQueries returns an array with the added queries of all bool types.
+     */
+    public function testGetQueries()
+    {
+        $query = new TermQuery('key1', 'value1');
+        $query2 = new TermQuery('key2', 'value2');
+
+        $bool = new BoolQuery();
+        $bool->add($query, BoolQuery::MUST, 'query');
+        $bool->add($query2, BoolQuery::SHOULD, 'query2');
+
+        $this->assertSame(array('query' => $query, 'query2' => $query2), $bool->getQueries());
+    }
+
+    /**
+     * Tests if BoolQuery::getQueries with specified bool type returns an empty array.
+     */
+    public function testGetQueriesByBoolTypeEmpty()
+    {
+        $bool = new BoolQuery();
+
+        $this->assertInternalType('array', $bool->getQueries(BoolQuery::MUST));
+    }
+
+    /**
+     * Tests if BoolQuery::getQueries with specified bool type returns an array with added queries.
+     */
+    public function testGetQueriesByBoolTypeWithQueryAddedToBoolType()
+    {
+        $query = new TermQuery('key1', 'value1');
+        $query2 = new TermQuery('key2', 'value2');
+
+        $bool = new BoolQuery();
+        $bool->add($query, BoolQuery::MUST, 'query');
+        $bool->add($query2, BoolQuery::SHOULD, 'query2');
+
+        $this->assertSame(array('query' => $query), $bool->getQueries(BoolQuery::MUST));
+    }
 }
