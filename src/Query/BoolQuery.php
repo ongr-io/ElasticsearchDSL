@@ -42,7 +42,10 @@ class BoolQuery implements BuilderInterface
     }
 
     /**
-     * @param  null $boolType
+     * Returns the query instances (by bool type).
+     *
+     * @param  string|null $boolType
+     *
      * @return array
      */
     public function getQueries($boolType = null)
@@ -57,7 +60,11 @@ class BoolQuery implements BuilderInterface
             return $queries;
         }
 
-        return $this->container[$boolType];
+        if (isset($this->container[$boolType])) {
+            return $this->container[$boolType];
+        }
+
+        return [];
     }
 
     /**
