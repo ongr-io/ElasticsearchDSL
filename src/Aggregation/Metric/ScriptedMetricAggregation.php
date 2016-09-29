@@ -72,7 +72,7 @@ class ScriptedMetricAggregation extends AbstractAggregation
      */
     public function getType()
     {
-        return 'stats';
+        return 'scripted_metric';
     }
 
     /**
