@@ -10,7 +10,14 @@ is the preffered and recommended way to ask ONGR support questions.
 [![Latest Stable Version](https://poser.pugx.org/ongr/elasticsearch-dsl/v/stable)](https://packagist.org/packages/ongr/elasticsearch-dsl)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/?branch=master)
 
-__This component requires Elasticsearch 2.0 or newer.__
+## Version matrix
+
+| Elasticsearch version | ElasticsearchBundle version |
+| --------------------- | --------------------------- |
+| >= 5.0                | ~2.x (partly) && ~3.x       |
+| >= 2.0, < 5.0         | ~2.x                        |
+| >= 1.0, < 2.0         | 1.x                         |
+| <= 0.90.x             | not supported               |
 
 ## Documentation
 
