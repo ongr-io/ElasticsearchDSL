@@ -12,9 +12,9 @@ is the preffered and recommended way to ask ONGR support questions.
 
 ## Version matrix
 
-| Elasticsearch version | ElasticsearchBundle version |
+| Elasticsearch version | ElasticsearchDSL version |
 | --------------------- | --------------------------- |
-| >= 5.0                | ~2.x (partly) && ~3.x       |
+| >= 5.0                | ~2.x                        |
 | >= 2.0, < 5.0         | ~2.x                        |
 | >= 1.0, < 2.0         | 1.x                         |
 | <= 0.90.x             | not supported               |
