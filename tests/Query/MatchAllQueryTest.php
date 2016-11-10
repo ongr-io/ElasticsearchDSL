@@ -18,9 +18,19 @@ class MatchAllQueryTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests toArray().
      */
-    public function testToArray()
+    public function testToArrayWhenThereAreNoParams()
     {
         $query = new MatchAllQuery();
-        $this->assertEquals(['match_all' => []], $query->toArray());
+        $this->assertEquals(['match_all' => new \stdClass()], $query->toArray());
+    }
+
+    /**
+     * Tests toArray().
+     */
+    public function testToArrayWithParams()
+    {
+        $params = ['boost' => 5];
+        $query = new MatchAllQuery($params);
+        $this->assertEquals(['match_all' => $params], $query->toArray());
     }
 }
