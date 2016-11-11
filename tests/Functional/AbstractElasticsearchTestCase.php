@@ -20,7 +20,7 @@ abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
     /**
      * Test index name in the elasticsearch.
      */
-    CONST INDEX_NAME = 'elasticsaerch-dsl-test';
+    const INDEX_NAME = 'elasticsaerch-dsl-test';
 
     /**
      * @var Client
@@ -49,7 +49,7 @@ abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
         $bulkBody = [];
 
         foreach ($this->getDataArray() as $type => $documents) {
-            foreach($documents as $id => $document) {
+            foreach ($documents as $id => $document) {
                 $bulkBody[] = [
                    'index' => [
                         '_index' => self::INDEX_NAME,
