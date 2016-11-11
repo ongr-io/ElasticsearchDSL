@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: php
 php:
   - 5.4
@@ -6,10 +6,30 @@ php:
   - 5.6
   - 7.0
   - hhvm
+env:
+  global:
+    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
+  matrix:
+    - ES_VERSION="5.0" ELASTICSEARH_PHP="~5.0"
+    - ES_VERSION="2.4" ELASTICSEARH_PHP="~2.0"
 matrix:
   allow_failures:
     - php: hhvm
+  exclude:
+    - php: 5.4
+      env: ES_VERSION="5.0" ELASTICSEARH_PHP="~5.0"
+    - php: 5.5
+      env: ES_VERSION="5.0" ELASTICSEARH_PHP="~5.0"
+install:
+  # Container based PHP image ues PHP 5.6.5, once it will be upgraded sudo will be not necessary
+  - sudo apt-get install -y oracle-java8-set-default
+  - ES_URL=$(curl -sS "https://esvm-props.kibana.rocks/builds" | jq -r ".branches[\"$ES_VERSION\"].zip")
+  - curl -L -o elasticsearch.zip $ES_URL
+  - unzip elasticsearch.zip
+  - ./elasticsearch-*/bin/elasticsearch -d
 before_script:
+  - composer require --no-update elasticsearch/elasticsearch:${ELASTICSEARH_PHP}
+  - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --no-interaction --prefer-dist
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
