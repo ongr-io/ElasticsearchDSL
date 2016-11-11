@@ -69,15 +69,6 @@ abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
         $this->client->indices()->refresh();
     }
 
-    private function deleteIndex()
-    {
-        try {
-            $this->client->indices()->delete(['index' => self::INDEX_NAME]);
-        } catch (\Exception $e) {
-            // Do nothing.
-        }
-    }
-
     /**
      * Defines index mapping for test index.
      * Override this function in your test case and return array with mapping body.
@@ -123,6 +114,14 @@ abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
         $this->deleteIndex();
     }
 
+    /**
+     * Execute search to the elasticsearch and handle results.
+     *
+     * @param Search $search Search object.
+     * @param null $type Types to search. Can be several types split by comma.
+     * @param bool $returnRaw Return raw response from the client.
+     * @return array
+     */
     protected function executeSearch(Search $search, $type = null, $returnRaw = false)
     {
         $response = $this->client->search(
@@ -148,5 +147,17 @@ abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
         }
 
         return $documents;
+    }
+
+    /**
+     * Deletes index from elasticsearch.
+     */
+    private function deleteIndex()
+    {
+        try {
+            $this->client->indices()->delete(['index' => self::INDEX_NAME]);
+        } catch (\Exception $e) {
+            // Do nothing.
+        }
     }
 }
