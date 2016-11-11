@@ -1,6 +1,6 @@
 <?php
 
-namespace ONGR\ElasticsearchDSL\Tests\InnerHit;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\InnerHit;
 
 use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
 use ONGR\ElasticsearchDSL\Query\MatchQuery;

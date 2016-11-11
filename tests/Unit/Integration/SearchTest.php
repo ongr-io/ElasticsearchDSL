@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Aggregation\Integration;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Integration;
 
 use ONGR\ElasticsearchDSL\Aggregation\FiltersAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\HistogramAggregation;

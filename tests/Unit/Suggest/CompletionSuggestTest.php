@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Suggest;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Suggest;
 
 use ONGR\ElasticsearchDSL\Suggest\CompletionSuggest;
 

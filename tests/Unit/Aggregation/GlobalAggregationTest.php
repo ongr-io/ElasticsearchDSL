@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\GlobalAggregation;
 
