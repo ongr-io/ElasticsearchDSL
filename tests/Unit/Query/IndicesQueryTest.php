@@ -21,7 +21,8 @@ class IndicesQueryTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryMock()
     {
-        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->setMethods(['toArray', 'getType'])->getMock();
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
+            ->setMethods(['toArray', 'getType'])->getMock();
         $mock
             ->expects($this->any())
             ->method('toArray')
