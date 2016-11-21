@@ -11,10 +11,23 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
 
+use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\Query\IndicesQuery;
 
 class IndicesQueryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|BuilderInterface
+     */
+    private function getQueryMock()
+    {
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->setMethods(['toArray', 'getType'])->getMock();
+        $mock
+            ->expects($this->any())
+            ->method('toArray')
+            ->willReturn(['term' => ['foo' => 'bar']]);
+        return $mock;
+    }
     /**
      * Data provider for testToArray().
      *
@@ -22,24 +35,9 @@ class IndicesQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function getTestToArrayData()
     {
-        $mock = $this->getMock('ONGR\ElasticsearchDSL\BuilderInterface');
-        $mock
-            ->expects($this->any())
-            ->method('toArray')
-            ->willReturn(['term' => ['foo' => 'bar']]);
-
         return [
             [
-                $mock,
-                $mock,
-                [
-                    'indices' => ['foo', 'bar'],
-                    'query' => ['term' => ['foo' => 'bar']],
-                    'no_match_query' => ['term' => ['foo' => 'bar']],
-                ]
-            ],
-            [
-                $mock,
+                $this->getQueryMock(),
                 'all',
                 [
                     'indices' => ['foo', 'bar'],
@@ -48,7 +46,16 @@ class IndicesQueryTest extends \PHPUnit_Framework_TestCase
                 ]
             ],
             [
-                $mock,
+                $this->getQueryMock(),
+                $this->getQueryMock(),
+                [
+                    'indices' => ['foo', 'bar'],
+                    'query' => ['term' => ['foo' => 'bar']],
+                    'no_match_query' => ['term' => ['foo' => 'bar']],
+                ]
+            ],
+            [
+                $this->getQueryMock(),
                 null,
                 [
                     'indices' => ['foo', 'bar'],
