@@ -19,23 +19,6 @@ class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test for reverse_nested aggregation toArray() method exception.
-     *
-     * @expectedException \LogicException
-     */
-    public function testToArrayException()
-    {
-        $aggregation = new ReverseNestedAggregation('test_agg');
-        $aggregation->setPath('test_path');
-
-        $expectedResult = [
-            'reverse_nested' => ['path' => 'test_path'],
-        ];
-
-        $this->assertEquals($expectedResult, $aggregation->toArray());
-    }
-
-    /**
-     * Test for reverse_nested aggregation toArray() method exception.
      */
     public function testToArray()
     {
