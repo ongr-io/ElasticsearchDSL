@@ -15,8 +15,8 @@ is the preffered and recommended way to ask ONGR support questions.
 
 | Elasticsearch version | ElasticsearchDSL version    |
 | --------------------- | --------------------------- |
-| >= 5.0, >= 2.0        | >=2.2                       |
-| >= 2.0, < 5.0         | >=2.0  <2.2                 |
+| >= 5.0                | >=5.0                       |
+| >= 2.0, < 5.0         | >=2.0                       |
 | >= 1.0, < 2.0         | 1.x                         |
 | <= 0.90.x             | not supported               |
 
@@ -58,7 +58,7 @@ Create search:
   $matchAll = new ONGR\ElasticsearchDSL\Query\MatchAllQuery();
   
   $search = new ONGR\ElasticsearchDSL\Search();
-  $search->addQuery($matchAll)
+  $search->addQuery($matchAll);
   
   $params = [
     'index' => 'your_index',
