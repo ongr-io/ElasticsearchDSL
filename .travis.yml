@@ -8,18 +8,10 @@ php:
   - hhvm
 env:
   global:
-    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
-  matrix:
-    - ES_VERSION="5.0" ELASTICSEARH_PHP="~5.0"
-    - ES_VERSION="2.4" ELASTICSEARH_PHP="~2.0"
+    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre" ES_VERSION="2.4" ELASTICSEARH_PHP="~2.0"
 matrix:
   allow_failures:
     - php: hhvm
-  exclude:
-    - php: 5.4
-      env: ES_VERSION="5.0" ELASTICSEARH_PHP="~5.0"
-    - php: 5.5
-      env: ES_VERSION="5.0" ELASTICSEARH_PHP="~5.0"
 install:
   # Container based PHP image ues PHP 5.6.5, once it will be upgraded sudo will be not necessary
   - sudo apt-get install -y oracle-java8-set-default
