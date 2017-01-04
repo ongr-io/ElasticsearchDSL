@@ -14,8 +14,8 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation;
 use ONGR\ElasticsearchDSL\Aggregation\FilterAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\HistogramAggregation;
 use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\ExistsQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
-use ONGR\ElasticsearchDSL\Query\MissingQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 
 class FilterAggregationTest extends \PHPUnit_Framework_TestCase
@@ -130,7 +130,7 @@ class FilterAggregationTest extends \PHPUnit_Framework_TestCase
     {
         $aggregation = new FilterAggregation('test_agg');
 
-        $aggregation->setFilter(new MissingQuery('test'));
+        $aggregation->setFilter(new ExistsQuery('test'));
         $aggregation->toArray();
     }
 

@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit;
 
-use ONGR\ElasticsearchDSL\Query\MissingQuery;
+use ONGR\ElasticsearchDSL\Query\ExistsQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
 use ONGR\ElasticsearchDSL\Sort\FieldSort;
@@ -235,13 +235,13 @@ class SearchTest extends \PHPUnit_Framework_TestCase
                         ],
                         'filter' => [
                             [
-                                'missing' => ['field' => 'baz'],
+                                'exists' => ['field' => 'baz'],
                             ],
                         ],
                     ],
                 ],
             ],
-            (new Search())->addQuery(new TermQuery('foo', 'bar'))->addFilter(new MissingQuery('baz')),
+            (new Search())->addQuery(new TermQuery('foo', 'bar'))->addFilter(new ExistsQuery('baz')),
         ];
 
         $cases['sort_by_price'] = [
