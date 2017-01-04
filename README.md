@@ -15,12 +15,10 @@ is the preffered and recommended way to ask ONGR support questions.
 
 | Elasticsearch version | ElasticsearchDSL version    |
 | --------------------- | --------------------------- |
-| >= 5.0                | >=5.0                       |
-| >= 2.0, < 5.0         | >=2.0                       |
+| >= 5.0                | >= 5.0                       |
+| >= 2.0, < 5.0         | >= 2.0                       |
 | >= 1.0, < 2.0         | 1.x                         |
 | <= 0.90.x             | not supported               |
-
-> ElasticsearchDSL from version >=2.2 works with both Elasticsearch >=2.0 and >=5.0 versions. 
 
 ## Documentation
 
