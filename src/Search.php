@@ -68,7 +68,7 @@ class Search
     /**
      * @var array
      */
-    private $fields;
+    private $storedFields;
 
     /**
      * @var array
@@ -556,13 +556,13 @@ class Search
     /**
      * Allows to selectively load specific stored fields for each document represented by a search hit.
      *
-     * @param array $fields
+     * @param array $storedFields
      *
      * @return $this
      */
-    public function setFields(array $fields)
+    public function setStoredFields(array $storedFields)
     {
-        $this->fields = $fields;
+        $this->storedFields = $storedFields;
 
         return $this;
     }
@@ -572,9 +572,9 @@ class Search
      *
      * @return array
      */
-    public function getFields()
+    public function getStoredFields()
     {
-        return $this->fields;
+        return $this->storedFields;
     }
 
     /**
@@ -789,7 +789,7 @@ class Search
         $params = [
             'from' => 'from',
             'size' => 'size',
-            'fields' => 'fields',
+            'storedFields' => 'stored_fields',
             'scriptFields' => 'script_fields',
             'explain' => 'explain',
             'stats' => 'stats',
