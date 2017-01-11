@@ -181,14 +181,23 @@ class FunctionScoreQuery implements BuilderInterface
         array $options = [],
         BuilderInterface $query = null
     ) {
-        $function = [
-            'script_score' => array_merge(
-                [
-                    'script' => $script,
-                    'params' => $params,
-                ],
+        if (count($params) > 0) {
+            $options = array_merge(
+                ['params' => $params],
                 $options
-            ),
+            );
+        }
+
+        $function = [
+            'script_score' => [
+                'script' => array_merge(
+                    [
+                        'lang' => 'painless',
+                        'inline' => $script
+                    ],
+                    $options
+                )
+            ]
         ];
 
         $this->applyFilter($function, $query);
