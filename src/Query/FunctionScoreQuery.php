@@ -168,27 +168,34 @@ class FunctionScoreQuery implements BuilderInterface
     /**
      * Adds script score function.
      *
-     * @param string           $script
-     * @param array            $params
-     * @param array            $options
+     * @param string $lang
+     * @param string $inline
+     * @param array $params
      * @param BuilderInterface $query
-     *
      * @return $this
      */
     public function addScriptScoreFunction(
-        $script,
-        array $params = [],
-        array $options = [],
+        $lang, 
+        $inline, 
+        array $params = [], 
         BuilderInterface $query = null
-    ) {
+    )
+    {
+        $notIncludeParams = empty($params);
         $function = [
-            'script_score' => array_merge(
-                [
-                    'script' => $script,
-                    'params' => $params,
-                ],
-                $options
-            ),
+            'script_score' => [
+                'script' => $notIncludeParams ?
+                    [
+                        'lang' => $lang,
+                        'inline' => $inline,
+                    ]
+                    :
+                    [
+                        'lang' => $lang,
+                        'inline' => $inline,
+                        'params' => $params,
+                    ]
+            ]
         ];
 
         $this->applyFilter($function, $query);
