@@ -9,6 +9,7 @@ php:
 env:
   global:
     - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre" ES_VERSION="2.4" ELASTICSEARH_PHP="~2.0"
+    - ELASRICSEARCH_HOST="127.0.0.1:9200"
 matrix:
   allow_failures:
     - php: hhvm
@@ -18,9 +19,11 @@ install:
   - ES_URL=$(curl -sS "https://esvm-props.kibana.rocks/builds" | jq -r ".branches[\"$ES_VERSION\"].zip")
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
+  #Enable groovy script for functional score query
+  - find . -name "elasticsearch.yml" | while read TXT ; do echo 'script.engine.groovy.inline.search: on' >> $TXT ; done
   - ./elasticsearch-*/bin/elasticsearch -d
 before_script:
-  - composer require --no-update elasticsearch/elasticsearch:${ELASTICSEARH_PHP}
+  - composer require --no-update elasticsearch/elasticsearch:${ELASTICgit remoSEARH_PHP}
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --no-interaction --prefer-dist
 script:
