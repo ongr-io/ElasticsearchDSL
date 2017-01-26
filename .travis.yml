@@ -8,17 +8,21 @@ php:
   - hhvm
 env:
   global:
-    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre" ES_VERSION="2.4" ELASTICSEARH_PHP="~2.0"
+    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre" ELASTICSEARH_PHP="~2.0"
+    - ELASRICSEARCH_HOST="127.0.0.1:9200"
+    - ES_URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.4.4/elasticsearch-2.4.4.zip"
 matrix:
   allow_failures:
     - php: hhvm
 install:
   # Container based PHP image ues PHP 5.6.5, once it will be upgraded sudo will be not necessary
   - sudo apt-get install -y oracle-java8-set-default
-  - ES_URL=$(curl -sS "https://esvm-props.kibana.rocks/builds" | jq -r ".branches[\"$ES_VERSION\"].zip")
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
-  - ./elasticsearch-*/bin/elasticsearch -d
+  - ./elasticsearch-*/bin/elasticsearch -d --script.inline true --script.stored true
+  - sleep 10
+  - curl 127.0.0.1:9200/_nodes/plugins
+  - curl 127.0.0.1:9200/_nodes
 before_script:
   - composer require --no-update elasticsearch/elasticsearch:${ELASTICSEARH_PHP}
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH

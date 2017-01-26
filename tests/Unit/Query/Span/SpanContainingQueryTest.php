@@ -47,7 +47,7 @@ class SpanContainingQueryTest extends \PHPUnit_Framework_TestCase
      */
     private function getSpanQueryMock($value)
     {
-        $mock = $this->getMock('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface');
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\Span\SpanQueryInterface')->getMock();
         $mock
             ->expects($this->once())
             ->method('toArray')
