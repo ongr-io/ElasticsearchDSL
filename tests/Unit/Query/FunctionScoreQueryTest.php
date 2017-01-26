@@ -67,7 +67,7 @@ class FunctionScoreQueryTest extends \PHPUnit_Framework_TestCase
     public function testAddRandomFunction($seed, $expectedArray)
     {
         /** @var MatchAllQuery|MockObject $matchAllQuery */
-        $matchAllQuery = $this->getMock('ONGR\ElasticsearchDSL\Query\MatchAllQuery');
+        $matchAllQuery = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\MatchAllQuery')->getMock();
 
         $functionScoreQuery = new FunctionScoreQuery($matchAllQuery);
         $functionScoreQuery->addRandomFunction($seed);

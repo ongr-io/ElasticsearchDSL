@@ -20,7 +20,7 @@ class HasChildQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $parentQuery = $this->getMock('ONGR\ElasticsearchDSL\BuilderInterface');
+        $parentQuery = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $query = new HasChildQuery('test_type', $parentQuery, ['test_parameter1']);
         $this->assertEquals(['test_parameter1'], $query->getParameters());
     }

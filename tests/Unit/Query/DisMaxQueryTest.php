@@ -20,7 +20,7 @@ class DisMaxQueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $mock = $this->getMock('ONGR\ElasticsearchDSL\BuilderInterface');
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $mock
             ->expects($this->any())
             ->method('toArray')
