@@ -18,7 +18,7 @@ install:
   - sudo apt-get install -y oracle-java8-set-default
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
-  - ./elasticsearch-*/bin/elasticsearch -Escript.inline=true -Escript.stored=true
+  - ./elasticsearch-*/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true
   - sleep 10
   - curl localhost:9200
 before_script:
