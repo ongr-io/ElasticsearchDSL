@@ -11,60 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "multi_match" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class MultiMatchQuery implements BuilderInterface
+class MultiMatchQuery extends \ONGR\ElasticsearchDSL\Query\FullText\MultiMatchQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var array
-     */
-    private $fields = [];
-
-    /**
-     * @var string
-     */
-    private $query;
-
-    /**
-     * @param array  $fields
-     * @param string $query
-     * @param array  $parameters
-     */
-    public function __construct(array $fields, $query, array $parameters = [])
-    {
-        $this->fields = $fields;
-        $this->query = $query;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'multi_match';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'fields' => $this->fields,
-            'query' => $this->query,
-        ];
-
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
-    }
 }

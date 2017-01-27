@@ -11,61 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "match" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class MatchQuery implements BuilderInterface
+class MatchQuery extends \ONGR\ElasticsearchDSL\Query\FullText\MatchQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $query;
-
-    /**
-     * @param string $field
-     * @param string $query
-     * @param array  $parameters
-     */
-    public function __construct($field, $query, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->query = $query;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'match';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'query' => $this->query,
-        ];
-
-        $output = [
-            $this->field => $this->processArray($query),
-        ];
-
-        return [$this->getType() => $output];
-    }
 }

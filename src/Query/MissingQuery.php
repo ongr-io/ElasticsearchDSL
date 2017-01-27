@@ -18,6 +18,7 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
  * Represents Elasticsearch "missing" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-missing-query.html
+ * @deprecated Use a negated exists query instead. (Also removed _missing_ from the query_string query).
  */
 class MissingQuery implements BuilderInterface
 {

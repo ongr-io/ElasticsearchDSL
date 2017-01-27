@@ -11,47 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-
 /**
  * Represents Elasticsearch "exists" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class ExistsQuery implements BuilderInterface
+class ExistsQuery extends \ONGR\ElasticsearchDSL\Query\TermLevel\ExistsQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * Constructor.
-     *
-     * @param string $field Field value
-     */
-    public function __construct($field)
-    {
-        $this->field = $field;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'exists';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return [
-            $this->getType() => [
-                'field' => $this->field,
-            ],
-        ];
-    }
 }

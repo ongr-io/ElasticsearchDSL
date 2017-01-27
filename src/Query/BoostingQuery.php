@@ -11,61 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-
 /**
  * Represents Elasticsearch "boosting" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-boosting-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class BoostingQuery implements BuilderInterface
+class BoostingQuery extends \ONGR\ElasticsearchDSL\Query\Compound\BoostingQuery
 {
-    /**
-     * @var BuilderInterface
-     */
-    private $positive;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $negative;
-
-    /**
-     * @var int|float
-     */
-    private $negativeBoost;
-
-    /**
-     * @param BuilderInterface $positive
-     * @param BuilderInterface $negative
-     * @param int|float        $negativeBoost
-     */
-    public function __construct(BuilderInterface $positive, BuilderInterface $negative, $negativeBoost)
-    {
-        $this->positive = $positive;
-        $this->negative = $negative;
-        $this->negativeBoost = $negativeBoost;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'boosting';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'positive' => $this->positive->toArray(),
-            'negative' => $this->negative->toArray(),
-            'negative_boost' => $this->negativeBoost,
-        ];
-
-        return [$this->getType() => $query];
-    }
 }

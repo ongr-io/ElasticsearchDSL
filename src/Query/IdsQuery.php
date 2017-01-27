@@ -11,52 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "ids" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class IdsQuery implements BuilderInterface
+class IdsQuery extends \ONGR\ElasticsearchDSL\Query\TermLevel\IdsQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var array
-     */
-    private $values;
-
-    /**
-     * @param array $values
-     * @param array $parameters
-     */
-    public function __construct(array $values, array $parameters = [])
-    {
-        $this->values = $values;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'ids';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'values' => $this->values,
-        ];
-
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
-    }
 }
