@@ -13,7 +13,6 @@ namespace ONGR\ElasticsearchDSL\Query;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Represents Elasticsearch "bool" query.
