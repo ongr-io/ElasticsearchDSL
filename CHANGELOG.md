@@ -1,8 +1,15 @@
 # CHANGELOG
-   
-v2.x (2016-x)
+v5.0.0 (2017-x)
 ---
-   
+- **[BC break]** Removed deprecated aggregation classes.
+- **[BC break]** Removed deprecated query classes.
+
+v2.2.1 (2017-01-26)
+---
+- Fixed function score for 2.x elastic.
+- Fixed bug in nested and reverse nested aggregations. (#173)
+- Fixed bool query key assign for some OS to avoid duplication.
+
 v2.2.0 (2016-11.11)
 ---
 - Added support for elasticsearch 5.0
@@ -67,3 +74,7 @@ v1.0.1 (2015-12-16)
 - Fixed `function_score` query options handling [#35](https://github.com/ongr-io/ElasticsearchDSL/issues/35)
 - Added Symfony 3 compatibility
 - Added support for `timeout` and `terminate_after` options in Search endpoint [#34](https://github.com/ongr-io/ElasticsearchDSL/issues/34)
+
+v1.0.0 (2015-09-14)
+---
+- First stable version, [more info here](https://github.com/ongr-io/ElasticsearchDSL/blob/v1.0.0/docs/index.md).
