@@ -12,7 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
-use ONGR\ElasticsearchDSL\Suggest\TermSuggest;
+use ONGR\ElasticsearchDSL\Suggest\Suggest;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -33,7 +33,7 @@ class SuggestEndpointTest extends \PHPUnit_Framework_TestCase
     {
         $suggestName = 'acme_suggest';
         $text = 'foo';
-        $suggest = new TermSuggest($suggestName, $text);
+        $suggest = new Suggest($suggestName, 'text', $text, 'acme');
         $endpoint = new SuggestEndpoint();
         $endpoint->add($suggest, $suggestName);
         $builders = $endpoint->getAll();
@@ -54,7 +54,7 @@ class SuggestEndpointTest extends \PHPUnit_Framework_TestCase
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );
 
-        $suggest = new TermSuggest('foo', 'bar');
+        $suggest = new Suggest('foo', 'bar', 'acme', 'foo');
         $instance->add($suggest);
 
         $this->assertEquals(

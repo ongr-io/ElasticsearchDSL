@@ -15,7 +15,7 @@ use ONGR\ElasticsearchDSL\Query\ExistsQuery;
 use ONGR\ElasticsearchDSL\Query\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
 use ONGR\ElasticsearchDSL\Sort\FieldSort;
-use ONGR\ElasticsearchDSL\Suggest\TermSuggest;
+use ONGR\ElasticsearchDSL\Suggest\Suggest;
 
 /**
  * Test for Search.
@@ -266,7 +266,7 @@ class SearchTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            (new Search())->addSuggest(new TermSuggest('foo', 'bar', ['field' => 'title', 'size' => 2])),
+            (new Search())->addSuggest(new Suggest('foo', 'term', 'bar', 'title', ['size' => 2])),
         ];
 
         $cases['multiple_suggests'] = [
@@ -283,8 +283,8 @@ class SearchTest extends \PHPUnit_Framework_TestCase
                 ],
             ],
             (new Search())
-                ->addSuggest(new TermSuggest('foo', 'bar', ['field' => 'title', 'size' => 2]))
-                ->addSuggest(new TermSuggest('bar', 'foo', ['field' => 'title', 'size' => 2])),
+                ->addSuggest(new Suggest('foo', 'term', 'bar', 'title', ['size' => 2]))
+                ->addSuggest(new Suggest('bar', 'term', 'foo', 'title', ['size' => 2])),
         ];
 
         return $cases;

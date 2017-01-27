@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\ChildrenAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateHistogramAggregation;
 
 /**
  * Unit test for children aggregation.
  */
-class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
+class DateHistogramAggregationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests if ChildrenAggregation#getArray throws exception when expected.
@@ -25,18 +25,18 @@ class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetArrayException()
     {
-        $aggregation = new ChildrenAggregation('foo');
+        $aggregation = new DateHistogramAggregation('foo');
         $aggregation->getArray();
     }
 
     /**
      * Tests getType method.
      */
-    public function testChildrenAggregationGetType()
+    public function testDateHistogramAggregationGetType()
     {
-        $aggregation = new ChildrenAggregation('foo');
+        $aggregation = new DateHistogramAggregation('foo');
         $result = $aggregation->getType();
-        $this->assertEquals('children', $result);
+        $this->assertEquals('date_histogram', $result);
     }
 
     /**
@@ -47,11 +47,12 @@ class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $aggregation = new ChildrenAggregation('foo');
+        $aggregation = new DateHistogramAggregation('foo');
         $aggregation->addAggregation($mock);
-        $aggregation->setChildren('question');
+        $aggregation->setField('date');
+        $aggregation->setInterval('month');
         $result = $aggregation->getArray();
-        $expected = ['type' => 'question'];
+        $expected = ['field' => 'date', 'interval' => 'month'];
         $this->assertEquals($expected, $result);
     }
 }

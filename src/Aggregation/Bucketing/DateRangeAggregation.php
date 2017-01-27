@@ -74,7 +74,7 @@ class DateRangeAggregation extends AbstractAggregation
      * @param string|null $from
      * @param string|null $to
      *
-     * @return RangeAggregation
+     * @return $this
      *
      * @throws \LogicException
      */

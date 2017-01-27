@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\GeoHashGridAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GeoHashGridAggregation;
 
 /**
  * Unit test for geohash grid aggregation.

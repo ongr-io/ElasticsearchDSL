@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
 
-use ONGR\ElasticsearchDSL\Aggregation\MissingAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\MissingAggregation;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 
 /**

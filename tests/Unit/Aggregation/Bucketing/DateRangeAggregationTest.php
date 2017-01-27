@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
-use ONGR\ElasticsearchDSL\Aggregation\DateRangeAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateRangeAggregation;
 
 class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,10 +44,9 @@ class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
      */
     public function testDateRangeAggregationGetArray()
     {
-        $agg = new DateRangeAggregation('foo');
+        $agg = new DateRangeAggregation('foo', 'baz');
         $agg->addRange(10, 20);
         $agg->setFormat('bar');
-        $agg->setField('baz');
         $result = $agg->getArray();
         $expected = [
             'format' => 'bar',
@@ -116,8 +115,10 @@ class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
     public function testDateRangeAggregationConstructor($field = null, $format = null, array $ranges = null)
     {
         /** @var DateRangeAggregation|\PHPUnit_Framework_MockObject_MockObject $aggregation */
-        $aggregation = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\DateRangeAggregation')
-            ->disableOriginalConstructor()->getMock();
+        $aggregation = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateRangeAggregation')
+            ->setMethods(['setField', 'setFormat', 'addRange'])
+            ->disableOriginalConstructor()
+            ->getMock();
         $aggregation->expects($this->once())->method('setField')->with($field);
         $aggregation->expects($this->once())->method('setFormat')->with($format);
         $aggregation->expects($this->exactly(count($ranges)))->method('addRange');
