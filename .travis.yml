@@ -20,9 +20,6 @@ install:
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
   - ./elasticsearch-*/bin/elasticsearch -d --script.inline true --script.stored true
-  - sleep 10
-  - curl 127.0.0.1:9200/_nodes/plugins
-  - curl 127.0.0.1:9200/_nodes
 before_script:
   - composer require --no-update elasticsearch/elasticsearch:${ELASTICSEARH_PHP}
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
