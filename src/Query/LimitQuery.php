@@ -17,6 +17,7 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  * Represents Elasticsearch "limit" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-limit-query.html
+ * @deprecated Use the terminate_after parameter instead.
  */
 class LimitQuery implements BuilderInterface
 {
