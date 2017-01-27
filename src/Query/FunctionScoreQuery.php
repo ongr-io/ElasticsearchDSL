@@ -184,8 +184,11 @@ class FunctionScoreQuery implements BuilderInterface
         $function = [
             'script_score' => array_merge(
                 [
-                    'script' => $script,
-                    'params' => $params,
+                    'script' => [
+                      'lang'   => 'painless',
+                      'inline' => $script,
+                      'params' => $params,
+                    ],
                 ],
                 $options
             ),
