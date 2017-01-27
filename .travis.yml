@@ -18,7 +18,7 @@ install:
   - sudo apt-get install -y oracle-java8-set-default
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
-  - ./elasticsearch-*/bin/elasticsearch -d --script.inline true --script.stored true
+  - ./elasticsearch-*/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true
 before_script:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --no-interaction --prefer-dist
