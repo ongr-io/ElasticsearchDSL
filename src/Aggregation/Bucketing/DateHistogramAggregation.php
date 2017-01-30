@@ -80,7 +80,6 @@ class DateHistogramAggregation extends AbstractAggregation
             'field' => $this->getField(),
             'interval' => $this->getInterval(),
         ];
-        $out = $this->processArray($out);
 
         return $out;
     }

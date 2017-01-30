@@ -139,8 +139,6 @@ class TopHitsAggregation extends AbstractAggregation
             }
         );
 
-        $output = $this->processArray($output);
-
         return empty($output) ? new \stdClass() : $output;
     }
 }
