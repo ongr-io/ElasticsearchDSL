@@ -117,12 +117,10 @@ The same way it works with a `Filter`. Take a look at this example:
 
 ```php
 $search = new Search();
-$termFilter = new TermQuery('name', 'ongr');
-$missingFilter = new MissingQuery('disabled');
-$existsFilter = new ExistsQuery('tag');
-$search->addFilter($termFilter);
-$search->addFilter($missingFilter);
-$search->addFilter($existsFilter, BoolQuery::MUST_NOT);
+$termQuery = new TermQuery('name', 'ongr');
+$existsQuery = new ExistsQuery('tag');
+$search->addQuery($termFilter);
+$search->addQuery($existsFilter, BoolQuery::MUST_NOT);
 ```
 
 Elasticsearch DSL will form this query:
@@ -131,29 +129,20 @@ Elasticsearch DSL will form this query:
 {
   "query": {
     "bool": {
-        "filter": {
-            "bool": {
-                "must": [
-                    {
-                        "term": {
-                            "name": "ongr"
-                        }
-                    },
-                    {
-                        "missing": {
-                            "field": "disabled"
-                        }
-                    }
-                ],
-                "must_not": [
-                    {
-                        "exists": {
-                            "field": "tag"
-                        }
-                    }
-                ]
+        "must": [
+            {
+                "term": {
+                    "name": "ongr"
+                }
             }
-        }
+        ],
+        "must_not": [
+            {
+                "exists": {
+                    "field": "tag"
+                }
+            }
+        ]
     }
   }
 }
@@ -161,15 +150,12 @@ Elasticsearch DSL will form this query:
 
 ### Modify queries
 
-
-
-
 ### Sent request to the elasticsearch
-And finaly we can pass it to `elasticsearch-php` client. To generate an array for the client we call `toArray()` function.
+And finally we can pass it to `elasticsearch-php` client. To generate an array for the client call `toArray()` function.
 
 ```php
 //from elasticsearch/elasticsearch package
-$client = new Elasticsearch\Client();
+$client = ClientBuilder::create()->build();
 
 $searchParams = [
   'index' => 'people',
@@ -180,4 +166,4 @@ $searchParams = [
 $docs = $client->search($searchParams);
 ```
 
-> This example is for elasticsearch/elasticsearch ~1.0 version.
+> This example is for elasticsearch/elasticsearch ~5.0 version.
