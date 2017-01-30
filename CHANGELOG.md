@@ -3,6 +3,8 @@ v5.0.0 (2017-x)
 ---
 - **[BC break]** Removed deprecated aggregation classes.
 - **[BC break]** Removed deprecated query classes.
+- **[BC break]** `Search::getQueryParams()` changed to `Search::getUriParams()`.
+- **[BC break]** `FilterEndpoint` was removed due deprecated filters.
 
 v2.2.1 (2017-01-26)
 ---
