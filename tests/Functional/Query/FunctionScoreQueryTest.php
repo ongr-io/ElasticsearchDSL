@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Functional\Query;
 
-use ONGR\ElasticsearchDSL\Query\FunctionScoreQuery;
+use ONGR\ElasticsearchDSL\Query\Compound\FunctionScoreQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\Search;
 use ONGR\ElasticsearchDSL\Tests\Functional\AbstractElasticsearchTestCase;
@@ -61,15 +61,11 @@ class FunctionScoreQueryTest extends AbstractElasticsearchTestCase
     {
         $fquery = new FunctionScoreQuery(new MatchAllQuery());
         $fquery->addScriptScoreFunction(
-            'price  = doc[\'price\'].value; margin = doc[\'margin\'].value;
-             if (price > target) { return price * (1 - discount); };
-             return price;',
+            'if (doc[\'price\'].value > ctx._source.target) { return doc[\'price\'].value * (1 - ctx._source.discount); }
+             return doc[\'price\'].value;',
             [
                 'target' => 20,
                 'discount' => 0.9,
-            ],
-            [
-                'lang' => 'groovy',
             ]
         );
 

@@ -44,27 +44,6 @@ class FunctionScoreQuery implements BuilderInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'function_score';
-    }
-
-    /**
-     * Modifier to apply filter to the function score function.
-     *
-     * @param array            $function
-     * @param BuilderInterface $query
-     */
-    private function applyFilter(array &$function, BuilderInterface $query = null)
-    {
-        if ($query) {
-            $function['filter'] = $query->toArray();
-        }
-    }
-
-    /**
      * Creates field_value_factor function.
      *
      * @param string           $field
@@ -89,6 +68,19 @@ class FunctionScoreQuery implements BuilderInterface
         $this->functions[] = $function;
 
         return $this;
+    }
+
+    /**
+     * Modifier to apply filter to the function score function.
+     *
+     * @param array            $function
+     * @param BuilderInterface $query
+     */
+    private function applyFilter(array &$function, BuilderInterface $query = null)
+    {
+        if ($query) {
+            $function['filter'] = $query->toArray();
+        }
     }
 
     /**
@@ -168,7 +160,7 @@ class FunctionScoreQuery implements BuilderInterface
     /**
      * Adds script score function.
      *
-     * @param string           $script
+     * @param string           $inline
      * @param array            $params
      * @param array            $options
      * @param BuilderInterface $query
@@ -176,23 +168,28 @@ class FunctionScoreQuery implements BuilderInterface
      * @return $this
      */
     public function addScriptScoreFunction(
-        $script,
+        $inline,
         array $params = [],
         array $options = [],
         BuilderInterface $query = null
     ) {
         $function = [
-            'script_score' => array_merge(
-                [
-                    'script' => $script,
-                    'params' => $params,
-                ],
-                $options
-            ),
+            'script_score' => [
+                'script' =>
+                    array_filter(
+                        array_merge(
+                            [
+                                'lang' => 'painless',
+                                'inline' => $inline,
+                                'params' => $params
+                            ],
+                            $options
+                        )
+                    )
+            ],
         ];
 
         $this->applyFilter($function, $query);
-
         $this->functions[] = $function;
 
         return $this;
@@ -225,5 +222,13 @@ class FunctionScoreQuery implements BuilderInterface
         $output = $this->processArray($query);
 
         return [$this->getType() => $output];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return 'function_score';
     }
 }
