@@ -17,7 +17,6 @@ use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
 use ONGR\ElasticsearchDSL\Query\Compound\BoolQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AbstractSearchEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
-use ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\InnerHitsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint;
@@ -36,74 +35,122 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 class Search
 {
     /**
-     * @var int
-     */
-    private $size;
-
-    /**
+     * To retrieve hits from a certain offset. Defaults to 0.
+     *
      * @var int
      */
     private $from;
 
     /**
-     * @var string
-     */
-    private $timeout;
-
-    /**
+     * The number of hits to return. Defaults to 10. If you do not care about getting some
+     * hits back but only about the number of matches and/or aggregations, setting the value
+     * to 0 will help performance.
+     *
      * @var int
      */
-    private $terminateAfter;
+    private $size;
 
     /**
-     * @var string|null
-     */
-    private $scroll;
-
-    /**
-     * @var array|bool|string
+     * Allows to control how the _source field is returned with every hit. By default
+     * operations return the contents of the _source field unless you have used the
+     * stored_fields parameter or if the _source field is disabled.
+     *
+     * @var bool
      */
     private $source;
 
     /**
+     * Allows to selectively load specific stored fields for each document represented by a search hit.
+     *
      * @var array
      */
     private $storedFields;
 
     /**
+     * Allows to return a script evaluation (based on different fields) for each hit.
+     * Script fields can work on fields that are not stored, and allow to return custom
+     * values to be returned (the evaluated value of the script). Script fields can
+     * also access the actual _source document indexed and extract specific elements
+     * to be returned from it (can be an "object" type).
+     *
      * @var array
      */
     private $scriptFields;
 
     /**
-     * @var string
+     * Allows to return the doc value representation of a field for each hit. Doc value
+     * fields can work on fields that are not stored. Note that if the fields parameter
+     * specifies fields without docvalues it will try to load the value from the fielddata
+     * cache causing the terms for that field to be loaded to memory (cached), which will
+     * result in more memory consumption.
+     *
+     * @var array
      */
-    private $searchType;
+    private $docValueFields;
 
     /**
-     * @var string
-     */
-    private $requestCache;
-
-    /**
+     * Enables explanation for each hit on how its score was computed.
+     *
      * @var bool
      */
     private $explain;
 
     /**
+     * Returns a version for each search hit.
+     *
+     * @var bool
+     */
+    private $version;
+
+    /**
+     * Allows to configure different boost level per index when searching across more
+     * than one indices. This is very handy when hits coming from one index matter more
+     * than hits coming from another index (think social graph where each user has an index).
+     *
      * @var array
      */
-    private $stats;
+    private $indicesBoost;
 
     /**
-     * @var string[]
-     */
-    private $preference;
-
-    /**
-     * @var float
+     * Exclude documents which have a _score less than the minimum specified in min_score.
+     *
+     * @var int
      */
     private $minScore;
+
+    /**
+     * Pagination of results can be done by using the from and size but the cost becomes
+     * prohibitive when the deep pagination is reached. The index.max_result_window which
+     * defaults to 10,000 is a safeguard, search requests take heap memory and time
+     * proportional to from + size. The Scroll api is recommended for efficient deep
+     * scrolling but scroll contexts are costly and it is not recommended to use it for
+     * real time user requests. The search_after parameter circumvents this problem by
+     * providing a live cursor. The idea is to use the results from the previous page to
+     * help the retrieval of the next page.
+     *
+     * @var array
+     */
+    private $searchAfter;
+
+    /**
+     * URI parameters alongside Request body search.
+     *
+     * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html
+     *
+     * @var array
+     */
+    private $uriParams = [];
+
+    /**
+     * While a search request returns a single “page” of results, the scroll API can be used to retrieve
+     * large numbers of results (or even all results) from a single search request, in much the same way
+     * as you would use a cursor on a traditional database. Scrolling is not intended for real time user
+     * requests, but rather for processing large amounts of data, e.g. in order to reindex the contents
+     * of one index into a new index with a different configuration.
+     *
+     * @var string
+     */
+    private $scroll;
 
     /**
      * @var OrderedSerializer
@@ -129,22 +176,6 @@ class Search
     }
 
     /**
-     * Returns endpoint instance.
-     *
-     * @param string $type Endpoint type.
-     *
-     * @return SearchEndpointInterface
-     */
-    private function getEndpoint($type)
-    {
-        if (!array_key_exists($type, $this->endpoints)) {
-            $this->endpoints[$type] = SearchEndpointFactory::get($type);
-        }
-
-        return $this->endpoints[$type];
-    }
-
-    /**
      * Destroys search endpoint.
      *
      * @param string $type Endpoint type.
@@ -152,19 +183,6 @@ class Search
     public function destroyEndpoint($type)
     {
         unset($this->endpoints[$type]);
-    }
-
-    /**
-     * Sets parameters to the endpoint.
-     *
-     * @param string $endpointName
-     * @param array  $parameters
-     */
-    private function setEndpointParameters($endpointName, array $parameters)
-    {
-        /** @var AbstractSearchEndpoint $endpoint */
-        $endpoint = $this->getEndpoint($endpointName);
-        $endpoint->setParameters($parameters);
     }
 
     /**
@@ -182,6 +200,22 @@ class Search
         $endpoint->addToBool($query, $boolType, $key);
 
         return $this;
+    }
+
+    /**
+     * Returns endpoint instance.
+     *
+     * @param string $type Endpoint type.
+     *
+     * @return SearchEndpointInterface
+     */
+    private function getEndpoint($type)
+    {
+        if (!array_key_exists($type, $this->endpoints)) {
+            $this->endpoints[$type] = SearchEndpointFactory::get($type);
+        }
+
+        return $this->endpoints[$type];
     }
 
     /**
@@ -211,52 +245,16 @@ class Search
     }
 
     /**
-     * Adds a filter to the search.
+     * Sets parameters to the endpoint.
      *
-     * @param BuilderInterface $filter   Filter.
-     * @param string           $boolType Example boolType values:
-     *                                   - must
-     *                                   - must_not
-     *                                   - should.
-     * @param string           $key
-     *
-     * @return $this
+     * @param string $endpointName
+     * @param array  $parameters
      */
-    public function addFilter(BuilderInterface $filter, $boolType = BoolQuery::MUST, $key = null)
+    public function setEndpointParameters($endpointName, array $parameters)
     {
-        // Trigger creation of QueryEndpoint as filters depends on it
-        $this->getEndpoint(QueryEndpoint::NAME);
-
-        $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
-        $endpoint->addToBool($filter, $boolType, $key);
-
-        return $this;
-    }
-
-    /**
-     * Returns queries inside BoolFilter instance.
-     *
-     * @return BuilderInterface
-     */
-    public function getFilters()
-    {
-        $endpoint = $this->getEndpoint(FilterEndpoint::NAME);
-
-        return $endpoint->getBool();
-    }
-
-    /**
-     * Sets filter endpoint parameters.
-     *
-     * @param array $parameters
-     *
-     * @return $this
-     */
-    public function setFilterParameters(array $parameters)
-    {
-        $this->setEndpointParameters(FilterEndpoint::NAME, $parameters);
-
-        return $this;
+        /** @var AbstractSearchEndpoint $endpoint */
+        $endpoint = $this->getEndpoint($endpointName);
+        $endpoint->setParameters($parameters);
     }
 
     /**
@@ -269,7 +267,7 @@ class Search
      *                                   - should.
      * @param string           $key
      *
-     * @return int Key of post filter.
+     * @return $this.
      */
     public function addPostFilter(BuilderInterface $filter, $boolType = BoolQuery::MUST, $key = null)
     {
@@ -383,7 +381,7 @@ class Search
      *
      * @param Highlight $highlight
      *
-     * @return int Key of highlight.
+     * @return $this.
      */
     public function addHighlight($highlight)
     {
@@ -397,7 +395,7 @@ class Search
      *
      * @return BuilderInterface
      */
-    public function getHighlight()
+    public function getHighlights()
     {
         /** @var HighlightEndpoint $highlightEndpoint */
         $highlightEndpoint = $this->getEndpoint(HighlightEndpoint::NAME);
@@ -430,74 +428,6 @@ class Search
     }
 
     /**
-     * Exclude documents which have a _score less than the minimum specified.
-     *
-     * @param float $minScore
-     *
-     * @return $this
-     */
-    public function setMinScore($minScore)
-    {
-        $this->minScore = $minScore;
-
-        return $this;
-    }
-
-    /**
-     * Returns min score value.
-     *
-     * @return float
-     */
-    public function getMinScore()
-    {
-        return $this->minScore;
-    }
-
-    /**
-     * Paginate reed removed lts from.
-     *
-     * @param int $from
-     *
-     * @return $this
-     */
-    public function setFrom($from)
-    {
-        $this->from = $from;
-
-        return $this;
-    }
-
-    /**
-     * Sets timeout for query execution.
-     *
-     * @param string $timeout
-     *
-     * @return $this
-     */
-    public function setTimeout($timeout)
-    {
-        $this->timeout = $timeout;
-
-        return $this;
-    }
-
-    /**
-     * Sets maximum number of documents per shard.
-     *
-     * @param int $terminateAfter
-     *
-     * @return $this
-     */
-    public function setTerminateAfter($terminateAfter)
-    {
-        $this->terminateAfter = $terminateAfter;
-
-        return $this;
-    }
-
-    /**
-     * Returns results offset value.
-     *
      * @return int
      */
     public function getFrom()
@@ -506,22 +436,16 @@ class Search
     }
 
     /**
-     * Set maximum number of results.
-     *
-     * @param int $size
-     *
+     * @param int $from
      * @return $this
      */
-    public function setSize($size)
+    public function setFrom($from)
     {
-        $this->size = $size;
-
+        $this->from = $from;
         return $this;
     }
 
     /**
-     * Returns maximum number of results query can request.
-     *
      * @return int
      */
     public function getSize()
@@ -530,46 +454,34 @@ class Search
     }
 
     /**
-     * Allows to control how the _source field is returned with every hit.
-     *
-     * @param array|bool|string $source
-     *
+     * @param int $size
      * @return $this
      */
-    public function setSource($source)
+    public function setSize($size)
     {
-        $this->source = $source;
-
+        $this->size = $size;
         return $this;
     }
 
     /**
-     * Returns source value.
-     *
-     * @return array|bool|string
+     * @return bool
      */
-    public function getSource()
+    public function isSource()
     {
         return $this->source;
     }
 
     /**
-     * Allows to selectively load specific stored fields for each document represented by a search hit.
-     *
-     * @param array $storedFields
-     *
+     * @param bool $source
      * @return $this
      */
-    public function setStoredFields(array $storedFields)
+    public function setSource($source)
     {
-        $this->storedFields = $storedFields;
-
+        $this->source = $source;
         return $this;
     }
 
     /**
-     * Returns field value.
-     *
      * @return array
      */
     public function getStoredFields()
@@ -578,22 +490,16 @@ class Search
     }
 
     /**
-     * Allows to return a script evaluation (based on different fields) for each hit.
-     *
-     * @param array $scriptFields
-     *
+     * @param array $storedFields
      * @return $this
      */
-    public function setScriptFields($scriptFields)
+    public function setStoredFields($storedFields)
     {
-        $this->scriptFields = $scriptFields;
-
+        $this->storedFields = $storedFields;
         return $this;
     }
 
     /**
-     * Returns containing script fields.
-     *
      * @return array
      */
     public function getScriptFields()
@@ -602,22 +508,34 @@ class Search
     }
 
     /**
-     * Sets explain property in request body search.
-     *
-     * @param bool $explain
-     *
+     * @param array $scriptFields
      * @return $this
      */
-    public function setExplain($explain)
+    public function setScriptFields($scriptFields)
     {
-        $this->explain = $explain;
-
+        $this->scriptFields = $scriptFields;
         return $this;
     }
 
     /**
-     * Returns if explain property is set in request body search.
-     *
+     * @return array
+     */
+    public function getDocValueFields()
+    {
+        return $this->docValueFields;
+    }
+
+    /**
+     * @param array $docValueFields
+     * @return $this
+     */
+    public function setDocValueFields($docValueFields)
+    {
+        $this->docValueFields = $docValueFields;
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isExplain()
@@ -626,47 +544,89 @@ class Search
     }
 
     /**
-     * Sets a stats group.
-     *
-     * @param array $stats
-     *
+     * @param bool $explain
      * @return $this
      */
-    public function setStats($stats)
+    public function setExplain($explain)
     {
-        $this->stats = $stats;
-
+        $this->explain = $explain;
         return $this;
     }
 
     /**
-     * Returns a stats group.
-     *
+     * @return bool
+     */
+    public function isVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param bool $version
+     * @return $this
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+        return $this;
+    }
+
+    /**
      * @return array
      */
-    public function getStats()
+    public function getIndicesBoost()
     {
-        return $this->stats;
+        return $this->indicesBoost;
     }
 
     /**
-     * Setter for scroll duration, effectively setting if search is scrolled or not.
-     *
-     * @param string|null $duration
-     *
+     * @param array $indicesBoost
      * @return $this
      */
-    public function setScroll($duration = '5m')
+    public function setIndicesBoost($indicesBoost)
     {
-        $this->scroll = $duration;
-
+        $this->indicesBoost = $indicesBoost;
         return $this;
     }
 
     /**
-     * Returns scroll duration.
-     *
-     * @return string|null
+     * @return int
+     */
+    public function getMinScore()
+    {
+        return $this->minScore;
+    }
+
+    /**
+     * @param int $minScore
+     * @return $this
+     */
+    public function setMinScore($minScore)
+    {
+        $this->minScore = $minScore;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSearchAfter()
+    {
+        return $this->searchAfter;
+    }
+
+    /**
+     * @param array $searchAfter
+     * @return $this
+     */
+    public function setSearchAfter($searchAfter)
+    {
+        $this->searchAfter = $searchAfter;
+        return $this;
+    }
+
+    /**
+     * @return string
      */
     public function getScroll()
     {
@@ -674,92 +634,47 @@ class Search
     }
 
     /**
-     * Set search type.
-     *
-     * @param string $searchType
-     *
+     * @param string $scroll
      * @return $this
      */
-    public function setSearchType($searchType)
+    public function setScroll($scroll = '5m')
     {
-        $this->searchType = $searchType;
-
+        $this->scroll = $scroll;
         return $this;
     }
 
     /**
-     * Returns search type used.
-     *
-     * @return string
-     */
-    public function getSearchType()
-    {
-        return $this->searchType;
-    }
-
-
-    /**
-     * Set request cache.
-     *
-     * @param string $requestCache
+     * @param string $name
+     * @param string|array|bool $value
      *
      * @return $this
      */
-    public function setRequestCache($requestCache)
+    public function addUriParam($name, $value)
     {
-        $this->requestCache = $requestCache;
-
-        return $this;
-    }
-
-    /**
-     * Returns request cache.
-     *
-     * @return string
-     */
-    public function getRequestCache()
-    {
-        return $this->requestCache;
-    }
-
-    /**
-     * Setter for preference.
-     *
-     * Controls which shard replicas to execute the search request on.
-     *
-     * @param mixed $preferenceParams Example values:
-     *                                _primary
-     *                                _primary_first
-     *                                _local
-     *                                _only_node:xyz (xyz - node id)
-     *                                _prefer_node:xyz (xyz - node id)
-     *                                _shards:2,3 (2 and 3 specified shards)
-     *                                custom value
-     *                                string[] combination of params.
-     *
-     * @return $this
-     */
-    public function setPreference($preferenceParams)
-    {
-        if (is_string($preferenceParams)) {
-            $this->preference[] = $preferenceParams;
-        }
-
-        if (is_array($preferenceParams) && !empty($preferenceParams)) {
-            $this->preference = $preferenceParams;
+        if (in_array($name, [
+            'q',
+            'df',
+            'analyzer',
+            'analyze_wildcard',
+            'default_operator',
+            'lenient',
+            'explain',
+            '_source',
+            'stored_fields',
+            'sort',
+            'track_scores',
+            'timeout',
+            'terminate_after',
+            'from',
+            'size',
+            'search_type',
+        ])) {
+            $this->uriParams[$name] = $value;
+        } else {
+            throw new \InvalidArgumentException(sprintf('Parameter %s is not supported.', $value));
         }
 
         return $this;
-    }
-
-    /**
-     * Returns preference params as string.
-     *
-     * @return string
-     */
-    public function getPreference()
-    {
-        return $this->preference ? implode(';', $this->preference) : null;
     }
 
     /**
@@ -767,16 +682,9 @@ class Search
      *
      * @return array
      */
-    public function getQueryParams()
+    public function getUriParams()
     {
-        return array_filter(
-            [
-                'scroll' => $this->getScroll(),
-                'search_type' => $this->getSearchType(),
-                'request_cache' => $this->getRequestCache(),
-                'preference' => $this->getPreference(),
-            ]
-        );
+        return $this->uriParams;
     }
 
     /**
@@ -789,14 +697,15 @@ class Search
         $params = [
             'from' => 'from',
             'size' => 'size',
+            'source' => '_source',
             'storedFields' => 'stored_fields',
             'scriptFields' => 'script_fields',
+            'docValueFields' => 'docvalue_fields',
             'explain' => 'explain',
-            'stats' => 'stats',
+            'version' => 'version',
+            'indicesBoost' => 'indices_boost',
             'minScore' => 'min_score',
-            'source' => '_source',
-            'timeout' => 'timeout',
-            'terminateAfter' => 'terminate_after',
+            'searchAfter' => 'search_after',
         ];
 
         foreach ($params as $field => $param) {
