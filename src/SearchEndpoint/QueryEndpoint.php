@@ -12,7 +12,7 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Query\BoolQuery;
+use ONGR\ElasticsearchDSL\Query\Compound\BoolQuery;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\OrderedNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -80,7 +80,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
      */
     public function getOrder()
     {
-        return 3;
+        return 2;
     }
 
     /**

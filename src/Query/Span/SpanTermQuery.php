@@ -11,7 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
-use ONGR\ElasticsearchDSL\Query\TermQuery;
+use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
 
 /**
  * Elasticsearch span_term query class.

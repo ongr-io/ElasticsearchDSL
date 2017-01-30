@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Search post filter dsl endpoint.
  */
-class PostFilterEndpoint extends FilterEndpoint
+class PostFilterEndpoint extends QueryEndpoint
 {
     /**
      * Endpoint name
@@ -40,6 +40,6 @@ class PostFilterEndpoint extends FilterEndpoint
      */
     public function getOrder()
     {
-        return 2;
+        return 1;
     }
 }
