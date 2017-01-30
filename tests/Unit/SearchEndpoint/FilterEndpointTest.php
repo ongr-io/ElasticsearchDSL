@@ -60,9 +60,9 @@ class FilterEndpointTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($instance->normalize($normalizerInterface));
         $this->assertTrue($instance->hasReference('filter_query'));
 
-        /** @var \ONGR\ElasticsearchDSL\Query\BoolQuery $bool */
+        /** @var \ONGR\ElasticsearchDSL\Query\Compound\BoolQuery $bool */
         $bool = $instance->getReference('filter_query');
-        $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\BoolQuery', $bool);
+        $this->assertInstanceOf('ONGR\ElasticsearchDSL\Query\Compound\BoolQuery', $bool);
 
         $must = $bool->getQueries('must');
         $realReference = reset($must);

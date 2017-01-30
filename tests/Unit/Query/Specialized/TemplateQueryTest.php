@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Specialized;
 
-use ONGR\ElasticsearchDSL\Query\TemplateQuery;
+use ONGR\ElasticsearchDSL\Query\Specialized\TemplateQuery;
 
 /**
  * Unit test for Template.

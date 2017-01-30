@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Compound;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\Query\IndicesQuery;
+use ONGR\ElasticsearchDSL\Query\Compound\IndicesQuery;
 
 class IndicesQueryTest extends \PHPUnit_Framework_TestCase
 {

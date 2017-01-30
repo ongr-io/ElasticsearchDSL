@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Geo;
 
-use ONGR\ElasticsearchDSL\Query\GeoBoundingBoxQuery;
+use ONGR\ElasticsearchDSL\Query\Geo\GeoBoundingBoxQuery;
 
 class GeoBoundingBoxQueryTest extends \PHPUnit_Framework_TestCase
 {

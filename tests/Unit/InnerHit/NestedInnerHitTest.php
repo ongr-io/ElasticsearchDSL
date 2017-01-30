@@ -3,8 +3,8 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\InnerHit;
 
 use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
-use ONGR\ElasticsearchDSL\Query\MatchQuery;
-use ONGR\ElasticsearchDSL\Query\NestedQuery;
+use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
+use ONGR\ElasticsearchDSL\Query\Joining\NestedQuery;
 use ONGR\ElasticsearchDSL\Search;
 
 class NestedInnerHitTest extends \PHPUnit_Framework_TestCase

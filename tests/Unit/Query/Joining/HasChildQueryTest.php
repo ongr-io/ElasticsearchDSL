@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Joining;
 
-use ONGR\ElasticsearchDSL\Query\HasChildQuery;
+use ONGR\ElasticsearchDSL\Query\Joining\HasChildQuery;
 
 class HasChildQueryTest extends \PHPUnit_Framework_TestCase
 {

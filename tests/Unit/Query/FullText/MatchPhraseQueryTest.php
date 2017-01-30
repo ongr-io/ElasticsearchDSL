@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\FullText;
 
-use ONGR\ElasticsearchDSL\Query\MatchPhraseQuery;
+use ONGR\ElasticsearchDSL\Query\FullText\MatchPhraseQuery;
 use PHPUnit_Framework_TestCase;
 
 class MatchPhraseQueryTest extends PHPUnit_Framework_TestCase

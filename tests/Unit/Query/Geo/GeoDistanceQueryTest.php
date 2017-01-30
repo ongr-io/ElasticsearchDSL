@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Query;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Geo;
 
-use ONGR\ElasticsearchDSL\Query\GeoDistanceQuery;
+use ONGR\ElasticsearchDSL\Query\Geo\GeoDistanceQuery;
 
 class GeoDistanceQueryTest extends \PHPUnit_Framework_TestCase
 {
