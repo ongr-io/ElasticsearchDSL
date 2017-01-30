@@ -80,7 +80,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
      */
     public function getOrder()
     {
-        return 3;
+        return 2;
     }
 
     /**

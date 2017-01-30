@@ -35,7 +35,7 @@ class PostFilterEndpointTest extends \PHPUnit_Framework_TestCase
     public function testGetOrder()
     {
         $instance = new PostFilterEndpoint();
-        $this->assertEquals(2, $instance->getOrder());
+        $this->assertEquals(1, $instance->getOrder());
     }
 
     /**

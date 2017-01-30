@@ -21,7 +21,6 @@ class SearchEndpointFactory
      */
     private static $endpoints = [
         'query' => 'ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint',
-        'filter' => 'ONGR\ElasticsearchDSL\SearchEndpoint\FilterEndpoint',
         'post_filter' => 'ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint',
         'sort' => 'ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint',
         'highlight' => 'ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint',

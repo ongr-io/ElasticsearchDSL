@@ -35,7 +35,7 @@ class QueryEndpointTest extends \PHPUnit_Framework_TestCase
     public function testGetOrder()
     {
         $instance = new QueryEndpoint();
-        $this->assertEquals(3, $instance->getOrder());
+        $this->assertEquals(2, $instance->getOrder());
     }
 
     /**
