@@ -11,65 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "term" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class TermQuery implements BuilderInterface
+class TermQuery extends \ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param string $value
-     * @param array  $parameters
-     */
-    public function __construct($field, $value, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->value = $value;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'term';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = $this->processArray();
-
-        if (empty($query)) {
-            $query = $this->value;
-        } else {
-            $query['value'] = $this->value;
-        }
-
-        $output = [
-            $this->field => $query,
-        ];
-
-        return [$this->getType() => $output];
-    }
 }

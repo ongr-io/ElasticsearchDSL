@@ -11,47 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-
 /**
  * Represents Elasticsearch "type" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class TypeQuery implements BuilderInterface
+class TypeQuery extends \ONGR\ElasticsearchDSL\Query\TermLevel\TypeQuery
 {
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * Constructor.
-     *
-     * @param string $type Type name
-     */
-    public function __construct($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'type';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        return [
-            $this->getType() => [
-                'value' => $this->type,
-            ],
-        ];
-    }
 }

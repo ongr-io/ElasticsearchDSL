@@ -11,61 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "fuzzy" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class FuzzyQuery implements BuilderInterface
+class FuzzyQuery extends \ONGR\ElasticsearchDSL\Query\TermLevel\FuzzyQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param string $value
-     * @param array  $parameters
-     */
-    public function __construct($field, $value, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->value = $value;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'fuzzy';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'value' => $this->value,
-        ];
-
-        $output = [
-            $this->field => $this->processArray($query),
-        ];
-
-        return [$this->getType() => $output];
-    }
 }

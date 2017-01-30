@@ -11,54 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "more_like_this" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class MoreLikeThisQuery implements BuilderInterface
+class MoreLikeThisQuery extends \ONGR\ElasticsearchDSL\Query\Specialized\MoreLikeThisQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string The text to find documents like it, required if ids or docs are not specified.
-     */
-    private $like;
-
-    /**
-     * @param string $like
-     * @param array  $parameters
-     */
-    public function __construct($like, array $parameters = [])
-    {
-        $this->like = $like;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'more_like_this';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [];
-
-        if (($this->hasParameter('ids') === false) || ($this->hasParameter('docs') === false)) {
-            $query['like'] = $this->like;
-        }
-
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
-    }
 }

@@ -11,60 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "has_parent" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-parent-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class HasParentQuery implements BuilderInterface
+class HasParentQuery extends \ONGR\ElasticsearchDSL\Query\Joining\HasParentQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $parentType;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param string           $parentType
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     */
-    public function __construct($parentType, BuilderInterface $query, array $parameters = [])
-    {
-        $this->parentType = $parentType;
-        $this->query = $query;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'has_parent';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'parent_type' => $this->parentType,
-            'query' => $this->query->toArray(),
-        ];
-
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
-    }
 }

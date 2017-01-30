@@ -11,56 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "geo_polygon" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-polygon-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class GeoPolygonQuery implements BuilderInterface
+class GeoPolygonQuery extends \ONGR\ElasticsearchDSL\Query\Geo\GeoPolygonQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $points;
-
-    /**
-     * @param string $field
-     * @param array  $points
-     * @param array  $parameters
-     */
-    public function __construct($field, array $points = [], array $parameters = [])
-    {
-        $this->field = $field;
-        $this->points = $points;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'geo_polygon';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [$this->field => ['points' => $this->points]];
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
-    }
 }

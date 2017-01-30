@@ -11,52 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "constant_score" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-constant-score-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class ConstantScoreQuery implements BuilderInterface
+class ConstantScoreQuery extends \ONGR\ElasticsearchDSL\Query\Compound\ConstantScoreQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     */
-    public function __construct(BuilderInterface $query, array $parameters = [])
-    {
-        $this->query = $query;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'constant_score';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = [
-            'filter' => $this->query->toArray(),
-        ];
-
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
-    }
 }

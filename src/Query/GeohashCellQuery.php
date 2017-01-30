@@ -18,6 +18,7 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
  * Represents Elasticsearch "geohash_cell" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geohash-cell-query.html
+ * @deprecated Use geohash_grid aggregation instead.
  */
 class GeohashCellQuery implements BuilderInterface
 {

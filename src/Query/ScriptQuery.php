@@ -11,49 +11,13 @@
 
 namespace ONGR\ElasticsearchDSL\Query;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
-use ONGR\ElasticsearchDSL\ParametersTrait;
-
 /**
  * Represents Elasticsearch "script" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-script-query.html
+ *
+ * @deprecated Use the extended class instead. This class is left only for BC compatibility.
  */
-class ScriptQuery implements BuilderInterface
+class ScriptQuery extends \ONGR\ElasticsearchDSL\Query\Specialized\ScriptQuery
 {
-    use ParametersTrait;
-
-    /**
-     * @var string
-     */
-    private $script;
-
-    /**
-     * @param string $script     Script
-     * @param array  $parameters Optional parameters
-     */
-    public function __construct($script, array $parameters = [])
-    {
-        $this->script = $script;
-        $this->setParameters($parameters);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'script';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $query = ['inline' => $this->script];
-        $output = $this->processArray($query);
-
-        return [$this->getType() => ['script' => $output]];
-    }
 }
