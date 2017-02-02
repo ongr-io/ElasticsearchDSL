@@ -29,4 +29,12 @@ class SearchTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('ONGR\ElasticsearchDSL\Search', new Search());
     }
+
+    public function testScrollUriParameter()
+    {
+        $search = new Search();
+        $search->setScroll('5m');
+
+        $this->assertArrayHasKey('scroll', $search->getUriParams());
+    }
 }
