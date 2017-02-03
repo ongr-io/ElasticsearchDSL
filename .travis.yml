@@ -26,4 +26,4 @@ script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
 after_script:
-  - vendor/bin/coveralls
+  - travis_retry php vendor/bin/coveralls
