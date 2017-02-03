@@ -640,6 +640,9 @@ class Search
     public function setScroll($scroll = '5m')
     {
         $this->scroll = $scroll;
+
+        $this->addUriParam('scroll', $this->scroll);
+
         return $this;
     }
 
@@ -668,6 +671,7 @@ class Search
             'from',
             'size',
             'search_type',
+            'scroll',
         ])) {
             $this->uriParams[$name] = $value;
         } else {
