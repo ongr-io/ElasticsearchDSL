@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Functional;
 
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
+use ONGR\ElasticsearchDSL\MSearch;
 use ONGR\ElasticsearchDSL\Search;
 
 abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
@@ -147,6 +148,20 @@ abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
         }
 
         return $documents;
+    }
+
+    /**
+     * @param MSearch $search
+     * @return array
+     */
+    protected function executeMultiSearch(MSearch $search)
+    {
+        return $this->client->msearch(
+            [
+                'index' => self::INDEX_NAME,
+                'body' => $search->toArray()
+            ]
+        );
     }
 
     /**
