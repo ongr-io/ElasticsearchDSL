@@ -12,7 +12,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit;
 
-
 use Elasticsearch\Common\Exceptions\InvalidArgumentException;
 use ONGR\ElasticsearchDSL\MSearch;
 use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
@@ -72,6 +71,4 @@ class MSearchTest extends \PHPUnit_Framework_TestCase
 
         $mSearch->addSearch($search1, ['not_existing_property' => 'value']);
     }
-
-
 }

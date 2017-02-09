@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace ONGR\ElasticsearchDSL;
 
 use Elasticsearch\Common\Exceptions\InvalidArgumentException;
@@ -54,8 +53,7 @@ class MSearch
     {
         $result = [];
 
-        foreach ($this->queries as $query)
-        {
+        foreach ($this->queries as $query) {
             /** @var Search $search */
             $search = $query['body'];
             $result[] = $query['header'];
@@ -87,5 +85,4 @@ class MSearch
             }
         }
     }
-
 }

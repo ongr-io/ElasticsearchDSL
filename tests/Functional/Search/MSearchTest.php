@@ -11,7 +11,6 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Functional;
 
-
 use ONGR\ElasticsearchDSL\MSearch;
 use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
 use ONGR\ElasticsearchDSL\Search;
