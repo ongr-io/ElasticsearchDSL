@@ -18,6 +18,8 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
  * Represents Elasticsearch "geo_distance_range" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-distance-range-query.html
+ *
+ * @deprecated The query is deprecated as of Elasticsearch 5.0 will still be supported for indices created before 5.0
  */
 class GeoDistanceRangeQuery implements BuilderInterface
 {
