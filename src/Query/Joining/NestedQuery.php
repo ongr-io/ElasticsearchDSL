@@ -67,4 +67,14 @@ class NestedQuery implements BuilderInterface
             )
         ];
     }
+
+    /**
+     * Returns nested query object.
+     *
+     * @return BuilderInterface
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
 }
