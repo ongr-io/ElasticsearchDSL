@@ -1,10 +1,14 @@
 # CHANGELOG
 v5.0.0 (2017-x)
 ---
-- **[BC break]** Removed deprecated aggregation classes.
-- **[BC break]** Removed deprecated query classes.
-- **[BC break]** `Search::getQueryParams()` changed to `Search::getUriParams()`.
-- **[BC break]** `FilterEndpoint` was removed due deprecated filters.
+- **Namespace for some queries were changed**. Queries were consolidated to a domain like Elasticsearch does.  All queries were grouped to `Compound`, `FullText`, `Geo`, `Joining`, `Span`, `Specialized` and `TermLevel`.
+- PHP version support changed to >=5.6
+- Added `elasticsearch\elasticsearch` to required dependency list in the composer.json.
+- Deprecated aggregations removed. Check if the namespace is correct. All aggregations grouped to `Bucketing`, `Metric` and `Pipeline` namespaces.
+- `Search::getQueryParams()` changed to `Search::getUriParams()`. All setter's for request URI parameters removed in favor of `uriParams` container. You can add URI parameters by `addUriParam`, and this function also has validation.
+- `Search::setFields()` and `Search::getFields()` were changed to `Search::setStoredFields()` and `Search::getStoredFields()`.
+- `FilterEndpoint` was removed due to deprecated filters in elasticsearch.
+- Added missing scroll param to URL params (#202)
 
 v2.2.1 (2017-01-26)
 ---

@@ -8,7 +8,7 @@ The regexp query allows you to use regular expression term queries.
 
 ```JSON
 {
-    "filter": {
+    "query": {
         "regexp":{
             "name.first" : "s.*y"
         }

@@ -10,7 +10,7 @@ $search = new Search();
 
 > We won't include namespaces in any examples. Don't worry all class's names are unique, so any IDE editor should autocomplete and include it for you ;).
 
-So, when we have a `Search` object we can start add something to it. Usually you will add `Query`, `Filter` and `Aggregation`.
+So, when we have a `Search` object we can start adding something to it. Usually you will add `Query` and `Aggregation`.
 
 > More info how create [queries](../Query/index.md) and [aggregations](../Aggregation/index.md) objects.
 
@@ -43,32 +43,40 @@ At the end it will form this query:
 
 ### Form a Filter
 
-Since Elasticsearch 2.0 all filters were replaced by queries. Queries acts like
-filters when you use them in filter context.
-
-To add a filter is the same way like a query. First, lets create some `Filter` object.
-
+Since Elasticsearch 5.0 the support for top level filters was dropped. The same functionality
+is now supported via `BoolQuery`. Adding a filter to the bool query is done like so:
+ 
 ```php
-$matchAllQuery = new MatchAllQuery();
+$search = new Search();
+$boolQuery = new BoolQuery();
+$boolQuery->add(new MatchAllQuery());
+$geoQuery = new TermQuery('field', 'value');
+$boolQuery->add($geoQuery, BoolQuery::FILTER);
+$search->addQuery($boolQuery);
+
+$search->toArray();
 ```
 
-And simply add to the `Search`:
+This will result in
 
-```php
-$search->addFilter($matchAllQuery);
 ```
-
-Unlike `Query`, when we add a `Filter` with our DSL library it will add a query and all necessary stuff for you. So when we add one filter we will get this query:
-
-```JSON
 {
-  "query": {
-      "bool": {
-          "filter": {
-              "match_all": {}
-          }
-      }
-  }
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match_all": {}
+                }
+            ],
+            "filter": [
+                {
+                    "term": {
+                        "field": "value"
+                    }
+                }
+            ]
+        }
+    }
 }
 ```
 
@@ -113,63 +121,17 @@ The query will look like:
 ```
 > More info how to form bool queries find in [Bool Query](../Query/Bool.md) chapter.
 
-The same way it works with a `Filter`. Take a look at this example:
-
-```php
-$search = new Search();
-$termFilter = new TermQuery('name', 'ongr');
-$missingFilter = new MissingQuery('disabled');
-$existsFilter = new ExistsQuery('tag');
-$search->addFilter($termFilter);
-$search->addFilter($missingFilter);
-$search->addFilter($existsFilter, BoolQuery::MUST_NOT);
-```
-
-Elasticsearch DSL will form this query:
-
-```JSON
-{
-  "query": {
-    "bool": {
-        "filter": {
-            "bool": {
-                "must": [
-                    {
-                        "term": {
-                            "name": "ongr"
-                        }
-                    },
-                    {
-                        "missing": {
-                            "field": "disabled"
-                        }
-                    }
-                ],
-                "must_not": [
-                    {
-                        "exists": {
-                            "field": "tag"
-                        }
-                    }
-                ]
-            }
-        }
-    }
-  }
-}
-```
-
 ### Modify queries
 
 
 
 
 ### Sent request to the elasticsearch
-And finaly we can pass it to `elasticsearch-php` client. To generate an array for the client we call `toArray()` function.
+And finally we can pass it to `elasticsearch-php` client. To generate an array for the client we call `toArray()` function.
 
 ```php
 //from elasticsearch/elasticsearch package
-$client = new Elasticsearch\Client();
+$client = ClientBuilder::create()->build();
 
 $searchParams = [
   'index' => 'people',
@@ -180,4 +142,4 @@ $searchParams = [
 $docs = $client->search($searchParams);
 ```
 
-> This example is for elasticsearch/elasticsearch ~1.0 version.
+> This example is for elasticsearch/elasticsearch ~5.0 version.
