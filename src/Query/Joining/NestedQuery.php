@@ -80,7 +80,7 @@ class NestedQuery implements BuilderInterface
 
     /**
      * Returns path this query is set for.
-     * 
+     *
      * @return string
      */
     public function getPath()
