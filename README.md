@@ -35,7 +35,6 @@ Install library with [composer](https://getcomposer.org):
 $ composer require ongr/elasticsearch-dsl
 ```
 
-> [elasticsearch-php](https://github.com/elastic/elasticsearch-php) client is defined in the composer requirements, no need to install it.
 
 ### Search
 
@@ -55,7 +54,7 @@ Create search:
  <?php
   require 'vendor/autoload.php'; //Composer autoload
   
-  $client = ClientBuilder::create()->build(); //elasticsearch-php client
+  $client = ClientBuilder::create()->build(); // elasticsearch-php client
   
   $matchAll = new ONGR\ElasticsearchDSL\Query\MatchAllQuery();
   
@@ -69,5 +68,13 @@ Create search:
   
   $results = $client->search($params);
 ```
+
+> *Note*
+> 
+> In the example above, [the official client](https://github.com/elastic/elasticsearch-php) 
+> for Elasticsearch is used which can be installed by running 
+> ```bash
+> $ composer require elasticsearch/elasticsearch
+> ```
 
 Elasticsearch DSL covers every elasticsearch query, all examples can be found in [the documentation](docs/index.md)
