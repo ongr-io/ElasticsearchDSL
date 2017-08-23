@@ -43,7 +43,7 @@ class BuilderBag
         if (method_exists($builder, 'getName')) {
             $name = $builder->getName();
         } else {
-            $name = uniqid();
+            $name = bin2hex(random_bytes(30));
         }
 
         $this->bag[$name] = $builder;
