@@ -54,11 +54,11 @@ class GeoShapeQuery implements BuilderInterface
      *
      * @param string $field       Field name.
      * @param string $type        Shape type.
-     * @param string $relation    Spatial relation.
      * @param array  $coordinates Shape coordinates.
+     * @param string $relation    Spatial relation.
      * @param array  $parameters  Additional parameters.
      */
-    public function addShape($field, $type, $relation = self::INTERSECTS, array $coordinates, array $parameters = [])
+    public function addShape($field, $type, array $coordinates, $relation = self::INTERSECTS, array $parameters = [])
     {
         $filter = array_merge(
             $parameters,
