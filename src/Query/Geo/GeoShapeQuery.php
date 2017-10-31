@@ -60,6 +60,12 @@ class GeoShapeQuery implements BuilderInterface
      */
     public function addShape($field, $type, array $coordinates, $relation = self::INTERSECTS, array $parameters = [])
     {
+        // TODO: remove this in the next major version
+        if (is_array($relation)) {
+            $parameters = $relation;
+            trigger_error('$parameters as parameter 4 in addShape is deprecated', E_USER_DEPRECATED);
+        }
+
         $filter = array_merge(
             $parameters,
             [
