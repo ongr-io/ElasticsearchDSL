@@ -63,6 +63,7 @@ class GeoShapeQuery implements BuilderInterface
         // TODO: remove this in the next major version
         if (is_array($relation)) {
             $parameters = $relation;
+            $relation = self::INTERSECTS;
             trigger_error('$parameters as parameter 4 in addShape is deprecated', E_USER_DEPRECATED);
         }
 
