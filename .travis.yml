@@ -5,9 +5,13 @@ php:
   - 7.0
   - 7.1
   - hhvm
+
 env:
+  matrix:
+    - PREFER_LOWEST="--prefer-lowest --prefer-stable"
+    - PREFER_LOWEST=""
   global:
-    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
+    - JAVA_HOME="/usr/lib/jvm/java-9-oracle/jre"
     - ELASRICSEARCH_HOST="127.0.0.1:9200"
     - ES_URL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.zip"
 matrix:
@@ -15,13 +19,13 @@ matrix:
     - php: hhvm
 install:
   # Container based PHP image ues PHP 5.6.5, once it will be upgraded sudo will be not necessary
-  - sudo apt-get install -y oracle-java8-set-default
+  - sudo apt-get install -y oracle-java9-set-default
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
   - ./elasticsearch-*/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true
 before_script:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
-  - composer install --no-interaction --prefer-dist
+  - composer update --no-interaction --prefer-source $PREFER_LOWEST
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
