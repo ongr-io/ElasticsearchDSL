@@ -5,7 +5,11 @@ php:
   - 7.0
   - 7.1
   - hhvm
+
 env:
+  matrix:
+    - PREFER_LOWEST="--prefer-lowest --prefer-stable"
+    - PREFER_LOWEST=""
   global:
     - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
     - ELASRICSEARCH_HOST="127.0.0.1:9200"
@@ -21,7 +25,7 @@ install:
   - ./elasticsearch-*/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true
 before_script:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
-  - composer install --no-interaction --prefer-dist
+  - composer update --no-interaction --prefer-source $PREFER_LOWEST
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
