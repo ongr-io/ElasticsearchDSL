@@ -663,6 +663,8 @@ class Search
             'lenient',
             'explain',
             '_source',
+            '_source_exclude',
+            '_source_include',
             'stored_fields',
             'sort',
             'track_scores',

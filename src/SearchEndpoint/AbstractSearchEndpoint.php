@@ -37,7 +37,7 @@ abstract class AbstractSearchEndpoint extends AbstractNormalizable implements Se
         }
 
         if (!$key) {
-            $key = uniqid();
+            $key = bin2hex(random_bytes(30));
         }
 
         $this->container[$key] = $builder;
