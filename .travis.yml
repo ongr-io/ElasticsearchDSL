@@ -4,6 +4,12 @@ php:
   - 7.0
   - 7.1
   - 7.2
+jdk:
+  - oraclejdk8
+#addons:
+#  apt:
+#    packages:
+#      - oracle-java8-installer
 env:
   global:
     - ES_VERSION=6.2.2 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
