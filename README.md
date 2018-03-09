@@ -15,15 +15,15 @@ is the preffered and recommended way to ask ONGR support questions.
 
 | Elasticsearch version | ElasticsearchDSL version    |
 | --------------------- | --------------------------- |
-| >= 5.0                | >= 5.0                      |
-| >= 2.0, < 5.0         | >= 2.0, < 5.0               |
+| >= 6.0                | >= 6.0                      |
+| >= 5.0, < 6.0         | >= 5.0                      |
+| >= 2.0, < 5.0         | >= 2.0                      |
 | >= 1.0, < 2.0         | 1.x                         |
-| <= 0.90.x             | 0.x                         |
+| <= 0.90.x             | not supported               |
 
 ## Documentation
 
-The latest library online documentation of the bundle [is here](http://docs.ongr.io/ElasticsearchDSL). If you need 2.x 
-docs you can find it in [the github branch here](https://github.com/ongr-io/ElasticsearchDSL/tree/2.x/docs).
+[The online documentation of the bundle is here](docs/index.md)
 
 ## Try it!
 
@@ -44,7 +44,7 @@ Elasticsearch DSL was extracted from [Elasticsearch Bundle](https://github.com/o
 If you dont want to use Symfony or Elasticsearch bundle, no worries, you can use it in any project together with [elasticsearch-php](https://github.com/elastic/elasticsearch-php). Here's the example:
 
 If you are using Symfony there is also the [ElasticsearchBundle](https://github.com/ongr-io/ElasticsearchBundle)
-which provides full integration with Elasticsearch DSL. 
+which provides full integration with Elasticsearch DSL.
 
 The library is standalone and is not coupled with any framework. You can use it in any PHP project, the only
 requirement is composer.  Here's the example:
@@ -54,7 +54,7 @@ Create search:
 ```php
  <?php
   require 'vendor/autoload.php'; //Composer autoload
-  
+
   $client = ClientBuilder::create()->build(); //elasticsearch-php client
   
   $matchAll = new ONGR\ElasticsearchDSL\Query\MatchAllQuery();

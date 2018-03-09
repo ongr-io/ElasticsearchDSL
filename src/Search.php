@@ -672,6 +672,11 @@ class Search
             'size',
             'search_type',
             'scroll',
+            'allow_no_indices',
+            'ignore_unavailable',
+            'typed_keys',
+            'pre_filter_shard_size',
+            'ignore_unavailable',
         ])) {
             $this->uriParams[$name] = $value;
         } else {
