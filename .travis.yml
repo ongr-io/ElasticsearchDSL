@@ -4,27 +4,20 @@ php:
   - 7.0
   - 7.1
   - 7.2
-jdk:
-  - oraclejdk8
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
 env:
   global:
-#    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
-    - ELASRICSEARCH_HOST="127.0.0.1:9200"
-    - ES_URL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.2.zip"
+    - ES_VERSION=6.2.2 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 install:
   # Container based PHP image ues PHP 5.6.5, once it will be upgraded sudo will be not necessary
 #  - sudo apt-get install -y oracle-java8-set-default
-  - curl -L -o elasticsearch.zip $ES_URL
-  - unzip elasticsearch.zip
-  - ./elasticsearch-*/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true
+  - wget ${ES_DOWNLOAD_URL}
+  - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
+  - ./elasticsearch-${ES_VERSION}/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true
 before_script:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --no-interaction --prefer-dist
 script:
+  - wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
 after_script:
