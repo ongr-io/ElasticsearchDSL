@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentilesAggregation;
 
-class PercentilesAggregationTest extends \PHPUnit_Framework_TestCase
+class PercentilesAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests if PercentilesAggregation#getArray throws exception when expected.

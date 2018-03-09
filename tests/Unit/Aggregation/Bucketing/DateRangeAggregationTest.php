@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateRangeAggregation;
 
-class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
+class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.

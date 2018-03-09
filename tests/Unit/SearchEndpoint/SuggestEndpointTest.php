@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Suggest\Suggest;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class SuggestEndpointTest extends \PHPUnit_Framework_TestCase
+class SuggestEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

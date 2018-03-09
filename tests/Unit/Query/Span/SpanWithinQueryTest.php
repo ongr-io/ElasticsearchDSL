@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanWithinQuery;
 /**
  * Unit test for SpanWithinQuery.
  */
-class SpanWithinQueryTest extends \PHPUnit_Framework_TestCase
+class SpanWithinQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests for toArray().

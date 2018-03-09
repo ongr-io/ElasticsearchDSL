@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 /**
  * Unit test for children aggregation.
  */
-class SamplerAggregationTest extends \PHPUnit_Framework_TestCase
+class SamplerAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests getType method.

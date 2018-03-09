@@ -1,21 +1,23 @@
 sudo: true
 language: php
 php:
-  - 5.6
   - 7.0
   - 7.1
-  - hhvm
+  - 7.2
+jdk:
+  - oraclejdk8
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
 env:
   global:
-    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
+#    - JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre"
     - ELASRICSEARCH_HOST="127.0.0.1:9200"
-    - ES_URL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.zip"
-matrix:
-  allow_failures:
-    - php: hhvm
+    - ES_URL="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.2.zip"
 install:
   # Container based PHP image ues PHP 5.6.5, once it will be upgraded sudo will be not necessary
-  - sudo apt-get install -y oracle-java8-set-default
+#  - sudo apt-get install -y oracle-java8-set-default
   - curl -L -o elasticsearch.zip $ES_URL
   - unzip elasticsearch.zip
   - ./elasticsearch-*/bin/elasticsearch -d -Escript.inline=true -Escript.stored=true

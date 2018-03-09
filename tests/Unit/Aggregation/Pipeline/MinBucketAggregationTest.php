@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\MinBucketAggregation;
 /**
  * Unit test for min bucket aggregation.
  */
-class MinBucketAggregationTest extends \PHPUnit_Framework_TestCase
+class MinBucketAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

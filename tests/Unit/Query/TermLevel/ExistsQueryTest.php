@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Query\TermLevel\ExistsQuery;
 /**
  * Unit test for ExistsQuery.
  */
-class ExistsQueryTest extends \PHPUnit_Framework_TestCase
+class ExistsQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray() method.

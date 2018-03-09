@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\AvgBucketAggregation;
 /**
  * Unit test for avg_bucket aggregation.
  */
-class AvgBucketAggregationTest extends \PHPUnit_Framework_TestCase
+class AvgBucketAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests getArray method.

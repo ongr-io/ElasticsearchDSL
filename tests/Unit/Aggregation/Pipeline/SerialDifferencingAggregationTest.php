@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\SerialDifferencingAggregation;
 /**
  * Unit test for serial differencing aggregation.
  */
-class SerialDifferencingAggregationTest extends \PHPUnit_Framework_TestCase
+class SerialDifferencingAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

@@ -15,7 +15,7 @@ use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 use ONGR\ElasticsearchDSL\Search;
 
-abstract class AbstractElasticsearchTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractElasticsearchTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test index name in the elasticsearch.

@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\BucketSelectorAggregation;
 /**
  * Unit test for bucket selector pipeline aggregation.
  */
-class BucketSelectorAggregationTest extends \PHPUnit_Framework_TestCase
+class BucketSelectorAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

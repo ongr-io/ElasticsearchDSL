@@ -14,7 +14,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\ReverseNestedAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 
-class ReverseNestedAggregationTest extends \PHPUnit_Framework_TestCase
+class ReverseNestedAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test for reverse_nested aggregation toArray() method exception.

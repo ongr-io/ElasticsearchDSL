@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\BucketScriptAggregation;
 /**
  * Unit test for bucket script pipeline aggregation.
  */
-class BucketScriptAggregationTest extends \PHPUnit_Framework_TestCase
+class BucketScriptAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

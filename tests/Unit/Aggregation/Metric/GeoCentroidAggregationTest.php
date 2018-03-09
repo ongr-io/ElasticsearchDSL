@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoCentroidAggregation;
 /**
  * Unit test for children aggregation.
  */
-class GeoCentroidAggregationTest extends \PHPUnit_Framework_TestCase
+class GeoCentroidAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when field is not provided

@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Geo;
 
 use ONGR\ElasticsearchDSL\Query\Geo\GeoBoundingBoxQuery;
 
-class GeoBoundingBoxQueryTest extends \PHPUnit_Framework_TestCase
+class GeoBoundingBoxQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when geo points are not set.

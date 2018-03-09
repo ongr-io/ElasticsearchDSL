@@ -19,7 +19,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 /**
  * Class HighlightEndpointTest.
  */
-class HighlightEndpointTest extends \PHPUnit_Framework_TestCase
+class HighlightEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

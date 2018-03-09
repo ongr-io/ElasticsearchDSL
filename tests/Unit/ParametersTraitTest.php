@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 /**
  * Test for ParametersTrait.
  */
-class ParametersTraitTest extends \PHPUnit_Framework_TestCase
+class ParametersTraitTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ParametersTrait

@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\MaxBucketAggregation;
 /**
  * Unit test for max bucket aggregation.
  */
-class MaxBucketAggregationTest extends \PHPUnit_Framework_TestCase
+class MaxBucketAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

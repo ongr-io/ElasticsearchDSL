@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\FullText;
 
 use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
 
-class MatchQueryTest extends \PHPUnit_Framework_TestCase
+class MatchQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

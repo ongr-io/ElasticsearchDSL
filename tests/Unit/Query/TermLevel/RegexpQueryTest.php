@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\Query\TermLevel\RegexpQuery;
 
-class RegexpQueryTest extends \PHPUnit_Framework_TestCase
+class RegexpQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

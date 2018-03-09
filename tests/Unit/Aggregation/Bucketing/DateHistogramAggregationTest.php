@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateHistogramAggregation;
 /**
  * Unit test for children aggregation.
  */
-class DateHistogramAggregationTest extends \PHPUnit_Framework_TestCase
+class DateHistogramAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests if ChildrenAggregation#getArray throws exception when expected.

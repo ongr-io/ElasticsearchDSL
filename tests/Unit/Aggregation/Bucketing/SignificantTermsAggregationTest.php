@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\SignificantTermsAggregation;
 /**
  * Unit test for children aggregation.
  */
-class SignificantTermsAggregationTest extends \PHPUnit_Framework_TestCase
+class SignificantTermsAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests getType method.
