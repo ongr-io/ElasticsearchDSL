@@ -12,9 +12,9 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\FullText;
 
 use ONGR\ElasticsearchDSL\Query\FullText\MatchPhraseQuery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class MatchPhraseQueryTest extends PHPUnit_Framework_TestCase
+class MatchPhraseQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

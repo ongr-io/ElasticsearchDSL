@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Unit test class for the QueryEndpoint.
  */
-class QueryEndpointTest extends \PHPUnit_Framework_TestCase
+class QueryEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

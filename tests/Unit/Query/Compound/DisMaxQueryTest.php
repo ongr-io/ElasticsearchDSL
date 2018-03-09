@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Compound;
 
 use ONGR\ElasticsearchDSL\Query\Compound\DisMaxQuery;
 
-class DisMaxQueryTest extends \PHPUnit_Framework_TestCase
+class DisMaxQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

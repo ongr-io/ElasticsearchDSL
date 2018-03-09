@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GeoHashGridAggregation;
 /**
  * Unit test for geohash grid aggregation.
  */
-class GeoHashGridAggregationTest extends \PHPUnit_Framework_TestCase
+class GeoHashGridAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.

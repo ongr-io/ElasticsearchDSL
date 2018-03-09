@@ -7,7 +7,7 @@ use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
 use ONGR\ElasticsearchDSL\Query\Joining\NestedQuery;
 use ONGR\ElasticsearchDSL\Search;
 
-class NestedInnerHitTest extends \PHPUnit_Framework_TestCase
+class NestedInnerHitTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Data provider for testToArray().

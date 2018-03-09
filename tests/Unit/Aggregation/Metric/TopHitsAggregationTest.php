@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\Sort\FieldSort;
 /**
  * Unit tests for top hits aggregation.
  */
-class TopHitsAggregationTest extends \PHPUnit_Framework_TestCase
+class TopHitsAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Check if aggregation returns the expected array.

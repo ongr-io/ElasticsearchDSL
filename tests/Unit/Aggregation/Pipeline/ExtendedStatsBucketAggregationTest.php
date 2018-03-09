@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\ExtendedStatsBucketAggregation;
 /**
  * Unit test for stats bucket aggregation.
  */
-class ExtendedStatsBucketAggregationTest extends \PHPUnit_Framework_TestCase
+class ExtendedStatsBucketAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

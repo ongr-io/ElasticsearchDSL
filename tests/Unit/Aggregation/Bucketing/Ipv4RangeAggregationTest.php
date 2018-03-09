@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\Ipv4RangeAggregation;
 
-class Ipv4RangeAggregationTest extends \PHPUnit_Framework_TestCase
+class Ipv4RangeAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test exception when field and range are not set.

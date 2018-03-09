@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Compound;
 
 use ONGR\ElasticsearchDSL\Query\Compound\BoostingQuery;
 
-class BoostingQueryTest extends \PHPUnit_Framework_TestCase
+class BoostingQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

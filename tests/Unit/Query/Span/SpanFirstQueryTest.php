@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanFirstQuery;
 /**
  * Unit test for SpanFirstQuery.
  */
-class SpanFirstQueryTest extends \PHPUnit_Framework_TestCase
+class SpanFirstQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests for toArray().

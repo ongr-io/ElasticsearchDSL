@@ -14,7 +14,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Joining;
 use ONGR\ElasticsearchDSL\Query\Joining\NestedQuery;
 use ONGR\ElasticsearchDSL\Query\TermLevel\TermsQuery;
 
-class NestedQueryTest extends \PHPUnit_Framework_TestCase
+class NestedQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Data provider to testGetToArray.

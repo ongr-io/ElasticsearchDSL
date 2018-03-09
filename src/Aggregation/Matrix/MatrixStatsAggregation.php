@@ -10,6 +10,7 @@
  */
 
 namespace ONGR\ElasticsearchDSL\Aggregation\Matrix;
+
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
 
@@ -96,12 +97,12 @@ class MaxAggregation extends AbstractAggregation
             $out['fields'] = $this->getField();
         }
 
-        if($this->getMode()) {
+        if ($this->getMode()) {
             $out['mode'] = $this->getMode();
         }
 
 
-        if($this->getMissing()) {
+        if ($this->getMissing()) {
             $out['missing'] = $this->getMissing();
         }
 

@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\DerivativeAggregation;
 /**
  * Unit test for derivative aggregation.
  */
-class DerivativeAggregationTest extends \PHPUnit_Framework_TestCase
+class DerivativeAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

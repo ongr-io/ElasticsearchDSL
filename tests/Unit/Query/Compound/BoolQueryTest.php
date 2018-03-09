@@ -18,7 +18,7 @@ use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
 /**
  * Unit test for Bool.
  */
-class BoolQueryTest extends \PHPUnit_Framework_TestCase
+class BoolQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test for addToBool() without setting a correct bool operator.

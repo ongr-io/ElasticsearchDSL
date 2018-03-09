@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\Query\TermLevel\RangeQuery;
 
-class RangeQueryTest extends \PHPUnit_Framework_TestCase
+class RangeQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

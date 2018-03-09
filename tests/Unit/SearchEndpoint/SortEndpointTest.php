@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * Class SortEndpointTest.
  */
-class SortEndpointTest extends \PHPUnit_Framework_TestCase
+class SortEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

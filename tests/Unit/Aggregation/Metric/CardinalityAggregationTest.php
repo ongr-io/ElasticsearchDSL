@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\CardinalityAggregation;
 /**
  * Unit test for cardinality aggregation.
  */
-class CardinalityAggregationTest extends \PHPUnit_Framework_TestCase
+class CardinalityAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests getArray method.

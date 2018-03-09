@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 /**
  * Unit test class for search endpoint factory.
  */
-class SearchEndpointFactoryTest extends \PHPUnit_Framework_TestCase
+class SearchEndpointFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests get method exception.

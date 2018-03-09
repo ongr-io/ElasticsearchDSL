@@ -18,7 +18,7 @@ use ONGR\ElasticsearchDSL\Query\TermLevel\ExistsQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
 
-class FilterAggregationTest extends \PHPUnit_Framework_TestCase
+class FilterAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Data provider for testToArray.

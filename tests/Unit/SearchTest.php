@@ -20,7 +20,7 @@ use ONGR\ElasticsearchDSL\Suggest\Suggest;
 /**
  * Test for Search.
  */
-class SearchTest extends \PHPUnit_Framework_TestCase
+class SearchTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests Search constructor.

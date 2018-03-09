@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanNotQuery;
 /**
  * Unit test for SpanNotQuery.
  */
-class SpanNotQueryTest extends \PHPUnit_Framework_TestCase
+class SpanNotQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests for toArray().
