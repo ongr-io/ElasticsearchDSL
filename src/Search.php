@@ -201,28 +201,6 @@ class Search
 
         return $this;
     }
-    
-    /**
-     * Adds multiple queries to the search.
-     *
-     * @param Array     $query
-     * @param string    $boolType
-     * @param string    $key
-     *
-     * @return $this
-     */
-    public function addQueries(Array $queries)
-    {
-        foreach ($queries as $query) {
-            if (is_array($query)) {
-                $this->addQuery(...$query);    
-            } else {
-                $this->addQuery($query);
-            }
-        }
-
-        return $this;
-    }    
 
     /**
      * Returns endpoint instance.
