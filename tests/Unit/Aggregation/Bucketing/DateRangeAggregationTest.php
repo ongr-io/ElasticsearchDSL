@@ -121,7 +121,13 @@ class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $aggregation->expects($this->once())->method('setField')->with($field);
         $aggregation->expects($this->once())->method('setFormat')->with($format);
-        $aggregation->expects($this->exactly(count($ranges ?? [])))->method('addRange');
+
+        if ($ranges) {
+            $rangesCount = count($ranges);
+        } else {
+            $rangesCount = 0;
+        }
+        $aggregation->expects($this->exactly($rangesCount))->method('addRange');
 
         if ($field !== null) {
             if ($format !== null) {
