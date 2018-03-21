@@ -30,7 +30,7 @@ class TopHitsAggregationTest extends \PHPUnit\Framework\TestCase
         $expected = [
             'top_hits' => [
                 'sort' => [
-                    'acme' => ['order' => 'asc'],
+                    ['acme' => ['order' => 'asc']],
                 ],
                 'size' => 1,
                 'from' => 1,
