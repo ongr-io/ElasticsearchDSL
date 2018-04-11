@@ -35,9 +35,9 @@ class TopHitsAggregation extends AbstractAggregation
     private $from;
 
     /**
-     * @var BuilderInterface How the top matching hits should be sorted.
+     * @var BuilderInterface[] How the top matching hits should be sorted.
      */
-    private $sort;
+    private $sorts = [];
 
     /**
      * Constructor for top hits.
@@ -52,7 +52,7 @@ class TopHitsAggregation extends AbstractAggregation
         parent::__construct($name);
         $this->setFrom($from);
         $this->setSize($size);
-        $this->setSort($sort);
+        $this->addSort($sort);
     }
 
     /**
@@ -76,23 +76,29 @@ class TopHitsAggregation extends AbstractAggregation
     }
 
     /**
-     * Return sort.
-     *
-     * @return BuilderInterface
+     * @return BuilderInterface[]
      */
-    public function getSort()
+    public function getSorts()
     {
-        return $this->sort;
+        return $this->sorts;
     }
 
     /**
-     * Set sort.
+     * @param BuilderInterface[] $sorts
+     */
+    public function setSorts(array $sorts)
+    {
+        $this->sorts = $sorts;
+    }
+
+    /**
+     * Add sort.
      *
      * @param BuilderInterface $sort
      */
-    public function setSort($sort)
+    public function addSort($sort)
     {
-        $this->sort = $sort;
+        $this->sorts[] = $sort;
     }
 
     /**
@@ -128,9 +134,19 @@ class TopHitsAggregation extends AbstractAggregation
      */
     public function getArray()
     {
+        $sortsOutput = [];
+        $addedSorts = array_filter($this->getSorts());
+        if ($addedSorts) {
+            foreach ($addedSorts as $sort) {
+                $sortsOutput[] = $sort->toArray();
+            }
+        } else {
+            $sortsOutput = null;
+        }
+
         $output = array_filter(
             [
-                'sort' => $this->getSort() ? $this->getSort()->toArray() : null,
+                'sort' => $sortsOutput,
                 'size' => $this->getSize(),
                 'from' => $this->getFrom(),
             ],
@@ -140,5 +156,32 @@ class TopHitsAggregation extends AbstractAggregation
         );
 
         return empty($output) ? new \stdClass() : $output;
+    }
+
+    /**
+     * @deprecated sorts now is a container, use `getSorts()`instead.
+     * Return sort.
+     *
+     * @return BuilderInterface
+     */
+    public function getSort()
+    {
+        if (isset($this->sorts[0])) {
+            return $this->sorts[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * @deprecated sorts now is a container, use `addSort()`instead.
+     *
+     * Set sort.
+     *
+     * @param BuilderInterface $sort
+     */
+    public function setSort(BuilderInterface $sort)
+    {
+        $this->sort = $sort;
     }
 }
