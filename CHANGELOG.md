@@ -1,5 +1,9 @@
 # CHANGELOG
-v5.0.0 (2017-x)
+v6.0.0 (2017-01-30)
+---
+- Added support for the Elasticsearch 6
+
+v5.0.0 (2017-01-30)
 ---
 - **Namespace for some queries were changed**. Queries were consolidated to a domain like Elasticsearch does.  All queries were grouped to `Compound`, `FullText`, `Geo`, `Joining`, `Span`, `Specialized` and `TermLevel`.
 - PHP version support changed to >=5.6
