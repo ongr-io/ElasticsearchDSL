@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\Query\TermLevel\FuzzyQuery;
 
-class FuzzyQueryTest extends \PHPUnit_Framework_TestCase
+class FuzzyQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

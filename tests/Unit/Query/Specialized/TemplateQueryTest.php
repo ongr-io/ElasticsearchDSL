@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Query\Specialized\TemplateQuery;
 /**
  * Unit test for Template.
  */
-class TemplateQueryTest extends \PHPUnit_Framework_TestCase
+class TemplateQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray() method with inline.

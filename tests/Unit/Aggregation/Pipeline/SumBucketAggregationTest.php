@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\SumBucketAggregation;
 /**
  * Unit test for sum bucket aggregation.
  */
-class SumBucketAggregationTest extends \PHPUnit_Framework_TestCase
+class SumBucketAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

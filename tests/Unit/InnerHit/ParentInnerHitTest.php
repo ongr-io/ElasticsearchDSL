@@ -6,7 +6,7 @@ use ONGR\ElasticsearchDSL\InnerHit\ParentInnerHit;
 use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
 use ONGR\ElasticsearchDSL\Search;
 
-class ParentInnerHitTest extends \PHPUnit_Framework_TestCase
+class ParentInnerHitTest extends \PHPUnit\Framework\TestCase
 {
     public function testToArray()
     {

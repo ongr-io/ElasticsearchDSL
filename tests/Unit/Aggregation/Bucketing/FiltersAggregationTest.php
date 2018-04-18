@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
 /**
  * Unit test for filters aggregation.
  */
-class FiltersAggregationTest extends \PHPUnit_Framework_TestCase
+class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when not anonymous filter is without name.

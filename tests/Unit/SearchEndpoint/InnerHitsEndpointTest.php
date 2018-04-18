@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\InnerHitsEndpoint;
 /**
  * Class AggregationsEndpointTest.
  */
-class InnerHitsEndpointTest extends \PHPUnit_Framework_TestCase
+class InnerHitsEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

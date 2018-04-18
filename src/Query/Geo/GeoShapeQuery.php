@@ -23,6 +23,11 @@ class GeoShapeQuery implements BuilderInterface
 {
     use ParametersTrait;
 
+    const INTERSECTS = 'intersects';
+    const DISJOINT = 'disjoint';
+    const WITHIN = 'within';
+    const CONTAINS = 'contains';
+
     /**
      * @var array
      */
@@ -50,10 +55,18 @@ class GeoShapeQuery implements BuilderInterface
      * @param string $field       Field name.
      * @param string $type        Shape type.
      * @param array  $coordinates Shape coordinates.
+     * @param string $relation    Spatial relation.
      * @param array  $parameters  Additional parameters.
      */
-    public function addShape($field, $type, array $coordinates, array $parameters = [])
+    public function addShape($field, $type, array $coordinates, $relation = self::INTERSECTS, array $parameters = [])
     {
+        // TODO: remove this in the next major version
+        if (is_array($relation)) {
+            $parameters = $relation;
+            $relation = self::INTERSECTS;
+            trigger_error('$parameters as parameter 4 in addShape is deprecated', E_USER_DEPRECATED);
+        }
+
         $filter = array_merge(
             $parameters,
             [
@@ -62,7 +75,10 @@ class GeoShapeQuery implements BuilderInterface
             ]
         );
 
-        $this->fields[$field]['shape'] = $filter;
+        $this->fields[$field] = [
+            'shape' => $filter,
+            'relation' => $relation,
+        ];
     }
 
     /**

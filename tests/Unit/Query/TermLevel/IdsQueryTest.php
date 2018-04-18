@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\Query\TermLevel\IdsQuery;
 
-class IdsQueryTest extends \PHPUnit_Framework_TestCase
+class IdsQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

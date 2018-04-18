@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\PercentilesBucketAggregation;
 /**
  * Unit test for percentiles bucket aggregation.
  */
-class PercentilesBucketAggregationTest extends \PHPUnit_Framework_TestCase
+class PercentilesBucketAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

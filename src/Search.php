@@ -663,6 +663,8 @@ class Search
             'lenient',
             'explain',
             '_source',
+            '_source_exclude',
+            '_source_include',
             'stored_fields',
             'sort',
             'track_scores',
@@ -672,6 +674,11 @@ class Search
             'size',
             'search_type',
             'scroll',
+            'allow_no_indices',
+            'ignore_unavailable',
+            'typed_keys',
+            'pre_filter_shard_size',
+            'ignore_unavailable',
         ])) {
             $this->uriParams[$name] = $value;
         } else {

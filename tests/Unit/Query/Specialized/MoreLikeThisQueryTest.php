@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Specialized;
 
 use ONGR\ElasticsearchDSL\Query\Specialized\MoreLikeThisQuery;
 
-class MoreLikeThisQueryTest extends \PHPUnit_Framework_TestCase
+class MoreLikeThisQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray().

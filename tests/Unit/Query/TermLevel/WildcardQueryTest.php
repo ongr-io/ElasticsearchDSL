@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\Query\TermLevel\WildcardQuery;
 
-class WildcardQueryTest extends \PHPUnit_Framework_TestCase
+class WildcardQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test for query toArray() method.

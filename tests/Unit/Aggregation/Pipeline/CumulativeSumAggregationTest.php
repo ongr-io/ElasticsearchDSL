@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\CumulativeSumAggregation;
 /**
  * Unit test for cumulative sum aggregation.
  */
-class CumulativeSumAggregationTest extends \PHPUnit_Framework_TestCase
+class CumulativeSumAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray method.

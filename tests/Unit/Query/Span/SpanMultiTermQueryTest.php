@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Query\Span\SpanMultiTermQuery;
 /**
  * Unit test for SpanMultiTermQuery.
  */
-class SpanMultiTermQueryTest extends \PHPUnit_Framework_TestCase
+class SpanMultiTermQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test for toArray().

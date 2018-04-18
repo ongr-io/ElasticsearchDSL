@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateRangeAggregation;
 
-class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
+class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.
@@ -121,7 +121,7 @@ class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $aggregation->expects($this->once())->method('setField')->with($field);
         $aggregation->expects($this->once())->method('setFormat')->with($format);
-        $aggregation->expects($this->exactly(count($ranges)))->method('addRange');
+        $aggregation->expects($this->exactly(count($ranges ?? [])))->method('addRange');
 
         if ($field !== null) {
             if ($format !== null) {

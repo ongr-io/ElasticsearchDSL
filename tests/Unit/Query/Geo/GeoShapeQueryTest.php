@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Geo;
 
 use ONGR\ElasticsearchDSL\Query\Geo\GeoShapeQuery;
 
-class GeoShapeQueryTest extends \PHPUnit_Framework_TestCase
+class GeoShapeQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests toArray() method.
@@ -21,7 +21,7 @@ class GeoShapeQueryTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $filter = new GeoShapeQuery(['param1' => 'value1']);
-        $filter->addShape('location', 'envelope', [[13, 53], [14, 52]]);
+        $filter->addShape('location', 'envelope', [[13, 53], [14, 52]], GeoShapeQuery::INTERSECTS);
 
         $expected = [
             'geo_shape' => [
@@ -30,6 +30,7 @@ class GeoShapeQueryTest extends \PHPUnit_Framework_TestCase
                         'type' => 'envelope',
                         'coordinates' => [[13, 53], [14, 52]],
                     ],
+                    'relation' => 'intersects'
                 ],
                 'param1' => 'value1',
             ],

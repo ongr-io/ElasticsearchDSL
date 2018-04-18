@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 
-class TermsAggregationTest extends \PHPUnit_Framework_TestCase
+class TermsAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests setField method.

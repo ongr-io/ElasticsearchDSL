@@ -14,7 +14,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit;
 use ONGR\ElasticsearchDSL\BuilderBag;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
-class BuilderBagTest extends \PHPUnit_Framework_TestCase
+class BuilderBagTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests if bag knows if he has a builder.

@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentileRanksAggregation;
 /**
  * Percentile ranks aggregation unit tests.
  */
-class PercentileRanksAggregationTest extends \PHPUnit_Framework_TestCase
+class PercentileRanksAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PercentileRanksAggregation

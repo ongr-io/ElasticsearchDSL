@@ -17,7 +17,7 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 /**
  * Class AggregationsEndpointTest.
  */
-class AggregationsEndpointTest extends \PHPUnit_Framework_TestCase
+class AggregationsEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

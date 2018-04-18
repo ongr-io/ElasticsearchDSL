@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\MissingAggregation;
 
-class MissingAggregationTest extends \PHPUnit_Framework_TestCase
+class MissingAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when field is not set.

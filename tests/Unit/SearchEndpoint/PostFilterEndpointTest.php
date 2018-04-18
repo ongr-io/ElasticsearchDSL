@@ -19,7 +19,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 /**
  * Class PostFilterEndpointTest.
  */
-class PostFilterEndpointTest extends \PHPUnit_Framework_TestCase
+class PostFilterEndpointTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests constructor.

@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\ChildrenAggregation;
 /**
  * Unit test for children aggregation.
  */
-class ChildrenAggregationTest extends \PHPUnit_Framework_TestCase
+class ChildrenAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests if ChildrenAggregation#getArray throws exception when expected.

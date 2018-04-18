@@ -16,7 +16,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoBoundsAggregation;
 /**
  * Unit test for geo bounds aggregation.
  */
-class GeoBoundsAggregationTest extends \PHPUnit_Framework_TestCase
+class GeoBoundsAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.

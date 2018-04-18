@@ -13,7 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GlobalAggregation;
 
-class GlobalAggregationTest extends \PHPUnit_Framework_TestCase
+class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Data provider for testToArray().
