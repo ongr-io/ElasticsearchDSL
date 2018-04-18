@@ -80,12 +80,10 @@ class RangeAggregation extends AbstractAggregation
      */
     public function addRange($from = null, $to = null, $key = '')
     {
-        $range = array_filter(
-            [
-                'from' => $from,
-                'to' => $to,
-            ]
-        );
+        $range = [
+            'from' => $from,
+            'to' => $to,
+        ];
 
         if ($this->keyed && !empty($key)) {
             $range['key'] = $key;
