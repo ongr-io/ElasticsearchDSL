@@ -84,10 +84,16 @@ class DateRangeAggregation extends AbstractAggregation
         $range = array_filter(
             [
                 'from' => $from,
-                'to' => $to,
-                'key' => $key,
-            ]
+                'to' => $to
+            ],
+            function ($v) {
+                return !is_null($v);
+            }
         );
+
+        if (!empty($key)) {
+            $range['key'] = $key;
+        }
 
         if (empty($range)) {
             throw new \LogicException('Either from or to must be set. Both cannot be null.');
