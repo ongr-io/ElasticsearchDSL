@@ -84,7 +84,10 @@ class RangeAggregation extends AbstractAggregation
             [
                 'from' => $from,
                 'to' => $to,
-            ]
+            ],
+            function ($v) {
+                return !is_null($v);
+            }
         );
 
         if ($this->keyed && !empty($key)) {
