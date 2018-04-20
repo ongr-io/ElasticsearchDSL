@@ -29,18 +29,24 @@ class DateHistogramAggregation extends AbstractAggregation
     protected $interval;
 
     /**
+     @ @var string
+     */
+    protected $format;
+
+    /**
      * Inner aggregations container init.
      *
      * @param string $name
      * @param string $field
      * @param string $interval
      */
-    public function __construct($name, $field = null, $interval = null)
+    public function __construct($name, $field = null, $interval = null, $format = null)
     {
         parent::__construct($name);
 
         $this->setField($field);
         $this->setInterval($interval);
+        $this->setFormat($format);
     }
 
     /**
@@ -57,6 +63,14 @@ class DateHistogramAggregation extends AbstractAggregation
     public function setInterval($interval)
     {
         $this->interval = $interval;
+    }
+
+    /**
+     * @param string $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
     }
 
     /**
@@ -80,6 +94,10 @@ class DateHistogramAggregation extends AbstractAggregation
             'field' => $this->getField(),
             'interval' => $this->getInterval(),
         ];
+
+        if (!empty($this->format)) {
+            $out['format'] = $this->format;
+        }
 
         return $out;
     }
