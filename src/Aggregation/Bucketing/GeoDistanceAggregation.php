@@ -132,7 +132,10 @@ class GeoDistanceAggregation extends AbstractAggregation
             [
                 'from' => $from,
                 'to' => $to,
-            ]
+            ],
+            function ($v) {
+                return !is_null($v);
+            }
         );
 
         if (empty($range)) {
