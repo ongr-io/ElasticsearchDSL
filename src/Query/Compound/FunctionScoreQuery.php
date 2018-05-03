@@ -91,6 +91,7 @@ class FunctionScoreQuery implements BuilderInterface
      * @param array            $function
      * @param array            $options
      * @param BuilderInterface $query
+     * @param int              $weight
      *
      * @return $this
      */
@@ -99,14 +100,18 @@ class FunctionScoreQuery implements BuilderInterface
         $field,
         array $function,
         array $options = [],
-        BuilderInterface $query = null
+        BuilderInterface $query = null,
+        $weight = null
     ) {
-        $function = [
-            $type => array_merge(
-                [$field => $function],
-                $options
-            ),
-        ];
+        $function = array_filter(
+            [
+                $type => array_merge(
+                    [$field => $function],
+                    $options
+                ),
+                'weight' => $weight,
+            ]
+        );
 
         $this->applyFilter($function, $query);
 
