@@ -29,7 +29,7 @@ class DateHistogramAggregation extends AbstractAggregation
     protected $interval;
 
     /**
-     @ @var string
+     * @var string
      */
     protected $format;
 
