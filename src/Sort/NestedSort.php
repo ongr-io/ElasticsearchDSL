@@ -45,7 +45,7 @@ class NestedSort implements BuilderInterface
      */
     public function __construct(
         $path,
-        BuilderInterface $filter,
+        BuilderInterface $filter = null,
         array $parameters = []
     ) {
         $this->path = $path;
@@ -68,8 +68,11 @@ class NestedSort implements BuilderInterface
     {
         $output = [
             'path'   => $this->path,
-            'filter' => $this->filter->toArray(),
         ];
+
+        if ($this->filter) {
+            $output['filter'] = $this->filter->toArray();
+        }
 
         if ($this->nestedFilter) {
             $output[$this->getType()] = $this->nestedFilter->toArray();

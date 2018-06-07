@@ -36,6 +36,20 @@ class NestedSortTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test for single nested, no filter.
+     *
+     */
+    public function testNoFilter()
+    {
+        $query = new NestedSort('somePath');
+        $expected = [
+            'path'   => 'somePath',
+        ];
+        $result = $query->toArray();
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Test for single nested.
      *
      */
