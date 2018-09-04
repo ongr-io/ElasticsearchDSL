@@ -155,7 +155,7 @@ class Search
     /**
      * @var OrderedSerializer
      */
-    private $serializer;
+    private static $serializer;
 
     /**
      * @var SearchEndpointInterface[]
@@ -167,12 +167,14 @@ class Search
      */
     public function __construct()
     {
-        $this->serializer = new OrderedSerializer(
-            [
-                new CustomReferencedNormalizer(),
-                new CustomNormalizer(),
-            ]
-        );
+        if (static::$serializer === null) {
+            static::$serializer = new OrderedSerializer(
+                [
+                    new CustomReferencedNormalizer(),
+                    new CustomNormalizer(),
+                ]
+            );
+        }
     }
 
     /**
@@ -703,7 +705,7 @@ class Search
      */
     public function toArray()
     {
-        $output = array_filter($this->serializer->normalize($this->endpoints));
+        $output = array_filter(static::$serializer->normalize($this->endpoints));
 
         $params = [
             'from' => 'from',

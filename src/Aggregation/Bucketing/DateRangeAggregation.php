@@ -86,7 +86,10 @@ class DateRangeAggregation extends AbstractAggregation
                 'from' => $from,
                 'to' => $to,
                 'key' => $key,
-            ]
+            ],
+            function ($v) {
+                return !is_null($v);
+            }
         );
 
         if (empty($range)) {

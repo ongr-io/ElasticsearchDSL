@@ -70,6 +70,16 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Tests bool query with empty body if it forms \stdObject
+     */
+    public function testEmptyBoolQuery()
+    {
+        $bool = new BoolQuery();
+
+        $this->assertEquals(['bool' => new \stdClass()], $bool->toArray());
+    }
+
+    /**
      * Tests bool query in filter context.
      */
     public function testBoolInFilterContext()
