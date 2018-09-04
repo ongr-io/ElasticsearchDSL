@@ -13,7 +13,7 @@
     "require": {
         "php": ">=5.6",
         "symfony/serializer": "~2.7|~3.0|~4.0",
-        "paragonie/random_compat": "^1.0|^2.0",
+        "paragonie/random_compat": "*",
         "elasticsearch/elasticsearch": "~5.0"
     },
     "require-dev": {
