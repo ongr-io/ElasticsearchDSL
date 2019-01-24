@@ -1,3 +1,4 @@
 coverage_clover: coverage.clover
 service_name: travis-ci
 json_path: ./coveralls.json
+repo_token: N0kfaH0FRNy0iRNjUsqerRDLcPsuMBNOZ
