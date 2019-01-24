@@ -52,6 +52,42 @@ class FieldSort implements BuilderInterface
     }
 
     /**
+     * @return string
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * @param string $field
+     * @return self
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param string $order
+     * @return self
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    /**
      * @return BuilderInterface
      */
     public function getNestedFilter()
