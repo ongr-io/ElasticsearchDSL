@@ -17,6 +17,8 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  * Represents Elasticsearch "indices" query.
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-indices-query.html
+ *
+ * @deprecated Search on the _index field instead. Will be deleted in 6.0
  */
 class IndicesQuery implements BuilderInterface
 {
