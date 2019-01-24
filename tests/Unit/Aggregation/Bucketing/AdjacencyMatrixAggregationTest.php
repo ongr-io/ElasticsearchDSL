@@ -67,8 +67,8 @@ class AdjacencyMatrixAggregationTest extends \PHPUnit\Framework\TestCase
             ->method('toArray')
             ->willReturn(['test_field' => ['test_value' => 'test']]);
 
-        $aggregation->addFilter('first', $filter );
-        $aggregation->addFilter('second', $filter );
+        $aggregation->addFilter('first', $filter);
+        $aggregation->addFilter('second', $filter);
 
         $results = $aggregation->toArray();
         $expected = [

@@ -38,11 +38,13 @@ class AutoDateHistogramAggregation extends AbstractAggregation
 
         $this->setField($field);
 
-        if ($buckets)
+        if ($buckets) {
             $this->addParameter('buckets', $buckets);
+        }
 
-        if ($format)
+        if ($format) {
             $this->addParameter('format', $format);
+        }
     }
 
     /**
