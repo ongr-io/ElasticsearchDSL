@@ -93,7 +93,7 @@ abstract class AbstractAggregation implements BuilderInterface
     /**
      * Returns all sub aggregations.
      *
-     * @return BuilderBag[]
+     * @return BuilderBag[]|BuilderInterface[]
      */
     public function getAggregations()
     {
@@ -108,7 +108,7 @@ abstract class AbstractAggregation implements BuilderInterface
      * Returns sub aggregation.
      * @param string $name Aggregation name to return.
      *
-     * @return AbstractAggregation|null
+     * @return AbstractAggregation|BuilderInterface|null
      */
     public function getAggregation($name)
     {

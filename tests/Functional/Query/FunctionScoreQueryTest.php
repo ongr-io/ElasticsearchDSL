@@ -35,7 +35,7 @@ class FunctionScoreQueryTest extends AbstractElasticsearchTestCase
                 ],
                 [
                     'title' => 'bar',
-                    'price' => 30,
+                    'price' => 10,
                 ],
             ]
         ];
@@ -61,12 +61,16 @@ class FunctionScoreQueryTest extends AbstractElasticsearchTestCase
     {
         $fquery = new FunctionScoreQuery(new MatchAllQuery());
         $fquery->addScriptScoreFunction(
-            'if (doc[\'price\'].value > ctx._source.target) 
-             { return doc[\'price\'].value * (1 - ctx._source.discount); }
-             return doc[\'price\'].value;',
+            "
+            if (doc['price'].value < params.target) 
+             {
+               return doc['price'].value * params.charge; 
+             }
+             return doc['price'].value;
+             ",
             [
-                'target' => 20,
-                'discount' => 0.9,
+                'target' => 10,
+                'charge' => 0.9,
             ]
         );
 
