@@ -35,7 +35,6 @@
 
     <logging>
         <log type="coverage-text" target="php://stdout" showOnlySummary="true"/>
-        <log type="coverage-php" target="coverage.cov"/>
     </logging>
 
 </phpunit>
