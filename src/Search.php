@@ -35,6 +35,14 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 class Search
 {
     /**
+     * If you don’t need to track the total number of hits at all you can improve
+     * query times by setting this option to false. Defaults to true.
+     *
+     * @var bool
+     */
+    private $trackTotalHits;
+
+    /**
      * To retrieve hits from a certain offset. Defaults to 0.
      *
      * @var int
@@ -446,6 +454,24 @@ class Search
     }
 
     /**
+     * @return bool
+     */
+    public function isTrackTotalHits()
+    {
+        return $this->trackTotalHits;
+    }
+
+    /**
+     * @param bool $trackTotalHits
+     * @return $this
+     */
+    public function setTrackTotalHits(bool $trackTotalHits)
+    {
+        $this->trackTotalHits = $trackTotalHits;
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getSize()
@@ -717,6 +743,7 @@ class Search
             'indicesBoost' => 'indices_boost',
             'minScore' => 'min_score',
             'searchAfter' => 'search_after',
+            'trackTotalHits' => 'track_total_hits',
         ];
 
         foreach ($params as $field => $param) {
