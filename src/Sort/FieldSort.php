@@ -123,7 +123,7 @@ class FieldSort implements BuilderInterface
         }
 
         if ($this->nestedFilter) {
-            $this->addParameter('nested_filter', $this->nestedFilter->toArray());
+            $this->addParameter('nested', $this->nestedFilter->toArray());
         }
 
         $output = [
