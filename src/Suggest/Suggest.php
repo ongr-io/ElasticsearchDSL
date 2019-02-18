@@ -11,11 +11,11 @@
 
 namespace ONGR\ElasticsearchDSL\Suggest;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
-class Suggest implements BuilderInterface
+class Suggest implements NamedBuilderInterface
 {
     use ParametersTrait;
 

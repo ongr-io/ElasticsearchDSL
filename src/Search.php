@@ -412,7 +412,7 @@ class Search
     *
     * @return $this
     */
-    public function addSuggest(BuilderInterface $suggest)
+    public function addSuggest(NamedBuilderInterface $suggest)
     {
         $this->getEndpoint(SuggestEndpoint::NAME)->add($suggest, $suggest->getName());
 

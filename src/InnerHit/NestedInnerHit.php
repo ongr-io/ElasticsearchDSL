@@ -11,8 +11,8 @@
 
 namespace ONGR\ElasticsearchDSL\InnerHit;
 
-use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\NameAwareTrait;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 use ONGR\ElasticsearchDSL\Search;
 
@@ -21,7 +21,7 @@ use ONGR\ElasticsearchDSL\Search;
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-inner-hits.html
  */
-class NestedInnerHit implements BuilderInterface
+class NestedInnerHit implements NamedBuilderInterface
 {
     use ParametersTrait;
     use NameAwareTrait;
