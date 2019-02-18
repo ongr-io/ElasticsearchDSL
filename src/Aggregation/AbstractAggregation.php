@@ -12,14 +12,14 @@
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\BuilderBag;
-use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\NameAwareTrait;
+use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
  * AbstractAggregation class.
  */
-abstract class AbstractAggregation implements BuilderInterface
+abstract class AbstractAggregation implements NamedBuilderInterface
 {
     use ParametersTrait;
     use NameAwareTrait;
@@ -93,7 +93,7 @@ abstract class AbstractAggregation implements BuilderInterface
     /**
      * Returns all sub aggregations.
      *
-     * @return BuilderBag[]|BuilderInterface[]
+     * @return BuilderBag[]|NamedBuilderInterface[]
      */
     public function getAggregations()
     {
@@ -108,7 +108,7 @@ abstract class AbstractAggregation implements BuilderInterface
      * Returns sub aggregation.
      * @param string $name Aggregation name to return.
      *
-     * @return AbstractAggregation|BuilderInterface|null
+     * @return AbstractAggregation|NamedBuilderInterface|null
      */
     public function getAggregation($name)
     {
