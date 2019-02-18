@@ -90,7 +90,7 @@ class RangeAggregation extends AbstractAggregation
             }
         );
 
-        if ($this->keyed && !empty($key)) {
+        if (!empty($key)) {
             $range['key'] = $key;
         }
 
