@@ -50,7 +50,7 @@ trait ParametersTrait
      *
      * @param string $name
      *
-     * @return array|false
+     * @return array|string|int|bool|\stdClass
      */
     public function getParameter($name)
     {
@@ -69,7 +69,7 @@ trait ParametersTrait
 
     /**
      * @param string                 $name
-     * @param array|string|\stdClass $value
+     * @param array|string|int|bool|\stdClass $value
      */
     public function addParameter($name, $value)
     {
