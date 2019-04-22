@@ -19,4 +19,6 @@ script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
 after_script:
+  - echo $TRAVIS
+  - echo $TRAVIS_JOB_ID
   - travis_retry php vendor/bin/php-coveralls -vvv -x coverage.clover -o coveralls.json
