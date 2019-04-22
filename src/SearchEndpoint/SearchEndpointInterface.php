@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use ONGR\ElasticsearchDSL\Query\Compound\BoolQuery;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**
@@ -71,7 +72,7 @@ interface SearchEndpointInterface extends NormalizableInterface
     /**
      * Returns Bool filter or query instance with all builder objects inside.
      *
-     * @return BuilderInterface
+     * @return BoolQuery
      */
     public function getBool();
 }

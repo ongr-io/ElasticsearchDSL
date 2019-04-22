@@ -223,7 +223,7 @@ class Search
     /**
      * Returns queries inside BoolQuery instance.
      *
-     * @return BuilderInterface
+     * @return BoolQuery
      */
     public function getQueries()
     {
@@ -283,7 +283,7 @@ class Search
     /**
      * Returns queries inside BoolFilter instance.
      *
-     * @return BuilderInterface
+     * @return BoolQuery
      */
     public function getPostFilters()
     {
