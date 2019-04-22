@@ -14,8 +14,9 @@ namespace ONGR\ElasticsearchDSL\Tests\Functional;
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 use ONGR\ElasticsearchDSL\Search;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractElasticsearchTestCase extends \PHPUnit\Framework\TestCase
+abstract class AbstractElasticsearchTestCase extends TestCase
 {
     /**
      * Test index name in the elasticsearch.
