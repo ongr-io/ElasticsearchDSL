@@ -6,7 +6,7 @@ php:
   - 7.2
 env:
   global:
-    - ES_VERSION=6.5.4 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
+    - ES_VERSION=6.7.1 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 install:
   - wget ${ES_DOWNLOAD_URL}
   - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
@@ -19,4 +19,4 @@ script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
 after_script:
-  - travis_retry php vendor/bin/php-coveralls
+  - travis_retry php vendor/bin/php-coveralls -v
