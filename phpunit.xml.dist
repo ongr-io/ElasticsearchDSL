@@ -32,9 +32,7 @@
             </exclude>
         </whitelist>
     </filter>
-
     <logging>
         <log type="coverage-text" target="php://stdout" showOnlySummary="true"/>
     </logging>
-
 </phpunit>
