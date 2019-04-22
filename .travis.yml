@@ -15,6 +15,10 @@ before_script:
   - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
   - composer install --no-interaction --prefer-dist
 script:
+  - print $TRAVIS
+  - print $TRAVIS_JOB_ID
+  - print $CI_NAME
+  - print $COVERALLS_REPO_TOKEN
   - wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200
   - vendor/bin/phpunit --coverage-clover=coverage.clover
   - vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
