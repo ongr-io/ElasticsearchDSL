@@ -41,7 +41,7 @@ class FunctionScoreQuery implements BuilderInterface
     {
         $this->query = $query;
         $this->setParameters($parameters);
-    }    
+    }
 
     /**
      * Returns the query instance.
