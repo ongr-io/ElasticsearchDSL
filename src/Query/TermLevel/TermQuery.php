@@ -34,9 +34,9 @@ class TermQuery implements BuilderInterface
     private $value;
 
     /**
-     * @param string $field
-     * @param string $value
-     * @param array  $parameters
+     * @param string                $field
+     * @param string|int|float|bool $value
+     * @param array                 $parameters
      */
     public function __construct($field, $value, array $parameters = [])
     {
