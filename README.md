@@ -6,6 +6,7 @@ If you need any help, [stack overflow](http://stackoverflow.com/questions/tagged
 is the preffered and recommended way to ask ONGR support questions.
  
 [![Build Status](https://travis-ci.org/ongr-io/ElasticsearchDSL.svg?branch=master)](https://travis-ci.org/ongr-io/ElasticsearchDSL)
+[![codecov](https://codecov.io/gh/ongr-io/ElasticsearchDSL/branch/master/graph/badge.svg)](https://codecov.io/gh/ongr-io/ElasticsearchDSL)
 [![Coverage Status](https://coveralls.io/repos/ongr-io/ElasticsearchDSL/badge.svg?branch=master&service=github)](https://coveralls.io/github/ongr-io/ElasticsearchDSL?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/ongr/elasticsearch-dsl/v/stable)](https://packagist.org/packages/ongr/elasticsearch-dsl)
 [![Total Downloads](https://poser.pugx.org/ongr/elasticsearch-dsl/downloads)](https://packagist.org/packages/ongr/elasticsearch-dsl)

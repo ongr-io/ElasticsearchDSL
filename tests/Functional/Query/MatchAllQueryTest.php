@@ -43,7 +43,7 @@ class MatchAllQueryTest extends AbstractElasticsearchTestCase
         $matchAll = new MatchAllQuery();
 
         $search->addQuery($matchAll);
-
+        $q = $search->getQueries();
         $results = $this->executeSearch($search);
 
         $this->assertEquals($this->getDataArray()['product'], $results);
