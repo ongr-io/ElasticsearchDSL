@@ -30,6 +30,16 @@ class CompositeAggregation extends AbstractAggregation
     private $sources = [];
 
     /**
+     * @var int
+     */
+    private $size;
+
+    /**
+     * @var array
+     */
+    private $after;
+
+    /**
      * Inner aggregations container init.
      *
      * @param string             $name
@@ -65,9 +75,19 @@ class CompositeAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        return [
+        $array = [
             'sources' => $this->sources,
         ];
+
+        if ($this->size !== null) {
+            $array['size'] = $this->size;
+        }
+
+        if (!empty($this->after)) {
+            $array['after'] = $this->after;
+        }
+
+        return $array;
     }
 
     /**
@@ -76,5 +96,49 @@ class CompositeAggregation extends AbstractAggregation
     public function getType()
     {
         return 'composite';
+    }
+
+    /**
+     * Sets size
+     *
+     * @param int $size Size
+     *
+     * @return void
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * Returns size
+     *
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * Sets after
+     *
+     * @param array $after After
+     *
+     * @return void
+     */
+    public function setAfter(array $after)
+    {
+        $this->after = $after;
+    }
+
+    /**
+     * Returns after
+     *
+     * @return array
+     */
+    public function getAfter()
+    {
+        return $this->after;
     }
 }
