@@ -39,6 +39,54 @@ class CompositeAggregationTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test for composite aggregation toArray() method with size and after part.
+     */
+    public function testToArrayWithSizeAndAfter()
+    {
+        $compositeAgg = new CompositeAggregation('composite_test_agg');
+        $termsAgg = new TermsAggregation('test_term_agg', 'test_field');
+        $compositeAgg->addSource($termsAgg);
+        $compositeAgg->setSize(5);
+        $compositeAgg->setAfter(['test_term_agg' => 'test']);
+
+        $expectedResult = [
+            'composite' => [
+                'sources' =>  [
+                    [
+                        'test_term_agg' => [ 'terms' => ['field' => 'test_field'] ],
+                    ]
+                ],
+                'size' => 5,
+                'after' => ['test_term_agg' => 'test']
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $compositeAgg->toArray());
+    }
+
+    /**
+     * Test for composite aggregation getSize() method.
+     */
+    public function testGetSize()
+    {
+        $compositeAgg = new CompositeAggregation('composite_test_agg');
+        $compositeAgg->setSize(5);
+
+        $this->assertEquals(5, $compositeAgg->getSize());
+    }
+
+    /**
+     * Test for composite aggregation getAfter() method.
+     */
+    public function testGetAfter()
+    {
+        $compositeAgg = new CompositeAggregation('composite_test_agg');
+        $compositeAgg->setAfter(['test_term_agg' => 'test']);
+
+        $this->assertEquals(['test_term_agg' => 'test'], $compositeAgg->getAfter());
+    }
+
+    /**
      * Tests getType method.
      */
     public function testGetType()
