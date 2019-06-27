@@ -47,11 +47,13 @@ class DateRangeAggregationTest extends \PHPUnit_Framework_TestCase
         $agg = new DateRangeAggregation('foo', 'baz');
         $agg->addRange(10, 20);
         $agg->setFormat('bar');
+        $agg->setKeyed(true);
         $result = $agg->getArray();
         $expected = [
             'format' => 'bar',
             'field' => 'baz',
             'ranges' => [['from' => 10, 'to' => 20]],
+            'keyed' => true,
         ];
         $this->assertEquals($expected, $result);
     }
