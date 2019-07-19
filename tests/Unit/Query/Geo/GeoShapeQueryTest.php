@@ -45,7 +45,7 @@ class GeoShapeQueryTest extends \PHPUnit\Framework\TestCase
     public function testToArrayIndexed()
     {
         $filter = new GeoShapeQuery(['param1' => 'value1']);
-        $filter->addPreIndexedShape('location', 'DEU', 'countries', 'shapes', 'location');
+        $filter->addPreIndexedShape('location', 'DEU', 'countries', 'shapes', 'location', GeoShapeQuery::WITHIN);
 
         $expected = [
             'geo_shape' => [
@@ -56,6 +56,7 @@ class GeoShapeQueryTest extends \PHPUnit\Framework\TestCase
                         'index' => 'shapes',
                         'path' => 'location',
                     ],
+                    'relation' => 'within'
                 ],
                 'param1' => 'value1',
             ],
