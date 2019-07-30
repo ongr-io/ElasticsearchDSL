@@ -58,28 +58,32 @@ class GeoBoundingBoxQuery implements BuilderInterface
      */
     public function toArray()
     {
+        return [
+            $this->getType() => $this->processArray([$this->field => $this->points()])
+        ];
+    }
+
+    /**
+     * @return array
+     *
+     * @throws \LogicException
+     */
+    private function points()
+    {
         if (count($this->values) === 2) {
-            $query = [
-                $this->field => [
-                    'top_left' => $this->values[0],
-                    'bottom_right' => $this->values[1],
-                ],
+            return [
+                'top_left' => $this->values[0] ?? $this->values['top_left'],
+                'bottom_right' => $this->values[1] ?? $this->values['bottom_right'],
             ];
         } elseif (count($this->values) === 4) {
-            $query = [
-                $this->field => [
-                    'top' => $this->values[0],
-                    'left' => $this->values[1],
-                    'bottom' => $this->values[2],
-                    'right' => $this->values[3],
-                ],
+            return [
+                'top' => $this->values[0] ?? $this->values['top'],
+                'left' => $this->values[1] ?? $this->values['left'],
+                'bottom' => $this->values[2] ?? $this->values['bottom'],
+                'right' => $this->values[3] ?? $this->values['right'],
             ];
-        } else {
-            throw new \LogicException('Geo Bounding Box filter must have 2 or 4 geo points set.');
         }
 
-        $output = $this->processArray($query);
-
-        return [$this->getType() => $output];
+        throw new \LogicException('Geo Bounding Box filter must have 2 or 4 geo points set.');
     }
 }
