@@ -33,6 +33,66 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Tests constructor builds container
+     */
+    public function testBoolConstructor()
+    {
+        $bool = new BoolQuery([
+            BoolQuery::SHOULD => [new TermQuery('key1', 'value1')],
+            BoolQuery::MUST => [
+                new TermQuery('key2', 'value2'),
+                new TermQuery('key3', 'value3'),
+            ],
+            BoolQuery::MUST_NOT => new TermQuery('key4', 'value4')
+        ]);
+
+        $expected = [
+            'bool' => [
+                'should' => [
+                    [
+                        'term' => [
+                            'key1' => 'value1',
+                        ],
+                    ],
+                ],
+                'must' => [
+                    [
+                        'term' => [
+                            'key2' => 'value2',
+                        ],
+                    ],
+                    [
+                        'term' => [
+                            'key3' => 'value3',
+                        ],
+                    ],
+                ],
+                'must_not' => [
+                    [
+                        'term' => [
+                            'key4' => 'value4',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $this->assertEquals($expected, $bool->toArray());
+    }
+
+    /**
+     * Tests exception thrown if invalid BoolQuery type key is specified
+     *
+     * @expectedException        \UnexpectedValueException
+     * @expectedExceptionMessage The bool operator acme is not supported
+     */
+    public function testBoolConstructorException()
+    {
+        new BoolQuery([
+            'acme' => [new TermQuery('key1', 'value1')],
+        ]);
+    }
+
+    /**
      * Tests toArray() method.
      */
     public function testBoolToArray()
