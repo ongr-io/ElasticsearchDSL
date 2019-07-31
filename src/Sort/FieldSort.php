@@ -61,11 +61,13 @@ class FieldSort implements BuilderInterface
 
     /**
      * @param string $field
-     * @return self
+     *
+     * @return $this
      */
     public function setField($field)
     {
         $this->field = $field;
+
         return $this;
     }
 
@@ -79,7 +81,8 @@ class FieldSort implements BuilderInterface
 
     /**
      * @param string $order
-     * @return self
+     *
+     * @return $this
      */
     public function setOrder($order)
     {
