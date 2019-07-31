@@ -52,11 +52,13 @@ class FieldMaskingSpanQuery implements SpanQueryInterface
 
     /**
      * @param mixed $query
-     * @return self
+     *
+     * @return $this
      */
     public function setQuery($query)
     {
         $this->query = $query;
+
         return $this;
     }
 
@@ -70,11 +72,13 @@ class FieldMaskingSpanQuery implements SpanQueryInterface
 
     /**
      * @param string $field
-     * @return FieldMaskingSpanQuery
+     *
+     * @return $this
      */
     public function setField($field)
     {
         $this->field = $field;
+
         return $this;
     }
 

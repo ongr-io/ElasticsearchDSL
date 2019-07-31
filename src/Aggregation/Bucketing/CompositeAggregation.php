@@ -103,11 +103,13 @@ class CompositeAggregation extends AbstractAggregation
      *
      * @param int $size Size
      *
-     * @return void
+     * @return $this
      */
     public function setSize($size)
     {
         $this->size = $size;
+
+        return $this;
     }
 
     /**
@@ -125,11 +127,13 @@ class CompositeAggregation extends AbstractAggregation
      *
      * @param array $after After
      *
-     * @return void
+     * @return $this
      */
     public function setAfter(array $after)
     {
         $this->after = $after;
+
+        return $this;
     }
 
     /**

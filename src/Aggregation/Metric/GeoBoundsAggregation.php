@@ -53,10 +53,14 @@ class GeoBoundsAggregation extends AbstractAggregation
 
     /**
      * @param bool $wrapLongitude
+     *
+     * @return $this
      */
     public function setWrapLongitude($wrapLongitude)
     {
         $this->wrapLongitude = $wrapLongitude;
+
+        return $this;
     }
 
     /**

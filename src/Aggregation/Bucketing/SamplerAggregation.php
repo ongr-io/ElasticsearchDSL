@@ -54,10 +54,14 @@ class SamplerAggregation extends AbstractAggregation
 
     /**
      * @param int $shardSize
+     *
+     * @return $this
      */
     public function setShardSize($shardSize)
     {
         $this->shardSize = $shardSize;
+
+        return $this;
     }
 
     /**

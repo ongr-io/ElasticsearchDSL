@@ -27,10 +27,14 @@ trait FieldAwareTrait
     }
 
     /**
-     * @param mixed $field
+     * @param string $field
+     *
+     * @return $this
      */
     public function setField($field)
     {
         $this->field = $field;
+
+        return $this;
     }
 }

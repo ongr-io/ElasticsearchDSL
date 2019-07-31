@@ -58,10 +58,14 @@ class DateRangeAggregation extends AbstractAggregation
 
     /**
      * @param string $format
+     *
+     * @return $this
      */
     public function setFormat($format)
     {
         $this->format = $format;
+
+        return $this;
     }
 
     /**
