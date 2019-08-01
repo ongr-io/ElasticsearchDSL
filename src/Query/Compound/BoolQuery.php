@@ -35,10 +35,18 @@ class BoolQuery implements BuilderInterface
 
     /**
      * Constructor to prepare container.
+     *
+     * @param array $container
      */
-    public function __construct()
+    public function __construct(array $container = [])
     {
-        $this->container = [];
+        foreach ($container as $type => $queries) {
+            $queries = is_array($queries) ? $queries : [$queries];
+
+            array_walk($queries, function ($query) use ($type) {
+                $this->add($query, $type);
+            });
+        }
     }
 
     /**
