@@ -67,10 +67,14 @@ class GeoHashGridAggregation extends AbstractAggregation
 
     /**
      * @param int $precision
+     *
+     * @return $this
      */
     public function setPrecision($precision)
     {
         $this->precision = $precision;
+
+        return $this;
     }
 
     /**
@@ -83,10 +87,14 @@ class GeoHashGridAggregation extends AbstractAggregation
 
     /**
      * @param int $size
+     *
+     * @return $this
      */
     public function setSize($size)
     {
         $this->size = $size;
+
+        return $this;
     }
 
     /**
@@ -99,10 +107,14 @@ class GeoHashGridAggregation extends AbstractAggregation
 
     /**
      * @param int $shardSize
+     *
+     * @return $this
      */
     public function setShardSize($shardSize)
     {
         $this->shardSize = $shardSize;
+
+        return $this;
     }
 
     /**

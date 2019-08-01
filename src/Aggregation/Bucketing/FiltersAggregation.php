@@ -58,7 +58,7 @@ class FiltersAggregation extends AbstractAggregation
     /**
      * @param bool $anonymous
      *
-     * @return FiltersAggregation
+     * @return $this
      */
     public function setAnonymous($anonymous)
     {

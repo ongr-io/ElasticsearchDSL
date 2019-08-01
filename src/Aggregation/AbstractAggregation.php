@@ -58,10 +58,14 @@ abstract class AbstractAggregation implements NamedBuilderInterface
 
     /**
      * @param string $field
+     *
+     * @return $this
      */
     public function setField($field)
     {
         $this->field = $field;
+
+        return $this;
     }
 
     /**

@@ -34,10 +34,14 @@ abstract class AbstractPipelineAggregation extends AbstractAggregation
 
     /**
      * @param string $bucketsPath
+     *
+     * @return $this
      */
     public function setBucketsPath($bucketsPath)
     {
         $this->bucketsPath = $bucketsPath;
+
+        return $this;
     }
 
     /**

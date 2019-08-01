@@ -60,10 +60,14 @@ class TemplateQuery implements BuilderInterface
 
     /**
      * @param string $file
+     *
+     * @return $this;
      */
     public function setFile($file)
     {
         $this->file = $file;
+
+        return $this;
     }
 
     /**
@@ -76,10 +80,14 @@ class TemplateQuery implements BuilderInterface
 
     /**
      * @param string $inline
+     *
+     * @return $this
      */
     public function setInline($inline)
     {
         $this->inline = $inline;
+
+        return $this;
     }
 
     /**
@@ -92,10 +100,14 @@ class TemplateQuery implements BuilderInterface
 
     /**
      * @param array $params
+     *
+     * @return $this
      */
     public function setParams($params)
     {
         $this->params = $params;
+
+        return $this;
     }
 
     /**

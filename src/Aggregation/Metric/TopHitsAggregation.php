@@ -66,13 +66,15 @@ class TopHitsAggregation extends AbstractAggregation
     }
 
     /**
-     * Set from.
-     *
      * @param int $from
+     *
+     * @return $this
      */
     public function setFrom($from)
     {
         $this->from = $from;
+
+        return $this;
     }
 
     /**
@@ -85,10 +87,14 @@ class TopHitsAggregation extends AbstractAggregation
 
     /**
      * @param BuilderInterface[] $sorts
+     *
+     * @return $this
      */
     public function setSorts(array $sorts)
     {
         $this->sorts = $sorts;
+
+        return $this;
     }
 
     /**
@@ -102,13 +108,15 @@ class TopHitsAggregation extends AbstractAggregation
     }
 
     /**
-     * Set size.
-     *
      * @param int $size
+     *
+     * @return $this
      */
     public function setSize($size)
     {
         $this->size = $size;
+
+        return $this;
     }
 
     /**
@@ -176,12 +184,14 @@ class TopHitsAggregation extends AbstractAggregation
     /**
      * @deprecated sorts now is a container, use `addSort()`instead.
      *
-     * Set sort.
-     *
      * @param BuilderInterface $sort
+     *
+     * @return $this
      */
     public function setSort(BuilderInterface $sort)
     {
         $this->sort = $sort;
+
+        return $this;
     }
 }

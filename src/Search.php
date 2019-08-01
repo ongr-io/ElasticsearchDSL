@@ -259,12 +259,16 @@ class Search
      *
      * @param string $endpointName
      * @param array  $parameters
+     *
+     * @return $this
      */
     public function setEndpointParameters($endpointName, array $parameters)
     {
         /** @var AbstractSearchEndpoint $endpoint */
         $endpoint = $this->getEndpoint($endpointName);
         $endpoint->setParameters($parameters);
+
+        return $this;
     }
 
     /**
@@ -447,11 +451,13 @@ class Search
 
     /**
      * @param int $from
+     *
      * @return $this
      */
     public function setFrom($from)
     {
         $this->from = $from;
+
         return $this;
     }
 
@@ -465,11 +471,13 @@ class Search
 
     /**
      * @param bool $trackTotalHits
+     *
      * @return $this
      */
     public function setTrackTotalHits(bool $trackTotalHits)
     {
         $this->trackTotalHits = $trackTotalHits;
+
         return $this;
     }
 
@@ -483,11 +491,13 @@ class Search
 
     /**
      * @param int $size
+     *
      * @return $this
      */
     public function setSize($size)
     {
         $this->size = $size;
+
         return $this;
     }
 
@@ -501,11 +511,13 @@ class Search
 
     /**
      * @param bool $source
+     *
      * @return $this
      */
     public function setSource($source)
     {
         $this->source = $source;
+
         return $this;
     }
 
@@ -519,11 +531,13 @@ class Search
 
     /**
      * @param array $storedFields
+     *
      * @return $this
      */
     public function setStoredFields($storedFields)
     {
         $this->storedFields = $storedFields;
+
         return $this;
     }
 
@@ -537,11 +551,13 @@ class Search
 
     /**
      * @param array $scriptFields
+     *
      * @return $this
      */
     public function setScriptFields($scriptFields)
     {
         $this->scriptFields = $scriptFields;
+
         return $this;
     }
 
@@ -555,11 +571,13 @@ class Search
 
     /**
      * @param array $docValueFields
+     *
      * @return $this
      */
     public function setDocValueFields($docValueFields)
     {
         $this->docValueFields = $docValueFields;
+
         return $this;
     }
 
@@ -573,11 +591,13 @@ class Search
 
     /**
      * @param bool $explain
+     *
      * @return $this
      */
     public function setExplain($explain)
     {
         $this->explain = $explain;
+
         return $this;
     }
 
@@ -591,11 +611,13 @@ class Search
 
     /**
      * @param bool $version
+     *
      * @return $this
      */
     public function setVersion($version)
     {
         $this->version = $version;
+
         return $this;
     }
 
@@ -609,11 +631,13 @@ class Search
 
     /**
      * @param array $indicesBoost
+     *
      * @return $this
      */
     public function setIndicesBoost($indicesBoost)
     {
         $this->indicesBoost = $indicesBoost;
+
         return $this;
     }
 
@@ -627,11 +651,13 @@ class Search
 
     /**
      * @param int $minScore
+     *
      * @return $this
      */
     public function setMinScore($minScore)
     {
         $this->minScore = $minScore;
+
         return $this;
     }
 
@@ -645,11 +671,13 @@ class Search
 
     /**
      * @param array $searchAfter
+     *
      * @return $this
      */
     public function setSearchAfter($searchAfter)
     {
         $this->searchAfter = $searchAfter;
+
         return $this;
     }
 
@@ -663,6 +691,7 @@ class Search
 
     /**
      * @param string $scroll
+     *
      * @return $this
      */
     public function setScroll($scroll = '5m')

@@ -53,11 +53,13 @@ class BucketSortAggregation extends AbstractPipelineAggregation
 
     /**
      * @param string $sort
-     * @return self
+     *
+     * @return $this
      */
     public function setSort($sort)
     {
         $this->sort = $sort;
+
         return $this;
     }
 
