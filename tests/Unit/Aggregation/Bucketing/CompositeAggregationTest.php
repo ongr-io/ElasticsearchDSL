@@ -47,4 +47,76 @@ class CompositeAggregationTest extends \PHPUnit\Framework\TestCase
         $result = $aggregation->getType();
         $this->assertEquals('composite', $result);
     }
+
+    public function testTermsSourceWithOrderParameter()
+    {
+        $compositeAgg = new CompositeAggregation('composite_with_order');
+        $termsAgg = new TermsAggregation('test_term_agg', 'test_field');
+        $termsAgg->addParameter('order', 'asc');
+        $compositeAgg->addSource($termsAgg);
+
+        $expectedResult = [
+            'composite' => [
+                'sources' =>  [
+                    [
+                        'test_term_agg' => [ 'terms' => ['field' => 'test_field', 'order' => 'asc'] ],
+                    ]
+                ]
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $compositeAgg->toArray());
+    }
+
+
+    public function testTermsSourceWithDescOrderParameter()
+    {
+        $compositeAgg = new CompositeAggregation('composite_with_order');
+        $termsAgg = new TermsAggregation('test_term_agg', 'test_field');
+        $termsAgg->addParameter('order', 'desc');
+        $compositeAgg->addSource($termsAgg);
+
+        $expectedResult = [
+            'composite' => [
+                'sources' =>  [
+                    [
+                        'test_term_agg' => [ 'terms' => ['field' => 'test_field', 'order' => 'desc'] ],
+                    ]
+                ]
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $compositeAgg->toArray());
+    }
+
+
+    public function testMultipleSourcesWithDifferentOrders()
+    {
+        $compositeAgg = new CompositeAggregation('composite_with_order');
+
+        $termsAgg = new TermsAggregation('test_term_agg_1', 'test_field');
+        $termsAgg->addParameter('order', 'desc');
+        $compositeAgg->addSource($termsAgg);
+
+        $termsAgg = new TermsAggregation('test_term_agg_2', 'test_field');
+        $termsAgg->addParameter('order', 'asc');
+        $compositeAgg->addSource($termsAgg);
+
+        $expectedResult = [
+            'composite' => [
+                'sources' =>  [
+                    [
+                        'test_term_agg_1' => [ 'terms' => ['field' => 'test_field', 'order' => 'desc'] ],
+                    ],
+                    [
+                        'test_term_agg_2' => [ 'terms' => ['field' => 'test_field', 'order' => 'asc'] ],
+                    ]
+                ]
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $compositeAgg->toArray());
+    }
+
+
 }
