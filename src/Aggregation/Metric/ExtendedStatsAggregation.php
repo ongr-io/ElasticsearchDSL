@@ -57,10 +57,14 @@ class ExtendedStatsAggregation extends AbstractAggregation
 
     /**
      * @param int $sigma
+     *
+     * @return $this
      */
     public function setSigma($sigma)
     {
         $this->sigma = $sigma;
+
+        return $this;
     }
 
     /**

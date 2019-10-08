@@ -59,18 +59,26 @@ class DateHistogramAggregation extends AbstractAggregation
 
     /**
      * @param string $interval
+     *
+     * @return $this
      */
     public function setInterval($interval)
     {
         $this->interval = $interval;
+
+        return $this;
     }
 
     /**
      * @param string $format
+     *
+     * @return $this
      */
     public function setFormat($format)
     {
         $this->format = $format;
+
+        return $this;
     }
 
     /**

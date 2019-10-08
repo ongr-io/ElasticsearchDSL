@@ -105,7 +105,7 @@ $queryArray = $search->toArray();
 ```php
 $functionScoreQuery = new FunctionScoreQuery(new MatchAllQuery());
 $existsQuery = new ExistsQuery('price');
-$functionScoreQuery->addFieldValueFactorFunction('price', 0.5, 'ln', $existsQuery);
+$functionScoreQuery->addFieldValueFactorFunction('price', 0.5, 'ln', $existsQuery, 0);
 
 $search = new Search();
 $search->addQuery($functionScoreQuery);

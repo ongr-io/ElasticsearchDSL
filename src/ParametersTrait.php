@@ -77,13 +77,15 @@ trait ParametersTrait
     }
 
     /**
-     * Sets an array of parameters.
-     *
      * @param array $parameters
+     *
+     * @return $this
      */
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
+
+        return $this;
     }
 
     /**

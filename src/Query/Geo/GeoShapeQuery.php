@@ -88,11 +88,26 @@ class GeoShapeQuery implements BuilderInterface
      * @param string $id         The ID of the document that containing the pre-indexed shape.
      * @param string $type       Name of the index where the pre-indexed shape is.
      * @param string $index      Index type where the pre-indexed shape is.
+     * @param string $relation   Spatial relation.
      * @param string $path       The field specified as path containing the pre-indexed shape.
      * @param array  $parameters Additional parameters.
      */
-    public function addPreIndexedShape($field, $id, $type, $index, $path, array $parameters = [])
-    {
+    public function addPreIndexedShape(
+        $field,
+        $id,
+        $type,
+        $index,
+        $path,
+        $relation = self::INTERSECTS,
+        array $parameters = []
+    ) {
+        // TODO: remove this in the next major version
+        if (is_array($relation)) {
+            $parameters = $relation;
+            $relation = self::INTERSECTS;
+            trigger_error('$parameters as parameter 6 in addShape is deprecated', E_USER_DEPRECATED);
+        }
+
         $filter = array_merge(
             $parameters,
             [
@@ -103,7 +118,10 @@ class GeoShapeQuery implements BuilderInterface
             ]
         );
 
-        $this->fields[$field]['indexed_shape'] = $filter;
+        $this->fields[$field] = [
+            'indexed_shape' => $filter,
+            'relation' => $relation,
+        ];
     }
 
     /**

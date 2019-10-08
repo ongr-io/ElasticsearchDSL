@@ -64,10 +64,14 @@ class PercentilesAggregation extends AbstractAggregation
 
     /**
      * @param array $percents
+     *
+     * @return $this
      */
     public function setPercents($percents)
     {
         $this->percents = $percents;
+
+        return $this;
     }
 
     /**
@@ -80,10 +84,14 @@ class PercentilesAggregation extends AbstractAggregation
 
     /**
      * @param int $compression
+     *
+     * @return $this
      */
     public function setCompression($compression)
     {
         $this->compression = $compression;
+
+        return $this;
     }
 
     /**

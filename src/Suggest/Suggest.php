@@ -58,10 +58,14 @@ class Suggest implements NamedBuilderInterface
 
     /**
      * @param string $name
+     *
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -86,10 +90,14 @@ class Suggest implements NamedBuilderInterface
 
     /**
      * @param string $type
+     *
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -102,10 +110,14 @@ class Suggest implements NamedBuilderInterface
 
     /**
      * @param string $text
+     *
+     * @return $this
      */
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 
     /**
@@ -118,10 +130,14 @@ class Suggest implements NamedBuilderInterface
 
     /**
      * @param string $field
+     *
+     * @return $this
      */
     public function setField($field)
     {
         $this->field = $field;
+
+        return $this;
     }
 
     /**

@@ -60,7 +60,7 @@ class RangeAggregation extends AbstractAggregation
      *
      * @param bool $keyed
      *
-     * @return RangeAggregation
+     * @return $this
      */
     public function setKeyed($keyed)
     {

@@ -30,4 +30,19 @@ class MultiMatchQueryTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($expected, $query->toArray());
     }
+
+    /**
+     * Tests multi-match query with no fields.
+     */
+    public function testToArrayWithNoFields()
+    {
+        $query = new MultiMatchQuery([], 'this is a test');
+        $expected = [
+            'multi_match' => [
+                'query' => 'this is a test',
+            ],
+        ];
+
+        $this->assertEquals($expected, $query->toArray());
+    }
 }

@@ -60,10 +60,14 @@ class MaxAggregation extends AbstractAggregation
 
     /**
      * @param string $mode
+     *
+     * @return $this
      */
     public function setMode($mode)
     {
         $this->mode = $mode;
+
+        return $this;
     }
 
     /**
@@ -76,10 +80,14 @@ class MaxAggregation extends AbstractAggregation
 
     /**
      * @param array $missing
+     *
+     * @return $this
      */
     public function setMissing($missing)
     {
         $this->missing = $missing;
+
+        return $this;
     }
 
     /**

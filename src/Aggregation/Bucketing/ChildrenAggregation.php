@@ -50,13 +50,15 @@ class ChildrenAggregation extends AbstractAggregation
     }
 
     /**
-     * Sets children.
-     *
      * @param string $children
+     *
+     * @return $this
      */
     public function setChildren($children)
     {
         $this->children = $children;
+
+        return $this;
     }
 
     /**
