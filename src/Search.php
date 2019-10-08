@@ -498,24 +498,6 @@ class Search
     }
 
     /**
-     * @return bool
-     */
-    public function isTrackTotalHits()
-    {
-        return $this->trackTotalHits;
-    }
-
-    /**
-     * @param bool $trackTotalHits
-     * @return $this
-     */
-    public function setTrackTotalHits(bool $trackTotalHits)
-    {
-        $this->trackTotalHits = $trackTotalHits;
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getSize()
