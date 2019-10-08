@@ -65,16 +65,14 @@ class FunctionScoreQuery implements BuilderInterface
      */
     public function addFieldValueFactorFunction($field, $factor, $modifier = 'none', BuilderInterface $query = null, $missing = null)
     {
-        $function = array_filter([
-            'field_value_factor' => [
+        $function = [
+            'field_value_factor' => array_filter([
                 'field' => $field,
                 'factor' => $factor,
                 'modifier' => $modifier,
                 'missing' => $missing
-            ],
-        ], function ($item) {
-            return $item !== null;
-        });
+            ]),
+        ];
 
         $this->applyFilter($function, $query);
 
