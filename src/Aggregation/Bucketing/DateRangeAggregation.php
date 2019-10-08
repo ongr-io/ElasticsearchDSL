@@ -29,25 +29,29 @@ class DateRangeAggregation extends AbstractAggregation
     private $format;
 
     /**
-     * @return string
+     * @var array
      */
-    public function getFormat()
-    {
-        return $this->format;
-    }
+    private $ranges = [];
+
+    /**
+     * @var bool
+     */
+    private $keyed = false;
 
     /**
      * @param string $name
      * @param string $field
      * @param string $format
      * @param array  $ranges
+     * @param bool   $keyed
      */
-    public function __construct($name, $field = null, $format = null, array $ranges = [])
+    public function __construct($name, $field = null, $format = null, array $ranges = [], $keyed = false)
     {
         parent::__construct($name);
 
         $this->setField($field);
         $this->setFormat($format);
+        $this->setKeyed($keyed);
         foreach ($ranges as $range) {
             $from = isset($range['from']) ? $range['from'] : null;
             $to = isset($range['to']) ? $range['to'] : null;
@@ -57,27 +61,41 @@ class DateRangeAggregation extends AbstractAggregation
     }
 
     /**
-     * @param string $format
+     * Sets if result buckets should be keyed.
      *
-     * @return $this
+     * @param bool $keyed
+     *
+     * @return DateRangeAggregation
      */
-    public function setFormat($format)
+    public function setKeyed($keyed)
     {
-        $this->format = $format;
+        $this->keyed = $keyed;
 
         return $this;
     }
 
     /**
-     * @var array
+     * @return string
      */
-    private $ranges = [];
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * @param string $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
 
     /**
      * Add range to aggregation.
      *
      * @param string|null $from
      * @param string|null $to
+     * @param string|null $key
      *
      * @return $this
      *
@@ -115,6 +133,7 @@ class DateRangeAggregation extends AbstractAggregation
                 'format' => $this->getFormat(),
                 'field' => $this->getField(),
                 'ranges' => $this->ranges,
+                'keyed' => $this->keyed,
             ];
 
             return $data;
