@@ -171,9 +171,25 @@ class Search
     private $endpoints = [];
 
     /**
-     * Initializes serializer.
+     * Constructor to initialize static properties
      */
     public function __construct()
+    {
+        $this->initializeSerializer();
+    }
+
+    /**
+     * Wakeup method to initialize static properties
+     */
+    public function __wakeup()
+    {
+        $this->initializeSerializer();
+    }
+
+    /**
+     * Initializes the serializer
+     */
+    private function initializeSerializer()
     {
         if (static::$serializer === null) {
             static::$serializer = new OrderedSerializer(
