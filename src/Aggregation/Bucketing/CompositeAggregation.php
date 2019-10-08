@@ -43,7 +43,7 @@ class CompositeAggregation extends AbstractAggregation
      * Inner aggregations container init.
      *
      * @param string             $name
-     * @param BuilderInterface[] $sources
+     * @param AbstractAggregation[] $sources
      */
     public function __construct($name, $sources = [])
     {
@@ -55,16 +55,20 @@ class CompositeAggregation extends AbstractAggregation
     }
 
     /**
-     * @param BuilderInterface $agg
+     * @param AbstractAggregation $agg
      *
      * @throws \LogicException
      *
      * @return self
      */
-    public function addSource(BuilderInterface $agg)
+    public function addSource(AbstractAggregation $agg)
     {
+        $array = $agg->getArray();
+
+        $array = is_array($array) ? array_merge($array, $agg->getParameters()) : $array;
+
         $this->sources[] = [
-            $agg->getName() => [ $agg->getType() => $agg->getArray() ]
+            $agg->getName() => [ $agg->getType() => $array ]
         ];
 
         return $this;
