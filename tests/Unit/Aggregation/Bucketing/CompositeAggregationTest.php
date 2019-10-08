@@ -165,6 +165,4 @@ class CompositeAggregationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($expectedResult, $compositeAgg->toArray());
     }
-
-
 }
