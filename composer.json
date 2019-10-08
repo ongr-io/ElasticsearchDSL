@@ -16,7 +16,7 @@
         "paragonie/random_compat": "*"
     },
     "require-dev": {
-        "elasticsearch/elasticsearch": "^6.0",
+        "elasticsearch/elasticsearch": "^7.0",
         "phpunit/phpunit": "~6.0",
         "squizlabs/php_codesniffer": "^3.0",
         "php-coveralls/php-coveralls": "^2.1"
@@ -37,7 +37,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "6.1-dev"
+            "dev-master": "7.0-dev"
         }
     }
 }
