@@ -1,12 +1,12 @@
 sudo: false
 language: php
 php:
-  - 7.0
   - 7.1
   - 7.2
+  - 7.3
 env:
   global:
-    - ES_VERSION=6.7.1 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
+    - ES_VERSION=7.4.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 install:
   - wget ${ES_DOWNLOAD_URL}
   - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
