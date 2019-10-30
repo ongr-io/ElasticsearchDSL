@@ -34,4 +34,14 @@ class TermsSetQueryTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($expected, $query->toArray());
     }
+
+    public function testItThrowsAaExceptionWhenMinimumShouldMatchFieldOrMinimumShouldMatchScriptIsNotGiven()
+    {
+        $message = "Either minimum_should_match_field or minimum_should_match_script must be set.";
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage($message);
+
+        $terms = ['php', 'c++', 'java'];
+        new TermsSetQuery('programming_languages', $terms, []);
+    }
 }
