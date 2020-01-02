@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit;
 
+use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 
 /**
@@ -36,7 +37,8 @@ class ParametersTraitTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAndAddParameter()
     {
-        $this->parametersTraitMock->addParameter('acme', 123);
+        $parent = $this->parametersTraitMock->addParameter('acme', 123);
+        $this->assertTrue(is_object($parent));
         $this->assertEquals(123, $this->parametersTraitMock->getParameter('acme'));
         $this->parametersTraitMock->addParameter('bar', 321);
         $this->assertEquals(321, $this->parametersTraitMock->getParameter('bar'));
