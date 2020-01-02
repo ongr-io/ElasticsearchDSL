@@ -37,10 +37,10 @@ class ParametersTraitTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetAndAddParameter()
     {
-        $parent = $this->parametersTraitMock->addParameter('acme', 123);
-        $this->assertTrue(is_object($parent));
+        $this->assertTrue(is_object($this->parametersTraitMock->addParameter('acme', 123)));
         $this->assertEquals(123, $this->parametersTraitMock->getParameter('acme'));
         $this->parametersTraitMock->addParameter('bar', 321);
         $this->assertEquals(321, $this->parametersTraitMock->getParameter('bar'));
+        $this->assertTrue(is_object($this->parametersTraitMock->removeParameter('acme')));
     }
 }
