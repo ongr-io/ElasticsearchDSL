@@ -58,7 +58,19 @@ class Search
      */
     private $size;
 
+    /**
+     * The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+     *
+     * @var integer
+     */
     private $terminateAfter;
+
+    /**
+     * Explicit timeout for each search request. Defaults to no timeout.
+     *
+     * @var time units
+     */
+    private $timeout;
 
     /**
      * Allows to control how the _source field is returned with every hit. By default
@@ -488,7 +500,17 @@ class Search
     {
         $this->terminateAfter = $time;
 
-        $this->addUriParam('terminate_after', $this->terminateAfter);
+        return $this;
+    }
+
+    /**
+     * @param string $time
+     *
+     * @return $this
+     */
+    public function setTimeout($time)
+    {
+        $this->timeout = $time;
 
         return $this;
     }
@@ -797,6 +819,7 @@ class Search
         $params = [
             'from' => 'from',
             'size' => 'size',
+            'timeout' => 'timeout',
             'source' => '_source',
             'storedFields' => 'stored_fields',
             'scriptFields' => 'script_fields',

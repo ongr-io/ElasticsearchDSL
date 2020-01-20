@@ -43,7 +43,14 @@ class SearchTest extends \PHPUnit\Framework\TestCase
         $search = new Search();
         $search->setTerminateAfter(500);
 
-        $this->assertArrayHasKey('terminate_after', $search->getUriParams());
-        // $this->assertArrayHasKey('set_terminate', $search->getUriParams());
+        $this->assertEquals(500, $search->toArray()['terminate_after']);
+    }
+
+    public function testTimeoutUriParameter()
+    {
+        $search = new Search();
+        $search->setTimeout('5s');
+
+        $this->assertEquals('5s', $search->toArray()['timeout']);
     }
 }
