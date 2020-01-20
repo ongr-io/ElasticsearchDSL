@@ -24,10 +24,10 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 
 /**
  * Search object that can be executed by a manager.
@@ -57,6 +57,8 @@ class Search
      * @var int
      */
     private $size;
+
+    private $terminateAfter;
 
     /**
      * Allows to control how the _source field is returned with every hit. By default
@@ -434,12 +436,12 @@ class Search
     }
 
     /**
-    * Adds suggest into search.
-    *
-    * @param BuilderInterface $suggest
-    *
-    * @return $this
-    */
+     * Adds suggest into search.
+     *
+     * @param BuilderInterface $suggest
+     *
+     * @return $this
+     */
     public function addSuggest(NamedBuilderInterface $suggest)
     {
         $this->getEndpoint(SuggestEndpoint::NAME)->add($suggest, $suggest->getName());
@@ -448,10 +450,10 @@ class Search
     }
 
     /**
-    * Returns all suggests.
-    *
-    * @return BuilderInterface[]
-    */
+     * Returns all suggests.
+     *
+     * @return BuilderInterface[]
+     */
     public function getSuggests()
     {
         return $this->getEndpoint(SuggestEndpoint::NAME)->getAll();
@@ -473,6 +475,20 @@ class Search
     public function setFrom($from)
     {
         $this->from = $from;
+
+        return $this;
+    }
+
+    /**
+     * @param int $time
+     *
+     * @return $this
+     */
+    public function setTerminateAfter(int $time)
+    {
+        $this->terminateAfter = $time;
+
+        $this->addUriParam('terminate_after', $this->terminateAfter);
 
         return $this;
     }
@@ -721,7 +737,7 @@ class Search
 
     /**
      * @param string $name
-     * @param string|array|bool $value
+     * @param string|array|bool|int $value
      *
      * @return $this
      */
@@ -791,6 +807,7 @@ class Search
             'minScore' => 'min_score',
             'searchAfter' => 'search_after',
             'trackTotalHits' => 'track_total_hits',
+            'terminateAfter' => 'terminate_after'
         ];
 
         foreach ($params as $field => $param) {
