@@ -458,7 +458,7 @@ class Search
     }
 
     /**
-     * @return int
+     * @return null|int
      */
     public function getFrom()
     {
@@ -466,7 +466,7 @@ class Search
     }
 
     /**
-     * @param int $from
+     * @param null|int $from
      *
      * @return $this
      */
@@ -498,7 +498,7 @@ class Search
     }
 
     /**
-     * @return int
+     * @return null|int
      */
     public function getSize()
     {
@@ -506,7 +506,7 @@ class Search
     }
 
     /**
-     * @param int $size
+     * @param null|int $size
      *
      * @return $this
      */
