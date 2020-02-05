@@ -75,8 +75,7 @@ class TermsSetQuery implements BuilderInterface
 
     private function validateParameters(array $parameters)
     {
-        if (
-            !isset($parameters[self::MINIMUM_SHOULD_MATCH_TYPE_FIELD]) &&
+        if (!isset($parameters[self::MINIMUM_SHOULD_MATCH_TYPE_FIELD]) &&
             !isset($parameters[self::MINIMUM_SHOULD_MATCH_TYPE_SCRIPT])
         ) {
             $message = "Either minimum_should_match_field or minimum_should_match_script must be set.";
