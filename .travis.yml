@@ -4,14 +4,20 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
 env:
   global:
     - ES_VERSION=6.7.1 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
+  matrix:
+    - SYMFONY="^3.0"
+    - SYMFONY="^4.0"
+    - SYMFONY="^5.0"
 install:
   - wget ${ES_DOWNLOAD_URL}
   - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
   - ./elasticsearch-${ES_VERSION}/bin/elasticsearch -d
 before_script:
+  - composer require --no-update symfony/framework-bundle:${SYMFONY}
   - if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi
   - composer install --no-interaction --prefer-dist
 script:
