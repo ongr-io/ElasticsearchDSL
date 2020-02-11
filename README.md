@@ -6,7 +6,7 @@ If you need any help, [stack overflow](http://stackoverflow.com/questions/tagged
 is the preferred and recommended way to ask ONGR support questions.
  
 [![Build Status](https://travis-ci.org/ongr-io/ElasticsearchDSL.svg?branch=master)](https://travis-ci.org/ongr-io/ElasticsearchDSL)
-[![codecov](https://codecov.io/gh/ongr-io/ElasticsearchDSL/branch/master/graph/badge.svg)](https://codecov.io/gh/ongr-io/ElasticsearchDSL)
+[![Financial Contributors on Open Collective](https://opencollective.com/ongr/all/badge.svg?label=financial+contributors)](https://opencollective.com/ongr) [![codecov](https://codecov.io/gh/ongr-io/ElasticsearchDSL/branch/master/graph/badge.svg)](https://codecov.io/gh/ongr-io/ElasticsearchDSL)
 [![Latest Stable Version](https://poser.pugx.org/ongr/elasticsearch-dsl/v/stable)](https://packagist.org/packages/ongr/elasticsearch-dsl)
 [![Total Downloads](https://poser.pugx.org/ongr/elasticsearch-dsl/downloads)](https://packagist.org/packages/ongr/elasticsearch-dsl)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ongr-io/ElasticsearchDSL/?branch=master)
@@ -77,3 +77,33 @@ Create search:
 ```
 
 Elasticsearch DSL covers every elasticsearch query, all examples can be found in [the documentation](docs/index.md)
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/ongr-io/ElasticsearchDSL/graphs/contributors"><img src="https://opencollective.com/ongr/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/ongr/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/ongr"><img src="https://opencollective.com/ongr/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/ongr/contribute)]
+
+<a href="https://opencollective.com/ongr/organization/0/website"><img src="https://opencollective.com/ongr/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/1/website"><img src="https://opencollective.com/ongr/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/2/website"><img src="https://opencollective.com/ongr/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/3/website"><img src="https://opencollective.com/ongr/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/4/website"><img src="https://opencollective.com/ongr/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/5/website"><img src="https://opencollective.com/ongr/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/6/website"><img src="https://opencollective.com/ongr/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/7/website"><img src="https://opencollective.com/ongr/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/8/website"><img src="https://opencollective.com/ongr/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/ongr/organization/9/website"><img src="https://opencollective.com/ongr/organization/9/avatar.svg"></a>
