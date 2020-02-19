@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
 
 /**
  * Unit test class for search endpoint factory.
@@ -34,6 +35,8 @@ class SearchEndpointFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testFactory()
     {
-        SearchEndpointFactory::get(AggregationsEndpoint::NAME);
+        $endpoinnt = SearchEndpointFactory::get(AggregationsEndpoint::NAME);
+
+        $this->assertInstanceOf(SearchEndpointInterface::class, $endpoinnt);
     }
 }

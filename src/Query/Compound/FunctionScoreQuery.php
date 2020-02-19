@@ -181,7 +181,7 @@ class FunctionScoreQuery implements BuilderInterface
     /**
      * Adds script score function.
      *
-     * @param string           $inline
+     * @param string           $source
      * @param array            $params
      * @param array            $options
      * @param BuilderInterface $query
@@ -189,7 +189,7 @@ class FunctionScoreQuery implements BuilderInterface
      * @return $this
      */
     public function addScriptScoreFunction(
-        $inline,
+        $source,
         array $params = [],
         array $options = [],
         BuilderInterface $query = null
@@ -201,7 +201,7 @@ class FunctionScoreQuery implements BuilderInterface
                         array_merge(
                             [
                                 'lang' => 'painless',
-                                'inline' => $inline,
+                                'source' => $source,
                                 'params' => $params
                             ],
                             $options

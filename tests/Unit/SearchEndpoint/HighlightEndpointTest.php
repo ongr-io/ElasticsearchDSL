@@ -26,7 +26,7 @@ class HighlightEndpointTest extends \PHPUnit\Framework\TestCase
      */
     public function testItCanBeInstantiated()
     {
-        $this->assertInstanceOf('ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint', new HighlightEndpoint());
+        $this->assertInstanceOf(HighlightEndpoint::class, new HighlightEndpoint());
     }
 
     /**
@@ -37,7 +37,7 @@ class HighlightEndpointTest extends \PHPUnit\Framework\TestCase
         $instance = new HighlightEndpoint();
         /** @var NormalizerInterface|MockObject $normalizerInterface */
         $normalizerInterface = $this->getMockForAbstractClass(
-            'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
+            NormalizerInterface::class
         );
 
         $this->assertNull($instance->normalize($normalizerInterface));
