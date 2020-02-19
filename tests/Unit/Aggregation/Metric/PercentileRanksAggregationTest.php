@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
 
 use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentileRanksAggregation;
+use phpDocumentor\Reflection\Types\Void_;
 
 /**
  * Percentile ranks aggregation unit tests.
@@ -26,7 +27,7 @@ class PercentileRanksAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Phpunit setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->agg = new PercentileRanksAggregation('foo');
     }

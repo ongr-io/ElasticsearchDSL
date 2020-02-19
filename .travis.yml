@@ -1,19 +1,17 @@
 sudo: false
 language: php
 php:
+  - 7.0
   - 7.1
   - 7.2
   - 7.3
-  - 7.4snapshot
-matrix:
-  allow_failures:
-      - php: 7.4snapshot
+  - 7.4
 env:
   global:
-    - ES_VERSION=7.4.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}-linux-x86_64.tar.gz
+    - ES_VERSION=6.7.1 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 install:
   - wget ${ES_DOWNLOAD_URL}
-  - tar -xzf elasticsearch-${ES_VERSION}-linux-x86_64.tar.gz
+  - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
   - ./elasticsearch-${ES_VERSION}/bin/elasticsearch -d
 before_script:
   - if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi

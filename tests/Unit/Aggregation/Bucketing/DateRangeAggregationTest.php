@@ -73,7 +73,7 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function testDateRangeAggregationConstructorProvider()
+    public function getDateRangeAggregationConstructorProvider()
     {
         return [
             // Case #0. Minimum arguments.
@@ -112,7 +112,7 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
      * @param string $format
      * @param array  $ranges
      *
-     * @dataProvider testDateRangeAggregationConstructorProvider
+     * @dataProvider getDateRangeAggregationConstructorProvider
      */
     public function testDateRangeAggregationConstructor($field = null, $format = null, array $ranges = null)
     {

@@ -120,7 +120,18 @@ class FilterAggregationTest extends \PHPUnit\Framework\TestCase
     public function testToArrayNoFilter()
     {
         $aggregation = new FilterAggregation('test_agg');
-        $aggregation->toArray();
+        $result = $aggregation->toArray();
+
+        $this->assertEquals(
+            [
+                'aggregation' => [
+                    'test_agg' => [
+                        'filter' => []
+                    ]
+                ]
+            ],
+            $result
+        );
     }
 
     /**
@@ -129,9 +140,19 @@ class FilterAggregationTest extends \PHPUnit\Framework\TestCase
     public function testToArrayWithFilter()
     {
         $aggregation = new FilterAggregation('test_agg');
-
         $aggregation->setFilter(new ExistsQuery('test'));
-        $aggregation->toArray();
+        $result = $aggregation->toArray();
+
+        $this->assertEquals(
+            [
+                'filter' => [
+                    'exists' => [
+                        'field' => 'test'
+                    ]
+                ]
+            ],
+            $result
+        );
     }
 
     /**
