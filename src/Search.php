@@ -24,10 +24,10 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointInterface;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
+use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\CustomReferencedNormalizer;
 use ONGR\ElasticsearchDSL\Serializer\OrderedSerializer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 
 /**
  * Search object that can be executed by a manager.
@@ -57,6 +57,21 @@ class Search
      * @var int
      */
     private $size;
+
+    /**
+     * The maximum number of documents to collect for each shard,
+     * upon reaching which the query execution will terminate early.
+     *
+     * @var integer
+     */
+    private $terminateAfter;
+
+    /**
+     * Explicit timeout for each search request. Defaults to no timeout.
+     *
+     * @var time units
+     */
+    private $timeout;
 
     /**
      * Allows to control how the _source field is returned with every hit. By default
@@ -458,6 +473,32 @@ class Search
     }
 
     /**
+    * @param int $time
+    *
+    * @return $this
+    */
+    public function setTerminateAfter(int $time)
+    {
+        $this->terminateAfter = $time;
+
+        $this->addUriParam('terminate_after', $this->terminateAfter);
+
+        return $this;
+    }
+
+    /**
+     * @param string $time
+     *
+     * @return $this
+     */
+    public function setTimeout($time)
+    {
+        $this->timeout = $time;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getFrom()
@@ -721,7 +762,7 @@ class Search
 
     /**
      * @param string $name
-     * @param string|array|bool $value
+     * @param string|array|bool|int $value
      *
      * @return $this
      */
@@ -781,6 +822,7 @@ class Search
         $params = [
             'from' => 'from',
             'size' => 'size',
+            'timeout' => 'timeout',
             'source' => '_source',
             'storedFields' => 'stored_fields',
             'scriptFields' => 'script_fields',
@@ -791,6 +833,7 @@ class Search
             'minScore' => 'min_score',
             'searchAfter' => 'search_after',
             'trackTotalHits' => 'track_total_hits',
+            'terminateAfter' => 'terminate_after'
         ];
 
         foreach ($params as $field => $param) {
