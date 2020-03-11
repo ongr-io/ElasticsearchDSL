@@ -22,7 +22,7 @@ class OrderedSerializer extends Serializer
     /**
      * {@inheritdoc}
      */
-    public function normalize($data, $format = null, array $context = [])
+    public function normalize($data, string $format = null, array $context = [])
     {
         return parent::normalize(
             is_array($data) ? $this->order($data) : $data,
@@ -34,7 +34,7 @@ class OrderedSerializer extends Serializer
     /**
      * {@inheritdoc}
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, string $type, string $format = null, array $context = [])
     {
         return parent::denormalize(
             is_array($data) ? $this->order($data) : $data,
