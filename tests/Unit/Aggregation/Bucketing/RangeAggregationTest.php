@@ -40,6 +40,41 @@ class RangeAggregationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($result, $aggregation->toArray());
     }
 
+    public function testRangeAggregationAddZeroIndexedKeys()
+    {
+        $aggregation = new RangeAggregation('test_agg');
+        $aggregation->setKeyed(true);
+        $aggregation->setField('test_field');
+        $aggregation->addRange(0, 100, '0');
+        $aggregation->addRange(100, 200, '1');
+        $aggregation->addRange(200, 300);
+
+        $result = [
+            'range' => [
+                'field' => 'test_field',
+                'ranges' => [
+                    [
+                        'from' => 0,
+                        'to' => 100,
+                        'key' => '0'
+                    ],
+                    [
+                        'from' => 100,
+                        'to' => 200,
+                        'key' => '1'
+                    ],
+                    [
+                        'from' => 200,
+                        'to' => 300
+                    ]
+                ],
+                'keyed' => true
+            ],
+        ];
+
+        $this->assertEquals($result, $aggregation->toArray());
+    }
+
     /**
      * Test addRange method with multiple values.
      */
