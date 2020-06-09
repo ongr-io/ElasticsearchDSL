@@ -1,5 +1,5 @@
 {
-    "name": "ongr/elasticsearch-dsl",
+    "name": "handcraftedinthealps/elasticsearch-dsl",
     "description": "Elasticsearch DSL library",
     "type": "library",
     "homepage": "http://ongr.io",
@@ -8,6 +8,10 @@
         {
             "name": "ONGR team",
             "homepage": "http://www.ongr.io"
+        },
+        {
+            "name": "Handcrafted in the Alps Team",
+            "homepage": "https://github.com/handcraftedinthealps/ElasticsearchDSL/graphs/contributors"
         }
     ],
     "require": {
@@ -32,6 +36,9 @@
         "psr-4": {
             "ONGR\\ElasticsearchDSL\\Tests\\": "tests/"
         }
+    },
+    "replace": {
+        "ongr/elasticsearch-dsl": "self.version"
     },
     "minimum-stability": "dev",
     "extra": {
