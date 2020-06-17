@@ -25,7 +25,7 @@ abstract class AbstractPipelineAggregation extends AbstractAggregation
     }
 
     /**
-     * @return string
+     * @return array|string
      */
     public function getBucketsPath()
     {
@@ -33,7 +33,7 @@ abstract class AbstractPipelineAggregation extends AbstractAggregation
     }
 
     /**
-     * @param string $bucketsPath
+     * @param array|string $bucketsPath
      *
      * @return $this
      */
