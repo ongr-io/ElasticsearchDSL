@@ -27,7 +27,7 @@ class SuggestEndpoint extends AbstractSearchEndpoint
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
         $output = [];
         if (count($this->getAll()) > 0) {
