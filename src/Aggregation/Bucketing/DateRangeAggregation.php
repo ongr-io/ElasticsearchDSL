@@ -128,17 +128,19 @@ class DateRangeAggregation extends AbstractAggregation
      */
     public function getArray()
     {
-        if ($this->getField() && $this->getFormat() && !empty($this->ranges)) {
+        if ($this->getField() && !empty($this->ranges)) {
             $data = [
-                'format' => $this->getFormat(),
                 'field' => $this->getField(),
                 'ranges' => $this->ranges,
                 'keyed' => $this->keyed,
             ];
+            if ($this->getFormat()) {
+                $data['format'] = $this->getFormat();
+            }
 
             return $data;
         }
-        throw new \LogicException('Date range aggregation must have field, format set and range added.');
+        throw new \LogicException('Date range aggregation must have field and range added.');
     }
 
     /**
