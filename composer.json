@@ -13,16 +13,11 @@
     "require": {
         "php": "^7.1",
         "symfony/serializer": "^3.0|^4.0",
-        "paragonie/random_compat": "*",
         "elasticsearch/elasticsearch": "^7.0"
     },
     "require-dev": {
-        "elasticsearch/elasticsearch": "^7.0",
         "phpunit/phpunit": "^7.0",
         "squizlabs/php_codesniffer": "^3.0"
-    },
-    "suggest": {
-      "elasticsearch/elasticsearch": "This library is for elasticsearch/elasticsearch client to enhance it with DSL functionality."
     },
     "autoload": {
         "psr-4": {
