@@ -28,6 +28,21 @@ class GeoShapeQuery implements BuilderInterface
     const WITHIN = 'within';
     const CONTAINS = 'contains';
 
+    /*
+     * Available shape types for addShape() $type param.
+     *
+     * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-shape.html#input-structure
+     */
+    const SHAPE_TYPE_POINT = 'point';
+    const SHAPE_TYPE_LINESTRING = 'linestring';
+    const SHAPE_TYPE_POLYGON = 'polygon';
+    const SHAPE_TYPE_MULTIPOINT = 'multipoint';
+    const SHAPE_TYPE_MULTILINESTRING = 'multilinestring';
+    const SHAPE_TYPE_MULTIPOLYGON = 'multipolygon';
+    const SHAPE_TYPE_GEOMETRYCOLLECTION = 'geometrycollection';
+    const SHAPE_TYPE_ENVELOPE = 'envelope';
+    const SHAPE_TYPE_CIRCLE = 'circle';
+
     /**
      * @var array
      */
