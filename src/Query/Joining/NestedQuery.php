@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Joining;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +25,20 @@ class NestedQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param string           $path
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     */
-    public function __construct($path, BuilderInterface $query, array $parameters = [])
-    {
-        $this->path = $path;
-        $this->query = $query;
+    public function __construct(
+        private string $path,
+        private BuilderInterface $query,
+        array $parameters = []
+    ) {
         $this->parameters = $parameters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'nested';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             $this->getType() => $this->processArray(
@@ -68,22 +50,12 @@ class NestedQuery implements BuilderInterface
         ];
     }
 
-    /**
-     * Returns nested query object.
-     *
-     * @return BuilderInterface
-     */
-    public function getQuery()
+    public function getQuery(): BuilderInterface
     {
         return $this->query;
     }
 
-    /**
-     * Returns path this query is set for.
-     *
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }

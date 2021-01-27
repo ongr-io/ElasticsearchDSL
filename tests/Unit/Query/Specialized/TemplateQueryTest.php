@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Specialized;
 
+use InvalidArgumentException;
 use ONGR\ElasticsearchDSL\Query\Specialized\TemplateQuery;
 
 /**
@@ -18,10 +21,7 @@ use ONGR\ElasticsearchDSL\Query\Specialized\TemplateQuery;
  */
 class TemplateQueryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Tests toArray() method with inline.
-     */
-    public function testToArrayInline()
+    public function testToArrayInline(): void
     {
         $inline = '"term": {"field": "{{query_string}}"}';
         $params = ['query_string' => 'all about search'];
@@ -35,10 +35,7 @@ class TemplateQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $query->toArray());
     }
 
-    /**
-     * Tests toArray() method with file
-     */
-    public function testToArrayFile()
+    public function testToArrayFile(): void
     {
         $file = 'my_template';
         $params = ['query_string' => 'all about search'];
@@ -54,13 +51,9 @@ class TemplateQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $query->toArray());
     }
 
-    /**
-     * Tests toArray() exception
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testToArrayException()
+    public function testToArrayException(): void
     {
+        $this->expectException(InvalidArgumentException::class);
         $query = new TemplateQuery();
         $query->toArray();
     }

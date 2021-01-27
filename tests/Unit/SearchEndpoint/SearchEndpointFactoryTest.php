@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
 
@@ -19,20 +22,14 @@ use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
  */
 class SearchEndpointFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Tests get method exception.
-     *
-     * @expectedException \RuntimeException
-     */
-    public function testGet()
+    public function testGet(): void
     {
+        $this->expectException(LogicException::class);
+
         SearchEndpointFactory::get('foo');
     }
 
-    /**
-     * Tests if factory can create endpoint.
-     */
-    public function testFactory()
+    public function testFactory(): void
     {
         SearchEndpointFactory::get(AggregationsEndpoint::NAME);
     }

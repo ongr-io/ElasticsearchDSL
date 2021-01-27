@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateHistogramAggregation;
 
 /**
@@ -18,31 +21,21 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateHistogramAggregation;
  */
 class DateHistogramAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Tests if ChildrenAggregation#getArray throws exception when expected.
-     *
-     * @expectedException \LogicException
-     */
-    public function testGetArrayException()
+    public function testGetArrayException(): void
     {
+        $this->expectException(LogicException::class);
         $aggregation = new DateHistogramAggregation('foo');
         $aggregation->getArray();
     }
 
-    /**
-     * Tests getType method.
-     */
-    public function testDateHistogramAggregationGetType()
+    public function testDateHistogramAggregationGetType(): void
     {
         $aggregation = new DateHistogramAggregation('foo');
         $result = $aggregation->getType();
         $this->assertEquals('date_histogram', $result);
     }
 
-    /**
-     * Tests getArray method.
-     */
-    public function testChildrenAggregationGetArray()
+    public function testChildrenAggregationGetArray(): void
     {
         $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation')
             ->disableOriginalConstructor()

@@ -14,20 +14,11 @@ namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 use ONGR\ElasticsearchDSL\InnerHit\NestedInnerHit;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * Search inner hits dsl endpoint.
- */
 class InnerHitsEndpoint extends AbstractSearchEndpoint
 {
-    /**
-     * Endpoint name
-     */
-    const NAME = 'inner_hits';
+    public const NAME = 'inner_hits';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
     {
         $output = [];
         if (count($this->getAll()) > 0) {

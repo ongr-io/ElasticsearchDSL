@@ -9,18 +9,16 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GlobalAggregation;
 
 class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Data provider for testToArray().
-     *
-     * @return array
-     */
-    public function getToArrayData()
+    public function getToArrayData(): array
     {
         $out = [];
 
@@ -64,7 +62,7 @@ class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider getToArrayData
      */
-    public function testToArray($aggregation, $expectedResult)
+    public function testToArray($aggregation, $expectedResult): void
     {
         $this->assertEquals(
             json_encode($expectedResult),
@@ -72,13 +70,10 @@ class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * Test for setField method on global aggregation.
-     *
-     * @expectedException \LogicException
-     */
-    public function testSetField()
+    public function testSetField(): void
     {
+        $this->expectException(LogicException::class);
+
         $aggregation = new GlobalAggregation('test_agg');
         $aggregation->setField('test_field');
     }

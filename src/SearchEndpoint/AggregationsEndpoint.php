@@ -9,25 +9,18 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * Search aggregations dsl endpoint.
- */
 class AggregationsEndpoint extends AbstractSearchEndpoint
 {
-    /**
-     * Endpoint name
-     */
-    const NAME = 'aggregations';
+    public const NAME = 'aggregations';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
     {
         $output = [];
         if (count($this->getAll()) > 0) {

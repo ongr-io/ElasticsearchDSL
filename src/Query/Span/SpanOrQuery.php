@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\ParametersTrait;
@@ -22,53 +24,31 @@ class SpanOrQuery implements SpanQueryInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var SpanQueryInterface[]
-     */
-    private $queries = [];
+    private array $queries = [];
 
-    /**
-     * @param array $parameters
-     */
     public function __construct(array $parameters = [])
     {
         $this->setParameters($parameters);
     }
 
-    /**
-     * Add span query.
-     *
-     * @param SpanQueryInterface $query
-     *
-     * @return $this
-     */
-    public function addQuery(SpanQueryInterface $query)
+    public function addQuery(SpanQueryInterface $query): static
     {
         $this->queries[] = $query;
 
         return $this;
     }
 
-    /**
-     * @return SpanQueryInterface[]
-     */
-    public function getQueries()
+    public function getQueries(): array
     {
         return $this->queries;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'span_or';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [];
         foreach ($this->queries as $type) {

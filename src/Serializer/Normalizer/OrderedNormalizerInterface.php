@@ -9,17 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Serializer\Normalizer;
 
-/**
- * This should be implemented by normalizable object that required to be processed in specific order.
- */
 interface OrderedNormalizerInterface
 {
-    /**
-     * Returns normalization priority.
-     *
-     * @return int
-     */
-    public function getOrder();
+    public function getOrder(): int;
 }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\ParametersTrait;
@@ -22,42 +24,21 @@ class SpanFirstQuery implements SpanQueryInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var SpanQueryInterface
-     */
-    private $query;
-
-    /**
-     * @var int
-     */
-    private $end;
-
-    /**
-     * @param SpanQueryInterface $query
-     * @param int                $end
-     * @param array              $parameters
-     *
-     * @throws \LogicException
-     */
-    public function __construct(SpanQueryInterface $query, $end, array $parameters = [])
-    {
-        $this->query = $query;
-        $this->end = $end;
+    public function __construct(
+        private SpanQueryInterface $query,
+        private int $end,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+
+    public function getType(): string
     {
         return 'span_first';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [];
         $query['match'] = $this->query->toArray();

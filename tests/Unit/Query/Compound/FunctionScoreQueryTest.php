@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Compound;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -26,7 +28,7 @@ class FunctionScoreQueryTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function addRandomFunctionProvider()
+    public function addRandomFunctionProvider(): array
     {
         return [
             // Case #0. No seed.
@@ -64,7 +66,7 @@ class FunctionScoreQueryTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider addRandomFunctionProvider
      */
-    public function testAddRandomFunction($seed, $expectedArray)
+    public function testAddRandomFunction(mixed $seed, array $expectedArray): void
     {
         /** @var MatchAllQuery|MockObject $matchAllQuery */
         $matchAllQuery = $this->getMockBuilder('ONGR\ElasticsearchDSL\Query\MatchAllQuery')->getMock();
@@ -74,11 +76,8 @@ class FunctionScoreQueryTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(['function_score' => $expectedArray], $functionScoreQuery->toArray());
     }
-    
-    /**
-     * Tests default argument values.
-     */
-    public function testAddFieldValueFactorFunction()
+
+    public function testAddFieldValueFactorFunction(): void
     {
         /** @var BuilderInterface|MockObject $builderInterface */
         $builderInterface = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');

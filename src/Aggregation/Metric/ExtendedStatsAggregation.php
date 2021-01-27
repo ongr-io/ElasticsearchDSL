@@ -23,18 +23,15 @@ use ONGR\ElasticsearchDSL\ScriptAwareTrait;
 class ExtendedStatsAggregation extends AbstractAggregation
 {
     use MetricTrait;
+
     use ScriptAwareTrait;
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param int    $sigma
-     * @param string $script
-     */
-    public function __construct($name, $field = null, $sigma = null, $script = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        private ?int $sigma = null,
+        private ?string $script = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
@@ -42,55 +39,32 @@ class ExtendedStatsAggregation extends AbstractAggregation
         $this->setScript($script);
     }
 
-    /**
-     * @var int
-     */
-    private $sigma;
-
-    /**
-     * @return int
-     */
-    public function getSigma()
+    public function getSigma(): ?int
     {
         return $this->sigma;
     }
 
-    /**
-     * @param int $sigma
-     *
-     * @return $this
-     */
-    public function setSigma($sigma)
+    public function setSigma(?int $sigma): static
     {
         $this->sigma = $sigma;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'extended_stats';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
-        $out = array_filter(
+        return array_filter(
             [
                 'field' => $this->getField(),
                 'script' => $this->getScript(),
                 'sigma' => $this->getSigma(),
             ],
-            function ($val) {
-                return ($val || is_numeric($val));
-            }
+            fn(mixed $val): bool => $val || is_numeric($val)
         );
-
-        return $out;
     }
 }

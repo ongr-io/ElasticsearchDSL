@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\ParametersTrait;
@@ -22,78 +24,42 @@ class SpanContainingQuery implements SpanQueryInterface
 {
     use ParametersTrait;
 
-    /**
-     * @param SpanQueryInterface
-     */
-    private $little;
-
-    /**
-     * @param SpanQueryInterface
-     */
-    private $big;
-
-    /**
-     * @param SpanQueryInterface $little
-     * @param SpanQueryInterface $big
-     */
-    public function __construct(SpanQueryInterface $little, SpanQueryInterface $big)
+    public function __construct(private SpanQueryInterface $little, private SpanQueryInterface $big)
     {
         $this->setLittle($little);
         $this->setBig($big);
     }
 
-    /**
-     * @return SpanQueryInterface
-     */
-    public function getLittle()
+    public function getLittle(): SpanQueryInterface
     {
         return $this->little;
     }
 
-    /**
-     * @param SpanQueryInterface $little
-     *
-     * @return $this
-     */
-    public function setLittle(SpanQueryInterface $little)
+    public function setLittle(SpanQueryInterface $little): static
     {
         $this->little = $little;
 
         return $this;
     }
 
-    /**
-     * @return SpanQueryInterface
-     */
-    public function getBig()
+    public function getBig(): SpanQueryInterface
     {
         return $this->big;
     }
 
-    /**
-     * @param SpanQueryInterface $big
-     *
-     * @return $this
-     */
-    public function setBig(SpanQueryInterface $big)
+    public function setBig(SpanQueryInterface $big): static
     {
         $this->big = $big;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'span_containing';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $output = [
             'little' => $this->getLittle()->toArray(),

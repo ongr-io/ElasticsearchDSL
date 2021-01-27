@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,20 +25,11 @@ class Ipv4RangeAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var array
-     */
-    private $ranges = [];
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param array  $ranges
-     */
-    public function __construct($name, $field = null, $ranges = [])
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        private array $ranges = []
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
@@ -59,16 +52,13 @@ class Ipv4RangeAggregation extends AbstractAggregation
      *
      * @return Ipv4RangeAggregation
      */
-    public function addRange($from = null, $to = null)
+    public function addRange(?string $from = null, ?string $to = null): static
     {
         $range = array_filter(
             [
                 'from' => $from,
                 'to' => $to,
-            ],
-            function ($v) {
-                return !is_null($v);
-            }
+            ]
         );
 
         $this->ranges[] = $range;
@@ -76,32 +66,19 @@ class Ipv4RangeAggregation extends AbstractAggregation
         return $this;
     }
 
-    /**
-     * Add ip mask to aggregation.
-     *
-     * @param string $mask
-     *
-     * @return Ipv4RangeAggregation
-     */
-    public function addMask($mask)
+    public function addMask(string $mask): static
     {
         $this->ranges[] = ['mask' => $mask];
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'ip_range';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         if ($this->getField() && !empty($this->ranges)) {
             return [

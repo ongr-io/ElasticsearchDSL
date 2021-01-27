@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Compound;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +25,27 @@ class BoolQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    const MUST = 'must';
-    const MUST_NOT = 'must_not';
-    const SHOULD = 'should';
-    const FILTER = 'filter';
+    public const MUST = 'must';
 
-    /**
-     * @var array
-     */
-    private $container = [];
+    public const MUST_NOT = 'must_not';
+    public const SHOULD = 'should';
+    public const FILTER = 'filter';
 
-    /**
-     * Constructor to prepare container.
-     *
-     * @param array $container
-     */
-    public function __construct(array $container = [])
+    public function __construct(private array $container = [])
     {
         foreach ($container as $type => $queries) {
             $queries = is_array($queries) ? $queries : [$queries];
 
-            array_walk($queries, function ($query) use ($type) {
-                $this->add($query, $type);
-            });
+            array_walk(
+                $queries,
+                function (BuilderInterface $query) use ($type): void {
+                    $this->add($query, $type);
+                }
+            );
         }
     }
 
-    /**
-     * Returns the query instances (by bool type).
-     *
-     * @param  string|null $boolType
-     *
-     * @return array
-     */
-    public function getQueries($boolType = null)
+    public function getQueries(?string $boolType = null): array
     {
         if ($boolType === null) {
             $queries = [];
@@ -75,18 +64,7 @@ class BoolQuery implements BuilderInterface
         return [];
     }
 
-    /**
-     * Add BuilderInterface object to bool operator.
-     *
-     * @param BuilderInterface $query Query add to the bool.
-     * @param string           $type  Bool type. Example: must, must_not, should.
-     * @param string           $key   Key that indicates a builder id.
-     *
-     * @return string Key of added builder.
-     *
-     * @throws \UnexpectedValueException
-     */
-    public function add(BuilderInterface $query, $type = self::MUST, $key = null)
+    public function add(BuilderInterface $query, string $type = self::MUST, ?string $key = null): string
     {
         if (!in_array($type, [self::MUST, self::MUST_NOT, self::SHOULD, self::FILTER])) {
             throw new \UnexpectedValueException(sprintf('The bool operator %s is not supported', $type));
@@ -101,13 +79,10 @@ class BoolQuery implements BuilderInterface
         return $key;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         if (count($this->container) === 1 && isset($this->container[self::MUST])
-                && count($this->container[self::MUST]) === 1) {
+            && count($this->container[self::MUST]) === 1) {
             $query = reset($this->container[self::MUST]);
 
             return $query->toArray();
@@ -131,10 +106,7 @@ class BoolQuery implements BuilderInterface
         return [$this->getType() => $output];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'bool';
     }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Geo;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,48 +25,21 @@ class GeoDistanceQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $distance;
-
-    /**
-     * @var mixed
-     */
-    private $location;
-
-    /**
-     * @param string $field
-     * @param string $distance
-     * @param mixed  $location
-     * @param array  $parameters
-     */
-    public function __construct($field, $distance, $location, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->distance = $distance;
-        $this->location = $location;
-
+    public function __construct(
+        private string $field,
+        private string $distance,
+        private mixed $location,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'geo_distance';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'distance' => $this->distance,

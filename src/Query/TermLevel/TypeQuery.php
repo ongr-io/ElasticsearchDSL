@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -20,33 +22,16 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  */
 class TypeQuery implements BuilderInterface
 {
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * Constructor.
-     *
-     * @param string $type Type name
-     */
-    public function __construct($type)
+    public function __construct(private string $type)
     {
-        $this->type = $type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'type';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             $this->getType() => [

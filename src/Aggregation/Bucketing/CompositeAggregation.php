@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -24,28 +26,11 @@ class CompositeAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var BuilderInterface[]
-     */
-    private $sources = [];
+    private ?int $size = null;
 
-    /**
-     * @var int
-     */
-    private $size;
+    private array $after = [];
 
-    /**
-     * @var array
-     */
-    private $after;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string             $name
-     * @param AbstractAggregation[] $sources
-     */
-    public function __construct($name, $sources = [])
+    public function __construct(private string $name, private array $sources = [])
     {
         parent::__construct($name);
 
@@ -54,14 +39,7 @@ class CompositeAggregation extends AbstractAggregation
         }
     }
 
-    /**
-     * @param AbstractAggregation $agg
-     *
-     * @throws \LogicException
-     *
-     * @return self
-     */
-    public function addSource(AbstractAggregation $agg)
+    public function addSource(AbstractAggregation $agg): static
     {
         $array = $agg->getArray();
 
@@ -74,10 +52,7 @@ class CompositeAggregation extends AbstractAggregation
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $array = [
             'sources' => $this->sources,
@@ -94,58 +69,31 @@ class CompositeAggregation extends AbstractAggregation
         return $array;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'composite';
     }
 
-    /**
-     * Sets size
-     *
-     * @param int $size Size
-     *
-     * @return $this
-     */
-    public function setSize($size)
+    public function setSize(?int $size): static
     {
         $this->size = $size;
 
         return $this;
     }
 
-    /**
-     * Returns size
-     *
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
-    /**
-     * Sets after
-     *
-     * @param array $after After
-     *
-     * @return $this
-     */
-    public function setAfter(array $after)
+    public function setAfter(array $after): static
     {
         $this->after = $after;
 
         return $this;
     }
 
-    /**
-     * Returns after
-     *
-     * @return array
-     */
-    public function getAfter()
+    public function getAfter(): array
     {
         return $this->after;
     }

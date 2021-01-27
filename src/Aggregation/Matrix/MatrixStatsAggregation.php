@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Matrix;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -19,86 +21,52 @@ use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
  *
  * @link https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-max-aggregation.html
  */
-class MaxAggregation extends AbstractAggregation
+class MatrixStatsAggregation extends AbstractAggregation
 {
     use MetricTrait;
 
-    /**
-     * @var string Used for multi value aggregation fields to pick a value.
-     */
-    private $mode;
-
-    /**
-     * @var array Defines how documents that are missing a value should be treated.
-     */
-    private $missing;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string|array $field Fields list to aggregate.
-     * @param array $missing
-     * @param string $mode
-     */
-    public function __construct($name, $field, $missing = null, $mode = null)
-    {
+    public function __construct(
+        private string $name,
+        private string|array $field,
+        private ?array $missing = null,
+        private ?string $mode = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
         $this->setMode($mode);
-        $this->missing = $missing;
     }
 
-    /**
-     * @return string
-     */
-    public function getMode()
+    public function getMode(): string
     {
         return $this->mode;
     }
 
-    /**
-     * @param string $mode
-     *
-     * @return $this
-     */
-    public function setMode($mode)
+    public function setMode(?string $mode): static
     {
         $this->mode = $mode;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getMissing()
+    public function getMissing(): ?array
     {
         return $this->missing;
     }
 
-    /**
-     * @param array $missing
-     *
-     * @return $this
-     */
-    public function setMissing($missing)
+    public function setMissing(?array $missing): static
     {
         $this->missing = $missing;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'matrix_stats';
     }
 
-    protected function getArray()
+    protected function getArray(): array
     {
         $out = [];
         if ($this->getField()) {

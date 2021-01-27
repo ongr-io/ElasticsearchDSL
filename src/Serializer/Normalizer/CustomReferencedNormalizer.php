@@ -9,24 +9,17 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Serializer\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 
-/**
- * Normalizer used with referenced normalized objects.
- */
 class CustomReferencedNormalizer extends CustomNormalizer
 {
-    /**
-     * @var array
-     */
-    private $references = [];
+    private array $references = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = []): mixed
     {
         $object->setReferences($this->references);
         $data = parent::normalize($object, $format, $context);
@@ -35,10 +28,7 @@ class CustomReferencedNormalizer extends CustomNormalizer
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization(mixed $data, $format = null): bool
     {
         return $data instanceof AbstractNormalizable;
     }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,25 +25,12 @@ class DateHistogramAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var string
-     */
-    protected $interval;
-
-    /**
-     * @var string
-     */
-    protected $format;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param string $interval
-     */
-    public function __construct($name, $field = null, $interval = null, $format = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        private mixed $interval = null,
+        private $format = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
@@ -49,50 +38,31 @@ class DateHistogramAggregation extends AbstractAggregation
         $this->setFormat($format);
     }
 
-    /**
-     * @return int
-     */
-    public function getInterval()
+    public function getInterval(): mixed
     {
         return $this->interval;
     }
 
-    /**
-     * @param string $interval
-     *
-     * @return $this
-     */
-    public function setInterval($interval)
+    public function setInterval(mixed $interval): static
     {
         $this->interval = $interval;
 
         return $this;
     }
 
-    /**
-     * @param string $format
-     *
-     * @return $this
-     */
-    public function setFormat($format)
+    public function setFormat(?string $format): static
     {
         $this->format = $format;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'date_histogram';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         if (!$this->getField() || !$this->getInterval()) {
             throw new \LogicException('Date histogram aggregation must have field and interval set.');

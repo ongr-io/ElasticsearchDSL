@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,43 +25,32 @@ use ONGR\ElasticsearchDSL\ScriptAwareTrait;
 class TermsAggregation extends AbstractAggregation
 {
     use BucketingTrait;
+
     use ScriptAwareTrait;
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param string $script
-     */
-    public function __construct($name, $field = null, $script = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        ?string $script = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
         $this->setScript($script);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'terms';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
-        $data = array_filter(
+        return array_filter(
             [
                 'field' => $this->getField(),
                 'script' => $this->getScript(),
             ]
         );
-
-        return $data;
     }
 }

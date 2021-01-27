@@ -9,12 +9,15 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\InnerHit;
 
 use ONGR\ElasticsearchDSL\NameAwareTrait;
 use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
 use ONGR\ElasticsearchDSL\Search;
+use stdClass;
 
 /**
  * Represents Elasticsearch top level nested inner hits.
@@ -24,26 +27,10 @@ use ONGR\ElasticsearchDSL\Search;
 class NestedInnerHit implements NamedBuilderInterface
 {
     use ParametersTrait;
+
     use NameAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var Search
-     */
-    private $search;
-
-    /**
-     * Inner hits container init.
-     *
-     * @param string $name
-     * @param string $path
-     * @param Search $search
-     */
-    public function __construct($name, $path, Search $search = null)
+    public function __construct(?string $name = null, private ?string $path = null, private ?Search $search = null)
     {
         $this->setName($name);
         $this->setPath($path);
@@ -52,87 +39,56 @@ class NestedInnerHit implements NamedBuilderInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return $this
-     */
-    public function setPath($path)
+    public function setPath(?string $path): static
     {
         $this->path = $path;
 
         return $this;
     }
 
-    /**
-     * @return Search
-     */
-    public function getSearch()
+    public function getSearch(): ?Search
     {
         return $this->search;
     }
 
-    /**
-     * @param Search $search
-     *
-     * @return $this
-     */
-    public function setSearch(Search $search)
+    public function setSearch(Search $search): static
     {
         $this->search = $search;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'nested';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
-        $out = $this->getSearch() ? $this->getSearch()->toArray() : new \stdClass();
+        $out = new stdClass();
 
-        $out = [
+        if (null !== $this->getSearch()) {
+            $out = $this->getSearch()->toArray();
+        }
+
+        return [
             $this->getPathType() => [
-                $this->getPath() => $out ,
+                $this->getPath() => $out,
             ],
         ];
-
-        return $out;
     }
 
-    /**
-     * Returns 'path' for nested and 'type' for parent inner hits
-     *
-     * @return null|string
-     */
-    private function getPathType()
+    private function getPathType(): ?string
     {
-        switch ($this->getType()) {
-            case 'nested':
-                $type = 'path';
-                break;
-            case 'parent':
-                $type = 'type';
-                break;
-            default:
-                $type = null;
-        }
-        return $type;
+        return match ($this->getType()) {
+            'nested' => 'path',
+            'parent' => 'type',
+            default => null
+        };
     }
 }

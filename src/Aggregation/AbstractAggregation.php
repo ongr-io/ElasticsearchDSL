@@ -9,12 +9,16 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\BuilderBag;
+use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\NameAwareTrait;
 use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
+use stdClass;
 
 /**
  * AbstractAggregation class.
@@ -22,111 +26,64 @@ use ONGR\ElasticsearchDSL\ParametersTrait;
 abstract class AbstractAggregation implements NamedBuilderInterface
 {
     use ParametersTrait;
+
     use NameAwareTrait;
 
-    /**
-     * @var string
-     */
-    private $field;
+    private ?string $field = null;
 
-    /**
-     * @var BuilderBag
-     */
-    private $aggregations;
+    private ?BuilderBag $aggregations = null;
 
-    /**
-     * Abstract supportsNesting method.
-     *
-     * @return bool
-     */
-    abstract protected function supportsNesting();
+    abstract protected function supportsNesting(): bool;
 
-    /**
-     * @return array|\stdClass
-     */
-    abstract protected function getArray();
+    abstract protected function getArray(): array | stdClass;
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->setName($name);
     }
 
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setField($field)
+    public function setField(?string $field): static
     {
         $this->field = $field;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getField()
+    public function getField(): ?string
     {
         return $this->field;
     }
 
-    /**
-     * Adds a sub-aggregation.
-     *
-     * @param AbstractAggregation $abstractAggregation
-     *
-     * @return $this
-     */
-    public function addAggregation(AbstractAggregation $abstractAggregation)
+    public function addAggregation(AbstractAggregation $abstractAggregation): static
     {
         if (!$this->aggregations) {
             $this->aggregations = $this->createBuilderBag();
         }
 
         $this->aggregations->add($abstractAggregation);
-        
+
         return $this;
     }
 
-    /**
-     * Returns all sub aggregations.
-     *
-     * @return BuilderBag[]|NamedBuilderInterface[]
-     */
-    public function getAggregations()
+    public function getAggregations(): array
     {
         if ($this->aggregations) {
             return $this->aggregations->all();
-        } else {
-            return [];
         }
+
+        return [];
     }
 
-    /**
-     * Returns sub aggregation.
-     * @param string $name Aggregation name to return.
-     *
-     * @return AbstractAggregation|NamedBuilderInterface|null
-     */
-    public function getAggregation($name)
+    public function getAggregation(string $name): AbstractAggregation|BuilderInterface|null
     {
         if ($this->aggregations && $this->aggregations->has($name)) {
             return $this->aggregations->get($name);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $array = $this->getArray();
         $result = [
@@ -144,12 +101,7 @@ abstract class AbstractAggregation implements NamedBuilderInterface
         return $result;
     }
 
-    /**
-     * Process all nested aggregations.
-     *
-     * @return array
-     */
-    protected function collectNestedAggregations()
+    protected function collectNestedAggregations(): array
     {
         $result = [];
         /** @var AbstractAggregation $aggregation */
@@ -160,12 +112,7 @@ abstract class AbstractAggregation implements NamedBuilderInterface
         return $result;
     }
 
-    /**
-     * Creates BuilderBag new instance.
-     *
-     * @return BuilderBag
-     */
-    private function createBuilderBag()
+    private function createBuilderBag(): BuilderBag
     {
         return new BuilderBag();
     }

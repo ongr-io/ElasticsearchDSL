@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\ParametersTrait;
@@ -22,40 +24,20 @@ class SpanNotQuery implements SpanQueryInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var SpanQueryInterface
-     */
-    private $include;
-
-    /**
-     * @var SpanQueryInterface
-     */
-    private $exclude;
-
-    /**
-     * @param SpanQueryInterface $include
-     * @param SpanQueryInterface $exclude
-     * @param array              $parameters
-     */
-    public function __construct(SpanQueryInterface $include, SpanQueryInterface $exclude, array $parameters = [])
-    {
-        $this->include = $include;
-        $this->exclude = $exclude;
+    public function __construct(
+        private SpanQueryInterface $include,
+        private SpanQueryInterface $exclude,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'span_not';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'include' => $this->include->toArray(),

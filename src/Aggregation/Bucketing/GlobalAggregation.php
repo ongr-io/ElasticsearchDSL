@@ -9,10 +9,13 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Type\BucketingTrait;
+use stdClass;
 
 /**
  * Class representing GlobalAggregation.
@@ -23,27 +26,18 @@ class GlobalAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setField($field)
+    public function setField(?string $field): static
     {
         throw new \LogicException("Global aggregation, doesn't support `field` parameter");
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'global';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): stdClass
     {
-        return new \stdClass();
+        return new stdClass();
     }
 }

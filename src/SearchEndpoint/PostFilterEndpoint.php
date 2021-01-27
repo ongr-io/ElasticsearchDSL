@@ -9,24 +9,17 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * Search post filter dsl endpoint.
- */
 class PostFilterEndpoint extends QueryEndpoint
 {
-    /**
-     * Endpoint name
-     */
-    const NAME = 'post_filter';
+    public const NAME = 'post_filter';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
     {
         if (!$this->getBool()) {
             return null;
@@ -35,10 +28,7 @@ class PostFilterEndpoint extends QueryEndpoint
         return $this->getBool()->toArray();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }

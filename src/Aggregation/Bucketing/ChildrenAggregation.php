@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,56 +25,31 @@ class ChildrenAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var string
-     */
-    private $children;
-
-    /**
-     * Return children.
-     *
-     * @return string
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * @param string $name
-     * @param string $children
-     */
-    public function __construct($name, $children = null)
+    public function __construct(private string $name, private ?string $children = null)
     {
         parent::__construct($name);
 
         $this->setChildren($children);
     }
 
-    /**
-     * @param string $children
-     *
-     * @return $this
-     */
-    public function setChildren($children)
+    public function getChildren(): ?string
+    {
+        return $this->children;
+    }
+
+    public function setChildren(?string $children): static
     {
         $this->children = $children;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'children';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         if (count($this->getAggregations()) == 0) {
             throw new \LogicException("Children aggregation `{$this->getName()}` has no aggregations added");

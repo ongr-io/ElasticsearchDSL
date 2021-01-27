@@ -9,13 +9,12 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
-/**
- * Interface SpanQueryInterface to recognise span queries.
- */
 interface SpanQueryInterface extends BuilderInterface
 {
 }

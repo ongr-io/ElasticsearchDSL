@@ -9,24 +9,17 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * Search sort dsl endpoint.
- */
 class SortEndpoint extends AbstractSearchEndpoint
 {
-    /**
-     * Endpoint name
-     */
-    const NAME = 'sort';
+    public const NAME = 'sort';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
     {
         $output = [];
 

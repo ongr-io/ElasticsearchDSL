@@ -9,20 +9,19 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Serializer;
 
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\OrderedNormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 
-/**
- * Custom serializer which orders data before normalization.
- */
 class OrderedSerializer extends Serializer
 {
     /**
      * {@inheritdoc}
      */
-    public function normalize($data, $format = null, array $context = [])
+    public function normalize(mixed $data, string $format = null, array $context = []): mixed
     {
         return parent::normalize(
             is_array($data) ? $this->order($data) : $data,
@@ -31,10 +30,7 @@ class OrderedSerializer extends Serializer
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
     {
         return parent::denormalize(
             is_array($data) ? $this->order($data) : $data,
@@ -44,14 +40,7 @@ class OrderedSerializer extends Serializer
         );
     }
 
-    /**
-     * Orders objects if can be done.
-     *
-     * @param array $data Data to order.
-     *
-     * @return array
-     */
-    private function order(array $data)
+    private function order(array $data): array
     {
         $filteredData = $this->filterOrderable($data);
 
@@ -69,14 +58,7 @@ class OrderedSerializer extends Serializer
         return $data;
     }
 
-    /**
-     * Filters out data which can be ordered.
-     *
-     * @param array $array Data to filter out.
-     *
-     * @return array
-     */
-    private function filterOrderable($array)
+    private function filterOrderable(array $array): array
     {
         return array_filter(
             $array,
