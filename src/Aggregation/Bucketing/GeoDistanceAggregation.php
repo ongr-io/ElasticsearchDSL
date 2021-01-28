@@ -27,7 +27,7 @@ class GeoDistanceAggregation extends AbstractAggregation
 
     private mixed $origin;
 
-    private $ranges = [];
+    private array $ranges = [];
 
     public function __construct(
         private string $name,
