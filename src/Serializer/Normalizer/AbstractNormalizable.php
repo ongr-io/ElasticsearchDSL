@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Serializer\Normalizer;
 
 use ONGR\ElasticsearchDSL\ParametersTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
-/**
- * Custom abstract normalizer which can save references for other objects.
- */
 abstract class AbstractNormalizable implements NormalizableInterface
 {
     use ParametersTrait {

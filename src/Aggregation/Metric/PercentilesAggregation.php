@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,29 +25,18 @@ use ONGR\ElasticsearchDSL\ScriptAwareTrait;
 class PercentilesAggregation extends AbstractAggregation
 {
     use MetricTrait;
+
     use ScriptAwareTrait;
 
-    /**
-     * @var array
-     */
-    private $percents;
+    private ?int $compression = null;
 
-    /**
-     * @var int
-     */
-    private $compression;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param array  $percents
-     * @param string $script
-     * @param int    $compression
-     */
-    public function __construct($name, $field = null, $percents = null, $script = null, $compression = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        private ?array $percents = null,
+        ?string $script = null,
+        ?int $compression = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
@@ -54,58 +45,36 @@ class PercentilesAggregation extends AbstractAggregation
         $this->setCompression($compression);
     }
 
-    /**
-     * @return array
-     */
-    public function getPercents()
+    public function getPercents(): ?array
     {
         return $this->percents;
     }
 
-    /**
-     * @param array $percents
-     *
-     * @return $this
-     */
-    public function setPercents($percents)
+    public function setPercents(?array $percents): static
     {
         $this->percents = $percents;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getCompression()
+    public function getCompression(): ?int
     {
         return $this->compression;
     }
 
-    /**
-     * @param int $compression
-     *
-     * @return $this
-     */
-    public function setCompression($compression)
+    public function setCompression(?int $compression): static
     {
         $this->compression = $compression;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'percentiles';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $out = array_filter(
             [
@@ -114,9 +83,7 @@ class PercentilesAggregation extends AbstractAggregation
                 'field' => $this->getField(),
                 'script' => $this->getScript(),
             ],
-            function ($val) {
-                return ($val || is_numeric($val));
-            }
+            fn(mixed $val): bool => $val || is_numeric($val)
         );
 
         $this->isRequiredParametersSet($out);
@@ -124,12 +91,7 @@ class PercentilesAggregation extends AbstractAggregation
         return $out;
     }
 
-    /**
-     * @param array $a
-     *
-     * @throws \LogicException
-     */
-    private function isRequiredParametersSet($a)
+    private function isRequiredParametersSet(array $a): void
     {
         if (!array_key_exists('field', $a) && !array_key_exists('script', $a)) {
             throw new \LogicException('Percentiles aggregation must have field or script set.');

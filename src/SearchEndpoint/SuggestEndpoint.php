@@ -9,29 +9,21 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\Suggest\TermSuggest;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * Search suggest dsl endpoint.
- */
 class SuggestEndpoint extends AbstractSearchEndpoint
 {
-    /**
-     * Endpoint name
-     */
     const NAME = 'suggest';
 
-    /**
-     * {@inheritdoc}
-     */
     public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
     {
         $output = [];
         if (count($this->getAll()) > 0) {
-            /** @var TermSuggest $suggest */
             foreach ($this->getAll() as $suggest) {
                 $output = array_merge($output, $suggest->toArray());
             }

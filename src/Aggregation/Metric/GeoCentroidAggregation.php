@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,38 +25,27 @@ class GeoCentroidAggregation extends AbstractAggregation
 {
     use MetricTrait;
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     */
-    public function __construct($name, $field = null)
+    public function __construct(string $name, ?string $field = null)
     {
         parent::__construct($name);
 
         $this->setField($field);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $data = [];
+
         if ($this->getField()) {
             $data['field'] = $this->getField();
-        } else {
-            throw new \LogicException('Geo centroid aggregation must have a field set.');
+
+            return $data;
         }
 
-        return $data;
+        throw new \LogicException('Geo centroid aggregation must have a field set.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'geo_centroid';
     }

@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ONGR package.
- *
- * (c) NFQ Technologies UAB <info@nfq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +14,20 @@ class RegexpQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string Field to be queried.
-     */
-    private $field;
-
-    /**
-     * @var string The actual regexp value to be used.
-     */
-    private $regexpValue;
-
-    /**
-     * @param string $field
-     * @param string $regexpValue
-     * @param array  $parameters
-     */
-    public function __construct($field, $regexpValue, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->regexpValue = $regexpValue;
+    public function __construct(
+        private string $field,
+        private string $regexpValue,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'regexp';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'value' => $this->regexpValue,

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Specialized;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,33 +25,17 @@ class ScriptQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $script;
-
-    /**
-     * @param string $script     Script
-     * @param array  $parameters Optional parameters
-     */
-    public function __construct($script, array $parameters = [])
+    public function __construct(private string $script, array $parameters = [])
     {
-        $this->script = $script;
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'script';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = ['inline' => $this->script];
         $output = $this->processArray($query);

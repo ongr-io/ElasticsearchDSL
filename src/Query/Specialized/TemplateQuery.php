@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ONGR package.
- *
- * (c) NFQ Technologies UAB <info@nfq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ONGR\ElasticsearchDSL\Query\Specialized;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,105 +14,58 @@ class TemplateQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $file;
-
-    /**
-     * @var string
-     */
-    private $inline;
-
-    /**
-     * @var array
-     */
-    private $params;
-
-    /**
-     * @param string $file A template of the query
-     * @param string $inline A template of the query
-     * @param array  $params Parameters to insert into template
-     */
-    public function __construct($file = null, $inline = null, array $params = [])
-    {
+    public function __construct(
+        private ?string $file = null,
+        private ?string $inline = null,
+        private array $params = []
+    ) {
         $this->setFile($file);
         $this->setInline($inline);
         $this->setParams($params);
     }
 
-    /**
-     * @return string
-     */
-    public function getFile()
+    public function getFile(): ?string
     {
         return $this->file;
     }
 
-    /**
-     * @param string $file
-     *
-     * @return $this;
-     */
-    public function setFile($file)
+    public function setFile(?string $file): static
     {
         $this->file = $file;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getInline()
+    public function getInline(): ?string
     {
         return $this->inline;
     }
 
-    /**
-     * @param string $inline
-     *
-     * @return $this
-     */
-    public function setInline($inline)
+    public function setInline(?string $inline): static
     {
         $this->inline = $inline;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    /**
-     * @param array $params
-     *
-     * @return $this
-     */
-    public function setParams($params)
+    public function setParams(array $params): static
     {
         $this->params = $params;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'template';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $output = array_filter(
             [

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -24,25 +26,15 @@ class FiltersAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var BuilderInterface[]
-     */
-    private $filters = [];
+    private array $filters = [];
 
-    /**
-     * @var bool
-     */
-    private $anonymous = false;
+    private bool $anonymous = false;
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string             $name
-     * @param BuilderInterface[] $filters
-     * @param bool               $anonymous
-     */
-    public function __construct($name, $filters = [], $anonymous = false)
-    {
+    public function __construct(
+        string $name,
+        ?array $filters = [],
+         bool $anonymous = false
+    ) {
         parent::__construct($name);
 
         $this->setAnonymous($anonymous);
@@ -55,27 +47,14 @@ class FiltersAggregation extends AbstractAggregation
         }
     }
 
-    /**
-     * @param bool $anonymous
-     *
-     * @return $this
-     */
-    public function setAnonymous($anonymous)
+    public function setAnonymous(bool $anonymous): static
     {
         $this->anonymous = $anonymous;
 
         return $this;
     }
 
-    /**
-     * @param BuilderInterface $filter
-     * @param string           $name
-     *
-     * @throws \LogicException
-     *
-     * @return FiltersAggregation
-     */
-    public function addFilter(BuilderInterface $filter, $name = '')
+    public function addFilter(?BuilderInterface $filter = null, string $name = ''): static
     {
         if ($this->anonymous === false && empty($name)) {
             throw new \LogicException('In not anonymous filters filter name must be set.');
@@ -88,18 +67,12 @@ class FiltersAggregation extends AbstractAggregation
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): ?array
     {
         return $this->filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'filters';
     }

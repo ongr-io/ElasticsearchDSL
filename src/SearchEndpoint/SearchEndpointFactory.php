@@ -9,11 +9,10 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
-/**
- * Factory for search endpoints.
- */
 class SearchEndpointFactory
 {
     /**
@@ -29,16 +28,7 @@ class SearchEndpointFactory
         'inner_hits' => 'ONGR\ElasticsearchDSL\SearchEndpoint\InnerHitsEndpoint',
     ];
 
-    /**
-     * Returns a search endpoint instance.
-     *
-     * @param string $type Type of endpoint.
-     *
-     * @return SearchEndpointInterface
-     *
-     * @throws \RuntimeException Endpoint does not exist.
-     */
-    public static function get($type)
+    public static function get(string $type): SearchEndpointInterface
     {
         if (!array_key_exists($type, self::$endpoints)) {
             throw new \RuntimeException('Endpoint does not exist.');

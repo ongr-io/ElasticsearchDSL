@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -24,60 +26,31 @@ class FilterAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var BuilderInterface
-     */
-    protected $filter;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string           $name
-     * @param BuilderInterface $filter
-     */
-    public function __construct($name, BuilderInterface $filter = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?BuilderInterface $filter = null
+    ) {
         parent::__construct($name);
-
-        if ($filter !== null) {
-            $this->setFilter($filter);
-        }
     }
 
-    /**
-     * @param BuilderInterface $filter
-     *
-     * @return $this
-     */
-    public function setFilter(BuilderInterface $filter)
+    public function setFilter(BuilderInterface $filter): static
     {
         $this->filter = $filter;
 
         return $this;
     }
 
-    /**
-     * Returns a filter.
-     *
-     * @return BuilderInterface
-     */
-    public function getFilter()
+    public function getFilter(): BuilderInterface
     {
         return $this->filter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setField($field)
+    public function setField($field): static
     {
         throw new \LogicException("Filter aggregation, doesn't support `field` parameter");
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         if (!$this->filter) {
             throw new \LogicException("Filter aggregation `{$this->getName()}` has no filter added");
@@ -86,10 +59,7 @@ class FilterAggregation extends AbstractAggregation
         return $this->getFilter()->toArray();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'filter';
     }

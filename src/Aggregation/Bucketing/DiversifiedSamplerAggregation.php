@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,67 +25,38 @@ class DiversifiedSamplerAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * Defines how many results will be received from each shard
-     * @param integer $shardSize
-     */
-    private $shardSize;
-
-    /**
-     * DiversifiedSamplerAggregation constructor.
-     *
-     * @param string $name Aggregation name
-     * @param string $field Elasticsearch field name
-     * @param int $shardSize Shard size, by default it's 100
-     */
-    public function __construct($name, $field = null, $shardSize = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        private ?int $shardSize = null
+    ) {
         parent::__construct($name);
-
-        $this->setField($field);
-        $this->setShardSize($shardSize);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getShardSize()
+    public function getShardSize(): int
     {
         return $this->shardSize;
     }
 
-    /**
-     * @param mixed $shardSize
-     *
-     * @return $this
-     */
-    public function setShardSize($shardSize)
+    public function setShardSize(int $shardSize): static
     {
         $this->shardSize = $shardSize;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'diversified_sampler';
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getArray()
+    protected function getArray(): array
     {
-        $out = array_filter(
+        return array_filter(
             [
                 'field' => $this->getField(),
                 'shard_size' => $this->getShardSize(),
             ]
         );
-
-        return $out;
     }
 }

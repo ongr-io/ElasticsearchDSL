@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,22 +25,17 @@ use ONGR\ElasticsearchDSL\ScriptAwareTrait;
 class CardinalityAggregation extends AbstractAggregation
 {
     use MetricTrait;
+
     use ScriptAwareTrait;
 
-    /**
-     * @var int
-     */
-    private $precisionThreshold;
+    private ?int $precisionThreshold = null;
 
-    /**
-     * @var bool
-     */
-    private $rehash;
+    private ?bool $rehash = null;
 
     /**
      * {@inheritdoc}
      */
-    public function getArray()
+    public function getArray(): array
     {
         $out = array_filter(
             [
@@ -47,9 +44,7 @@ class CardinalityAggregation extends AbstractAggregation
                 'precision_threshold' => $this->getPrecisionThreshold(),
                 'rehash' => $this->isRehash(),
             ],
-            function ($val) {
-                return ($val || is_bool($val));
-            }
+            fn(mixed $val): bool => $val || is_bool($val)
         );
 
         $this->checkRequiredFields($out);
@@ -57,62 +52,36 @@ class CardinalityAggregation extends AbstractAggregation
         return $out;
     }
 
-    /**
-     * @param int $precision
-     *
-     * @return $this
-     */
-    public function setPrecisionThreshold($precision)
+    public function setPrecisionThreshold(?int $precision): static
     {
         $this->precisionThreshold = $precision;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPrecisionThreshold()
+    public function getPrecisionThreshold(): ?int
     {
         return $this->precisionThreshold;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRehash()
+    public function isRehash(): ?bool
     {
         return $this->rehash;
     }
 
-    /**
-     * @param bool $rehash
-     *
-     * @return $this
-     */
-    public function setRehash($rehash)
+    public function setRehash(?bool $rehash): static
     {
         $this->rehash = $rehash;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'cardinality';
     }
 
-    /**
-     * Checks if required fields are set.
-     *
-     * @param array $fields
-     *
-     * @throws \LogicException
-     */
-    private function checkRequiredFields($fields)
+    private function checkRequiredFields(array $fields): void
     {
         if (!array_key_exists('field', $fields) && !array_key_exists('script', $fields)) {
             throw new \LogicException('Cardinality aggregation must have field or script set.');

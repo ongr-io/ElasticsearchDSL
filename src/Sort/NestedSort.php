@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Sort;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,51 +25,25 @@ class NestedSort implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private ?BuilderInterface $nestedFilter = null;
 
-    /**
-     * @var BuilderInterface
-     */
-    private $filter;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $nestedFilter;
-
-    /**
-     * @param string $path
-     * @param BuilderInterface $filter
-     * @param array $parameters
-     */
     public function __construct(
-        $path,
-        BuilderInterface $filter = null,
+        private string $path,
+        private ?BuilderInterface $filter = null,
         array $parameters = []
     ) {
-        $this->path = $path;
-        $this->filter = $filter;
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'nested';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $output = [
-            'path'   => $this->path,
+            'path' => $this->path,
         ];
 
         if ($this->filter) {
@@ -81,40 +57,22 @@ class NestedSort implements BuilderInterface
         return $this->processArray($output);
     }
 
-    /**
-     * Returns nested filter object.
-     *
-     * @return BuilderInterface
-     */
-    public function getFilter()
+    public function getFilter(): ?BuilderInterface
     {
         return $this->filter;
     }
 
-    /**
-     * Returns path this filter is set for.
-     *
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @return BuilderInterface
-     */
-    public function getNestedFilter()
+    public function getNestedFilter(): ?BuilderInterface
     {
         return $this->nestedFilter;
     }
 
-    /**
-     * @param BuilderInterface $nestedFilter
-     *
-     * @return $this
-     */
-    public function setNestedFilter(BuilderInterface $nestedFilter)
+    public function setNestedFilter(?BuilderInterface $nestedFilter): static
     {
         $this->nestedFilter = $nestedFilter;
 

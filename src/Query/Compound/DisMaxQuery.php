@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Compound;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,47 +25,26 @@ class DisMaxQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var BuilderInterface[]
-     */
-    private $queries = [];
+    private array $queries = [];
 
-    /**
-     * Initializes Dis Max query.
-     *
-     * @param array $parameters
-     */
     public function __construct(array $parameters = [])
     {
         $this->setParameters($parameters);
     }
 
-    /**
-     * Add query.
-     *
-     * @param BuilderInterface $query
-     *
-     * @return DisMaxQuery
-     */
-    public function addQuery(BuilderInterface $query)
+    public function addQuery(BuilderInterface $query): static
     {
         $this->queries[] = $query;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'dis_max';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [];
         foreach ($this->queries as $type) {

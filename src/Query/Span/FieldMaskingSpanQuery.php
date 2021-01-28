@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\ParametersTrait;
@@ -22,70 +24,39 @@ class FieldMaskingSpanQuery implements SpanQueryInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var SpanQueryInterface
-     */
-    private $query;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @param string             $field
-     * @param SpanQueryInterface $query
-     */
-    public function __construct($field, SpanQueryInterface $query)
-    {
+    public function __construct(
+        private string $field,
+        private SpanQueryInterface $query
+    ) {
         $this->setQuery($query);
         $this->setField($field);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQuery()
+    public function getQuery(): SpanQueryInterface
     {
         return $this->query;
     }
 
-    /**
-     * @param mixed $query
-     *
-     * @return $this
-     */
-    public function setQuery($query)
+    public function setQuery(SpanQueryInterface $query): static
     {
         $this->query = $query;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getField()
+    public function getField(): string
     {
         return $this->field;
     }
 
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setField($field)
+    public function setField(string $field): static
     {
         $this->field = $field;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $output = [
             'query' => $this->getQuery()->toArray(),
@@ -97,10 +68,7 @@ class FieldMaskingSpanQuery implements SpanQueryInterface
         return [$this->getType() => $output];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'field_masking_span';
     }

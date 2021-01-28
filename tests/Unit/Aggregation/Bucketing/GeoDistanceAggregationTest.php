@@ -9,56 +9,45 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GeoDistanceAggregation;
 
 class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test if exception is thrown when field is not set.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Geo distance aggregation must have a field set.
-     */
-    public function testGeoDistanceAggregationExceptionWhenFieldIsNotSet()
+    public function testGeoDistanceAggregationExceptionWhenFieldIsNotSet(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Geo distance aggregation must have a field set.');
+
         $agg = new GeoDistanceAggregation('test_agg');
         $agg->setOrigin('50, 70');
         $agg->getArray();
     }
 
-    /**
-     * Test if exception is thrown when origin is not set.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Geo distance aggregation must have an origin set.
-     */
-    public function testGeoDistanceAggregationExceptionWhenOriginIsNotSet()
+    public function testGeoDistanceAggregationExceptionWhenOriginIsNotSet(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Geo distance aggregation must have an origin set.');
+
         $agg = new GeoDistanceAggregation('test_agg');
         $agg->setField('location');
         $agg->getArray();
     }
 
-    /**
-     * Test if exception is thrown when field is not set.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Either from or to must be set. Both cannot be null.
-     */
-    public function testGeoDistanceAggregationAddRangeException()
+    public function testGeoDistanceAggregationAddRangeException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Either from or to must be set. Both cannot be null.');
+
         $agg = new GeoDistanceAggregation('test_agg');
         $agg->addRange();
     }
 
-    /**
-     * Data provider for testGeoDistanceAggregationGetArray().
-     *
-     * @return array
-     */
-    public function testGeoDistanceAggregationGetArrayDataProvider()
+    public function geoDistanceAggregationGetArrayDataProvider(): array
     {
         $out = [];
         $filterData = [
@@ -88,9 +77,9 @@ class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
      * @param array $filterData
      * @param array $expected
      *
-     * @dataProvider testGeoDistanceAggregationGetArrayDataProvider
+     * @dataProvider geoDistanceAggregationGetArrayDataProvider
      */
-    public function testGeoDistanceAggregationGetArray($filterData, $expected)
+    public function testGeoDistanceAggregationGetArray($filterData, $expected): void
     {
         $aggregation = new GeoDistanceAggregation('foo');
         $aggregation->setOrigin($filterData['origin']);
@@ -106,7 +95,7 @@ class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Tests getType method.
      */
-    public function testGeoDistanceAggregationGetType()
+    public function testGeoDistanceAggregationGetType(): void
     {
         $aggregation = new GeoDistanceAggregation('foo');
         $result = $aggregation->getType();
@@ -116,7 +105,7 @@ class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Tests if parameters can be passed to constructor.
      */
-    public function testConstructorFilter()
+    public function testConstructorFilter(): void
     {
         $aggregation = new GeoDistanceAggregation(
             'test',

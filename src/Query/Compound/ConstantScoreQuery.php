@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Compound;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,33 +25,19 @@ class ConstantScoreQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     */
-    public function __construct(BuilderInterface $query, array $parameters = [])
-    {
-        $this->query = $query;
+    public function __construct(
+        private BuilderInterface $query,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'constant_score';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'filter' => $this->query->toArray(),

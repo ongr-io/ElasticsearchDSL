@@ -9,31 +9,30 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\SearchEndpoint\AggregationsEndpoint;
 use ONGR\ElasticsearchDSL\SearchEndpoint\SearchEndpointFactory;
+use RuntimeException;
 
 /**
  * Unit test class for search endpoint factory.
  */
 class SearchEndpointFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Tests get method exception.
-     *
-     * @expectedException \RuntimeException
-     */
-    public function testGet()
+    public function testGet(): void
     {
+        $this->expectException(RuntimeException::class);
+
         SearchEndpointFactory::get('foo');
     }
 
-    /**
-     * Tests if factory can create endpoint.
-     */
-    public function testFactory()
+    public function testFactory(): void
     {
-        SearchEndpointFactory::get(AggregationsEndpoint::NAME);
+        $searchEndpoint = SearchEndpointFactory::get(AggregationsEndpoint::NAME);
+
+        $this->assertInstanceOf(AggregationsEndpoint::class, $searchEndpoint);
     }
 }

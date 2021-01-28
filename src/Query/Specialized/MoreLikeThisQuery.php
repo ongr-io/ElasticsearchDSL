@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Specialized;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,33 +25,19 @@ class MoreLikeThisQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string The text to find documents like it, required if ids or docs are not specified.
-     */
-    private $like;
-
-    /**
-     * @param string $like
-     * @param array  $parameters
-     */
-    public function __construct($like, array $parameters = [])
-    {
-        $this->like = $like;
+    public function __construct(
+        private string $like,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'more_like_this';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [];
 

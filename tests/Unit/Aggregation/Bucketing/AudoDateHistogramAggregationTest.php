@@ -16,12 +16,8 @@ use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
 
 class AudoDateHistogramAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Tests agg.
-     */
-    public function testAutoDateHistogramAggregationSetField()
+    public function testAutoDateHistogramAggregationSetField(): void
     {
-        // Case #0 terms aggregation.
         $aggregation = new AutoDateHistogramAggregation('test_agg', 'test_field');
 
         $result = [

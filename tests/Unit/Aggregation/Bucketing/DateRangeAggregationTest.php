@@ -11,30 +11,24 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\DateRangeAggregation;
 
 class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test if exception is thrown.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Date range aggregation must have field, format set and range added.
-     */
-    public function testIfExceptionIsThrownWhenNoParametersAreSet()
+    public function testIfExceptionIsThrownWhenNoParametersAreSet(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Date range aggregation must have field, format set and range added.');
+
         $agg = new DateRangeAggregation('test_agg');
         $agg->getArray();
     }
 
-    /**
-     * Test if exception is thrown when both range parameters are null.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Either from or to must be set. Both cannot be null.
-     */
     public function testIfExceptionIsThrownWhenBothRangesAreNull()
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Either from or to must be set. Both cannot be null.');
         $agg = new DateRangeAggregation('test_agg');
         $agg->addRange(null, null);
     }
@@ -73,7 +67,7 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function testDateRangeAggregationConstructorProvider()
+    public function dateRangeAggregationConstructorProvider()
     {
         return [
             // Case #0. Minimum arguments.
@@ -112,7 +106,7 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
      * @param string $format
      * @param array  $ranges
      *
-     * @dataProvider testDateRangeAggregationConstructorProvider
+     * @dataProvider dateRangeAggregationConstructorProvider
      */
     public function testDateRangeAggregationConstructor($field = null, $format = null, array $ranges = null)
     {

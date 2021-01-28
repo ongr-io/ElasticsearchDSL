@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,104 +25,53 @@ class GeoHashGridAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var int
-     */
-    private $precision;
-
-    /**
-     * @var int
-     */
-    private $size;
-
-    /**
-     * @var int
-     */
-    private $shardSize;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param int    $precision
-     * @param int    $size
-     * @param int    $shardSize
-     */
-    public function __construct($name, $field = null, $precision = null, $size = null, $shardSize = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?string $field = null,
+        private ?int $precision = null,
+        private ?int $size = null,
+        private ?int $shardSize = null
+    ) {
         parent::__construct($name);
-
-        $this->setField($field);
-        $this->setPrecision($precision);
-        $this->setSize($size);
-        $this->setShardSize($shardSize);
     }
 
-    /**
-     * @return int
-     */
-    public function getPrecision()
+    public function getPrecision(): ?int
     {
         return $this->precision;
     }
 
-    /**
-     * @param int $precision
-     *
-     * @return $this
-     */
-    public function setPrecision($precision)
+    public function setPrecision(?int $precision): static
     {
         $this->precision = $precision;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
-    /**
-     * @param int $size
-     *
-     * @return $this
-     */
-    public function setSize($size)
+    public function setSize(?int $size): static
     {
         $this->size = $size;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getShardSize()
+    public function getShardSize(): ?int
     {
         return $this->shardSize;
     }
 
-    /**
-     * @param int $shardSize
-     *
-     * @return $this
-     */
-    public function setShardSize($shardSize)
+    public function setShardSize(?int $shardSize): static
     {
         $this->shardSize = $shardSize;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $data = [];
 
@@ -145,10 +96,7 @@ class GeoHashGridAggregation extends AbstractAggregation
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'geohash_grid';
     }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Joining;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +25,20 @@ class HasParentQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $parentType;
-
-    /**
-     * @var BuilderInterface
-     */
-    private $query;
-
-    /**
-     * @param string           $parentType
-     * @param BuilderInterface $query
-     * @param array            $parameters
-     */
-    public function __construct($parentType, BuilderInterface $query, array $parameters = [])
-    {
-        $this->parentType = $parentType;
-        $this->query = $query;
+    public function __construct(
+        private string $parentType,
+        private BuilderInterface $query,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'has_parent';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'parent_type' => $this->parentType,

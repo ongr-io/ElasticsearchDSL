@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoCentroidAggregation;
 
 /**
@@ -18,30 +21,21 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoCentroidAggregation;
  */
 class GeoCentroidAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test if exception is thrown when field is not provided
-     *
-     * @expectedException \LogicException
-     */
-    public function testGetArrayException()
+    public function testGetArrayException(): void
     {
+        $this->expectException(LogicException::class);
+
         $aggregation = new GeoCentroidAggregation('foo');
         $aggregation->getArray();
     }
 
-    /**
-     * Tests getType method.
-     */
-    public function testGeoCentroidAggregationGetType()
+    public function testGeoCentroidAggregationGetType(): void
     {
         $aggregation = new GeoCentroidAggregation('foo');
         $this->assertEquals('geo_centroid', $aggregation->getType());
     }
 
-    /**
-     * Tests getArray method.
-     */
-    public function testGeoCentroidAggregationGetArray()
+    public function testGeoCentroidAggregationGetArray(): void
     {
         $aggregation = new GeoCentroidAggregation('foo', 'location');
         $this->assertEquals(['field' => 'location'], $aggregation->getArray());
