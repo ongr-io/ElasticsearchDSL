@@ -25,10 +25,12 @@ class Ipv4RangeAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
+    private array $ranges = [];
+
     public function __construct(
         private string $name,
         private ?string $field = null,
-        private array $ranges = []
+        array $ranges = []
     ) {
         parent::__construct($name);
 

@@ -34,7 +34,6 @@ class MatrixStatsAggregation extends AbstractAggregation
         parent::__construct($name);
 
         $this->setField($field);
-        $this->setMode($mode);
     }
 
     public function getMode(): string

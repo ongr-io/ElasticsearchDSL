@@ -28,6 +28,8 @@ class PercentilesAggregation extends AbstractAggregation
 
     use ScriptAwareTrait;
 
+    private ?int $compression = null;
+
     public function __construct(
         private string $name,
         private ?string $field = null,

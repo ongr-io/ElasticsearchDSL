@@ -17,7 +17,7 @@ use stdClass;
 
 interface BuilderInterface
 {
-    public function toArray():  array | stdClass;
+    public function toArray():  array | stdClass | null;
 
     public function getType(): string;
 }

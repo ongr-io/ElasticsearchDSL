@@ -28,6 +28,8 @@ class PercentileRanksAggregation extends AbstractAggregation
 
     use ScriptAwareTrait;
 
+    private ?int $compression = null;
+
     public function __construct(
         private string $name,
         private ?string $field = null,
@@ -89,12 +91,12 @@ class PercentileRanksAggregation extends AbstractAggregation
         return $out;
     }
 
-    private function isRequiredParametersSet(array $a): void
+    private function isRequiredParametersSet(array $a): bool
     {
         if (array_key_exists('field', $a) && array_key_exists('values', $a)
             || (array_key_exists('script', $a) && array_key_exists('values', $a))
         ) {
-            return;
+            return true;
         }
         throw new \LogicException('Percentile ranks aggregation must have field and values or script and values set.');
     }

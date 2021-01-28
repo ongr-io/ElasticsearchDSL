@@ -28,10 +28,14 @@ class BoolQuery implements BuilderInterface
     public const MUST = 'must';
 
     public const MUST_NOT = 'must_not';
+
     public const SHOULD = 'should';
+
     public const FILTER = 'filter';
 
-    public function __construct(private array $container = [])
+    private array $container = [];
+
+    public function __construct(array $container = [])
     {
         foreach ($container as $type => $queries) {
             $queries = is_array($queries) ? $queries : [$queries];

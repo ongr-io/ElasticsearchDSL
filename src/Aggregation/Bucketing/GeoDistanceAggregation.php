@@ -25,16 +25,17 @@ class GeoDistanceAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * Inner aggregations container init.
-     */
+    private mixed $origin;
+
+    private $ranges = [];
+
     public function __construct(
-        protected string $name,
-        protected ?string $field = null,
-        protected ?string $origin = null,
-        protected array $ranges = [],
-        protected ?string $unit = null,
-        protected ?string $distanceType = null
+        private string $name,
+        ?string $field = null,
+        mixed $origin = null,
+        array $ranges = [],
+        ?string $unit = null,
+        ?string $distanceType = null
     ) {
         parent::__construct($name);
 
@@ -49,12 +50,12 @@ class GeoDistanceAggregation extends AbstractAggregation
         $this->setDistanceType($distanceType);
     }
 
-    public function getOrigin(): ?string
+    public function getOrigin(): mixed
     {
         return $this->origin;
     }
 
-    public function setOrigin(?string $origin): static
+    public function setOrigin(mixed $origin): static
     {
         $this->origin = $origin;
 

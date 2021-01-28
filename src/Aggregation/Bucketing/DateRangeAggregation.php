@@ -25,12 +25,16 @@ class DateRangeAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
+    private array $ranges = [];
+
+    private bool $keyed = false;
+
     public function __construct(
         private string $name,
         private ?string $field = null,
         private ?string $format = null,
-        private array $ranges = [],
-        private bool $keyed = false
+        array $ranges = [],
+        bool $keyed = false
     ) {
         parent::__construct($name);
 

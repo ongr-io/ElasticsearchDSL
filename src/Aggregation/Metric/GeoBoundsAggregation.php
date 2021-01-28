@@ -30,7 +30,6 @@ class GeoBoundsAggregation extends AbstractAggregation
         parent::__construct($name);
 
         $this->setField($field);
-        $this->setWrapLongitude($wrapLongitude);
     }
 
     public function isWrapLongitude(): bool

@@ -128,7 +128,8 @@ class FilterAggregationTest extends \PHPUnit\Framework\TestCase
         $aggregation = new FilterAggregation('test_agg');
 
         $aggregation->setFilter(new ExistsQuery('test'));
-        $aggregation->toArray();
+
+        $this->assertIsArray($aggregation->toArray());
     }
 
     /**

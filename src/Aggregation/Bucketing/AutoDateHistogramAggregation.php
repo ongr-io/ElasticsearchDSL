@@ -27,10 +27,10 @@ class AutoDateHistogramAggregation extends AbstractAggregation
     use BucketingTrait;
 
     public function __construct(
-        private string $name,
-        private string $field,
-        private ?int $buckets = null,
-        private ?string $format = null
+        string $name,
+        string $field,
+        ?int $buckets = null,
+        ?string $format = null
     ) {
         parent::__construct($name);
 

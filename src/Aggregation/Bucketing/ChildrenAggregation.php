@@ -28,8 +28,6 @@ class ChildrenAggregation extends AbstractAggregation
     public function __construct(private string $name, private ?string $children = null)
     {
         parent::__construct($name);
-
-        $this->setChildren($children);
     }
 
     public function getChildren(): ?string

@@ -32,10 +32,6 @@ class DateHistogramAggregation extends AbstractAggregation
         private $format = null
     ) {
         parent::__construct($name);
-
-        $this->setField($field);
-        $this->setInterval($interval);
-        $this->setFormat($format);
     }
 
     public function getInterval(): mixed

@@ -28,8 +28,6 @@ class MissingAggregation extends AbstractAggregation
     public function __construct(private string $name, private ?string $field = null)
     {
         parent::__construct($name);
-
-        $this->setField($field);
     }
 
     public function getArray(): array

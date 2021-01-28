@@ -31,6 +31,8 @@ class HistogramAggregation extends AbstractAggregation
 
     protected array $extendedBounds = [];
 
+    protected ?bool $keyed = null;
+
     public function __construct(
         private string $name,
         private ?string $field = null,
@@ -38,16 +40,13 @@ class HistogramAggregation extends AbstractAggregation
         private ?int $minDocCount = null,
         private ?string $orderMode = null,
         private string $orderDirection = self::DIRECTION_ASC,
-        private ?int $extendedBoundsMin = null,
-        private ?int $extendedBoundsMax = null,
-        private ?bool $keyed = null
+        ?int $extendedBoundsMin = null,
+        ?int $extendedBoundsMax = null,
+        ?bool $keyed = null
     ) {
         parent::__construct($name);
 
         $this->setField($field);
-        $this->setInterval($interval);
-        $this->setMinDocCount($minDocCount);
-        $this->setOrder($orderMode, $orderDirection);
         $this->setExtendedBounds($extendedBoundsMin, $extendedBoundsMax);
         $this->setKeyed($keyed);
     }

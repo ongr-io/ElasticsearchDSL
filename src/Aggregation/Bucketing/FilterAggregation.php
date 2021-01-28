@@ -31,10 +31,6 @@ class FilterAggregation extends AbstractAggregation
         private ?BuilderInterface $filter = null
     ) {
         parent::__construct($name);
-
-        if ($filter !== null) {
-            $this->setFilter($filter);
-        }
     }
 
     public function setFilter(BuilderInterface $filter): static

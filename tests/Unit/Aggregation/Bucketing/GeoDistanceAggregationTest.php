@@ -47,7 +47,7 @@ class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
         $agg->addRange();
     }
 
-    public function testGeoDistanceAggregationGetArrayDataProvider(): array
+    public function geoDistanceAggregationGetArrayDataProvider(): array
     {
         $out = [];
         $filterData = [
@@ -77,7 +77,7 @@ class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
      * @param array $filterData
      * @param array $expected
      *
-     * @dataProvider testGeoDistanceAggregationGetArrayDataProvider
+     * @dataProvider geoDistanceAggregationGetArrayDataProvider
      */
     public function testGeoDistanceAggregationGetArray($filterData, $expected): void
     {

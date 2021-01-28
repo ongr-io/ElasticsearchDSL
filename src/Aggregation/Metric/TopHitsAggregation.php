@@ -89,9 +89,11 @@ class TopHitsAggregation extends AbstractAggregation
 
     public function getArray(): array|stdClass
     {
-        $sortsOutput = [];
+        $sortsOutput = null;
         $addedSorts = array_filter($this->getSorts());
+
         if ($addedSorts) {
+            $sortsOutput = [];
             foreach ($addedSorts as $sort) {
                 $sortsOutput[] = $sort->toArray();
             }
@@ -106,7 +108,7 @@ class TopHitsAggregation extends AbstractAggregation
             fn(mixed $val): bool => (($val || is_array($val) || ($val || is_numeric($val))))
         );
 
-        return $output ?: new stdClass();
+        return $output ?? new stdClass();
     }
 
     public function getSort(): ?BuilderInterface

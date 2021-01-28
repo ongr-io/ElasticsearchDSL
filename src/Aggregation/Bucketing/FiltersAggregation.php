@@ -26,10 +26,14 @@ class FiltersAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
+    private array $filters = [];
+
+    private bool $anonymous = false;
+
     public function __construct(
-        private string $name,
-        private array $filters = [],
-        private bool $anonymous = false
+        string $name,
+        ?array $filters = [],
+         bool $anonymous = false
     ) {
         parent::__construct($name);
 
@@ -63,7 +67,7 @@ class FiltersAggregation extends AbstractAggregation
         return $this;
     }
 
-    public function getArray(): array
+    public function getArray(): ?array
     {
         return $this->filters;
     }

@@ -33,7 +33,6 @@ class SamplerAggregation extends AbstractAggregation
         parent::__construct($name);
 
         $this->setField($field);
-        $this->setShardSize($shardSize);
     }
 
     public function getShardSize(): ?int

@@ -33,11 +33,6 @@ class GeoHashGridAggregation extends AbstractAggregation
         private ?int $shardSize = null
     ) {
         parent::__construct($name);
-
-        $this->setField($field);
-        $this->setPrecision($precision);
-        $this->setSize($size);
-        $this->setShardSize($shardSize);
     }
 
     public function getPrecision(): ?int

@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace ONGR\ElasticsearchDSL\Aggregation;
 
 use ONGR\ElasticsearchDSL\BuilderBag;
@@ -35,7 +33,7 @@ abstract class AbstractAggregation implements NamedBuilderInterface
 
     abstract protected function supportsNesting(): bool;
 
-    abstract protected function getArray(): array | stdClass;
+    abstract protected function getArray(): array|stdClass|null;
 
     public function __construct(string $name)
     {
@@ -65,6 +63,11 @@ abstract class AbstractAggregation implements NamedBuilderInterface
         return $this;
     }
 
+    /**
+     * Returns all sub aggregations.
+     *
+     * @return BuilderBag[]|NamedBuilderInterface[]
+     */
     public function getAggregations(): array
     {
         if ($this->aggregations) {

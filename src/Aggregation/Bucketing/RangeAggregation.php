@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the ONGR package.
  *
@@ -10,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
@@ -25,16 +25,21 @@ class RangeAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
+    private array $ranges = [];
+
+    private bool $keyed = false;
+
     public function __construct(
         private string $name,
         private ?string $field = null,
-        private array $ranges = [],
-        private bool $keyed = false
+        array $ranges = [],
+        bool $keyed = false
     ) {
         parent::__construct($name);
 
         $this->setField($field);
         $this->setKeyed($keyed);
+
         foreach ($ranges as $range) {
             $from = isset($range['from']) ? $range['from'] : null;
             $to = isset($range['to']) ? $range['to'] : null;

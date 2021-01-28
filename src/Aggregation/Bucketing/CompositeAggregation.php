@@ -30,7 +30,9 @@ class CompositeAggregation extends AbstractAggregation
 
     private array $after = [];
 
-    public function __construct(private string $name, private array $sources = [])
+    private array $sources = [];
+
+    public function __construct(private string $name, array $sources = [])
     {
         parent::__construct($name);
 
