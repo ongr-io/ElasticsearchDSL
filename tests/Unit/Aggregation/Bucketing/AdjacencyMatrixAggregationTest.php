@@ -60,7 +60,7 @@ class AdjacencyMatrixAggregationTest extends \PHPUnit\Framework\TestCase
     {
         $aggregation = new AdjacencyMatrixAggregation('test_agg');
         $filter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
-            ->setMethods(['toArray', 'getType'])
+            ->onlyMethods(['toArray', 'getType'])
             ->getMockForAbstractClass();
         $filter->expects($this->any())
             ->method('toArray')
