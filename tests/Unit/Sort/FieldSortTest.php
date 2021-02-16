@@ -19,7 +19,6 @@ class FieldSortTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test for toArray() method.
-     *
      */
     public function testToArray()
     {
