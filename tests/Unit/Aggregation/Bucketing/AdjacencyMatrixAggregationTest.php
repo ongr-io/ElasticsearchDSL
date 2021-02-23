@@ -12,24 +12,24 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\AdjacencyMatrixAggregation;
+use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FiltersAggregation;
 
 /**
  * Unit test for adjacency matrix aggregation.
  */
 class AdjacencyMatrixAggregationTest extends \PHPUnit\Framework\TestCase
 {
-//    /**
-//     * Test if exception is thrown when not anonymous filter is without name.
-//     *
-//     * @expectedException \LogicException
-//     * @expectedExceptionMessage In not anonymous filters filter name must be set.
-//     */
-//    public function testIfExceptionIsThrown()
-//    {
-//        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
-//        $aggregation = new FiltersAggregation('test_agg');
-//        $aggregation->addFilter($mock);
-//    }
+    /**
+     * Test if exception is thrown when not anonymous filter is without name.
+     */
+    public function testIfExceptionIsThrown()
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage("In not anonymous filters filter name must be set.");
+        $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
+        $aggregation = new FiltersAggregation('test_agg');
+        $aggregation->addFilter($mock);
+    }
 
     /**
      * Test GetArray method.
