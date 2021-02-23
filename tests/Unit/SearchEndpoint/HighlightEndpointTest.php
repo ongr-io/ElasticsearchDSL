@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\Highlight\Highlight;
 use ONGR\ElasticsearchDSL\SearchEndpoint\HighlightEndpoint;

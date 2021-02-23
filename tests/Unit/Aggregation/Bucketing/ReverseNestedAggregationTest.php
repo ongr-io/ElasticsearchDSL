@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\ReverseNestedAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\TermsAggregation;
