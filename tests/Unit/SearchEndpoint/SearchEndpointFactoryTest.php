@@ -22,11 +22,10 @@ class SearchEndpointFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests get method exception.
-     *
-     * @expectedException \RuntimeException
      */
     public function testGet()
     {
+        $this->expectException(\RuntimeException::class);
         SearchEndpointFactory::get('foo');
     }
 
