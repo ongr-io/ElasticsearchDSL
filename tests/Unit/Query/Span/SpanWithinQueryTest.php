@@ -12,6 +12,7 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Span;
 
 use ONGR\ElasticsearchDSL\Query\Span\SpanWithinQuery;
+use PHPUnit\Framework\MockObject\MockBuilder;
 
 /**
  * Unit test for SpanWithinQuery.
@@ -43,7 +44,7 @@ class SpanWithinQueryTest extends \PHPUnit\Framework\TestCase
     /**
      * @param string $value
      *
-     * @returns \PHPUnit_Framework_MockObject_MockObject
+     * @returns MockBuilder
      */
     private function getSpanQueryMock($value)
     {

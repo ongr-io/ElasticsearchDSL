@@ -13,8 +13,6 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\PostFilterEndpoint;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * Class PostFilterEndpointTest.
@@ -44,7 +42,6 @@ class PostFilterEndpointTest extends \PHPUnit\Framework\TestCase
     public function testNormalization()
     {
         $instance = new PostFilterEndpoint();
-        /** @var NormalizerInterface|MockObject $normalizerInterface */
         $normalizerInterface = $this->getMockForAbstractClass(
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );

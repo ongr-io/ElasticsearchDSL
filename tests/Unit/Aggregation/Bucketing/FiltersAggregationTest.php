@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FiltersAggregation;
-use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Unit test for filters aggregation.
@@ -94,9 +93,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructorFilter()
     {
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface1 */
         $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface2 */
         $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
 
         $aggregation = new FiltersAggregation(

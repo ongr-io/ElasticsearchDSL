@@ -12,7 +12,6 @@
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\AdjacencyMatrixAggregation;
-use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Unit test for adjacency matrix aggregation.
@@ -95,9 +94,7 @@ class AdjacencyMatrixAggregationTest extends \PHPUnit\Framework\TestCase
      */
     public function testFilterConstructor()
     {
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface1 */
         $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface2 */
         $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
 
         $aggregation = new AdjacencyMatrixAggregation(
