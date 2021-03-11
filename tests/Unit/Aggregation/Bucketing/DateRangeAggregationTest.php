@@ -19,7 +19,7 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
      * Test if exception is thrown.
      *
      * @expectedException \LogicException
-     * @expectedExceptionMessage Date range aggregation must have field, format set and range added.
+     * @expectedExceptionMessage Date range aggregation must have field and range added.
      */
     public function testIfExceptionIsThrownWhenNoParametersAreSet()
     {
