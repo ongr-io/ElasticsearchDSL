@@ -37,4 +37,20 @@ class SearchTest extends \PHPUnit\Framework\TestCase
 
         $this->assertArrayHasKey('scroll', $search->getUriParams());
     }
+
+    public function testTerminateAfterUriParameter()
+    {
+        $search = new Search();
+        $search->setTerminateAfter(500);
+
+        $this->assertEquals(500, $search->toArray()['terminate_after']);
+    }
+
+    public function testTimeoutUriParameter()
+    {
+        $search = new Search();
+        $search->setTimeout('5s');
+
+        $this->assertEquals('5s', $search->toArray()['timeout']);
+    }
 }
