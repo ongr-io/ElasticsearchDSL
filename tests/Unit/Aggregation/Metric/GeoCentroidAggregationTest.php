@@ -20,11 +20,10 @@ class GeoCentroidAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when field is not provided
-     *
-     * @expectedException \LogicException
      */
     public function testGetArrayException()
     {
+        $this->expectException(\LogicException::class);
         $aggregation = new GeoCentroidAggregation('foo');
         $aggregation->getArray();
     }

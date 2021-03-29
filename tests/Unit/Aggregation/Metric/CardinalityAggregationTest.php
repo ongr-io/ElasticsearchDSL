@@ -52,12 +52,11 @@ class CardinalityAggregationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Tests if CardinalityAggregation#getArray throws exception when expected.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Cardinality aggregation must have field or script set.
      */
     public function testGetArrayException()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cardinality aggregation must have field or script set.');
         $aggregation = new CardinalityAggregation('bar');
         $aggregation->getArray();
     }

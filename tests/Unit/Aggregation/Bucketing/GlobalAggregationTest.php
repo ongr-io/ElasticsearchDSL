@@ -74,11 +74,10 @@ class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test for setField method on global aggregation.
-     *
-     * @expectedException \LogicException
      */
     public function testSetField()
     {
+        $this->expectException(\LogicException::class);
         $aggregation = new GlobalAggregation('test_agg');
         $aggregation->setField('test_field');
     }
