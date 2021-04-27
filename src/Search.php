@@ -752,6 +752,7 @@ class Search
             'typed_keys',
             'pre_filter_shard_size',
             'ignore_unavailable',
+            'rest_total_hits_as_int',
         ])) {
             $this->uriParams[$name] = $value;
         } else {
