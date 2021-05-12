@@ -68,6 +68,13 @@ class Search
     private $source;
 
     /**
+     * Allows to selectively load specific source fields for each document represented by a search hit.
+     *
+     * @var array
+     */
+    private $sourceFields;
+
+    /**
      * Allows to selectively load specific stored fields for each document represented by a search hit.
      *
      * @var array
@@ -540,6 +547,26 @@ class Search
     /**
      * @return array
      */
+    public function getSourceFields()
+    {
+        return $this->sourceFields;
+    }
+
+    /**
+     * @param array $sourceFields
+     *
+     * @return $this
+     */
+    public function setSourceFields($sourceFields)
+    {
+        $this->sourceFields = $sourceFields;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
     public function getStoredFields()
     {
         return $this->storedFields;
@@ -792,6 +819,12 @@ class Search
             'searchAfter' => 'search_after',
             'trackTotalHits' => 'track_total_hits',
         ];
+
+        if(!empty($this->sourceFields))
+        {
+            unset($params['source']);
+            $params['sourceFields'] = '_source';
+        }
 
         foreach ($params as $field => $param) {
             if ($this->$field !== null) {
