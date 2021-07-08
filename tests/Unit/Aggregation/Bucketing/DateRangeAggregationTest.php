@@ -21,7 +21,7 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
     public function testIfExceptionIsThrownWhenNoParametersAreSet()
     {
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('Date range aggregation must have field, format set and range added.');
+        $this->expectExceptionMessage('Date range aggregation must have field and range added.');
         $agg = new DateRangeAggregation('test_agg');
         $agg->getArray();
     }
