@@ -90,7 +90,7 @@ class RangeAggregation extends AbstractAggregation
             }
         );
 
-        if (!empty($key)) {
+        if ('' !== $key) {
             $range['key'] = $key;
         }
 
