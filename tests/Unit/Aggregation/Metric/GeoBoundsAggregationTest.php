@@ -20,11 +20,10 @@ class GeoBoundsAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.
-     *
-     * @expectedException \LogicException
      */
     public function testGeoBoundsAggregationException()
     {
+        $this->expectException(\LogicException::class);
         $agg = new GeoBoundsAggregation('test_agg');
         $agg->getArray();
     }
