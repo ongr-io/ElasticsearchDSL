@@ -12,20 +12,31 @@
 namespace ONGR\ElasticsearchDSL\Serializer;
 
 use ONGR\ElasticsearchDSL\Serializer\Normalizer\OrderedNormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerAwareTrait;
 
 /**
  * Custom serializer which orders data before normalization.
  */
-class OrderedSerializer extends Serializer
+class OrderedSerializer implements NormalizerInterface, DenormalizerInterface
 {
+    /**
+     * @param array<NormalizerInterface|DenormalizerInterface> $normalizers
+     */
+    public function __construct(array $normalizers = [])
+    {
+        $this->serializer = new Serializer($normalizers);
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function normalize($data, $format = null, array $context = [])
+    public function normalize($object, string $format = null, array $context = [])
     {
-        return parent::normalize(
-            is_array($data) ? $this->order($data) : $data,
+        return $this->serializer->normalize(
+            is_array($object) ? $this->order($object) : $object,
             $format,
             $context
         );
@@ -34,9 +45,9 @@ class OrderedSerializer extends Serializer
     /**
      * {@inheritdoc}
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, string $type, string $format = null, array $context = [])
     {
-        return parent::denormalize(
+        return $this->serializer->denormalize(
             is_array($data) ? $this->order($data) : $data,
             $type,
             $format,
@@ -84,5 +95,21 @@ class OrderedSerializer extends Serializer
                 return $value instanceof OrderedNormalizerInterface;
             }
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsNormalization($data, string $format = null)
+    {
+        return $this->serializer->supportsNormalization($data, $format);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsDenormalization($data, string $type, string $format = null)
+    {
+        return $this->serializer->supportsDenormalization($data, $type, $format);
     }
 }

@@ -38,7 +38,7 @@ class HighlightEndpointTest extends \PHPUnit\Framework\TestCase
             NormalizerInterface::class
         );
 
-        $this->assertNull($instance->normalize($normalizerInterface));
+        $this->assertFalse($instance->normalize($normalizerInterface));
 
         $highlight = new Highlight();
         $highlight->addField('acme');

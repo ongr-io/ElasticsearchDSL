@@ -46,7 +46,7 @@ class QueryEndpointTest extends \PHPUnit\Framework\TestCase
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );
 
-        $this->assertNull($instance->normalize($normalizerInterface));
+        $this->assertFalse($instance->normalize($normalizerInterface));
 
         $matchAll = new MatchAllQuery();
         $instance->add($matchAll);
