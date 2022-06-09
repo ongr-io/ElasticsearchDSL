@@ -12,12 +12,20 @@
 namespace ONGR\ElasticsearchDSL\Serializer\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Normalizer used with referenced normalized objects.
  */
-class CustomReferencedNormalizer extends CustomNormalizer
+class CustomReferencedNormalizer implements NormalizerInterface
 {
+    private CustomNormalizer $customNormalizer;
+
+    public function __construct()
+    {
+        $this->customNormalizer = new CustomNormalizer();
+    }
+
     /**
      * @var array
      */
@@ -29,7 +37,7 @@ class CustomReferencedNormalizer extends CustomNormalizer
     public function normalize($object, string $format = null, array $context = [])
     {
         $object->setReferences($this->references);
-        $data = parent::normalize($object, $format, $context);
+        $data = $this->customNormalizer->normalize($object, $format, $context);
         $this->references = array_merge($this->references, $object->getReferences());
 
         return $data;
@@ -38,7 +46,7 @@ class CustomReferencedNormalizer extends CustomNormalizer
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof AbstractNormalizable;
     }

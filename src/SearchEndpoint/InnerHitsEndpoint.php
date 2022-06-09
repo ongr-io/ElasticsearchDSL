@@ -27,7 +27,7 @@ class InnerHitsEndpoint extends AbstractSearchEndpoint
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize($normalizer, string $format = null, array $context = []): array|string|int|float|bool
     {
         $output = [];
         if (count($this->getAll()) > 0) {

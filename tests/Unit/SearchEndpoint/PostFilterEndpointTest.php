@@ -45,7 +45,7 @@ class PostFilterEndpointTest extends \PHPUnit\Framework\TestCase
         $normalizerInterface = $this->getMockForAbstractClass(
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );
-        $this->assertNull($instance->normalize($normalizerInterface));
+        $this->assertFalse($instance->normalize($normalizerInterface));
 
         $matchAll = new MatchAllQuery();
         $instance->add($matchAll);

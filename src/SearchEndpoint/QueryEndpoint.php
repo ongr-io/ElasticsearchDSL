@@ -39,7 +39,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize($normalizer, string $format = null, array $context = []): array|string|int|float|bool
     {
         if (!$this->filtersSet && $this->hasReference('filter_query')) {
             /** @var BuilderInterface $filter */
@@ -49,7 +49,7 @@ class QueryEndpoint extends AbstractSearchEndpoint implements OrderedNormalizerI
         }
 
         if (!$this->bool) {
-            return null;
+            return false;
         }
 
         return $this->bool->toArray();

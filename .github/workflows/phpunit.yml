@@ -16,33 +16,41 @@ jobs:
           discovery.type: single-node
     strategy:
       matrix:
-        php: ['7.4', '8.0']
+        php: ['8.0', '8.1']
+        symfony: ['5.0.*', '6.0.*']
+
+    name: 'PHP ${{ matrix.php }} - Symfony ${{ matrix.symfony }}'
+
     steps:
-    - uses: actions/checkout@v2
-  
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php }}
-        tools: composer:v2
-        coverage: xdebug
+      - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: xdebug
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      - name: Validate composer.json and composer.lock
+        run: composer validate
 
-    - name: Wait for Elasticsearch
-      run: php ./.github/wait_for_es.php
+      - name: Install dependencies
+        run: |
+          composer global require --no-progress --no-scripts --no-plugins symfony/flex
+          composer update --no-interaction --no-progress
+        env:
+          SYMFONY_REQUIRE: "${{ matrix.symfony }}"
 
-    - name: Run PHPUnit
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Wait for Elasticsearch
+        run: php ./.github/wait_for_es.php
 
-    - name: Run PHPCS
-      run: vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
-    
-    - name: Upload Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
+
+      - name: Upload Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.xml

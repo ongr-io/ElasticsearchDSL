@@ -26,10 +26,10 @@ class PostFilterEndpoint extends QueryEndpoint
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize($normalizer, string $format = null, array $context = []): array|string|int|float|bool
     {
         if (!$this->getBool()) {
-            return null;
+            return false;
         }
 
         return $this->getBool()->toArray();
