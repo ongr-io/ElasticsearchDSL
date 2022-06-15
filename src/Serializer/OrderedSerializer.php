@@ -59,7 +59,7 @@ class OrderedSerializer extends Serializer
             uasort(
                 $filteredData,
                 function (OrderedNormalizerInterface $a, OrderedNormalizerInterface $b) {
-                    return $a->getOrder() > $b->getOrder();
+                    return $a->getOrder() <=> $b->getOrder();
                 }
             );
 
