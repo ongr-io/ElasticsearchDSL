@@ -37,12 +37,15 @@ trait ParametersTrait
      * Removes parameter.
      *
      * @param string $name
+     * @return $this
      */
     public function removeParameter($name)
     {
         if ($this->hasParameter($name)) {
             unset($this->parameters[$name]);
         }
+
+        return $this;
     }
 
     /**
@@ -70,10 +73,13 @@ trait ParametersTrait
     /**
      * @param string                 $name
      * @param array|string|int|float|bool|\stdClass $value
+     * @return $this
      */
     public function addParameter($name, $value)
     {
         $this->parameters[$name] = $value;
+
+        return $this;
     }
 
     /**

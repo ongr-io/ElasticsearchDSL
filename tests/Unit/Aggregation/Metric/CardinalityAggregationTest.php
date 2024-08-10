@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\Metric\CardinalityAggregation;
 
@@ -52,12 +52,11 @@ class CardinalityAggregationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Tests if CardinalityAggregation#getArray throws exception when expected.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Cardinality aggregation must have field or script set.
      */
     public function testGetArrayException()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cardinality aggregation must have field or script set.');
         $aggregation = new CardinalityAggregation('bar');
         $aggregation->getArray();
     }

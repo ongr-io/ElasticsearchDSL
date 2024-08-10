@@ -9,12 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\SearchEndpoint\QueryEndpoint;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Unit test class for the QueryEndpoint.
@@ -44,7 +42,6 @@ class QueryEndpointTest extends \PHPUnit\Framework\TestCase
     public function testEndpoint()
     {
         $instance = new QueryEndpoint();
-        /** @var NormalizerInterface|MockObject $normalizerInterface */
         $normalizerInterface = $this->getMockForAbstractClass(
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );

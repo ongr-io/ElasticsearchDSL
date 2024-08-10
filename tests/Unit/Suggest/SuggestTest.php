@@ -26,8 +26,6 @@ class SuggestTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Data provider for testToArray()
-     *
-     * @return array[]
      */
     public function getTestToArrayData()
     {

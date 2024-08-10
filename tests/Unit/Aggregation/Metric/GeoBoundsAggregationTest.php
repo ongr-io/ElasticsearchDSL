@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoBoundsAggregation;
 
@@ -20,11 +20,10 @@ class GeoBoundsAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.
-     *
-     * @expectedException \LogicException
      */
     public function testGeoBoundsAggregationException()
     {
+        $this->expectException(\LogicException::class);
         $agg = new GeoBoundsAggregation('test_agg');
         $agg->getArray();
     }

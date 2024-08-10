@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoCentroidAggregation;
 
@@ -20,11 +20,10 @@ class GeoCentroidAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when field is not provided
-     *
-     * @expectedException \LogicException
      */
     public function testGetArrayException()
     {
+        $this->expectException(\LogicException::class);
         $aggregation = new GeoCentroidAggregation('foo');
         $aggregation->getArray();
     }

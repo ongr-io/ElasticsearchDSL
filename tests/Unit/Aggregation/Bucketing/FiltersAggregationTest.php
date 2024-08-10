@@ -9,10 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FiltersAggregation;
-use ONGR\ElasticsearchDSL\BuilderInterface;
 
 /**
  * Unit test for filters aggregation.
@@ -21,12 +20,11 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown when not anonymous filter is without name.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage In not anonymous filters filter name must be set.
      */
     public function testIfExceptionIsThrown()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('In not anonymous filters filter name must be set.');
         $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $aggregation = new FiltersAggregation('test_agg');
         $aggregation->addFilter($mock);
@@ -62,7 +60,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
     {
         $aggregation = new FiltersAggregation('test_agg');
         $filter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
-            ->setMethods(['toArray', 'getType'])
+            ->onlyMethods(['toArray', 'getType'])
             ->getMockForAbstractClass();
         $filter->expects($this->any())
             ->method('toArray')
@@ -95,9 +93,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructorFilter()
     {
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface1 */
         $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
-        /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface2 */
         $builderInterface2 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');
 
         $aggregation = new FiltersAggregation(

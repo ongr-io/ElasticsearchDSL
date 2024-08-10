@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\SearchEndpoint\InnerHitsEndpoint;
 
@@ -54,7 +54,8 @@ class InnerHitsEndpointTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $innerHit = $this
             ->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
-            ->setMethods(['getName', 'toArray', 'getType'])
+            ->onlyMethods(['toArray', 'getType'])
+            ->addMethods(['getName'])
             ->getMock();
         $innerHit->expects($this->any())->method('getName')->willReturn('foo');
         $innerHit->expects($this->any())->method('toArray')->willReturn(['foo' => 'bar']);

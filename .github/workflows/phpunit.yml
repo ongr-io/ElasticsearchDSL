@@ -1,0 +1,48 @@
+name: PHPUnit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      elasticsearch:
+        image: elastic/elasticsearch:7.4.0
+        ports:
+          - 9200:9200
+        env:
+          discovery.type: single-node
+    strategy:
+      matrix:
+        php: ['7.4', '8.0']
+    steps:
+    - uses: actions/checkout@v2
+  
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        tools: composer:v2
+        coverage: xdebug
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Wait for Elasticsearch
+      run: php ./.github/wait_for_es.php
+
+    - name: Run PHPUnit
+      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+    - name: Run PHPCS
+      run: vendor/bin/phpcs -p --standard=PSR2 --ignore=vendor/ ./
+    
+    - name: Upload Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml

@@ -9,12 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\SearchEndpoint\SuggestEndpoint;
 use ONGR\ElasticsearchDSL\Suggest\Suggest;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class SuggestEndpointTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,7 +47,6 @@ class SuggestEndpointTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new SuggestEndpoint();
 
-        /** @var NormalizerInterface|MockObject $normalizerInterface */
         $normalizerInterface = $this->getMockForAbstractClass(
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );

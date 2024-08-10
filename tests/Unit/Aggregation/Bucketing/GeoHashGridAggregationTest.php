@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\GeoHashGridAggregation;
 
@@ -20,11 +20,10 @@ class GeoHashGridAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test if exception is thrown.
-     *
-     * @expectedException \LogicException
      */
     public function testGeoHashGridAggregationException()
     {
+        $this->expectException(\LogicException::class);
         $agg = new GeoHashGridAggregation('test_agg');
         $agg->getArray();
     }

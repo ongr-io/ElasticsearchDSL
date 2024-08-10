@@ -9,12 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Unit\SearchEndpoint;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\SearchEndpoint\SortEndpoint;
 use ONGR\ElasticsearchDSL\Sort\FieldSort;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Class SortEndpointTest.
@@ -36,7 +34,6 @@ class SortEndpointTest extends \PHPUnit\Framework\TestCase
     {
         $instance = new SortEndpoint();
 
-        /** @var NormalizerInterface|MockObject $normalizerInterface */
         $normalizerInterface = $this->getMockForAbstractClass(
             'Symfony\Component\Serializer\Normalizer\NormalizerInterface'
         );

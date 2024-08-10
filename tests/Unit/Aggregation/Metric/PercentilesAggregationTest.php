@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
+namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentilesAggregation;
 
@@ -17,12 +17,11 @@ class PercentilesAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests if PercentilesAggregation#getArray throws exception when expected.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Percentiles aggregation must have field or script set.
      */
     public function testPercentilesAggregationGetArrayException()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Percentiles aggregation must have field or script set.');
         $aggregation = new PercentilesAggregation('bar');
         $aggregation->getArray();
     }

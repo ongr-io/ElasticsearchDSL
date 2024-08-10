@@ -13,6 +13,7 @@ namespace ONGR\ElasticsearchDSL\Tests\Unit;
 
 use ONGR\ElasticsearchDSL\BuilderBag;
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use PHPUnit\Framework\MockObject\MockBuilder;
 
 class BuilderBagTest extends \PHPUnit\Framework\TestCase
 {
@@ -79,12 +80,13 @@ class BuilderBagTest extends \PHPUnit\Framework\TestCase
      *
      * @param string $name
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|BuilderInterface
+     * @return MockBuilder|BuilderInterface
      */
     private function getBuilder($name)
     {
         $friendlyBuilderMock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
-            ->setMethods(['getName', 'toArray', 'getType'])
+            ->onlyMethods(['toArray', 'getType'])
+            ->addMethods(['getName'])
             ->disableOriginalConstructor()
             ->getMock();
 

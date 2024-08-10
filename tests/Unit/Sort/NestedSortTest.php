@@ -18,7 +18,6 @@ class NestedSortTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test for single nested.
-     *
      */
     public function testSingle()
     {
@@ -37,7 +36,6 @@ class NestedSortTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test for single nested, no filter.
-     *
      */
     public function testNoFilter()
     {
@@ -51,7 +49,6 @@ class NestedSortTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test for single nested.
-     *
      */
     public function testMultipleNesting()
     {
