@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Pipeline;
 
 /**
@@ -18,10 +20,7 @@ namespace ONGR\ElasticsearchDSL\Aggregation\Pipeline;
  */
 class ExtendedStatsBucketAggregation extends AbstractPipelineAggregation
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'extended_stats_bucket';
     }

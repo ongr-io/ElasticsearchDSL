@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
 
 /**
@@ -18,10 +20,7 @@ namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
  */
 class SumAggregation extends StatsAggregation
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'sum';
     }

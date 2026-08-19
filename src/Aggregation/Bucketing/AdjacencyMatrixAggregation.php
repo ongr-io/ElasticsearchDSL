@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -26,20 +28,11 @@ class AdjacencyMatrixAggregation extends AbstractAggregation
 
     use BucketingTrait;
 
-    /**
-     * @var BuilderInterface[]
-     */
-    private $filters = [
+    private array $filters = [
         self::FILTERS => []
     ];
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string             $name
-     * @param BuilderInterface[] $filters
-     */
-    public function __construct($name, $filters = [])
+    public function __construct(string $name, array $filters = [])
     {
         parent::__construct($name);
 
@@ -49,32 +42,21 @@ class AdjacencyMatrixAggregation extends AbstractAggregation
     }
 
     /**
-     * @param string           $name
-     * @param BuilderInterface $filter
-     *
      * @throws \LogicException
-     *
-     * @return self
      */
-    public function addFilter($name, BuilderInterface $filter)
+    public function addFilter(string $name, BuilderInterface $filter): static
     {
         $this->filters[self::FILTERS][$name] = $filter->toArray();
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'adjacency_matrix';
     }

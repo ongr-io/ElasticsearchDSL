@@ -9,33 +9,30 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Query\Compound;
 
 use ONGR\ElasticsearchDSL\Query\Compound\BoolQuery;
 use ONGR\ElasticsearchDSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
+use UnexpectedValueException;
 
 /**
  * Unit test for Bool.
  */
 class BoolQueryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test for addToBool() without setting a correct bool operator.
-     *
-     * @expectedException        \UnexpectedValueException
-     * @expectedExceptionMessage The bool operator acme is not supported
-     */
-    public function testBoolAddToBoolException()
+    public function testBoolAddToBoolException(): void
     {
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('The bool operator acme is not supported');
+
         $bool = new BoolQuery();
         $bool->add(new MatchAllQuery(), 'acme');
     }
 
-    /**
-     * Tests constructor builds container
-     */
-    public function testBoolConstructor()
+    public function testBoolConstructor(): void
     {
         $bool = new BoolQuery([
             BoolQuery::SHOULD => [new TermQuery('key1', 'value1')],
@@ -43,7 +40,7 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
                 new TermQuery('key2', 'value2'),
                 new TermQuery('key3', 'value3'),
             ],
-            BoolQuery::MUST_NOT => new TermQuery('key4', 'value4')
+            BoolQuery::MUST_NOT => [new TermQuery('key4', 'value4')]
         ]);
 
         $expected = [
@@ -79,23 +76,17 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $bool->toArray());
     }
 
-    /**
-     * Tests exception thrown if invalid BoolQuery type key is specified
-     *
-     * @expectedException        \UnexpectedValueException
-     * @expectedExceptionMessage The bool operator acme is not supported
-     */
-    public function testBoolConstructorException()
+    public function testBoolConstructorException(): void
     {
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('The bool operator acme is not supported');
+
         new BoolQuery([
             'acme' => [new TermQuery('key1', 'value1')],
         ]);
     }
 
-    /**
-     * Tests toArray() method.
-     */
-    public function testBoolToArray()
+    public function testBoolToArray(): void
     {
         $bool = new BoolQuery();
         $bool->add(new TermQuery('key1', 'value1'), BoolQuery::SHOULD);
@@ -129,20 +120,14 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $bool->toArray());
     }
 
-    /**
-     * Tests bool query with empty body if it forms \stdObject
-     */
-    public function testEmptyBoolQuery()
+    public function testEmptyBoolQuery():void
     {
         $bool = new BoolQuery();
 
         $this->assertEquals(['bool' => new \stdClass()], $bool->toArray());
     }
 
-    /**
-     * Tests bool query in filter context.
-     */
-    public function testBoolInFilterContext()
+    public function testBoolInFilterContext(): void
     {
         $bool = new BoolQuery();
         $bool->add(new TermQuery('key1', 'value1'), BoolQuery::FILTER);
@@ -168,10 +153,7 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $bool->toArray());
     }
 
-    /**
-     * Test if simplified structure is returned in case single MUST query given.
-     */
-    public function testSingleMust()
+    public function testSingleMust(): void
     {
         $bool = new BoolQuery();
         $bool->add(new TermQuery('key2', 'value2'), BoolQuery::MUST);
@@ -183,20 +165,14 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $bool->toArray());
     }
 
-    /**
-     * Tests if BoolQuery::getQueries returns an empty array.
-     */
-    public function testGetQueriesEmpty()
+    public function testGetQueriesEmpty(): void
     {
         $bool = new BoolQuery();
 
-        $this->assertInternalType('array', $bool->getQueries());
+        $this->assertIsArray($bool->getQueries());
     }
 
-    /**
-     * Tests if BoolQuery::getQueries returns an array with the added queries of all bool types.
-     */
-    public function testGetQueries()
+    public function testGetQueries(): void
     {
         $query = new TermQuery('key1', 'value1');
         $query2 = new TermQuery('key2', 'value2');
@@ -208,20 +184,14 @@ class BoolQueryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(array('query' => $query, 'query2' => $query2), $bool->getQueries());
     }
 
-    /**
-     * Tests if BoolQuery::getQueries with specified bool type returns an empty array.
-     */
-    public function testGetQueriesByBoolTypeEmpty()
+    public function testGetQueriesByBoolTypeEmpty(): void
     {
         $bool = new BoolQuery();
 
-        $this->assertInternalType('array', $bool->getQueries(BoolQuery::MUST));
+        $this->assertIsArray($bool->getQueries(BoolQuery::MUST));
     }
 
-    /**
-     * Tests if BoolQuery::getQueries with specified bool type returns an array with added queries.
-     */
-    public function testGetQueriesByBoolTypeWithQueryAddedToBoolType()
+    public function testGetQueriesByBoolTypeWithQueryAddedToBoolType(): void
     {
         $query = new TermQuery('key1', 'value1');
         $query2 = new TermQuery('key2', 'value2');

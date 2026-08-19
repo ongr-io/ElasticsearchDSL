@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\FiltersAggregation;
 use ONGR\ElasticsearchDSL\BuilderInterface;
 
@@ -19,14 +22,11 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  */
 class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test if exception is thrown when not anonymous filter is without name.
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage In not anonymous filters filter name must be set.
-     */
-    public function testIfExceptionIsThrown()
+    public function testIfExceptionIsThrown(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('In not anonymous filters filter name must be set.');
+
         $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $aggregation = new FiltersAggregation('test_agg');
         $aggregation->addFilter($mock);
@@ -35,7 +35,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Test GetArray method.
      */
-    public function testFiltersAggregationGetArray()
+    public function testFiltersAggregationGetArray(): void
     {
         $mock = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')->getMock();
         $aggregation = new FiltersAggregation('test_agg');
@@ -48,7 +48,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Tests getType method.
      */
-    public function testFiltersAggregationGetType()
+    public function testFiltersAggregationGetType(): void
     {
         $aggregation = new FiltersAggregation('foo');
         $result = $aggregation->getType();
@@ -58,7 +58,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Test for filter aggregation toArray() method.
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $aggregation = new FiltersAggregation('test_agg');
         $filter = $this->getMockBuilder('ONGR\ElasticsearchDSL\BuilderInterface')
@@ -93,7 +93,7 @@ class FiltersAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Tests if filters can be passed to constructor.
      */
-    public function testConstructorFilter()
+    public function testConstructorFilter(): void
     {
         /** @var BuilderInterface|\PHPUnit_Framework_MockObject_MockObject $builderInterface1 */
         $builderInterface1 = $this->getMockForAbstractClass('ONGR\ElasticsearchDSL\BuilderInterface');

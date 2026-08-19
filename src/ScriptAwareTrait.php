@@ -9,32 +9,20 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL;
 
-/**
- * A trait which handles elasticsearch aggregation script.
- */
 trait ScriptAwareTrait
 {
-    /**
-     * @var string
-     */
-    private $script;
+    private ?string $script = null;
 
-    /**
-     * @return string
-     */
-    public function getScript()
+    public function getScript(): ?string
     {
         return $this->script;
     }
 
-    /**
-     * @param string $script
-     *
-     * @return $this
-     */
-    public function setScript($script)
+    public function setScript(?string $script): static
     {
         $this->script = $script;
 

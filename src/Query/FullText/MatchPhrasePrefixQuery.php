@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\FullText;
 
 /**
@@ -22,7 +24,7 @@ class MatchPhrasePrefixQuery extends MatchQuery
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): string
     {
         return 'match_phrase_prefix';
     }

@@ -9,35 +9,22 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\SearchEndpoint;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * Search highlight dsl endpoint.
- */
 class HighlightEndpoint extends AbstractSearchEndpoint
 {
-    /**
-     * Endpoint name
-     */
-    const NAME = 'highlight';
+    public const NAME = 'highlight';
 
-    /**
-     * @var BuilderInterface
-     */
-    private $highlight;
+    private ?BuilderInterface $highlight = null;
 
-    /**
-     * @var string Key for highlight storing.
-     */
-    private $key;
+    private ?string $key = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
     {
         if ($this->highlight) {
             return $this->highlight->toArray();
@@ -46,10 +33,7 @@ class HighlightEndpoint extends AbstractSearchEndpoint
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function add(BuilderInterface $builder, $key = null)
+    public function add(BuilderInterface $builder, ?string $key = null): ?string
     {
         if ($this->highlight) {
             throw new \OverflowException('Only one highlight can be set');
@@ -57,20 +41,16 @@ class HighlightEndpoint extends AbstractSearchEndpoint
 
         $this->key = $key;
         $this->highlight = $builder;
+
+        return $key;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAll($boolType = null)
+    public function getAll(?string $boolType = null): array
     {
         return [$this->key => $this->highlight];
     }
 
-    /**
-     * @return BuilderInterface
-     */
-    public function getHighlight()
+    public function getHighlight(): ?BuilderInterface
     {
         return $this->highlight;
     }

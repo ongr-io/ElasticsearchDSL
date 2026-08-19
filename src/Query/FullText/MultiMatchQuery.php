@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\FullText;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -29,40 +31,20 @@ class MultiMatchQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var array
-     */
-    private $fields = [];
-
-    /**
-     * @var string
-     */
-    private $query;
-
-    /**
-     * @param array  $fields
-     * @param string $query
-     * @param array  $parameters
-     */
-    public function __construct(array $fields, $query, array $parameters = [])
-    {
-        $this->fields = $fields;
-        $this->query = $query;
+    public function __construct(
+        private array $fields,
+        private string $query,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'multi_match';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'query' => $this->query,

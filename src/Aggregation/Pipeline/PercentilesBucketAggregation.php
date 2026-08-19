@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Pipeline;
 
 /**
@@ -18,43 +20,26 @@ namespace ONGR\ElasticsearchDSL\Aggregation\Pipeline;
  */
 class PercentilesBucketAggregation extends AbstractPipelineAggregation
 {
-    /**
-     * @var array
-     */
-    private $percents;
+    private array $percents;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'percentiles_bucket';
     }
 
-    /**
-     * @return array
-     */
-    public function getPercents()
+    public function getPercents(): array
     {
         return $this->percents;
     }
 
-    /**
-     * @param array $percents
-     *
-     * @return $this
-     */
-    public function setPercents(array $percents)
+    public function setPercents(array $percents): static
     {
         $this->percents = $percents;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $data = ['buckets_path' => $this->getBucketsPath()];
 

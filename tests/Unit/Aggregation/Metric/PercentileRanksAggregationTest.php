@@ -11,6 +11,7 @@
 
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentileRanksAggregation;
 
 /**
@@ -18,47 +19,32 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\PercentileRanksAggregation;
  */
 class PercentileRanksAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var PercentileRanksAggregation
-     */
-    public $agg;
+    public PercentileRanksAggregation $agg;
 
-    /**
-     * Phpunit setup.
-     */
-    public function setUp()
+    public function setUp(): void
     {
         $this->agg = new PercentileRanksAggregation('foo');
     }
 
-    /**
-     * Tests if exception is thrown when required parameters not set.
-     *
-     * @expectedException \LogicException
-     */
-    public function testIfPercentileRanksAggregationThrowsAnException()
+    public function testIfPercentileRanksAggregationThrowsAnException(): void
     {
+        $this->expectException(LogicException::class);
+
         $this->agg->toArray();
     }
 
-    /**
-     * Tests exception when only field is set.
-     *
-     * @expectedException \LogicException
-     */
-    public function testIfExceptionIsThrownWhenFieldSetAndValueNotSet()
+    public function testIfExceptionIsThrownWhenFieldSetAndValueNotSet(): void
     {
+        $this->expectException(LogicException::class);
+
         $this->agg->setField('bar');
         $this->agg->toArray();
     }
 
-    /**
-     * Tests exception when only value is set.
-     *
-     * @expectedException \LogicException
-     */
-    public function testIfExceptionIsThrownWhenScriptSetAndValueNotSet()
+    public function testIfExceptionIsThrownWhenScriptSetAndValueNotSet(): void
     {
+        $this->expectException(LogicException::class);
+
         $this->agg->setScript('bar');
         $this->agg->toArray();
     }
@@ -66,7 +52,7 @@ class PercentileRanksAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Test getType method.
      */
-    public function testGetType()
+    public function testGetType(): void
     {
         $this->assertEquals('percentile_ranks', $this->agg->getType());
     }
@@ -74,7 +60,7 @@ class PercentileRanksAggregationTest extends \PHPUnit\Framework\TestCase
     /**
      * Test toArray method.
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $this->agg->setField('bar');
         $this->agg->setValues(['bar']);

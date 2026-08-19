@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Aggregation\Pipeline;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Pipeline\BucketSelectorAggregation;
 
 /**
@@ -18,10 +21,7 @@ use ONGR\ElasticsearchDSL\Aggregation\Pipeline\BucketSelectorAggregation;
  */
 class BucketSelectorAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Tests toArray method.
-     */
-    public function testToArray()
+    public function testToArray(): void
     {
         $aggregation = new BucketSelectorAggregation(
             'test',
@@ -45,15 +45,11 @@ class BucketSelectorAggregationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $aggregation->toArray());
     }
 
-    /**
-     * Tests if the exception is thrown in getArray method if no
-     * buckets_path or script is set
-     *
-     * @expectedException \LogicException
-     * @expectedExceptionMessage `test` aggregation must have script set.
-     */
-    public function testGetArrayException()
+    public function testGetArrayException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage("`test` aggregation must have script set.");
+
         $agg = new BucketSelectorAggregation('test', []);
 
         $agg->getArray();

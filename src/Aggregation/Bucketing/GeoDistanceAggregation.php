@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,38 +25,18 @@ class GeoDistanceAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * @var mixed
-     */
-    private $origin;
+    private mixed $origin;
 
-    /**
-     * @var string
-     */
-    private $distanceType;
+    private array $ranges = [];
 
-    /**
-     * @var string
-     */
-    private $unit;
-
-    /**
-     * @var array
-     */
-    private $ranges = [];
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param mixed  $origin
-     * @param array  $ranges
-     * @param string $unit
-     * @param string $distanceType
-     */
-    public function __construct($name, $field = null, $origin = null, $ranges = [], $unit = null, $distanceType = null)
-    {
+    public function __construct(
+        private string $name,
+        ?string $field = null,
+        mixed $origin = null,
+        array $ranges = [],
+        ?string $unit = null,
+        ?string $distanceType = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
@@ -68,60 +50,36 @@ class GeoDistanceAggregation extends AbstractAggregation
         $this->setDistanceType($distanceType);
     }
 
-    /**
-     * @return string
-     */
-    public function getOrigin()
+    public function getOrigin(): mixed
     {
         return $this->origin;
     }
 
-    /**
-     * @param mixed $origin
-     *
-     * @return $this
-     */
-    public function setOrigin($origin)
+    public function setOrigin(mixed $origin): static
     {
         $this->origin = $origin;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDistanceType()
+    public function getDistanceType(): ?string
     {
         return $this->distanceType;
     }
 
-    /**
-     * @param string $distanceType
-     *
-     * @return $this
-     */
-    public function setDistanceType($distanceType)
+    public function setDistanceType(?string $distanceType): static
     {
         $this->distanceType = $distanceType;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnit()
+    public function getUnit(): ?string
     {
         return $this->unit;
     }
 
-    /**
-     * @param string $unit
-     *
-     * @return $this
-     */
-    public function setUnit($unit)
+    public function setUnit(?string $unit): static
     {
         $this->unit = $unit;
 
@@ -130,24 +88,14 @@ class GeoDistanceAggregation extends AbstractAggregation
 
     /**
      * Add range to aggregation.
-     *
-     * @param int|float|null $from
-     * @param int|float|null $to
-     *
-     * @throws \LogicException
-     *
-     * @return GeoDistanceAggregation
      */
-    public function addRange($from = null, $to = null)
+    public function addRange(null|int|float|string $from = null, null|int|float|string $to = null): static
     {
         $range = array_filter(
             [
                 'from' => $from,
                 'to' => $to,
-            ],
-            function ($v) {
-                return !is_null($v);
-            }
+            ]
         );
 
         if (empty($range)) {
@@ -159,10 +107,7 @@ class GeoDistanceAggregation extends AbstractAggregation
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $data = [];
 
@@ -191,10 +136,7 @@ class GeoDistanceAggregation extends AbstractAggregation
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'geo_distance';
     }

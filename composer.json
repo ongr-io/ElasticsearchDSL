@@ -11,14 +11,15 @@
         }
     ],
     "require": {
-        "php": "^7.0",
-        "symfony/serializer": "^3.0|^4.0",
+        "php": "^8.0",
+        "symfony/serializer": "5.*",
         "paragonie/random_compat": "*"
     },
     "require-dev": {
         "elasticsearch/elasticsearch": "^7.0",
-        "phpunit/phpunit": "~6.0",
-        "squizlabs/php_codesniffer": "^3.0"
+        "phpunit/phpunit": "~9.0",
+        "squizlabs/php_codesniffer": "^3.0",
+        "friendsofphp/php-cs-fixer": "2.18.x-dev"
     },
     "suggest": {
       "elasticsearch/elasticsearch": "This library is for elasticsearch/elasticsearch client to enhance it with DSL functionality."

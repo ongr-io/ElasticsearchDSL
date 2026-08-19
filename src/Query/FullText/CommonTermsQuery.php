@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\FullText;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +25,20 @@ class CommonTermsQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $query;
-
-    /**
-     * @param string $field
-     * @param string $query
-     * @param array  $parameters
-     */
-    public function __construct($field, $query, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->query = $query;
+    public function __construct(
+        private string $field,
+        private string $query,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'common';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'query' => $this->query,

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 /**
@@ -18,43 +20,26 @@ namespace ONGR\ElasticsearchDSL\Query\Span;
  */
 class SpanNearQuery extends SpanOrQuery implements SpanQueryInterface
 {
-    /**
-     * @var int
-     */
-    private $slop;
+    private int $slop;
 
-    /**
-     * @return int
-     */
-    public function getSlop()
+    public function getSlop(): int
     {
         return $this->slop;
     }
 
-    /**
-     * @param int $slop
-     *
-     * @return $this
-     */
-    public function setSlop($slop)
+    public function setSlop(int $slop): static
     {
         $this->slop = $slop;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'span_near';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [];
         foreach ($this->getQueries() as $type) {

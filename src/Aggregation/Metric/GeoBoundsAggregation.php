@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -23,50 +25,26 @@ class GeoBoundsAggregation extends AbstractAggregation
 {
     use MetricTrait;
 
-    /**
-     * @var bool
-     */
-    private $wrapLongitude = true;
-
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param bool   $wrapLongitude
-     */
-    public function __construct($name, $field = null, $wrapLongitude = true)
+    public function __construct(private string $name, private ?string $field = null, private bool $wrapLongitude = true)
     {
         parent::__construct($name);
 
         $this->setField($field);
-        $this->setWrapLongitude($wrapLongitude);
     }
 
-    /**
-     * @return bool
-     */
-    public function isWrapLongitude()
+    public function isWrapLongitude(): bool
     {
         return $this->wrapLongitude;
     }
 
-    /**
-     * @param bool $wrapLongitude
-     *
-     * @return $this
-     */
-    public function setWrapLongitude($wrapLongitude)
+    public function setWrapLongitude(bool $wrapLongitude): static
     {
         $this->wrapLongitude = $wrapLongitude;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
         $data = [];
         if ($this->getField()) {
@@ -80,10 +58,7 @@ class GeoBoundsAggregation extends AbstractAggregation
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'geo_bounds';
     }

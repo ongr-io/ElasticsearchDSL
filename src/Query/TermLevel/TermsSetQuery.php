@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,57 +25,37 @@ class TermsSetQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    const MINIMUM_SHOULD_MATCH_TYPE_FIELD = 'minimum_should_match_field';
-    const MINIMUM_SHOULD_MATCH_TYPE_SCRIPT = 'minimum_should_match_script';
+    public const MINIMUM_SHOULD_MATCH_TYPE_FIELD = 'minimum_should_match_field';
+    public const MINIMUM_SHOULD_MATCH_TYPE_SCRIPT = 'minimum_should_match_script';
 
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $terms;
-
-    /**
-     * Constructor.
-     *
-     * @param string $field      Field name
-     * @param array  $terms      An array of terms
-     * @param array  $parameters Parameters
-     */
-    public function __construct($field, $terms, array $parameters)
-    {
-        $this->field = $field;
-        $this->terms = $terms;
+    public function __construct(
+        private string $field,
+        private array $terms,
+        array $parameters
+    ) {
         $this->validateParameters($parameters);
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'terms_set';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'terms' => $this->terms,
         ];
 
-        return [$this->getType() => [
-            $this->field => $this->processArray($query),
-        ]];
+        return [
+            $this->getType() => [
+                $this->field => $this->processArray($query),
+            ]
+        ];
     }
 
-    private function validateParameters(array $parameters)
+    private function validateParameters(array $parameters): void
     {
         if (!isset($parameters[self::MINIMUM_SHOULD_MATCH_TYPE_FIELD]) &&
             !isset($parameters[self::MINIMUM_SHOULD_MATCH_TYPE_SCRIPT])

@@ -9,29 +9,20 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL;
 
 trait FieldAwareTrait
 {
-    /**
-     * @var string
-     */
-    private $field;
+    private ?string $field = null;
 
-    /**
-     * @return mixed
-     */
-    public function getField()
+    public function getField(): ?string
     {
         return $this->field;
     }
 
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setField($field)
+    public function setField(?string $field): static
     {
         $this->field = $field;
 

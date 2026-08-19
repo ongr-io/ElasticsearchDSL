@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Pipeline;
 
 /**
@@ -18,10 +20,7 @@ namespace ONGR\ElasticsearchDSL\Aggregation\Pipeline;
  */
 class BucketSelectorAggregation extends BucketScriptAggregation
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'bucket_selector';
     }

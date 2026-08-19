@@ -1,5 +1,6 @@
 <?php
 
+
 /*
  * This file is part of the ONGR package.
  *
@@ -8,6 +9,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
@@ -23,42 +26,20 @@ class TermsQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $terms;
-
-    /**
-     * Constructor.
-     *
-     * @param string $field      Field name
-     * @param array  $terms      An array of terms
-     * @param array  $parameters Optional parameters
-     */
-    public function __construct($field, $terms, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->terms = $terms;
+    public function __construct(
+        private string $field,
+        private mixed $terms,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'terms';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             $this->field => $this->terms,

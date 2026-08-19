@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Compound;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -20,45 +22,20 @@ use ONGR\ElasticsearchDSL\BuilderInterface;
  */
 class BoostingQuery implements BuilderInterface
 {
-    /**
-     * @var BuilderInterface
-     */
-    private $positive;
+    public function __construct(
+        private BuilderInterface $positive,
+        private BuilderInterface $negative,
+        private int|float $negativeBoost
+    ) {
 
-    /**
-     * @var BuilderInterface
-     */
-    private $negative;
-
-    /**
-     * @var int|float
-     */
-    private $negativeBoost;
-
-    /**
-     * @param BuilderInterface $positive
-     * @param BuilderInterface $negative
-     * @param int|float        $negativeBoost
-     */
-    public function __construct(BuilderInterface $positive, BuilderInterface $negative, $negativeBoost)
-    {
-        $this->positive = $positive;
-        $this->negative = $negative;
-        $this->negativeBoost = $negativeBoost;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'boosting';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'positive' => $this->positive->toArray(),

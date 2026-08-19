@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ONGR package.
- *
- * (c) NFQ Technologies UAB <info@nfq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,33 +14,17 @@ class IdsQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var array
-     */
-    private $values;
-
-    /**
-     * @param array $values
-     * @param array $parameters
-     */
-    public function __construct(array $values, array $parameters = [])
+    public function __construct(private array $values, array $parameters = [])
     {
-        $this->values = $values;
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'ids';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'values' => $this->values,

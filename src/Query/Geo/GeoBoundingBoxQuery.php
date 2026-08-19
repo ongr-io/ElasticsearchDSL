@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ONGR package.
- *
- * (c) NFQ Technologies UAB <info@nfq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ONGR\ElasticsearchDSL\Query\Geo;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,52 +14,27 @@ class GeoBoundingBoxQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var array
-     */
-    private $values;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @param string $field
-     * @param array  $values
-     * @param array  $parameters
-     */
-    public function __construct($field, $values, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->values = $values;
+    public function __construct(
+        private string $field,
+        private array $values,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'geo_bounding_box';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             $this->getType() => $this->processArray([$this->field => $this->points()])
         ];
     }
 
-    /**
-     * @return array
-     *
-     * @throws \LogicException
-     */
-    private function points()
+    private function points(): array
     {
         if (count($this->values) === 2) {
             return [

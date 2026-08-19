@@ -9,46 +9,24 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Suggest;
 
 use ONGR\ElasticsearchDSL\NamedBuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 class Suggest implements NamedBuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $text;
-
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * TermSuggest constructor.
-     * @param string $name
-     * @param string $type
-     * @param string $text
-     * @param string $field
-     * @param array $parameters
-     */
-    public function __construct($name, $type, $text, $field, $parameters = [])
-    {
+    public function __construct(
+        private string $name,
+        private string $type,
+        private string $text,
+        private string $field,
+        array $parameters = []
+    ) {
         $this->setName($name);
         $this->setType($type);
         $this->setText($text);
@@ -56,102 +34,62 @@ class Suggest implements NamedBuilderInterface
         $this->setParameters($parameters);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Returns suggest name
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Returns element type.
-     *
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setType($type)
+    public function setType(string $type): static
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @param string $text
-     *
-     * @return $this
-     */
-    public function setText($text)
+    public function setText(string $text): static
     {
         $this->text = $text;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getField()
+    public function getField(): string
     {
         return $this->field;
     }
 
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setField($field)
+    public function setField(string $field): static
     {
         $this->field = $field;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
-        $output = [
+        return [
             $this->getName() => [
                 'text' => $this->getText(),
                 $this->getType() => $this->processArray(['field' => $this->getField()]),
             ]
         ];
-
-        return $output;
     }
 }

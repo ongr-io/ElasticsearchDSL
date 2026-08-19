@@ -9,11 +9,14 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Metric;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
 use ONGR\ElasticsearchDSL\Aggregation\Type\MetricTrait;
 use ONGR\ElasticsearchDSL\BuilderInterface;
+use stdClass;
 
 /**
  * Top hits aggregation.
@@ -24,132 +27,76 @@ class TopHitsAggregation extends AbstractAggregation
 {
     use MetricTrait;
 
-    /**
-     * @var int Number of top matching hits to return per bucket.
-     */
-    private $size;
+    private array $sorts = [];
 
-    /**
-     * @var int The offset from the first result you want to fetch.
-     */
-    private $from;
-
-    /**
-     * @var BuilderInterface[] How the top matching hits should be sorted.
-     */
-    private $sorts = [];
-
-    /**
-     * Constructor for top hits.
-     *
-     * @param string                $name Aggregation name.
-     * @param null|int              $size Number of top matching hits to return per bucket.
-     * @param null|int              $from The offset from the first result you want to fetch.
-     * @param null|BuilderInterface $sort How the top matching hits should be sorted.
-     */
-    public function __construct($name, $size = null, $from = null, $sort = null)
-    {
+    public function __construct(
+        private string $name,
+        private ?int $size = null,
+        private ?int $from = null,
+        ?BuilderInterface $sort = null
+    ) {
         parent::__construct($name);
         $this->setFrom($from);
         $this->setSize($size);
         $this->addSort($sort);
     }
 
-    /**
-     * Return from.
-     *
-     * @return int
-     */
-    public function getFrom()
+    public function getFrom(): ?int
     {
         return $this->from;
     }
 
-    /**
-     * @param int $from
-     *
-     * @return $this
-     */
-    public function setFrom($from)
+    public function setFrom(?int $from): static
     {
         $this->from = $from;
 
         return $this;
     }
 
-    /**
-     * @return BuilderInterface[]
-     */
-    public function getSorts()
+    public function getSorts(): array
     {
         return $this->sorts;
     }
 
-    /**
-     * @param BuilderInterface[] $sorts
-     *
-     * @return $this
-     */
-    public function setSorts(array $sorts)
+    public function setSorts(array $sorts): static
     {
         $this->sorts = $sorts;
 
         return $this;
     }
 
-    /**
-     * Add sort.
-     *
-     * @param BuilderInterface $sort
-     */
-    public function addSort($sort)
+    public function addSort(?BuilderInterface $sort): void
     {
         $this->sorts[] = $sort;
     }
 
-    /**
-     * @param int $size
-     *
-     * @return $this
-     */
-    public function setSize($size)
+    public function setSize(?int $size): static
     {
         $this->size = $size;
 
         return $this;
     }
 
-    /**
-     * Return size.
-     *
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'top_hits';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array|stdClass
     {
-        $sortsOutput = [];
+        $sortsOutput = null;
         $addedSorts = array_filter($this->getSorts());
+
         if ($addedSorts) {
+            $sortsOutput = [];
             foreach ($addedSorts as $sort) {
                 $sortsOutput[] = $sort->toArray();
             }
-        } else {
-            $sortsOutput = null;
         }
 
         $output = array_filter(
@@ -158,21 +105,13 @@ class TopHitsAggregation extends AbstractAggregation
                 'size' => $this->getSize(),
                 'from' => $this->getFrom(),
             ],
-            function ($val) {
-                return (($val || is_array($val) || ($val || is_numeric($val))));
-            }
+            fn(mixed $val): bool => (($val || is_array($val) || ($val || is_numeric($val))))
         );
 
-        return empty($output) ? new \stdClass() : $output;
+        return $output ?? new stdClass();
     }
 
-    /**
-     * @deprecated sorts now is a container, use `getSorts()`instead.
-     * Return sort.
-     *
-     * @return BuilderInterface
-     */
-    public function getSort()
+    public function getSort(): ?BuilderInterface
     {
         if (isset($this->sorts[0])) {
             return $this->sorts[0];
@@ -181,14 +120,7 @@ class TopHitsAggregation extends AbstractAggregation
         return null;
     }
 
-    /**
-     * @deprecated sorts now is a container, use `addSort()`instead.
-     *
-     * @param BuilderInterface $sort
-     *
-     * @return $this
-     */
-    public function setSort(BuilderInterface $sort)
+    public function setSort(BuilderInterface $sort): static
     {
         $this->sort = $sort;
 

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Highlight;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -21,38 +23,18 @@ class Highlight implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var array Holds fields for highlight.
-     */
-    private $fields = [];
+    private array $fields = [];
 
-    /**
-     * @var array
-     */
-    private $tags;
+    private ?array $tags = null;
 
-    /**
-     * @param string $name   Field name to highlight.
-     * @param array  $params
-     *
-     * @return $this
-     */
-    public function addField($name, array $params = [])
+    public function addField(string $name, array $params = []): static
     {
         $this->fields[$name] = $params;
 
         return $this;
     }
 
-    /**
-     * Sets html tag and its class used in highlighting.
-     *
-     * @param array $preTags
-     * @param array $postTags
-     *
-     * @return $this
-     */
-    public function setTags(array $preTags, array $postTags)
+    public function setTags(array $preTags, array $postTags): static
     {
         $this->tags['pre_tags'] = $preTags;
         $this->tags['post_tags'] = $postTags;
@@ -60,18 +42,12 @@ class Highlight implements BuilderInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'highlight';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $output = [];
 

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +25,20 @@ class WildcardQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * @param string $field
-     * @param string $value
-     * @param array  $parameters
-     */
-    public function __construct($field, $value, array $parameters = [])
-    {
-        $this->field = $field;
-        $this->value = $value;
+    public function __construct(
+        private string $field,
+        private string $value,
+        array $parameters = []
+    ) {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'wildcard';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'value' => $this->value,

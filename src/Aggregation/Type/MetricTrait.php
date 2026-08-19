@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Type;
 
 /**
@@ -16,12 +18,7 @@ namespace ONGR\ElasticsearchDSL\Aggregation\Type;
  */
 trait MetricTrait
 {
-    /**
-     * Metric aggregations does not support nesting.
-     *
-     * @return bool
-     */
-    protected function supportsNesting()
+    protected function supportsNesting(): bool
     {
         return false;
     }

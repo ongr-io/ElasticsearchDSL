@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,24 +25,15 @@ class RangeQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * Range control names.
-     */
-    const LT = 'lt';
-    const GT = 'gt';
-    const LTE = 'lte';
-    const GTE = 'gte';
+    public const LT = 'lt';
 
-    /**
-     * @var string Field name.
-     */
-    private $field;
+    public const GT = 'gt';
 
-    /**
-     * @param string $field
-     * @param array  $parameters
-     */
-    public function __construct($field, array $parameters = [])
+    public const LTE = 'lte';
+
+    public const GTE = 'gte';
+
+    public function __construct(private string $field, array $parameters = [])
     {
         $this->setParameters($parameters);
 
@@ -51,22 +44,14 @@ class RangeQuery implements BuilderInterface
         if ($this->hasParameter(self::LTE) && $this->hasParameter(self::LT)) {
             unset($this->parameters[self::LT]);
         }
-
-        $this->field = $field;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'range';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $output = [
             $this->field => $this->getParameters(),

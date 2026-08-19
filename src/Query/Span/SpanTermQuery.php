@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\Span;
 
 use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
@@ -20,10 +22,7 @@ use ONGR\ElasticsearchDSL\Query\TermLevel\TermQuery;
  */
 class SpanTermQuery extends TermQuery implements SpanQueryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'span_term';
     }

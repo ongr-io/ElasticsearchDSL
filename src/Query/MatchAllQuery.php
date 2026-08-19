@@ -9,10 +9,13 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
 use ONGR\ElasticsearchDSL\ParametersTrait;
+use stdClass;
 
 /**
  * Represents Elasticsearch "match_all" query.
@@ -23,28 +26,20 @@ class MatchAllQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @param array $parameters Additional parameters.
-     */
     public function __construct(array $parameters = [])
     {
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'match_all';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array | stdClass
     {
         $params = $this->getParameters();
-        return [$this->getType() => !empty($params) ? $params : new \stdClass()];
+
+        return [$this->getType() => $params ?: new stdClass()];
     }
 }

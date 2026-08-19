@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Query\TermLevel;
 
 use ONGR\ElasticsearchDSL\BuilderInterface;
@@ -23,40 +25,17 @@ class PrefixQuery implements BuilderInterface
 {
     use ParametersTrait;
 
-    /**
-     * @var string
-     */
-    protected $field;
-
-    /**
-     * @var string
-     */
-    protected $value;
-
-    /**
-     * @param string $field      Field name.
-     * @param string $value      Value.
-     * @param array  $parameters Optional parameters.
-     */
-    public function __construct($field, $value, array $parameters = [])
+    public function __construct(protected string $field, protected string $value, array $parameters = [])
     {
-        $this->field = $field;
-        $this->value = $value;
         $this->setParameters($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'prefix';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         $query = [
             'value' => $this->value,

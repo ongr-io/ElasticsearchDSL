@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Aggregation\Bucketing;
 
 use ONGR\ElasticsearchDSL\Aggregation\AbstractAggregation;
@@ -24,16 +26,12 @@ class AutoDateHistogramAggregation extends AbstractAggregation
 {
     use BucketingTrait;
 
-    /**
-     * Inner aggregations container init.
-     *
-     * @param string $name
-     * @param string $field
-     * @param int    $buckets
-     * @param string $format
-     */
-    public function __construct($name, $field, $buckets = null, $format = null)
-    {
+    public function __construct(
+        string $name,
+        string $field,
+        ?int $buckets = null,
+        ?string $format = null
+    ) {
         parent::__construct($name);
 
         $this->setField($field);
@@ -47,24 +45,16 @@ class AutoDateHistogramAggregation extends AbstractAggregation
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getArray()
+    public function getArray(): array
     {
-        $data = array_filter(
+        return array_filter(
             [
                 'field' => $this->getField(),
             ]
         );
-
-        return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'auto_date_histogram';
     }

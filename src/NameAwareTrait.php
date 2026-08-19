@@ -9,29 +9,20 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL;
 
 trait NameAwareTrait
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(?string $name): static
     {
         $this->name = $name;
 

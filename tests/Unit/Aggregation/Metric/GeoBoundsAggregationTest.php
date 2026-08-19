@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Metric\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoBoundsAggregation;
 
 /**
@@ -18,31 +21,22 @@ use ONGR\ElasticsearchDSL\Aggregation\Metric\GeoBoundsAggregation;
  */
 class GeoBoundsAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test if exception is thrown.
-     *
-     * @expectedException \LogicException
-     */
-    public function testGeoBoundsAggregationException()
+    public function testGeoBoundsAggregationException(): void
     {
+        $this->expectException(LogicException::class);
+
         $agg = new GeoBoundsAggregation('test_agg');
         $agg->getArray();
     }
 
-    /**
-     * Tests getType method.
-     */
-    public function testGeoBoundsAggregationGetType()
+    public function testGeoBoundsAggregationGetType(): void
     {
         $agg = new GeoBoundsAggregation('foo');
         $result = $agg->getType();
         $this->assertEquals('geo_bounds', $result);
     }
 
-    /**
-     * Tests getArray method.
-     */
-    public function testGeoBoundsAggregationGetArray()
+    public function testGeoBoundsAggregationGetArray(): void
     {
         $agg = new GeoBoundsAggregation('foo');
         $agg->setField('bar');

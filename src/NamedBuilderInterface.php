@@ -9,17 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL;
 
-/**
- * Interface NamedBuilderInterface.
- */
 interface NamedBuilderInterface extends BuilderInterface
 {
-    /**
-     * Returns element name.
-     *
-     * @return string
-     */
-    public function getName();
+    public function getName(): ?string;
 }

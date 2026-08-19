@@ -9,27 +9,24 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace ONGR\ElasticsearchDSL\Tests\Unit\Bucketing\Aggregation;
 
+use LogicException;
 use ONGR\ElasticsearchDSL\Aggregation\Bucketing\Ipv4RangeAggregation;
 
 class Ipv4RangeAggregationTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Test exception when field and range are not set.
-     *
-     * @expectedException \LogicException
-     */
     public function testIfExceptionIsThrownWhenFieldAndRangeAreNotSet()
     {
+        $this->expectException(LogicException::class);
+
         $agg = new Ipv4RangeAggregation('foo');
         $agg->toArray();
     }
 
-    /**
-     * Tests if field and range  can be passed to constructor.
-     */
-    public function testConstructorFilter()
+    public function testConstructorFilter(): void
     {
         $aggregation = new Ipv4RangeAggregation('test', 'fieldName', [['from' => 'fromValue']]);
         $this->assertSame(
